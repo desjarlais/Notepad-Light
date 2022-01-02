@@ -5,6 +5,7 @@ namespace Notepad_Light
 {
     public partial class FrmMain : Form
     {
+        // globals
         public string gCurrentFileName = Strings.defaultFileName;
         public bool gChanged = false;
         public bool gRtf = false;
@@ -120,6 +121,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void FileOpen()
         {
             try
@@ -168,6 +172,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void FileSave()
         {
             try
@@ -205,6 +212,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void FileSaveAs()
         {
             try
@@ -256,6 +266,9 @@ namespace Notepad_Light
             gChanged = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void UpdateToolbarIcons()
         {
             try
