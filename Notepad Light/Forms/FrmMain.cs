@@ -18,28 +18,52 @@ namespace Notepad_Light
             // init file MRU
             if (Properties.Settings.Default.FileMRU.Count > 0)
             {
-                int fileMruDeleteIndex = 0;
-                int fileMruIndex = 0;
-                bool deleteInitValue = false;
-
+                // loop each value and add to recent menu
+                int mruCount = 1;
                 foreach (var f in Properties.Settings.Default.FileMRU)
                 {
-                    if (f == "#### File MRU ####")
+                    if (f is not null)
                     {
-                        fileMruDeleteIndex = fileMruIndex;
-                        deleteInitValue = true;
+                        switch (mruCount)
+                        {
+                            case 1:
+                                recentToolStripMenuItem1.Text = f.ToString(); break;
+                            case 2:
+                                recentToolStripMenuItem2.Text = f.ToString(); break;
+                            case 3:
+                                recentToolStripMenuItem3.Text = f.ToString(); break;
+                            case 4:
+                                recentToolStripMenuItem4.Text = f.ToString(); break;
+                            case 5:
+                                recentToolStripMenuItem5.Text = f.ToString(); break;
+                        }
                     }
-                    else
-                    {
-                        recentToolStripMenuItem.DropDownItems.Add(f);
-                        fileMruIndex++;
-                    }
+                    
+                    mruCount++;
                 }
 
-                if (deleteInitValue)
-                {
-                    Properties.Settings.Default.FileMRU.RemoveAt(fileMruDeleteIndex);
-                }
+                //int fileMruDeleteIndex = 0;
+                //int fileMruIndex = 0;
+                //bool deleteInitValue = false;
+
+                    //foreach (var f in Properties.Settings.Default.FileMRU)
+                    //{
+                    //    if (f == "#### File MRU ####")
+                    //    {
+                    //        fileMruDeleteIndex = fileMruIndex;
+                    //        deleteInitValue = true;
+                    //    }
+                    //    else
+                    //    {
+                    //        recentToolStripMenuItem.DropDownItems.Add(f);
+                    //        fileMruIndex++;
+                    //    }
+                    //}
+
+                    //if (deleteInitValue)
+                    //{
+                    //    Properties.Settings.Default.FileMRU.RemoveAt(fileMruDeleteIndex);
+                    //}
             }
 
             // set initial zoom to 100
@@ -114,7 +138,44 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// file open using a specific path
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void FileOpen(string filePath)
+        {
+            try
+            {
+                if (filePath.EndsWith(".txt"))
+                {
+                    // setup plain text open
+                    rtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+                    DisableToolbarFormattingIcons();
+                    gRtf = false;
+                    toolStripStatusLabelFileType.Text = Strings.plainText;
+                }
+                else
+                {
+                    // setup rtf open
+                    rtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
+                    EnableToolbarFormattingIcons();
+                    gRtf = true;
+                    toolStripStatusLabelFileType.Text = Strings.rtf;
+                }
+
+                UpdateMRU();
+                UpdateFormTitle(filePath);
+                gChanged = false;
+                ClearToolbarFormattingIcons();
+                MoveCursorToFirstLine();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("FileOpen Error = " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// default file open using file dialog
         /// </summary>
         public void FileOpen()
         {
@@ -151,7 +212,7 @@ namespace Notepad_Light
                         toolStripStatusLabelFileType.Text = Strings.rtf;
                     }
 
-                    UpdateMRU(ofdFileOpen.FileName);
+                    UpdateMRU();
                     UpdateFormTitle(ofdFileOpen.FileName);
                     gChanged = false;
                     ClearToolbarFormattingIcons();
@@ -228,6 +289,61 @@ namespace Notepad_Light
             {
                 Logger.Log("FileSaveAs Error :\r\n\r\n" + ex.Message);
             }
+        }
+
+        public void OpenRecentFile(string filePath, int buttonIndex)
+        {
+            if (filePath == "empty")
+            {
+                return;
+            }
+
+            if (File.Exists(filePath))
+            {
+                FileOpen(filePath);
+            }
+            else
+            {
+                // file no longer exists, remove from mru
+                RemoveFileFromMRU(filePath, buttonIndex);
+            }
+        }
+
+        public void ClearRecentMenuItems()
+        {
+            recentToolStripMenuItem1.Text = "empty";
+            recentToolStripMenuItem2.Text = "empty";
+            recentToolStripMenuItem3.Text = "empty";
+            recentToolStripMenuItem4.Text = "empty";
+            recentToolStripMenuItem5.Text = "empty";
+        }
+
+        public void RemoveFileFromMRU(string path, int index)
+        {
+            int mruIndex = 0;
+            int badIndex = 0;
+
+            // check if the non-existent file is in the mru
+            if (Properties.Settings.Default.FileMRU.Count > 0)
+            {
+                foreach (var f in Properties.Settings.Default.FileMRU)
+                {
+                    if (f == path)
+                    {
+                        badIndex = mruIndex;
+                    }
+
+                    mruIndex++;
+                }
+
+                Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
+            }
+
+            // clear the menu 
+            ClearRecentMenuItems();
+
+            // add the rest of the items back
+            UpdateMRU();
         }
 
         public void Cut()
@@ -456,46 +572,26 @@ namespace Notepad_Light
             return result;
         }
 
-        public void UpdateMRU(string filePath)
+        public void UpdateMRU()
         {
-            if (Properties.Settings.Default.FileMRU.Count == 5)
+            int index = 1;
+            foreach (var f in Properties.Settings.Default.FileMRU)
             {
-                // now move each item down the list
-                recentToolStripMenuItem.DropDownItems[4].Text = recentToolStripMenuItem.DropDownItems[3].Text;
-                Properties.Settings.Default.FileMRU[4] = Properties.Settings.Default.FileMRU[3];
-
-                recentToolStripMenuItem.DropDownItems[3].Text = recentToolStripMenuItem.DropDownItems[2].Text;
-                Properties.Settings.Default.FileMRU[3] = Properties.Settings.Default.FileMRU[2];
-
-                recentToolStripMenuItem.DropDownItems[2].Text = recentToolStripMenuItem.DropDownItems[1].Text;
-                Properties.Settings.Default.FileMRU[2] = Properties.Settings.Default.FileMRU[1];
-
-                recentToolStripMenuItem.DropDownItems[1].Text = recentToolStripMenuItem.DropDownItems[0].Text;
-                Properties.Settings.Default.FileMRU[1] = Properties.Settings.Default.FileMRU[0];
-
-                recentToolStripMenuItem.DropDownItems[0].Text = filePath;
-                Properties.Settings.Default.FileMRU[0] = filePath;
-            }
-            else
-            {
-                if (IsFileInMru(filePath) == false)
+                switch (index)
                 {
-                    recentToolStripMenuItem.DropDownItems.Add(filePath);
-                    Properties.Settings.Default.FileMRU.Add(filePath);
+                    case 1:
+                        recentToolStripMenuItem1.Text = f?.ToString(); break;
+                    case 2:
+                        recentToolStripMenuItem2.Text = f?.ToString(); break;
+                    case 3:
+                        recentToolStripMenuItem3.Text = f?.ToString(); break;
+                    case 4:
+                        recentToolStripMenuItem4.Text = f?.ToString(); break;
+                    case 5:
+                        recentToolStripMenuItem5.Text = f?.ToString(); break;
                 }
+                index++;
             }
-
-            Properties.Settings.Default.Save();
-        }
-
-        /// <summary>
-        /// Open the recent item file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenFromRecentHandler(object sender, EventArgs e)
-        {
-            
         }
 
         public void UpdateLnColValues()
@@ -852,6 +948,56 @@ namespace Notepad_Light
                     e.SuppressKeyPress = true;
                     bulletToolStripButton.PerformClick();
                 }
+            }
+        }
+
+        private void recentToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (sender is not null)
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString(), 1);
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+        }
+
+        private void recentToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (sender is not null)
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString(), 2);
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+        }
+
+        private void recentToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            if (sender is not null)
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString(), 3);
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+        }
+
+        private void recentToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            if (sender is not null)
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString(), 4);
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+        }
+
+        private void recentToolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            if (sender is not null)
+            {
+#pragma warning disable CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString(), 5);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
     }
