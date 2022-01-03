@@ -13,5 +13,8 @@ namespace Notepad_Light.Helpers
         public const string defaultFileName = "Untitled";
         public const string rtf = "Rtf";
         public const string plainText = "Text";
+
+        // hyperlinks
+        public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
     }
 }

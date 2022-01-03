@@ -36,17 +36,19 @@
             // LstOutput
             // 
             this.LstOutput.FormattingEnabled = true;
-            this.LstOutput.ItemHeight = 32;
-            this.LstOutput.Location = new System.Drawing.Point(12, 12);
+            this.LstOutput.ItemHeight = 15;
+            this.LstOutput.Location = new System.Drawing.Point(6, 6);
+            this.LstOutput.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.LstOutput.Name = "LstOutput";
-            this.LstOutput.Size = new System.Drawing.Size(1187, 772);
+            this.LstOutput.Size = new System.Drawing.Size(641, 364);
             this.LstOutput.TabIndex = 0;
             // 
             // BtnCopy
             // 
-            this.BtnCopy.Location = new System.Drawing.Point(12, 790);
+            this.BtnCopy.Location = new System.Drawing.Point(6, 370);
+            this.BtnCopy.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnCopy.Name = "BtnCopy";
-            this.BtnCopy.Size = new System.Drawing.Size(150, 46);
+            this.BtnCopy.Size = new System.Drawing.Size(81, 22);
             this.BtnCopy.TabIndex = 1;
             this.BtnCopy.Text = "Copy";
             this.BtnCopy.UseVisualStyleBackColor = true;
@@ -54,9 +56,10 @@
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(1049, 790);
+            this.BtnOK.Location = new System.Drawing.Point(565, 370);
+            this.BtnOK.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnOK.Name = "BtnOK";
-            this.BtnOK.Size = new System.Drawing.Size(150, 46);
+            this.BtnOK.Size = new System.Drawing.Size(81, 22);
             this.BtnOK.TabIndex = 2;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;
@@ -64,12 +67,16 @@
             // 
             // FrmErrorLog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1211, 848);
+            this.ClientSize = new System.Drawing.Size(652, 398);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.BtnCopy);
             this.Controls.Add(this.LstOutput);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmErrorLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Error Log";
