@@ -47,6 +47,7 @@ namespace Notepad_Light.Forms
             Properties.Settings.Default.FileMRU.Clear();
             UpdateMRUListbox();
             LstMRU.Items.Clear();
+            Properties.Settings.Default.Save();
         }
 
         private void BtnOK_Click(object sender, EventArgs e)

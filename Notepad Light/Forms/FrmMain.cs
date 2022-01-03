@@ -212,8 +212,9 @@ namespace Notepad_Light
                         toolStripStatusLabelFileType.Text = Strings.rtf;
                     }
 
-                    UpdateMRU();
+                    Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
                     UpdateFormTitle(ofdFileOpen.FileName);
+                    UpdateMRU();
                     gChanged = false;
                     ClearToolbarFormattingIcons();
                     MoveCursorToFirstLine();
@@ -376,7 +377,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// refresh the ui for toolbar icons
         /// </summary>
         public void UpdateToolbarIcons()
         {
@@ -723,7 +724,7 @@ namespace Notepad_Light
             // also need to update the file mru in case it was cleared
             if (Properties.Settings.Default.FileMRU.Count == 0)
             {
-                recentToolStripMenuItem.DropDownItems.Clear();
+                ClearRecentMenuItems();
             }
         }
 
