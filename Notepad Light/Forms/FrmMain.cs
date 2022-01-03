@@ -60,7 +60,7 @@ namespace Notepad_Light
 
         public void UpdateStatusBar()
         {
-            if (Properties.Settings.Default.NewDocRtf == true)
+            if (Properties.Settings.Default.NewDocRtf == true || gCurrentFileName.EndsWith(".rtf"))
             {
                 EnableToolbarFormattingIcons();
                 toolStripStatusLabelFileType.Text = Strings.rtf;
@@ -84,15 +84,7 @@ namespace Notepad_Light
             gChanged = false;
             UpdateFormTitle(Strings.defaultFileName);
             UpdateStatusBar();
-            
-            if (gRtf)
-            {
-                EnableToolbarFormattingIcons();
-            }
-            else
-            {
-                DisableToolbarFormattingIcons();
-            }
+            ClearToolbarFormattingIcons();
         }
 
         public void FileNew()
@@ -221,13 +213,14 @@ namespace Notepad_Light
             {
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
-                    sfdSaveAs.Filter = "Plain Text | *.txt; *.rtf";
+                    sfdSaveAs.Filter = "Plain Text (*.txt)|*.txt | RTF (*.rtf)|*.rtf";
                     sfdSaveAs.Title = "Save As";
 
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
                         rtbPage.SaveFile(sfdSaveAs.FileName);
                         UpdateFormTitle(sfdSaveAs.FileName);
+                        UpdateStatusBar();
                     }
                 }
             }
@@ -465,8 +458,6 @@ namespace Notepad_Light
 
         public void UpdateMRU(string filePath)
         {
-            int mruCount = Properties.Settings.Default.FileMRU.Count;
-
             if (Properties.Settings.Default.FileMRU.Count == 5)
             {
                 // now move each item down the list
@@ -495,6 +486,16 @@ namespace Notepad_Light
             }
 
             Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// Open the recent item file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenFromRecentHandler(object sender, EventArgs e)
+        {
+            
         }
 
         public void UpdateLnColValues()
