@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Notepad_Light.Helpers
+﻿namespace Notepad_Light.Helpers
 {
     public static class Strings
     {
@@ -17,8 +11,12 @@ namespace Notepad_Light.Helpers
         public const string pasteRtf = "Rtf";
         public const string pasteUnicode = "UnicodeText";
         public const string pasteImage = "Image";
+        public const string startTimeText = "Start";
+        public const string stopTimeText = "Stop";
+        public const string zeroTimer = "00:00:00";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
+        public const string githubIssues = "https://github.com/desjarlais/Notepad-Light/issues";
     }
 }

@@ -123,6 +123,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Restart_16x {
+            get {
+                object obj = ResourceManager.GetObject("Restart_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rightindent {
             get {
                 object obj = ResourceManager.GetObject("rightindent", resourceCulture);
@@ -143,9 +153,39 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap StatusRun_16x {
+            get {
+                object obj = ResourceManager.GetObject("StatusRun_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Stop_16x {
+            get {
+                object obj = ResourceManager.GetObject("Stop_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap StrikeThrough_16x {
             get {
                 object obj = ResourceManager.GetObject("StrikeThrough_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TimePicker_16x {
+            get {
+                object obj = ResourceManager.GetObject("TimePicker_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,5 +1,6 @@
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
+using System.Diagnostics;
 
 namespace Notepad_Light
 {
@@ -10,10 +11,16 @@ namespace Notepad_Light
         public bool gChanged = false;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
+        private int editedHours, editedMinutes, editedSeconds;
+        private Stopwatch gStopwatch;
+        private TimeSpan tSpan;
 
         public FrmMain()
         {
             InitializeComponent();
+
+            // init stopwatch for timer
+            gStopwatch = new Stopwatch();
 
             // init file MRU
             if (Properties.Settings.Default.FileMRU.Count > 0)
@@ -594,6 +601,13 @@ namespace Notepad_Light
             toolStripStatusLabelColumn.Text = column.ToString();
         }
 
+        public void ClearTimeSpanVariables()
+        {
+            editedHours = 0;
+            editedMinutes = 0;
+            editedSeconds = 0;
+        }
+
         public void ResetZoomMenu()
         {
             // reset all values
@@ -804,7 +818,7 @@ namespace Notepad_Light
 
         private void helpToolStripButton_Click(object sender, EventArgs e)
         {
-            App.PlatformSpecificProcessStart("");
+            App.PlatformSpecificProcessStart(Strings.githubIssues);
         }
 
         private void openToolStripButton_Click(object sender, EventArgs e)
@@ -989,6 +1003,47 @@ namespace Notepad_Light
                 OpenRecentFile(sender.ToString(), 5);
 #pragma warning restore CS8604 // Possible null reference argument.
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (!gStopwatch.IsRunning)
+            {
+                return;
+            }
+            else
+            {
+                TimeSpan tSpan2 = gStopwatch.Elapsed;
+                tSpan = gStopwatch.Elapsed;
+                tSpan = tSpan2.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
+                toolStripLabelTimer.Text = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
+            }
+        }
+
+        private void toolStripButtonStartStopTimer_Click(object sender, EventArgs e)
+        {
+            if (gStopwatch.IsRunning)
+            {
+                // stop the timer
+                gStopwatch.Stop();
+                toolStripButtonStartStopTimer.Text = Strings.startTimeText;
+                toolStripButtonStartStopTimer.Image = Properties.Resources.StatusRun_16x;
+            }
+            else
+            {
+                timer1.Enabled = true;
+                gStopwatch.Start();
+                toolStripButtonStartStopTimer.Text = Strings.stopTimeText;
+                toolStripButtonStartStopTimer.Image = Properties.Resources.Stop_16x;
+            }
+        }
+
+        private void toolStripButtonResetTimer_Click(object sender, EventArgs e)
+        {
+            gStopwatch.Reset();
+            toolStripLabelTimer.Text = Strings.zeroTimer;
+            toolStripButtonStartStopTimer.Image = Properties.Resources.StatusRun_16x;
+            ClearTimeSpanVariables();
         }
     }
 }

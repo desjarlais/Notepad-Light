@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -106,8 +107,14 @@
             this.decreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.increaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButtonStartStopTimer = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabelTimer = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButtonResetTimer = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -596,6 +603,11 @@
             this.decreaseIndentToolStripButton,
             this.increaseIndentToolStripButton,
             this.toolStripSeparator9,
+            this.toolStripLabel1,
+            this.toolStripButtonStartStopTimer,
+            this.toolStripLabelTimer,
+            this.toolStripButtonResetTimer,
+            this.toolStripSeparator2,
             this.helpToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
@@ -780,6 +792,42 @@
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(40, 22);
+            this.toolStripLabel1.Text = "Timer:";
+            // 
+            // toolStripButtonStartStopTimer
+            // 
+            this.toolStripButtonStartStopTimer.Image = global::Notepad_Light.Properties.Resources.StatusRun_16x;
+            this.toolStripButtonStartStopTimer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonStartStopTimer.Name = "toolStripButtonStartStopTimer";
+            this.toolStripButtonStartStopTimer.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonStartStopTimer.Text = "Start";
+            this.toolStripButtonStartStopTimer.Click += new System.EventHandler(this.toolStripButtonStartStopTimer_Click);
+            // 
+            // toolStripLabelTimer
+            // 
+            this.toolStripLabelTimer.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.toolStripLabelTimer.Name = "toolStripLabelTimer";
+            this.toolStripLabelTimer.Size = new System.Drawing.Size(55, 22);
+            this.toolStripLabelTimer.Text = "00:00:00";
+            // 
+            // toolStripButtonResetTimer
+            // 
+            this.toolStripButtonResetTimer.Image = global::Notepad_Light.Properties.Resources.Restart_16x;
+            this.toolStripButtonResetTimer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonResetTimer.Name = "toolStripButtonResetTimer";
+            this.toolStripButtonResetTimer.Size = new System.Drawing.Size(55, 22);
+            this.toolStripButtonResetTimer.Text = "Reset";
+            this.toolStripButtonResetTimer.Click += new System.EventHandler(this.toolStripButtonResetTimer_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // helpToolStripButton
             // 
             this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -789,6 +837,10 @@
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             this.helpToolStripButton.Click += new System.EventHandler(this.helpToolStripButton_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // FrmMain
             // 
@@ -898,5 +950,11 @@
         private ToolStripMenuItem recentToolStripMenuItem3;
         private ToolStripMenuItem recentToolStripMenuItem4;
         private ToolStripMenuItem recentToolStripMenuItem5;
+        private ToolStripLabel toolStripLabel1;
+        private ToolStripButton toolStripButtonStartStopTimer;
+        private ToolStripLabel toolStripLabelTimer;
+        private ToolStripButton toolStripButtonResetTimer;
+        private ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
