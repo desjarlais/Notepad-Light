@@ -21,3 +21,4 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Most Recently Used (MRU)
 * Zoom
 * Word Wrap
+* Timer
