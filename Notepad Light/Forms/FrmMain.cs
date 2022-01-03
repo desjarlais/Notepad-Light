@@ -337,8 +337,35 @@ namespace Notepad_Light
 
         public void Paste()
         {
-            rtbPage.Paste();
-            gChanged = true;
+            if (Properties.Settings.Default.UsePasteUI == false)
+            {
+                rtbPage.Paste();
+                gChanged = true;
+            }
+            else
+            {
+                // show the form so the user can decide what to paste
+                FrmPasteUI pFrm = new FrmPasteUI()
+                {
+                    Owner = this
+                };
+                pFrm.ShowDialog();
+
+                // paste based on user selection
+                switch (pFrm.SelectedPasteOption)
+                {
+                    case Strings.plainText:
+                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
+                    case Strings.pasteHtml:
+                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
+                    case Strings.pasteRtf:
+                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
+                    case Strings.pasteUnicode:
+                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
+                    case Strings.pasteImage:
+                        rtbPage.Paste(); break;
+                }
+            }
         }
 
         public void Undo()

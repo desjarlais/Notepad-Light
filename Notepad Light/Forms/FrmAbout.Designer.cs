@@ -41,7 +41,7 @@
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(343, 109);
+            this.BtnOK.Location = new System.Drawing.Point(343, 156);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(56, 23);
             this.BtnOK.TabIndex = 1;
@@ -57,7 +57,7 @@
             this.groupBox1.Controls.Add(this.lblVersion);
             this.groupBox1.Location = new System.Drawing.Point(12, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(387, 100);
+            this.groupBox1.Size = new System.Drawing.Size(387, 147);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -75,26 +75,30 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(6, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 15);
+            this.label1.Size = new System.Drawing.Size(86, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Notepad Light";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(201, 19);
+            this.pictureBox1.Image = global::Notepad_Light.Properties.Resources.brandesoftlogo;
+            this.pictureBox1.Location = new System.Drawing.Point(213, 19);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(180, 75);
+            this.pictureBox1.Size = new System.Drawing.Size(168, 121);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblVersion.Location = new System.Drawing.Point(6, 46);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(51, 15);
+            this.lblVersion.Size = new System.Drawing.Size(54, 15);
             this.lblVersion.TabIndex = 0;
             this.lblVersion.Text = "Version: ";
             // 
@@ -102,7 +106,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 141);
+            this.ClientSize = new System.Drawing.Size(411, 187);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

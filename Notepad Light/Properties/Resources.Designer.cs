@@ -73,6 +73,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap brandesoftlogo {
+            get {
+                object obj = ResourceManager.GetObject("brandesoftlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BulletList_16x {
             get {
                 object obj = ResourceManager.GetObject("BulletList_16x", resourceCulture);
