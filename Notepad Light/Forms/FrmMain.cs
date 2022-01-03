@@ -41,29 +41,6 @@ namespace Notepad_Light
                     
                     mruCount++;
                 }
-
-                //int fileMruDeleteIndex = 0;
-                //int fileMruIndex = 0;
-                //bool deleteInitValue = false;
-
-                    //foreach (var f in Properties.Settings.Default.FileMRU)
-                    //{
-                    //    if (f == "#### File MRU ####")
-                    //    {
-                    //        fileMruDeleteIndex = fileMruIndex;
-                    //        deleteInitValue = true;
-                    //    }
-                    //    else
-                    //    {
-                    //        recentToolStripMenuItem.DropDownItems.Add(f);
-                    //        fileMruIndex++;
-                    //    }
-                    //}
-
-                    //if (deleteInitValue)
-                    //{
-                    //    Properties.Settings.Default.FileMRU.RemoveAt(fileMruDeleteIndex);
-                    //}
             }
 
             // set initial zoom to 100
@@ -227,7 +204,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// save the current file changes
         /// </summary>
         public void FileSave()
         {
@@ -267,7 +244,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// save the file using the dialog
         /// </summary>
         public void FileSaveAs()
         {
@@ -556,21 +533,6 @@ namespace Notepad_Light
                 rtbPage.SelectionStart = 0;
                 rtbPage.SelectionLength = 0;
             }
-        }
-
-        public bool IsFileInMru(string filePath)
-        {
-            bool result = false;
-
-            foreach (var f in Properties.Settings.Default.FileMRU)
-            {
-                if (f is not null && f == filePath)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
         }
 
         public void UpdateMRU()
