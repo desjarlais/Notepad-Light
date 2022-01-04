@@ -192,9 +192,24 @@ namespace Notepad_Light
                         toolStripStatusLabelFileType.Text = Strings.rtf;
                     }
 
-                    Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
                     UpdateFormTitle(ofdFileOpen.FileName);
-                    UpdateMRU();
+
+                    bool isFileInMru = false;
+
+                    foreach (var f in Properties.Settings.Default.FileMRU)
+                    {
+                        if (f == gCurrentFileName)
+                        {
+                            isFileInMru = true;
+                        }
+                    }
+
+                    if (!isFileInMru)
+                    {
+                        Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
+                        UpdateMRU();
+                    }
+
                     gChanged = false;
                     ClearToolbarFormattingIcons();
                     MoveCursorToFirstLine();
