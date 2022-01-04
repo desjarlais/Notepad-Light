@@ -1021,12 +1021,35 @@ namespace Notepad_Light
             
             if (findToolStripTextBox.Text.Length > 0)
             {
-                int indexToText = rtbPage.Find(findToolStripTextBox.Text, lastIndexFound + 1, RichTextBoxFinds.None);
+                int indexToText;
+                if (Properties.Settings.Default.FindDirectionUp)
+                {
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, findToolStripTextBox.Text.Length - 1, RichTextBoxFinds.None);
+                }
+                else
+                {
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, lastIndexFound + 1, RichTextBoxFinds.None);
+                }
+
                 lastIndexFound = indexToText;
+
                 if (indexToText >= 0)
                 {
                     MoveCursorToLocation(indexToText, findToolStripTextBox.Text.Length);
                 }
+            }
+        }
+
+        private void findToolStripTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // if the text changed, restart search at beginning
+            if (Properties.Settings.Default.FindDirectionUp)
+            {
+                lastIndexFound = rtbPage.Text.Length;
+            }
+            else
+            {
+                lastIndexFound = -1;
             }
         }
 
