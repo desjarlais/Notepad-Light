@@ -1,7 +1,6 @@
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
-using System.Text;
 
 namespace Notepad_Light
 {
@@ -15,6 +14,7 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+        public int lastIndexFound = -1;
 
         public FrmMain()
         {
@@ -34,16 +34,11 @@ namespace Notepad_Light
                     {
                         switch (mruCount)
                         {
-                            case 1:
-                                recentToolStripMenuItem1.Text = f.ToString(); break;
-                            case 2:
-                                recentToolStripMenuItem2.Text = f.ToString(); break;
-                            case 3:
-                                recentToolStripMenuItem3.Text = f.ToString(); break;
-                            case 4:
-                                recentToolStripMenuItem4.Text = f.ToString(); break;
-                            case 5:
-                                recentToolStripMenuItem5.Text = f.ToString(); break;
+                            case 1: recentToolStripMenuItem1.Text = f.ToString(); break;
+                            case 2: recentToolStripMenuItem2.Text = f.ToString(); break;
+                            case 3: recentToolStripMenuItem3.Text = f.ToString(); break;
+                            case 4: recentToolStripMenuItem4.Text = f.ToString(); break;
+                            case 5: recentToolStripMenuItem5.Text = f.ToString(); break;
                         }
                     }
                     
@@ -69,7 +64,7 @@ namespace Notepad_Light
 
         public void UpdateStatusBar()
         {
-            if (Properties.Settings.Default.NewDocRtf == true || gCurrentFileName.EndsWith(".rtf"))
+            if (Properties.Settings.Default.NewDocumentFormat == "RTF" || gCurrentFileName.EndsWith(".rtf"))
             {
                 EnableToolbarFormattingIcons();
                 toolStripStatusLabelFileType.Text = Strings.rtf;
@@ -364,7 +359,7 @@ namespace Notepad_Light
                 {
                     case Strings.plainText: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
                     case Strings.pasteHtml: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
-                    case Strings.pasteRtf: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
+                    case Strings.rtf: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
                     case Strings.pasteUnicode: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
                     case Strings.pasteImage: rtbPage.Paste(); break;
                 }
@@ -552,6 +547,12 @@ namespace Notepad_Light
             EndOfButtonFormatWork();
         }
 
+        public void MoveCursorToLocation(int location, int length)
+        {
+            rtbPage.SelectionStart = location;
+            rtbPage.SelectionLength = length;
+        }
+
         public void MoveCursorToFirstLine()
         {
             if (Properties.Settings.Default.ClearTextOnInsert)
@@ -618,23 +619,11 @@ namespace Notepad_Light
             // set the menu item check mark
             switch (zoomPercentage)
             {
-                case 1.0f:
-                    zoomToolStripMenuItem100.Checked = true;
-                    break;
-                case 1.5f:
-                    zoomToolStripMenuItem150.Checked = true;
-                    break;
-                case 2.0f:
-                    zoomToolStripMenuItem200.Checked = true;
-                    break;
-                case 2.5f:
-                    zoomToolStripMenuItem250.Checked = true;
-                    break;
-                case 3.0f:
-                    zoomToolStripMenuItem300.Checked = true;
-                    break;
-                default:
-                    break;
+                case 1.0f: zoomToolStripMenuItem100.Checked = true; break;
+                case 1.5f: zoomToolStripMenuItem150.Checked = true; break;
+                case 2.0f: zoomToolStripMenuItem200.Checked = true; break;
+                case 2.5f: zoomToolStripMenuItem250.Checked = true; break;
+                case 3.0f: zoomToolStripMenuItem300.Checked = true; break;
             }
         }
 
@@ -713,8 +702,15 @@ namespace Notepad_Light
             fOptions.ShowDialog();
 
             // coming back from settings, adjust file type
-            gRtf = Properties.Settings.Default.NewDocRtf;
-
+            if (Properties.Settings.Default.NewDocumentFormat == "RTF")
+            {
+                gRtf = true;
+            }
+            else
+            {
+                gRtf = false;
+            }
+            
             // also need to update the file mru in case it was cleared
             if (Properties.Settings.Default.FileMRU.Count == 0)
             {
@@ -1008,6 +1004,29 @@ namespace Notepad_Light
                 tSpan = gStopwatch.Elapsed;
                 tSpan = tSpan2.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
                 toolStripLabelTimer.Text = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void findToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (findToolStripTextBox.Text == String.Empty)
+            {
+                return;
+            }
+            
+            if (findToolStripTextBox.Text.Length > 0)
+            {
+                int indexToText = rtbPage.Find(findToolStripTextBox.Text, lastIndexFound + 1, RichTextBoxFinds.None);
+                lastIndexFound = indexToText;
+                if (indexToText >= 0)
+                {
+                    MoveCursorToLocation(indexToText, findToolStripTextBox.Text.Length);
+                }
             }
         }
 

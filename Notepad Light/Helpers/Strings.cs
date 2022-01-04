@@ -8,7 +8,6 @@
         public const string rtf = "Rtf";
         public const string plainText = "Text";
         public const string pasteHtml = "Html";
-        public const string pasteRtf = "Rtf";
         public const string pasteUnicode = "UnicodeText";
         public const string pasteImage = "Image";
         public const string startTimeText = "Start";

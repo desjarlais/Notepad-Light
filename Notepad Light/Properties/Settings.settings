@@ -25,14 +25,14 @@
     <Setting Name="UsePasteUI" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="NewDocRtf" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="BulletFirstIndent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="DefaultEncoding" Type="System.String" Scope="User">
-      <Value Profile="(Default)">UTF-8</Value>
+    <Setting Name="NewDocumentFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Plain Text</Value>
+    </Setting>
+    <Setting Name="FindDirectionUp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

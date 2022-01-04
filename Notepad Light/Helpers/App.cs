@@ -7,6 +7,7 @@ namespace Notepad_Light.Helpers
     {
         public enum supportedEncoding 
         {
+            // list of .net 5 supported encodings
             utf16 = 1200,
             unicodeFFFE = 1201,
             utf32 = 12000,

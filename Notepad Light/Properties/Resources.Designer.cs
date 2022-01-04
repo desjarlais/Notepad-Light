@@ -93,6 +93,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FindNext_16x {
+            get {
+                object obj = ResourceManager.GetObject("FindNext_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Italic_16x {
             get {
                 object obj = ResourceManager.GetObject("Italic_16x", resourceCulture);

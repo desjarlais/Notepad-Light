@@ -112,18 +112,6 @@ namespace Notepad_Light.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool NewDocRtf {
-            get {
-                return ((bool)(this["NewDocRtf"]));
-            }
-            set {
-                this["NewDocRtf"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BulletFirstIndent {
             get {
                 return ((bool)(this["BulletFirstIndent"]));
@@ -135,13 +123,25 @@ namespace Notepad_Light.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("UTF-8")]
-        public string DefaultEncoding {
+        [global::System.Configuration.DefaultSettingValueAttribute("Plain Text")]
+        public string NewDocumentFormat {
             get {
-                return ((string)(this["DefaultEncoding"]));
+                return ((string)(this["NewDocumentFormat"]));
             }
             set {
-                this["DefaultEncoding"] = value;
+                this["NewDocumentFormat"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FindDirectionUp {
+            get {
+                return ((bool)(this["FindDirectionUp"]));
+            }
+            set {
+                this["FindDirectionUp"] = value;
             }
         }
     }

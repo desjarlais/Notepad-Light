@@ -8,7 +8,7 @@
 
             // update options
             ckbUsePasteUI.Checked = Properties.Settings.Default.UsePasteUI;
-            ckbUseRtf.Checked = Properties.Settings.Default.NewDocRtf;
+            cboNewDocFormat.Text = Properties.Settings.Default.NewDocumentFormat;
             
             // check the file MRU and populate the list
             if (Properties.Settings.Default.FileMRU.Count > 0)
@@ -16,8 +16,14 @@
                 UpdateMRUListbox();   
             }
 
-            // update encoding combo box
-            cboSupportedEncodings.Text = Properties.Settings.Default.DefaultEncoding;
+            if (Properties.Settings.Default.FindDirectionUp == true)
+            {
+                rdoUp.Checked = true;
+            }
+            else
+            {
+                rdoDown.Checked = true;
+            }
         }
 
         public void UpdateMRUListbox()
@@ -46,8 +52,18 @@
         private void BtnOK_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.UsePasteUI = ckbUsePasteUI.Checked;
-            Properties.Settings.Default.NewDocRtf = ckbUseRtf.Checked;
+            Properties.Settings.Default.NewDocumentFormat = cboNewDocFormat.Text;
             Properties.Settings.Default.Save();
+
+            if (rdoDown.Checked)
+            {
+                Properties.Settings.Default.FindDirectionUp = false;
+            }
+            else
+            {
+                Properties.Settings.Default.FindDirectionUp = true;
+            }
+
             Close();
         }
 

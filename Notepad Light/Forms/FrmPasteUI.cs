@@ -18,7 +18,7 @@ namespace Notepad_Light.Forms
 
             if (Clipboard.ContainsText(TextDataFormat.Rtf))
             {
-                cboClipFormats.Items.Add(Strings.pasteRtf);
+                cboClipFormats.Items.Add(Strings.rtf);
             }
 
             if (Clipboard.ContainsText(TextDataFormat.Html))
