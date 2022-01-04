@@ -14,7 +14,6 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        public int lastIndexFound;
 
         public FrmMain()
         {
@@ -1047,25 +1046,11 @@ namespace Notepad_Light
                 {
                     indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
                 }
-                
-                lastIndexFound = indexToText;
 
                 if (indexToText >= 0)
                 {
                     MoveCursorToLocation(indexToText, findToolStripTextBox.Text.Length);
                 }
-            }
-        }
-
-        private void findToolStripTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Properties.Settings.Default.FindDirectionUp)
-            {
-                lastIndexFound = 1;
-            }
-            else
-            {
-                lastIndexFound = -1;
             }
         }
 
