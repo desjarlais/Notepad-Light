@@ -22,3 +22,4 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Zoom
 * Word Wrap
 * Timer
+* Find / Search for text
