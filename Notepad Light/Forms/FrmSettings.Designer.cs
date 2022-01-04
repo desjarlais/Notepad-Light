@@ -38,6 +38,8 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboSupportedEncodings = new System.Windows.Forms.ComboBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.ckbUseRtf = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
@@ -53,7 +55,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox1.Size = new System.Drawing.Size(386, 256);
+            this.groupBox1.Size = new System.Drawing.Size(538, 191);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File MRU";
@@ -65,12 +67,12 @@
             this.LstMRU.Location = new System.Drawing.Point(9, 18);
             this.LstMRU.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.LstMRU.Name = "LstMRU";
-            this.LstMRU.Size = new System.Drawing.Size(367, 199);
+            this.LstMRU.Size = new System.Drawing.Size(524, 124);
             this.LstMRU.TabIndex = 4;
             // 
             // BtnClearMRU
             // 
-            this.BtnClearMRU.Location = new System.Drawing.Point(9, 226);
+            this.BtnClearMRU.Location = new System.Drawing.Point(9, 161);
             this.BtnClearMRU.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnClearMRU.Name = "BtnClearMRU";
             this.BtnClearMRU.Size = new System.Drawing.Size(81, 22);
@@ -83,11 +85,11 @@
             // 
             this.groupBox2.Controls.Add(this.rdoPasteUI);
             this.groupBox2.Controls.Add(this.rdoPasteText);
-            this.groupBox2.Location = new System.Drawing.Point(403, 12);
+            this.groupBox2.Location = new System.Drawing.Point(6, 205);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox2.Size = new System.Drawing.Size(268, 84);
+            this.groupBox2.Size = new System.Drawing.Size(141, 84);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Paste Options";
@@ -118,7 +120,7 @@
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(506, 244);
+            this.BtnOK.Location = new System.Drawing.Point(379, 349);
             this.BtnOK.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(81, 22);
@@ -129,7 +131,7 @@
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(590, 244);
+            this.BtnCancel.Location = new System.Drawing.Point(463, 349);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(81, 22);
@@ -140,21 +142,48 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.cboSupportedEncodings);
             this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Controls.Add(this.ckbUseRtf);
-            this.groupBox3.Location = new System.Drawing.Point(403, 99);
+            this.groupBox3.Location = new System.Drawing.Point(151, 205);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Size = new System.Drawing.Size(268, 142);
+            this.groupBox3.Size = new System.Drawing.Size(393, 142);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 15);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Default Encoding:";
+            // 
+            // cboSupportedEncodings
+            // 
+            this.cboSupportedEncodings.FormattingEnabled = true;
+            this.cboSupportedEncodings.Items.AddRange(new object[] {
+            "Unicode",
+            "Unicode (Big Endian)",
+            "Unicode (UTF-32)",
+            "Unicode (UTF-32 Big Endian)",
+            "US-ASCII",
+            "Western European (ISO)",
+            "Unicode (UTF-8)"});
+            this.cboSupportedEncodings.Location = new System.Drawing.Point(119, 27);
+            this.cboSupportedEncodings.Name = "cboSupportedEncodings";
+            this.cboSupportedEncodings.Size = new System.Drawing.Size(269, 23);
+            this.cboSupportedEncodings.TabIndex = 3;
+            // 
             // ckbUsePasteUI
             // 
             this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 50);
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 92);
             this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUsePasteUI.Name = "ckbUsePasteUI";
             this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
@@ -165,7 +194,7 @@
             // ckbUseRtf
             // 
             this.ckbUseRtf.AutoSize = true;
-            this.ckbUseRtf.Location = new System.Drawing.Point(12, 23);
+            this.ckbUseRtf.Location = new System.Drawing.Point(12, 65);
             this.ckbUseRtf.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUseRtf.Name = "ckbUseRtf";
             this.ckbUseRtf.Size = new System.Drawing.Size(141, 19);
@@ -177,7 +206,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 274);
+            this.ClientSize = new System.Drawing.Size(553, 376);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOK);
@@ -213,5 +242,7 @@
         private GroupBox groupBox3;
         private CheckBox ckbUsePasteUI;
         private CheckBox ckbUseRtf;
+        private Label label1;
+        private ComboBox cboSupportedEncodings;
     }
 }

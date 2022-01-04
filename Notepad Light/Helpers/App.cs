@@ -5,6 +5,17 @@ namespace Notepad_Light.Helpers
 {
     public class App
     {
+        public enum supportedEncoding 
+        {
+            utf16 = 1200,
+            unicodeFFFE = 1201,
+            utf32 = 12000,
+            utf32BE = 12001,
+            usascii = 20127,
+            iso88591 = 28591,
+            utf8 = 65001
+        }
+
         public static void PlatformSpecificProcessStart(string url)
         {
             // known issue in .NET Core https://github.com/dotnet/corefx/issues/10361

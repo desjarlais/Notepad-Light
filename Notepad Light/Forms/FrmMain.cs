@@ -1,6 +1,7 @@
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
+using System.Text;
 
 namespace Notepad_Light
 {
@@ -327,7 +328,7 @@ namespace Notepad_Light
             // clear the menu 
             ClearRecentMenuItems();
 
-            // add the rest of the items back
+            // add the remaining items back
             UpdateMRU();
         }
 
@@ -361,16 +362,11 @@ namespace Notepad_Light
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
                 {
-                    case Strings.plainText:
-                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
-                    case Strings.pasteHtml:
-                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
-                    case Strings.pasteRtf:
-                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
-                    case Strings.pasteUnicode:
-                        rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
-                    case Strings.pasteImage:
-                        rtbPage.Paste(); break;
+                    case Strings.plainText: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
+                    case Strings.pasteHtml: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
+                    case Strings.pasteRtf: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
+                    case Strings.pasteUnicode: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
+                    case Strings.pasteImage: rtbPage.Paste(); break;
                 }
             }
         }
@@ -576,16 +572,11 @@ namespace Notepad_Light
             {
                 switch (index)
                 {
-                    case 1:
-                        recentToolStripMenuItem1.Text = f?.ToString(); break;
-                    case 2:
-                        recentToolStripMenuItem2.Text = f?.ToString(); break;
-                    case 3:
-                        recentToolStripMenuItem3.Text = f?.ToString(); break;
-                    case 4:
-                        recentToolStripMenuItem4.Text = f?.ToString(); break;
-                    case 5:
-                        recentToolStripMenuItem5.Text = f?.ToString(); break;
+                    case 1: recentToolStripMenuItem1.Text = f?.ToString(); break;
+                    case 2: recentToolStripMenuItem2.Text = f?.ToString(); break;
+                    case 3: recentToolStripMenuItem3.Text = f?.ToString(); break;
+                    case 4: recentToolStripMenuItem4.Text = f?.ToString(); break;
+                    case 5: recentToolStripMenuItem5.Text = f?.ToString(); break;
                 }
                 index++;
             }

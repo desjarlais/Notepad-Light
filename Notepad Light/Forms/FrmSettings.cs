@@ -15,6 +15,9 @@
             {
                 UpdateMRUListbox();   
             }
+
+            // update encoding combo box
+            cboSupportedEncodings.Text = Properties.Settings.Default.DefaultEncoding;
         }
 
         public void UpdateMRUListbox()

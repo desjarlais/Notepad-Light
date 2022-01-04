@@ -38,6 +38,7 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelFileType = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.rtbPage = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +65,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.formatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearFormattingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,7 +132,8 @@
             this.toolStripStatusLabelColumn,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel4,
-            this.toolStripStatusLabelFileType});
+            this.toolStripStatusLabelFileType,
+            this.toolStripStatusLabel5});
             this.statusStrip1.Location = new System.Drawing.Point(0, 475);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 8, 0);
@@ -165,8 +168,8 @@
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(23, 17);
-            this.toolStripStatusLabel2.Text = " -- ";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel2.Text = " | ";
             // 
             // toolStripStatusLabel4
             // 
@@ -179,6 +182,12 @@
             this.toolStripStatusLabelFileType.Name = "toolStripStatusLabelFileType";
             this.toolStripStatusLabelFileType.Size = new System.Drawing.Size(34, 17);
             this.toolStripStatusLabelFileType.Text = "none";
+            // 
+            // toolStripStatusLabel5
+            // 
+            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel5.Text = " | ";
             // 
             // rtbPage
             // 
@@ -335,7 +344,8 @@
             this.pasteToolStripMenuItem,
             this.toolStripSeparator4,
             this.selectAllToolStripMenuItem,
-            this.clearAllTextToolStripMenuItem});
+            this.clearAllTextToolStripMenuItem,
+            this.toolStripSeparator5});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 22);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -412,6 +422,11 @@
             this.clearAllTextToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.clearAllTextToolStripMenuItem.Text = "Clear All Text";
             this.clearAllTextToolStripMenuItem.Click += new System.EventHandler(this.clearAllTextToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(161, 6);
             // 
             // formatToolStripMenuItem
             // 
@@ -956,5 +971,7 @@
         private ToolStripButton toolStripButtonResetTimer;
         private ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Timer timer1;
+        private ToolStripSeparator toolStripSeparator5;
+        private ToolStripStatusLabel toolStripStatusLabel5;
     }
 }
