@@ -16,13 +16,14 @@
                 UpdateMRUListbox();   
             }
 
-            if (Properties.Settings.Default.FindDirectionUp == true)
+            // update the find direction
+            if (Properties.Settings.Default.FindDirectionUp)
             {
-                rdoUp.Checked = true;
+                rdoFindDirectionUp.Checked = true;
             }
             else
             {
-                rdoDown.Checked = true;
+                rdoFindDirectionDown.Checked = true;
             }
         }
 
@@ -55,7 +56,7 @@
             Properties.Settings.Default.NewDocumentFormat = cboNewDocFormat.Text;
             Properties.Settings.Default.Save();
 
-            if (rdoDown.Checked)
+            if (rdoFindDirectionDown.Checked == true)
             {
                 Properties.Settings.Default.FindDirectionUp = false;
             }

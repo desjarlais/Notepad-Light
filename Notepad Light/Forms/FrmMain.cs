@@ -14,7 +14,7 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        public int lastIndexFound = -1;
+        public int lastIndexFound;
 
         public FrmMain()
         {
@@ -117,6 +117,24 @@ namespace Notepad_Light
             }
         }
 
+        public void LoadPlainTextFile(string filePath)
+        {
+            // setup plain text open
+            rtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            DisableToolbarFormattingIcons();
+            gRtf = false;
+            toolStripStatusLabelFileType.Text = Strings.plainText;
+        }
+
+        public void LoadRtfFile(string filePath)
+        {
+            // setup rtf open
+            rtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
+            EnableToolbarFormattingIcons();
+            gRtf = true;
+            toolStripStatusLabelFileType.Text = Strings.rtf;
+        }
+
         /// <summary>
         /// file open using a specific path
         /// </summary>
@@ -127,19 +145,11 @@ namespace Notepad_Light
             {
                 if (filePath.EndsWith(".txt"))
                 {
-                    // setup plain text open
-                    rtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
-                    DisableToolbarFormattingIcons();
-                    gRtf = false;
-                    toolStripStatusLabelFileType.Text = Strings.plainText;
+                    LoadPlainTextFile(filePath);
                 }
                 else
                 {
-                    // setup rtf open
-                    rtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
-                    EnableToolbarFormattingIcons();
-                    gRtf = true;
-                    toolStripStatusLabelFileType.Text = Strings.rtf;
+                    LoadRtfFile(filePath);
                 }
 
                 UpdateMRU();
@@ -177,19 +187,11 @@ namespace Notepad_Light
                 {
                     if (ofdFileOpen.FileName.EndsWith(".txt"))
                     {
-                        // setup plain text open
-                        rtbPage.LoadFile(ofdFileOpen.FileName, RichTextBoxStreamType.PlainText);
-                        DisableToolbarFormattingIcons();
-                        gRtf = false;
-                        toolStripStatusLabelFileType.Text = Strings.plainText;
+                        LoadPlainTextFile(ofdFileOpen.FileName);
                     }
                     else
                     {
-                        // setup rtf open
-                        rtbPage.LoadFile(ofdFileOpen.FileName, RichTextBoxStreamType.RichText);
-                        EnableToolbarFormattingIcons();
-                        gRtf = true;
-                        toolStripStatusLabelFileType.Text = Strings.rtf;
+                        LoadRtfFile(ofdFileOpen.FileName);
                     }
 
                     UpdateFormTitle(ofdFileOpen.FileName);
@@ -1029,7 +1031,7 @@ namespace Notepad_Light
 
         private void findToolStripButton_Click(object sender, EventArgs e)
         {
-            if (findToolStripTextBox.Text == String.Empty)
+            if (findToolStripTextBox.Text == string.Empty)
             {
                 return;
             }
@@ -1039,13 +1041,13 @@ namespace Notepad_Light
                 int indexToText;
                 if (Properties.Settings.Default.FindDirectionUp)
                 {
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, findToolStripTextBox.Text.Length - 1, RichTextBoxFinds.None);
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, 0, rtbPage.SelectionStart, RichTextBoxFinds.Reverse);
                 }
                 else
                 {
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, lastIndexFound + 1, RichTextBoxFinds.None);
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
                 }
-
+                
                 lastIndexFound = indexToText;
 
                 if (indexToText >= 0)
@@ -1057,10 +1059,9 @@ namespace Notepad_Light
 
         private void findToolStripTextBox_TextChanged(object sender, EventArgs e)
         {
-            // if the text changed, restart search at beginning
             if (Properties.Settings.Default.FindDirectionUp)
             {
-                lastIndexFound = rtbPage.Text.Length;
+                lastIndexFound = 1;
             }
             else
             {

@@ -42,8 +42,8 @@
             this.cboNewDocFormat = new System.Windows.Forms.ComboBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.rdoUp = new System.Windows.Forms.RadioButton();
-            this.rdoDown = new System.Windows.Forms.RadioButton();
+            this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
+            this.rdoFindDirectionDown = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -190,36 +190,36 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.rdoDown);
-            this.groupBox5.Controls.Add(this.rdoUp);
+            this.groupBox5.Controls.Add(this.rdoFindDirectionDown);
+            this.groupBox5.Controls.Add(this.rdoFindDirectionUp);
             this.groupBox5.Location = new System.Drawing.Point(192, 202);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(98, 84);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Find Direction";
+            this.groupBox5.Text = "Find Options";
             // 
-            // rdoUp
+            // rdoFindDirectionUp
             // 
-            this.rdoUp.AutoSize = true;
-            this.rdoUp.Location = new System.Drawing.Point(6, 22);
-            this.rdoUp.Name = "rdoUp";
-            this.rdoUp.Size = new System.Drawing.Size(40, 19);
-            this.rdoUp.TabIndex = 0;
-            this.rdoUp.TabStop = true;
-            this.rdoUp.Text = "Up";
-            this.rdoUp.UseVisualStyleBackColor = true;
+            this.rdoFindDirectionUp.AutoSize = true;
+            this.rdoFindDirectionUp.Location = new System.Drawing.Point(3, 19);
+            this.rdoFindDirectionUp.Name = "rdoFindDirectionUp";
+            this.rdoFindDirectionUp.Size = new System.Drawing.Size(40, 19);
+            this.rdoFindDirectionUp.TabIndex = 0;
+            this.rdoFindDirectionUp.TabStop = true;
+            this.rdoFindDirectionUp.Text = "Up";
+            this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
             // 
-            // rdoDown
+            // rdoFindDirectionDown
             // 
-            this.rdoDown.AutoSize = true;
-            this.rdoDown.Location = new System.Drawing.Point(6, 48);
-            this.rdoDown.Name = "rdoDown";
-            this.rdoDown.Size = new System.Drawing.Size(56, 19);
-            this.rdoDown.TabIndex = 1;
-            this.rdoDown.TabStop = true;
-            this.rdoDown.Text = "Down";
-            this.rdoDown.UseVisualStyleBackColor = true;
+            this.rdoFindDirectionDown.AutoSize = true;
+            this.rdoFindDirectionDown.Location = new System.Drawing.Point(3, 48);
+            this.rdoFindDirectionDown.Name = "rdoFindDirectionDown";
+            this.rdoFindDirectionDown.Size = new System.Drawing.Size(56, 19);
+            this.rdoFindDirectionDown.TabIndex = 1;
+            this.rdoFindDirectionDown.TabStop = true;
+            this.rdoFindDirectionDown.Text = "Down";
+            this.rdoFindDirectionDown.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
@@ -266,7 +266,7 @@
         private Label label2;
         private ComboBox cboNewDocFormat;
         private GroupBox groupBox5;
-        private RadioButton rdoDown;
-        private RadioButton rdoUp;
+        private RadioButton rdoFindDirectionDown;
+        private RadioButton rdoFindDirectionUp;
     }
 }
