@@ -49,13 +49,9 @@ namespace Notepad_Light
             zoomToolStripMenuItem100.Checked = true;
             ApplyZoom(1.0f);
 
-            // set wordwrap
+            // set wordwrap value, filename in title and enable icons
             wordWrapToolStripMenuItem.Checked = rtbPage.WordWrap;
-
-            // set filename
             UpdateFormTitle(gCurrentFileName);
-
-            // enable icons based on default
             UpdateStatusBar();
         }
 
@@ -178,20 +174,18 @@ namespace Notepad_Light
         {
             try
             {
-                string fUserPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-                // get the file
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Select File To Open.",
                     Filter = "Text Files | *.txt; *.rtf; ",
                     RestoreDirectory = true,
-                    InitialDirectory = fUserPath
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 };
 
                 // add the contents to the textbox
                 if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                 {
+                    // first load the file contents
                     if (ofdFileOpen.FileName.EndsWith(".txt"))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
@@ -201,8 +195,12 @@ namespace Notepad_Light
                         LoadRtfFile(ofdFileOpen.FileName);
                     }
 
+                    // update the title with the file path
                     UpdateFormTitle(ofdFileOpen.FileName);
 
+                    // if the file was opened and is in the mru, we don't want to add it
+                    // this will check if it exists and if it does, don't update the mru
+                    // otherwise, update mru so we can display it in the ui and add to the settings
                     bool isFileInMru = false;
 
                     foreach (var f in Properties.Settings.Default.FileMRU)
@@ -219,6 +217,7 @@ namespace Notepad_Light
                         UpdateMRU();
                     }
 
+                    // lastly, set the saved back to false and update the ui and cursor
                     gChanged = false;
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
@@ -323,6 +322,11 @@ namespace Notepad_Light
             recentToolStripMenuItem5.Text = "empty";
         }
 
+        /// <summary>
+        /// for files that don't exist, we need to update the ui and settings mru list
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="index"></param>
         public void RemoveFileFromMRU(string path, int index)
         {
             int mruIndex = 0;
@@ -341,13 +345,12 @@ namespace Notepad_Light
                     mruIndex++;
                 }
 
+                // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
             }
 
-            // clear the menu 
+            // clear the menu and add back the remaining files
             ClearRecentMenuItems();
-
-            // add the remaining items back
             UpdateMRU();
         }
 
@@ -419,7 +422,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// refresh the ui for toolbar icons
+        /// refresh the toolbar icons
         /// </summary>
         public void UpdateToolbarIcons()
         {
@@ -587,12 +590,20 @@ namespace Notepad_Light
             EndOfButtonFormatWork();
         }
 
-        public void MoveCursorToLocation(int location, int length)
+        /// <summary>
+        /// given a position, move the cursor to that location in the richtextbox
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="length"></param>
+        public void MoveCursorToLocation(int startLocation, int length)
         {
-            rtbPage.SelectionStart = location;
+            rtbPage.SelectionStart = startLocation;
             rtbPage.SelectionLength = length;
         }
 
+        /// <summary>
+        /// populate the recent menu with the file mru settings list
+        /// </summary>
         public void UpdateMRU()
         {
             int index = 1;
@@ -610,9 +621,11 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// get the current cursor position and update the taskbar with the location
+        /// </summary>
         public void UpdateLnColValues()
         {
-            // update the line and column values
             int line = rtbPage.GetLineFromCharIndex(rtbPage.SelectionStart);
             int column = rtbPage.SelectionStart - rtbPage.GetFirstCharIndexFromLine(line);
 
@@ -627,9 +640,11 @@ namespace Notepad_Light
             editedSeconds = 0;
         }
 
+        /// <summary>
+        /// clear any check marks for zoom menu items
+        /// </summary>
         public void ResetZoomMenu()
         {
-            // reset all values
             zoomToolStripMenuItem100.Checked = false;
             zoomToolStripMenuItem150.Checked = false;
             zoomToolStripMenuItem200.Checked = false;
@@ -637,13 +652,15 @@ namespace Notepad_Light
             zoomToolStripMenuItem300.Checked = false;
         }
 
+        /// <summary>
+        /// given a float percentage value, clear the menu
+        /// and light up the new value then apply the zoom value
+        /// </summary>
+        /// <param name="zoomPercentage"></param>
         public void ApplyZoom(float zoomPercentage)
         {
-            // set the zoom value
             rtbPage.ZoomFactor = zoomPercentage;
             ResetZoomMenu();
-
-            // set the menu item check mark
             switch (zoomPercentage)
             {
                 case 1.0f: zoomToolStripMenuItem100.Checked = true; break;
