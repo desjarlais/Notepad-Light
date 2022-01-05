@@ -1038,13 +1038,25 @@ namespace Notepad_Light
             if (findToolStripTextBox.Text.Length > 0)
             {
                 int indexToText;
-                if (Properties.Settings.Default.FindDirectionUp)
+                if (Properties.Settings.Default.SearchOption == "Up")
                 {
+                    // search up the file and find any word match
                     indexToText = rtbPage.Find(findToolStripTextBox.Text, 0, rtbPage.SelectionStart, RichTextBoxFinds.Reverse);
+                }
+                else if (Properties.Settings.Default.SearchOption == "Down")
+                {
+                    // search from the top down and find any word match
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                }
+                else if (Properties.Settings.Default.SearchOption == "MatchCase")
+                {
+                    // only find words that match the case exactly
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
                 }
                 else
                 {
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                    // only find words that have the entire word in the search textbox
+                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
                 }
 
                 if (indexToText >= 0)

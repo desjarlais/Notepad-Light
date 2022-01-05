@@ -32,9 +32,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.LstMRU = new System.Windows.Forms.ListBox();
             this.BtnClearMRU = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rdoPasteUI = new System.Windows.Forms.RadioButton();
-            this.rdoPasteText = new System.Windows.Forms.RadioButton();
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -42,10 +39,11 @@
             this.cboNewDocFormat = new System.Windows.Forms.ComboBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionDown = new System.Windows.Forms.RadioButton();
+            this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
+            this.rdoMatchCase = new System.Windows.Forms.RadioButton();
+            this.rdoWholeWord = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.SuspendLayout();
@@ -84,46 +82,9 @@
             this.BtnClearMRU.UseVisualStyleBackColor = true;
             this.BtnClearMRU.Click += new System.EventHandler(this.BtnClearMRU_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rdoPasteUI);
-            this.groupBox2.Controls.Add(this.rdoPasteText);
-            this.groupBox2.Location = new System.Drawing.Point(11, 202);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox2.Size = new System.Drawing.Size(176, 84);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Paste Options";
-            // 
-            // rdoPasteUI
-            // 
-            this.rdoPasteUI.AutoSize = true;
-            this.rdoPasteUI.Location = new System.Drawing.Point(12, 47);
-            this.rdoPasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.rdoPasteUI.Name = "rdoPasteUI";
-            this.rdoPasteUI.Size = new System.Drawing.Size(112, 19);
-            this.rdoPasteUI.TabIndex = 1;
-            this.rdoPasteUI.TabStop = true;
-            this.rdoPasteUI.Text = "Use Paste Dialog";
-            this.rdoPasteUI.UseVisualStyleBackColor = true;
-            // 
-            // rdoPasteText
-            // 
-            this.rdoPasteText.AutoSize = true;
-            this.rdoPasteText.Location = new System.Drawing.Point(12, 22);
-            this.rdoPasteText.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.rdoPasteText.Name = "rdoPasteText";
-            this.rdoPasteText.Size = new System.Drawing.Size(74, 19);
-            this.rdoPasteText.TabIndex = 0;
-            this.rdoPasteText.TabStop = true;
-            this.rdoPasteText.Text = "Text Only";
-            this.rdoPasteText.UseVisualStyleBackColor = true;
-            // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(482, 298);
+            this.BtnOK.Location = new System.Drawing.Point(481, 288);
             this.BtnOK.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(81, 22);
@@ -134,7 +95,7 @@
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(566, 298);
+            this.BtnCancel.Location = new System.Drawing.Point(564, 288);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(81, 22);
@@ -145,9 +106,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.cboNewDocFormat);
-            this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Location = new System.Drawing.Point(295, 202);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
@@ -174,13 +135,13 @@
             "RTF"});
             this.cboNewDocFormat.Location = new System.Drawing.Point(152, 19);
             this.cboNewDocFormat.Name = "cboNewDocFormat";
-            this.cboNewDocFormat.Size = new System.Drawing.Size(157, 23);
+            this.cboNewDocFormat.Size = new System.Drawing.Size(182, 23);
             this.cboNewDocFormat.TabIndex = 5;
             // 
             // ckbUsePasteUI
             // 
             this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 48);
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 49);
             this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUsePasteUI.Name = "ckbUsePasteUI";
             this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
@@ -190,30 +151,21 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.rdoWholeWord);
+            this.groupBox5.Controls.Add(this.rdoMatchCase);
             this.groupBox5.Controls.Add(this.rdoFindDirectionDown);
             this.groupBox5.Controls.Add(this.rdoFindDirectionUp);
-            this.groupBox5.Location = new System.Drawing.Point(192, 202);
+            this.groupBox5.Location = new System.Drawing.Point(6, 202);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(98, 84);
+            this.groupBox5.Size = new System.Drawing.Size(284, 84);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Find Options";
             // 
-            // rdoFindDirectionUp
-            // 
-            this.rdoFindDirectionUp.AutoSize = true;
-            this.rdoFindDirectionUp.Location = new System.Drawing.Point(3, 19);
-            this.rdoFindDirectionUp.Name = "rdoFindDirectionUp";
-            this.rdoFindDirectionUp.Size = new System.Drawing.Size(40, 19);
-            this.rdoFindDirectionUp.TabIndex = 0;
-            this.rdoFindDirectionUp.TabStop = true;
-            this.rdoFindDirectionUp.Text = "Up";
-            this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
-            // 
             // rdoFindDirectionDown
             // 
             this.rdoFindDirectionDown.AutoSize = true;
-            this.rdoFindDirectionDown.Location = new System.Drawing.Point(3, 48);
+            this.rdoFindDirectionDown.Location = new System.Drawing.Point(9, 48);
             this.rdoFindDirectionDown.Name = "rdoFindDirectionDown";
             this.rdoFindDirectionDown.Size = new System.Drawing.Size(56, 19);
             this.rdoFindDirectionDown.TabIndex = 1;
@@ -221,16 +173,48 @@
             this.rdoFindDirectionDown.Text = "Down";
             this.rdoFindDirectionDown.UseVisualStyleBackColor = true;
             // 
+            // rdoFindDirectionUp
+            // 
+            this.rdoFindDirectionUp.AutoSize = true;
+            this.rdoFindDirectionUp.Location = new System.Drawing.Point(9, 23);
+            this.rdoFindDirectionUp.Name = "rdoFindDirectionUp";
+            this.rdoFindDirectionUp.Size = new System.Drawing.Size(40, 19);
+            this.rdoFindDirectionUp.TabIndex = 0;
+            this.rdoFindDirectionUp.TabStop = true;
+            this.rdoFindDirectionUp.Text = "Up";
+            this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
+            // 
+            // rdoMatchCase
+            // 
+            this.rdoMatchCase.AutoSize = true;
+            this.rdoMatchCase.Location = new System.Drawing.Point(94, 23);
+            this.rdoMatchCase.Name = "rdoMatchCase";
+            this.rdoMatchCase.Size = new System.Drawing.Size(87, 19);
+            this.rdoMatchCase.TabIndex = 2;
+            this.rdoMatchCase.TabStop = true;
+            this.rdoMatchCase.Text = "Match Case";
+            this.rdoMatchCase.UseVisualStyleBackColor = true;
+            // 
+            // rdoWholeWord
+            // 
+            this.rdoWholeWord.AutoSize = true;
+            this.rdoWholeWord.Location = new System.Drawing.Point(94, 48);
+            this.rdoWholeWord.Name = "rdoWholeWord";
+            this.rdoWholeWord.Size = new System.Drawing.Size(91, 19);
+            this.rdoWholeWord.TabIndex = 3;
+            this.rdoWholeWord.TabStop = true;
+            this.rdoWholeWord.Text = "Whole Word";
+            this.rdoWholeWord.UseVisualStyleBackColor = true;
+            // 
             // FrmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 329);
+            this.ClientSize = new System.Drawing.Size(654, 320);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOK);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -241,8 +225,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -256,9 +238,6 @@
         private GroupBox groupBox1;
         private ListBox LstMRU;
         private Button BtnClearMRU;
-        private GroupBox groupBox2;
-        private RadioButton rdoPasteUI;
-        private RadioButton rdoPasteText;
         private Button BtnOK;
         private Button BtnCancel;
         private GroupBox groupBox3;
@@ -268,5 +247,7 @@
         private GroupBox groupBox5;
         private RadioButton rdoFindDirectionDown;
         private RadioButton rdoFindDirectionUp;
+        private RadioButton rdoWholeWord;
+        private RadioButton rdoMatchCase;
     }
 }

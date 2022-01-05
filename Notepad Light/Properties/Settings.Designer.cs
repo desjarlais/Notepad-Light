@@ -135,13 +135,13 @@ namespace Notepad_Light.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FindDirectionUp {
+        [global::System.Configuration.DefaultSettingValueAttribute("Down")]
+        public string SearchOption {
             get {
-                return ((bool)(this["FindDirectionUp"]));
+                return ((string)(this["SearchOption"]));
             }
             set {
-                this["FindDirectionUp"] = value;
+                this["SearchOption"] = value;
             }
         }
     }

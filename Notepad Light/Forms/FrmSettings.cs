@@ -9,6 +9,9 @@
             // update options
             ckbUsePasteUI.Checked = Properties.Settings.Default.UsePasteUI;
             cboNewDocFormat.Text = Properties.Settings.Default.NewDocumentFormat;
+
+            // update the paste options
+            
             
             // check the file MRU and populate the list
             if (Properties.Settings.Default.FileMRU.Count > 0)
@@ -17,13 +20,12 @@
             }
 
             // update the find direction
-            if (Properties.Settings.Default.FindDirectionUp)
+            switch (Properties.Settings.Default.SearchOption.ToString())
             {
-                rdoFindDirectionUp.Checked = true;
-            }
-            else
-            {
-                rdoFindDirectionDown.Checked = true;
+                case "Up": rdoFindDirectionUp.Checked = true; break;
+                case "Down": rdoFindDirectionDown.Checked = true; break;
+                case "MatchCase": rdoMatchCase.Checked = true; break;
+                case "WholeWord": rdoWholeWord.Checked = true; break;
             }
         }
 
@@ -56,13 +58,21 @@
             Properties.Settings.Default.NewDocumentFormat = cboNewDocFormat.Text;
             Properties.Settings.Default.Save();
 
-            if (rdoFindDirectionDown.Checked == true)
+            if (rdoFindDirectionUp.Checked == true)
             {
-                Properties.Settings.Default.FindDirectionUp = false;
+                Properties.Settings.Default.SearchOption = "Up";
+            }
+            else if (rdoMatchCase.Checked == true)
+            {
+                Properties.Settings.Default.SearchOption = "MatchCase";
+            }
+            else if (rdoWholeWord.Checked == true)
+            {
+                Properties.Settings.Default.SearchOption = "WholeWord";
             }
             else
             {
-                Properties.Settings.Default.FindDirectionUp = true;
+                Properties.Settings.Default.SearchOption = "Down";
             }
 
             Close();
