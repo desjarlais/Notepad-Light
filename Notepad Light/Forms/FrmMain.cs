@@ -116,6 +116,10 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// when loading plain text files, we need to disable icons for formatting
+        /// </summary>
+        /// <param name="filePath"></param>
         public void LoadPlainTextFile(string filePath)
         {
             // setup plain text open
@@ -125,6 +129,10 @@ namespace Notepad_Light
             toolStripStatusLabelFileType.Text = Strings.plainText;
         }
 
+        /// <summary>
+        /// when loading rtf files, enable the formatting buttons
+        /// </summary>
+        /// <param name="filePath"></param>
         public void LoadRtfFile(string filePath)
         {
             // setup rtf open
@@ -135,7 +143,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// file open using a specific path
+        /// file open from the MRU
         /// </summary>
         /// <param name="filePath"></param>
         public void FileOpen(string filePath)
@@ -155,7 +163,7 @@ namespace Notepad_Light
                 UpdateFormTitle(filePath);
                 gChanged = false;
                 ClearToolbarFormattingIcons();
-                MoveCursorToFirstLine();
+                MoveCursorToLocation(0, 0);
             }
             catch (Exception ex)
             {
@@ -213,7 +221,7 @@ namespace Notepad_Light
 
                     gChanged = false;
                     ClearToolbarFormattingIcons();
-                    MoveCursorToFirstLine();
+                    MoveCursorToLocation(0, 0);
                 }
             }
             catch (Exception ex)
@@ -244,7 +252,7 @@ namespace Notepad_Light
                 else
                 {
                     if (gCurrentFileName.EndsWith(".txt"))
-                        {
+                    {
                         rtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
                     }
                     
@@ -356,10 +364,11 @@ namespace Notepad_Light
 
         public void Paste()
         {
+            gChanged = true;
+
             if (Properties.Settings.Default.UsePasteUI == false)
             {
                 rtbPage.Paste();
-                gChanged = true;
             }
             else
             {
@@ -369,7 +378,7 @@ namespace Notepad_Light
                     Owner = this
                 };
                 pFrm.ShowDialog();
-
+                
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
                 {
@@ -378,6 +387,7 @@ namespace Notepad_Light
                     case Strings.rtf: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
                     case Strings.pasteUnicode: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
                     case Strings.pasteImage: rtbPage.Paste(); break;
+                    default: gChanged = false; break;
                 }
             }
         }
@@ -392,6 +402,20 @@ namespace Notepad_Light
         {
             rtbPage.Redo();
             gChanged = true;
+        }
+
+        public void ExitAppWork()
+        {
+            if (gChanged == true)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    FileSave();
+                }
+            }
+
+            Application.Exit();
         }
 
         /// <summary>
@@ -567,19 +591,6 @@ namespace Notepad_Light
         {
             rtbPage.SelectionStart = location;
             rtbPage.SelectionLength = length;
-        }
-
-        public void MoveCursorToFirstLine()
-        {
-            if (Properties.Settings.Default.ClearTextOnInsert)
-            {
-                rtbPage.ResetText();
-            }
-            else
-            {
-                rtbPage.SelectionStart = 0;
-                rtbPage.SelectionLength = 0;
-            }
         }
 
         public void UpdateMRU()
@@ -852,36 +863,32 @@ namespace Notepad_Light
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Save();
+            ExitAppWork();
         }
 
         private void zoomToolStripMenuItem100_Click(object sender, EventArgs e)
         {
             ApplyZoom(1.0f);
-            zoomToolStripMenuItem100.Checked = true;
         }
 
         private void zoomToolStripMenuItem150_Click(object sender, EventArgs e)
         {
             ApplyZoom(1.5f);
-            zoomToolStripMenuItem150.Checked = true;
         }
 
         private void zoomToolStripMenuItem200_Click(object sender, EventArgs e)
         {
             ApplyZoom(2.0f);
-            zoomToolStripMenuItem200.Checked = true;
         }
 
         private void zoomToolStripMenuItem250_Click(object sender, EventArgs e)
         {
             ApplyZoom(2.5f);
-            zoomToolStripMenuItem250.Checked = true;
         }
 
         private void zoomToolStripMenuItem300_Click(object sender, EventArgs e)
         {
             ApplyZoom(3.0f);
-            zoomToolStripMenuItem300.Checked = true;
         }
 
         private void wordWrapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1025,7 +1032,7 @@ namespace Notepad_Light
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            ExitAppWork();
         }
 
         private void findToolStripButton_Click(object sender, EventArgs e)

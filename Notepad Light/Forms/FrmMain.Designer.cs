@@ -855,7 +855,7 @@
             // 
             this.findToolStripTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.findToolStripTextBox.Name = "findToolStripTextBox";
-            this.findToolStripTextBox.Size = new System.Drawing.Size(250, 25);
+            this.findToolStripTextBox.Size = new System.Drawing.Size(200, 25);
             // 
             // findToolStripButton
             // 
