@@ -7,7 +7,8 @@ There are plenty of notepad applications, so this is just another one in the mix
 # Features
 
 * Supports plain text and rtf file formats
-* Users can create, open and save new and existing files
+* Users can create, open and save new files
+* Users can open and save existing files
 * undo / redo 
 * basic formatting in rtf 
   * bold
