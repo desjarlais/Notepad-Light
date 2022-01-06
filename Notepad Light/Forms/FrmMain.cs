@@ -158,6 +158,7 @@ namespace Notepad_Light
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
                 if (filePath.EndsWith(".txt"))
                 {
                     LoadPlainTextFile(filePath);
@@ -177,6 +178,10 @@ namespace Notepad_Light
             {
                 Logger.Log("FileOpen Error = " + ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>
@@ -186,6 +191,7 @@ namespace Notepad_Light
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Select File To Open.",
@@ -239,6 +245,10 @@ namespace Notepad_Light
             {
                 Logger.Log("FileOpen Error = " + ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>
@@ -248,6 +258,8 @@ namespace Notepad_Light
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
+
                 // if gChanged is false, no changes to save
                 if (gChanged == false)
                 {
@@ -279,6 +291,10 @@ namespace Notepad_Light
             {
                 Logger.Log("FileSave Error = " + ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         /// <summary>
@@ -295,6 +311,7 @@ namespace Notepad_Light
 
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
+                        Cursor = Cursors.WaitCursor;
                         rtbPage.SaveFile(sfdSaveAs.FileName);
                         UpdateFormTitle(sfdSaveAs.FileName);
                         UpdateStatusBar();
@@ -306,22 +323,38 @@ namespace Notepad_Light
             {
                 Logger.Log("FileSaveAs Error :\r\n\r\n" + ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         public void OpenRecentFile(string filePath, int buttonIndex)
         {
+            // if there are unsaved changes, prompt the user before opening
+            if (gChanged)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    FileSave();
+                }
+            }
+
+            // do nothing if there is no file
             if (filePath == "empty")
             {
                 return;
             }
 
+            // if there is a file/path, open it
             if (File.Exists(filePath))
             {
                 FileOpen(filePath);
             }
             else
             {
-                // file no longer exists, remove from mru
+                // if the file no longer exists, remove from mru
                 RemoveFileFromMRU(filePath, buttonIndex);
             }
         }
