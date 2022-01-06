@@ -1,6 +1,7 @@
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Notepad_Light
 {
@@ -43,6 +44,9 @@ namespace Notepad_Light
                     
                     mruCount++;
                 }
+
+                // update status bar with app version                
+                appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             }
 
             // set initial zoom to 100
@@ -757,27 +761,7 @@ namespace Notepad_Light
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmSettings fOptions = new FrmSettings()
-            {
-                Owner = this
-            };
-            fOptions.ShowDialog();
-
-            // coming back from settings, adjust file type
-            if (Properties.Settings.Default.NewDocumentFormat == "RTF")
-            {
-                gRtf = true;
-            }
-            else
-            {
-                gRtf = false;
-            }
             
-            // also need to update the file mru in case it was cleared
-            if (Properties.Settings.Default.FileMRU.Count == 0)
-            {
-                ClearRecentMenuItems();
-            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1105,6 +1089,31 @@ namespace Notepad_Light
                 {
                     MoveCursorToLocation(indexToText, findToolStripTextBox.Text.Length);
                 }
+            }
+        }
+
+        private void fileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSettings fOptions = new FrmSettings()
+            {
+                Owner = this
+            };
+            fOptions.ShowDialog();
+
+            // coming back from settings, adjust file type
+            if (Properties.Settings.Default.NewDocumentFormat == "RTF")
+            {
+                gRtf = true;
+            }
+            else
+            {
+                gRtf = false;
+            }
+
+            // also need to update the file mru in case it was cleared
+            if (Properties.Settings.Default.FileMRU.Count == 0)
+            {
+                ClearRecentMenuItems();
             }
         }
 
