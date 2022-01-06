@@ -83,7 +83,15 @@ namespace Notepad_Light
             gChanged = false;
             UpdateFormTitle(Strings.defaultFileName);
             UpdateStatusBar();
-            ClearToolbarFormattingIcons();
+            
+            if (Properties.Settings.Default.NewDocumentFormat == "RTF")
+            {
+                EnableToolbarFormattingIcons();
+            }
+            else
+            {
+                ClearToolbarFormattingIcons();
+            }
         }
 
         public void FileNew()
@@ -286,6 +294,7 @@ namespace Notepad_Light
                         rtbPage.SaveFile(sfdSaveAs.FileName);
                         UpdateFormTitle(sfdSaveAs.FileName);
                         UpdateStatusBar();
+                        gChanged = false;
                     }
                 }
             }
@@ -407,7 +416,11 @@ namespace Notepad_Light
             gChanged = true;
         }
 
-        public void ExitAppWork()
+        /// <summary>
+        /// if there are unsaved changes, we need to ask the user what to do
+        /// </summary>
+        /// <param name="fromFormClosingEvent"></param>
+        public void ExitAppWork(bool fromFormClosingEvent)
         {
             if (gChanged == true)
             {
@@ -418,7 +431,12 @@ namespace Notepad_Light
                 }
             }
 
-            Application.Exit();
+            // formclosingevent will fire twice if we call app exit anywhere from form closing
+            // only call app.exit if we aren't coming from the event
+            if (!fromFormClosingEvent)
+            {
+                Application.Exit();
+            }
         }
 
         /// <summary>
@@ -593,7 +611,7 @@ namespace Notepad_Light
         /// <summary>
         /// given a position, move the cursor to that location in the richtextbox
         /// </summary>
-        /// <param name="location"></param>
+        /// <param name="startLocation"></param>
         /// <param name="length"></param>
         public void MoveCursorToLocation(int startLocation, int length)
         {
@@ -880,7 +898,7 @@ namespace Notepad_Light
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Save();
-            ExitAppWork();
+            ExitAppWork(true);
         }
 
         private void zoomToolStripMenuItem100_Click(object sender, EventArgs e)
@@ -1049,7 +1067,7 @@ namespace Notepad_Light
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExitAppWork();
+            ExitAppWork(false);
         }
 
         private void findToolStripButton_Click(object sender, EventArgs e)
