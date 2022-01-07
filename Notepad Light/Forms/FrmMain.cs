@@ -731,6 +731,7 @@ namespace Notepad_Light
         private void rtbPage_SelectionChanged(object sender, EventArgs e)
         {
             UpdateLnColValues();
+            UpdateToolbarIcons();
 
             // check if content was added
             if (gPrevPageLength != rtbPage.TextLength)
@@ -790,11 +791,6 @@ namespace Notepad_Light
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbPage.SelectAll();
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -985,6 +981,8 @@ namespace Notepad_Light
             {
                 rtbPage.SelectionIndent -= 30;
             }
+
+            EndOfButtonFormatWork();
         }
 
         private void increaseIndentToolStripButton_Click(object sender, EventArgs e)
@@ -993,6 +991,8 @@ namespace Notepad_Light
             {
                 rtbPage.SelectionIndent += 30;
             }
+
+            EndOfButtonFormatWork();
         }
 
         private void rtbPage_KeyDown(object sender, KeyEventArgs e)
@@ -1093,8 +1093,7 @@ namespace Notepad_Light
             {
                 return;
             }
-            
-            if (findToolStripTextBox.Text.Length > 0)
+            else
             {
                 int indexToText;
                 if (Properties.Settings.Default.SearchOption == "Up")
