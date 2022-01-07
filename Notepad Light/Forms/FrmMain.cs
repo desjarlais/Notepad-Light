@@ -549,8 +549,8 @@ namespace Notepad_Light
         public void ClearFormatting()
         {
             rtbPage.SelectionBullet = false;
-            rtbPage.Font = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
-            rtbPage.ForeColor = Color.FromName(Properties.Settings.Default.DefaultFontColorName);
+            rtbPage.SelectionFont = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
+            rtbPage.SelectionColor = Color.FromName(Properties.Settings.Default.DefaultFontColorName);
             rtbPage.SelectionIndent = 0;
             gChanged = true;
         }
