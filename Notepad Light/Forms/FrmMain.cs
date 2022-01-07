@@ -63,7 +63,7 @@ namespace Notepad_Light
 
         public void UpdateStatusBar()
         {
-            if (Properties.Settings.Default.NewDocumentFormat == "RTF" || gCurrentFileName.EndsWith(".rtf"))
+            if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf || gCurrentFileName.EndsWith(Strings.rtfExt))
             {
                 EnableToolbarFormattingIcons();
                 toolStripStatusLabelFileType.Text = Strings.rtf;
@@ -88,7 +88,7 @@ namespace Notepad_Light
             UpdateFormTitle(Strings.defaultFileName);
             UpdateStatusBar();
             
-            if (Properties.Settings.Default.NewDocumentFormat == "RTF")
+            if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf)
             {
                 EnableToolbarFormattingIcons();
             }
@@ -159,7 +159,7 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
-                if (filePath.EndsWith(".txt"))
+                if (filePath.EndsWith(Strings.txtExt))
                 {
                     LoadPlainTextFile(filePath);
                 }
@@ -204,7 +204,7 @@ namespace Notepad_Light
                 if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                 {
                     // first load the file contents
-                    if (ofdFileOpen.FileName.EndsWith(".txt"))
+                    if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
                     }
@@ -274,12 +274,12 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    if (gCurrentFileName.EndsWith(".txt"))
+                    if (gCurrentFileName.EndsWith(Strings.txtExt))
                     {
                         rtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
                     }
                     
-                    if (gCurrentFileName.EndsWith(".rtf"))
+                    if (gCurrentFileName.EndsWith(Strings.rtfExt))
                     {
                         rtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.RichText);
                     }
@@ -342,7 +342,7 @@ namespace Notepad_Light
             }
 
             // do nothing if there is no file
-            if (filePath == "empty")
+            if (filePath == Strings.empty)
             {
                 return;
             }
@@ -361,11 +361,11 @@ namespace Notepad_Light
 
         public void ClearRecentMenuItems()
         {
-            recentToolStripMenuItem1.Text = "empty";
-            recentToolStripMenuItem2.Text = "empty";
-            recentToolStripMenuItem3.Text = "empty";
-            recentToolStripMenuItem4.Text = "empty";
-            recentToolStripMenuItem5.Text = "empty";
+            recentToolStripMenuItem1.Text = Strings.empty;
+            recentToolStripMenuItem2.Text = Strings.empty;
+            recentToolStripMenuItem3.Text = Strings.empty;
+            recentToolStripMenuItem4.Text = Strings.empty;
+            recentToolStripMenuItem5.Text = Strings.empty;
         }
 
         /// <summary>
@@ -1133,7 +1133,7 @@ namespace Notepad_Light
             fOptions.ShowDialog();
 
             // coming back from settings, adjust file type
-            if (Properties.Settings.Default.NewDocumentFormat == "RTF")
+            if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf)
             {
                 gRtf = true;
             }
@@ -1172,6 +1172,7 @@ namespace Notepad_Light
             gStopwatch.Reset();
             toolStripLabelTimer.Text = Strings.zeroTimer;
             toolStripButtonStartStopTimer.Image = Properties.Resources.StatusRun_16x;
+            toolStripButtonStartStopTimer.Text = Strings.startTimeText;
             ClearTimeSpanVariables();
         }
     }

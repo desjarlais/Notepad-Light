@@ -13,6 +13,9 @@
         public const string startTimeText = "Start";
         public const string stopTimeText = "Stop";
         public const string zeroTimer = "00:00:00";
+        public const string empty = "empty";
+        public const string rtfExt = ".rtf";
+        public const string txtExt = ".txt";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";

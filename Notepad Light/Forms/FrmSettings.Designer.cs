@@ -35,14 +35,14 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cboNewDocFormat = new System.Windows.Forms.ComboBox();
-            this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.rdoWholeWord = new System.Windows.Forms.RadioButton();
+            this.rdoMatchCase = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionDown = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
-            this.rdoMatchCase = new System.Windows.Forms.RadioButton();
-            this.rdoWholeWord = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -118,6 +118,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
             // 
+            // ckbUsePasteUI
+            // 
+            this.ckbUsePasteUI.AutoSize = true;
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 49);
+            this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.ckbUsePasteUI.Name = "ckbUsePasteUI";
+            this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
+            this.ckbUsePasteUI.TabIndex = 1;
+            this.ckbUsePasteUI.Text = "Use Paste UI";
+            this.ckbUsePasteUI.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -132,22 +143,11 @@
             this.cboNewDocFormat.FormattingEnabled = true;
             this.cboNewDocFormat.Items.AddRange(new object[] {
             "Plain Text",
-            "RTF"});
+            "Rtf"});
             this.cboNewDocFormat.Location = new System.Drawing.Point(152, 19);
             this.cboNewDocFormat.Name = "cboNewDocFormat";
             this.cboNewDocFormat.Size = new System.Drawing.Size(182, 23);
             this.cboNewDocFormat.TabIndex = 5;
-            // 
-            // ckbUsePasteUI
-            // 
-            this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 49);
-            this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.ckbUsePasteUI.Name = "ckbUsePasteUI";
-            this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
-            this.ckbUsePasteUI.TabIndex = 1;
-            this.ckbUsePasteUI.Text = "Use Paste UI";
-            this.ckbUsePasteUI.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -161,6 +161,28 @@
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Find Options";
+            // 
+            // rdoWholeWord
+            // 
+            this.rdoWholeWord.AutoSize = true;
+            this.rdoWholeWord.Location = new System.Drawing.Point(94, 48);
+            this.rdoWholeWord.Name = "rdoWholeWord";
+            this.rdoWholeWord.Size = new System.Drawing.Size(91, 19);
+            this.rdoWholeWord.TabIndex = 3;
+            this.rdoWholeWord.TabStop = true;
+            this.rdoWholeWord.Text = "Whole Word";
+            this.rdoWholeWord.UseVisualStyleBackColor = true;
+            // 
+            // rdoMatchCase
+            // 
+            this.rdoMatchCase.AutoSize = true;
+            this.rdoMatchCase.Location = new System.Drawing.Point(94, 23);
+            this.rdoMatchCase.Name = "rdoMatchCase";
+            this.rdoMatchCase.Size = new System.Drawing.Size(87, 19);
+            this.rdoMatchCase.TabIndex = 2;
+            this.rdoMatchCase.TabStop = true;
+            this.rdoMatchCase.Text = "Match Case";
+            this.rdoMatchCase.UseVisualStyleBackColor = true;
             // 
             // rdoFindDirectionDown
             // 
@@ -183,28 +205,6 @@
             this.rdoFindDirectionUp.TabStop = true;
             this.rdoFindDirectionUp.Text = "Up";
             this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
-            // 
-            // rdoMatchCase
-            // 
-            this.rdoMatchCase.AutoSize = true;
-            this.rdoMatchCase.Location = new System.Drawing.Point(94, 23);
-            this.rdoMatchCase.Name = "rdoMatchCase";
-            this.rdoMatchCase.Size = new System.Drawing.Size(87, 19);
-            this.rdoMatchCase.TabIndex = 2;
-            this.rdoMatchCase.TabStop = true;
-            this.rdoMatchCase.Text = "Match Case";
-            this.rdoMatchCase.UseVisualStyleBackColor = true;
-            // 
-            // rdoWholeWord
-            // 
-            this.rdoWholeWord.AutoSize = true;
-            this.rdoWholeWord.Location = new System.Drawing.Point(94, 48);
-            this.rdoWholeWord.Name = "rdoWholeWord";
-            this.rdoWholeWord.Size = new System.Drawing.Size(91, 19);
-            this.rdoWholeWord.TabIndex = 3;
-            this.rdoWholeWord.TabStop = true;
-            this.rdoWholeWord.Text = "Whole Word";
-            this.rdoWholeWord.UseVisualStyleBackColor = true;
             // 
             // FrmSettings
             // 
