@@ -34,11 +34,11 @@ namespace Notepad_Light
                     {
                         switch (mruCount)
                         {
-                            case 1: recentToolStripMenuItem1.Text = f.ToString(); break;
-                            case 2: recentToolStripMenuItem2.Text = f.ToString(); break;
-                            case 3: recentToolStripMenuItem3.Text = f.ToString(); break;
-                            case 4: recentToolStripMenuItem4.Text = f.ToString(); break;
-                            case 5: recentToolStripMenuItem5.Text = f.ToString(); break;
+                            case 1: RecentToolStripMenuItem1.Text = f.ToString(); break;
+                            case 2: RecentToolStripMenuItem2.Text = f.ToString(); break;
+                            case 3: RecentToolStripMenuItem3.Text = f.ToString(); break;
+                            case 4: RecentToolStripMenuItem4.Text = f.ToString(); break;
+                            case 5: RecentToolStripMenuItem5.Text = f.ToString(); break;
                         }
                     }
                     
@@ -54,7 +54,7 @@ namespace Notepad_Light
             ApplyZoom(1.0f);
 
             // set wordwrap value, filename in title and enable icons
-            wordWrapToolStripMenuItem.Checked = rtbPage.WordWrap;
+            WordWrapToolStripMenuItem.Checked = rtbPage.WordWrap;
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
         }
@@ -361,11 +361,11 @@ namespace Notepad_Light
 
         public void ClearRecentMenuItems()
         {
-            recentToolStripMenuItem1.Text = Strings.empty;
-            recentToolStripMenuItem2.Text = Strings.empty;
-            recentToolStripMenuItem3.Text = Strings.empty;
-            recentToolStripMenuItem4.Text = Strings.empty;
-            recentToolStripMenuItem5.Text = Strings.empty;
+            RecentToolStripMenuItem1.Text = Strings.empty;
+            RecentToolStripMenuItem2.Text = Strings.empty;
+            RecentToolStripMenuItem3.Text = Strings.empty;
+            RecentToolStripMenuItem4.Text = Strings.empty;
+            RecentToolStripMenuItem5.Text = Strings.empty;
         }
 
         /// <summary>
@@ -666,11 +666,11 @@ namespace Notepad_Light
             {
                 switch (index)
                 {
-                    case 1: recentToolStripMenuItem1.Text = f?.ToString(); break;
-                    case 2: recentToolStripMenuItem2.Text = f?.ToString(); break;
-                    case 3: recentToolStripMenuItem3.Text = f?.ToString(); break;
-                    case 4: recentToolStripMenuItem4.Text = f?.ToString(); break;
-                    case 5: recentToolStripMenuItem5.Text = f?.ToString(); break;
+                    case 1: RecentToolStripMenuItem1.Text = f?.ToString(); break;
+                    case 2: RecentToolStripMenuItem2.Text = f?.ToString(); break;
+                    case 3: RecentToolStripMenuItem3.Text = f?.ToString(); break;
+                    case 4: RecentToolStripMenuItem4.Text = f?.ToString(); break;
+                    case 5: RecentToolStripMenuItem5.Text = f?.ToString(); break;
                 }
                 index++;
             }
@@ -947,12 +947,12 @@ namespace Notepad_Light
             if (rtbPage.WordWrap == true)
             {
                 rtbPage.WordWrap = false;
-                wordWrapToolStripMenuItem.Checked = false;
+                WordWrapToolStripMenuItem.Checked = false;
             }
             else
             {
                 rtbPage.WordWrap = true;
-                wordWrapToolStripMenuItem.Checked = true;
+                WordWrapToolStripMenuItem.Checked = true;
             }
         }
 
@@ -1155,6 +1155,11 @@ namespace Notepad_Light
         private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             App.PlatformSpecificProcessStart(Strings.githubDiscussion);
+        }
+
+        private void ReportBugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            App.PlatformSpecificProcessStart(Strings.githubIssues);
         }
 
         private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)

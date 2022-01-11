@@ -83,6 +83,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Bug_16x {
+            get {
+                object obj = ResourceManager.GetObject("Bug_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BulletList_16x {
             get {
                 object obj = ResourceManager.GetObject("BulletList_16x", resourceCulture);
@@ -196,6 +206,16 @@ namespace Notepad_Light.Properties {
         internal static System.Drawing.Bitmap Redo_16x {
             get {
                 object obj = ResourceManager.GetObject("Redo_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Report_16x {
+            get {
+                object obj = ResourceManager.GetObject("Report_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
