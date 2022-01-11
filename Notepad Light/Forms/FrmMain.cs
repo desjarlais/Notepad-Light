@@ -688,6 +688,9 @@ namespace Notepad_Light
             toolStripStatusLabelColumn.Text = column.ToString();
         }
 
+        /// <summary>
+        /// reset the timespan variables
+        /// </summary>
         public void ClearTimeSpanVariables()
         {
             editedHours = 0;
@@ -728,7 +731,7 @@ namespace Notepad_Light
 
         #endregion
 
-        private void rtbPage_SelectionChanged(object sender, EventArgs e)
+        private void RtbPage_SelectionChanged(object sender, EventArgs e)
         {
             UpdateLnColValues();
             UpdateToolbarIcons();
@@ -743,57 +746,57 @@ namespace Notepad_Light
             gPrevPageLength = rtbPage.TextLength;
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FileNew();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FileOpen();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FileSave();
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FileSaveAs();
         }
 
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Undo();
         }
 
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Redo();
         }
 
-        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cut();
         }
 
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Copy();
         }
 
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Paste();
         }
 
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbPage.SelectAll();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmAbout fAbout = new FrmAbout()
             {
@@ -802,7 +805,7 @@ namespace Notepad_Light
             fAbout.ShowDialog();
         }
 
-        private void errorLogToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ErrorLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmErrorLog fLog = new FrmErrorLog()
             {
@@ -811,42 +814,42 @@ namespace Notepad_Light
             fLog.ShowDialog();
         }
 
-        private void newToolStripButton_Click(object sender, EventArgs e)
+        private void NewToolStripButton_Click(object sender, EventArgs e)
         {
             FileNew();
         }
 
-        private void boldToolStripButton_Click(object sender, EventArgs e)
+        private void BoldToolStripButton_Click(object sender, EventArgs e)
         {
             ApplyBold();
         }
 
-        private void italicToolStripButton_Click(object sender, EventArgs e)
+        private void ItalicToolStripButton_Click(object sender, EventArgs e)
         {
             ApplyItalic();
         }
 
-        private void underlineToolStripButton_Click(object sender, EventArgs e)
+        private void UnderlineToolStripButton_Click(object sender, EventArgs e)
         {
             ApplyUnderline();
         }
 
-        private void strikethroughToolStripButton_Click(object sender, EventArgs e)
+        private void StrikethroughToolStripButton_Click(object sender, EventArgs e)
         {
             ApplyStrikethrough();
         }
 
-        private void undoToolStripButton_Click(object sender, EventArgs e)
+        private void UndoToolStripButton_Click(object sender, EventArgs e)
         {
             Undo();
         }
 
-        private void redoToolStripButton_Click(object sender, EventArgs e)
+        private void RedoToolStripButton_Click(object sender, EventArgs e)
         {
             Redo();
         }
 
-        private void editFontToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // setup the initial dialog values from settings
             fontDialog1.ShowColor = true;
@@ -866,44 +869,44 @@ namespace Notepad_Light
             }
         }
 
-        private void clearFormattingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearFormattingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearFormatting();
             EndOfButtonFormatWork();
         }
 
-        private void clearAllTextToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearAllTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbPage.ResetText();
             rtbPage.Font = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
         }
 
-        private void helpToolStripButton_Click(object sender, EventArgs e)
+        private void HelpToolStripButton_Click(object sender, EventArgs e)
         {
             App.PlatformSpecificProcessStart(Strings.githubIssues);
         }
 
-        private void openToolStripButton_Click(object sender, EventArgs e)
+        private void OpenToolStripButton_Click(object sender, EventArgs e)
         {
             FileOpen();
         }
 
-        private void saveToolStripButton_Click(object sender, EventArgs e)
+        private void SaveToolStripButton_Click(object sender, EventArgs e)
         {
             FileSave();
         }
 
-        private void cutToolStripButton_Click(object sender, EventArgs e)
+        private void CutToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();
         }
 
-        private void copyToolStripButton_Click(object sender, EventArgs e)
+        private void CopyToolStripButton_Click(object sender, EventArgs e)
         {
             Copy();
         }
 
-        private void pasteToolStripButton_Click(object sender, EventArgs e)
+        private void PasteToolStripButton_Click(object sender, EventArgs e)
         {
             Paste();
         }
@@ -914,32 +917,32 @@ namespace Notepad_Light
             ExitAppWork(true);
         }
 
-        private void zoomToolStripMenuItem100_Click(object sender, EventArgs e)
+        private void ZoomToolStripMenuItem100_Click(object sender, EventArgs e)
         {
             ApplyZoom(1.0f);
         }
 
-        private void zoomToolStripMenuItem150_Click(object sender, EventArgs e)
+        private void ZoomToolStripMenuItem150_Click(object sender, EventArgs e)
         {
             ApplyZoom(1.5f);
         }
 
-        private void zoomToolStripMenuItem200_Click(object sender, EventArgs e)
+        private void ZoomToolStripMenuItem200_Click(object sender, EventArgs e)
         {
             ApplyZoom(2.0f);
         }
 
-        private void zoomToolStripMenuItem250_Click(object sender, EventArgs e)
+        private void ZoomToolStripMenuItem250_Click(object sender, EventArgs e)
         {
             ApplyZoom(2.5f);
         }
 
-        private void zoomToolStripMenuItem300_Click(object sender, EventArgs e)
+        private void ZoomToolStripMenuItem300_Click(object sender, EventArgs e)
         {
             ApplyZoom(3.0f);
         }
 
-        private void wordWrapToolStripMenuItem_Click(object sender, EventArgs e)
+        private void WordWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (rtbPage.WordWrap == true)
             {
@@ -953,7 +956,7 @@ namespace Notepad_Light
             }
         }
 
-        private void bulletToolStripButton_Click(object sender, EventArgs e)
+        private void BulletToolStripButton_Click(object sender, EventArgs e)
         {
             // toggle the bullet and set the indent value
             if (rtbPage.SelectionBullet == true)
@@ -975,7 +978,7 @@ namespace Notepad_Light
             EndOfButtonFormatWork();
         }
 
-        private void decreaseIndentToolStripButton_Click(object sender, EventArgs e)
+        private void DecreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
             if (rtbPage.SelectionIndent > 0)
             {
@@ -985,7 +988,7 @@ namespace Notepad_Light
             EndOfButtonFormatWork();
         }
 
-        private void increaseIndentToolStripButton_Click(object sender, EventArgs e)
+        private void IncreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
             if (rtbPage.SelectionIndent < 150)
             {
@@ -995,7 +998,7 @@ namespace Notepad_Light
             EndOfButtonFormatWork();
         }
 
-        private void rtbPage_KeyDown(object sender, KeyEventArgs e)
+        private void RtbPage_KeyDown(object sender, KeyEventArgs e)
         {
             // if the line has a bullet and the tab was pressed, indent the line
             // need to suppress the key to prevent the cursor from moving around
@@ -1017,7 +1020,7 @@ namespace Notepad_Light
             }
         }
 
-        private void recentToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void RecentToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (sender is not null)
             {
@@ -1027,7 +1030,7 @@ namespace Notepad_Light
             }
         }
 
-        private void recentToolStripMenuItem2_Click(object sender, EventArgs e)
+        private void RecentToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             if (sender is not null)
             {
@@ -1037,7 +1040,7 @@ namespace Notepad_Light
             }
         }
 
-        private void recentToolStripMenuItem3_Click(object sender, EventArgs e)
+        private void RecentToolStripMenuItem3_Click(object sender, EventArgs e)
         {
             if (sender is not null)
             {
@@ -1047,7 +1050,7 @@ namespace Notepad_Light
             }
         }
 
-        private void recentToolStripMenuItem4_Click(object sender, EventArgs e)
+        private void RecentToolStripMenuItem4_Click(object sender, EventArgs e)
         {
             if (sender is not null)
             {
@@ -1057,7 +1060,7 @@ namespace Notepad_Light
             }
         }
 
-        private void recentToolStripMenuItem5_Click(object sender, EventArgs e)
+        private void RecentToolStripMenuItem5_Click(object sender, EventArgs e)
         {
             if (sender is not null)
             {
@@ -1067,7 +1070,7 @@ namespace Notepad_Light
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             if (!gStopwatch.IsRunning)
             {
@@ -1082,12 +1085,12 @@ namespace Notepad_Light
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitAppWork(false);
         }
 
-        private void findToolStripButton_Click(object sender, EventArgs e)
+        private void FindToolStripButton_Click(object sender, EventArgs e)
         {
             if (findToolStripTextBox.Text == string.Empty)
             {
@@ -1124,7 +1127,7 @@ namespace Notepad_Light
             }
         }
 
-        private void fileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmSettings fOptions = new FrmSettings()
             {
@@ -1149,7 +1152,12 @@ namespace Notepad_Light
             }
         }
 
-        private void toolStripButtonStartStopTimer_Click(object sender, EventArgs e)
+        private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            App.PlatformSpecificProcessStart(Strings.githubDiscussion);
+        }
+
+        private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)
         {
             if (gStopwatch.IsRunning)
             {
@@ -1167,7 +1175,7 @@ namespace Notepad_Light
             }
         }
 
-        private void toolStripButtonResetTimer_Click(object sender, EventArgs e)
+        private void ToolStripButtonResetTimer_Click(object sender, EventArgs e)
         {
             gStopwatch.Reset();
             toolStripLabelTimer.Text = Strings.zeroTimer;

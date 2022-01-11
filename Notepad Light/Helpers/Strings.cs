@@ -20,5 +20,6 @@
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
         public const string githubIssues = "https://github.com/desjarlais/Notepad-Light/issues";
+        public const string githubDiscussion = "https://github.com/desjarlais/Notepad-Light/discussions";
     }
 }
