@@ -373,7 +373,8 @@ namespace Notepad_Light
 
         public void PrintPreview()
         {
-            printPreviewDialog1.Document = printDocument1;   
+            printPreviewDialog1.Document = printDocument1;
+            gPrintString = rtbPage.Text;
             printPreviewDialog1.ShowDialog();
         }
 
@@ -596,6 +597,7 @@ namespace Notepad_Light
             rtbPage.SelectionFont = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
             rtbPage.SelectionColor = Color.FromName(Properties.Settings.Default.DefaultFontColorName);
             rtbPage.SelectionIndent = 0;
+            rtbPage.SelectionAlignment = HorizontalAlignment.Left;
             gChanged = true;
         }
 

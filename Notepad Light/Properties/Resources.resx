@@ -169,6 +169,15 @@
   <data name="leftindent" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\leftindent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PageGuide_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PageGuide_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintPreview_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PrintPreview_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintStatusBar1_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PrintStatusBar1_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Redo_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Redo_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
