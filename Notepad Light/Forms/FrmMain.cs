@@ -518,51 +518,51 @@ namespace Notepad_Light
                 // bold
                 if (rtbPage.SelectionFont.Bold == true)
                 {
-                    boldToolStripButton.Checked = true;
+                    BoldToolStripButton.Checked = true;
                 }
                 else
                 {
-                    boldToolStripButton.Checked = false;
+                    BoldToolStripButton.Checked = false;
                 }
 
                 // italic
                 if (rtbPage.SelectionFont.Italic == true)
                 {
-                    italicToolStripButton.Checked = true;
+                    ItalicToolStripButton.Checked = true;
                 }
                 else
                 {
-                    italicToolStripButton.Checked = false;
+                    ItalicToolStripButton.Checked = false;
                 }
 
                 // underline
                 if (rtbPage.SelectionFont.Underline == true)
                 {
-                    underlineToolStripButton.Checked = true;
+                    UnderlineToolStripButton.Checked = true;
                 }
                 else
                 {
-                    underlineToolStripButton.Checked = false;
+                    UnderlineToolStripButton.Checked = false;
                 }
 
                 // strikethrough
                 if (rtbPage.SelectionFont.Strikeout == true)
                 {
-                    strikethroughToolStripButton.Checked = true;
+                    StrikethroughToolStripButton.Checked = true;
                 }
                 else
                 {
-                    strikethroughToolStripButton.Checked = false;
+                    StrikethroughToolStripButton.Checked = false;
                 }
 
                 // bullets
                 if (rtbPage.SelectionBullet == true)
                 {
-                    bulletToolStripButton.Checked = true;
+                    BulletToolStripButton.Checked = true;
                 }
                 else
                 {
-                    bulletToolStripButton.Checked = false;
+                    BulletToolStripButton.Checked = false;
                 }
 
                 // alignment
@@ -603,29 +603,31 @@ namespace Notepad_Light
 
         public void EnableToolbarFormattingIcons()
         {
-            boldToolStripButton.Enabled = true;
-            italicToolStripButton.Enabled = true;
-            underlineToolStripButton.Enabled = true;
-            strikethroughToolStripButton.Enabled = true;
-            bulletToolStripButton.Enabled = true;
+            BoldToolStripButton.Enabled = true;
+            ItalicToolStripButton.Enabled = true;
+            UnderlineToolStripButton.Enabled = true;
+            StrikethroughToolStripButton.Enabled = true;
+            BulletToolStripButton.Enabled = true;
+            FontColorToolStripButton.Enabled = true;
         }
 
         public void DisableToolbarFormattingIcons()
         {
-            boldToolStripButton.Enabled = false;
-            italicToolStripButton.Enabled = false;
-            underlineToolStripButton.Enabled = false;
-            strikethroughToolStripButton.Enabled = false;
-            bulletToolStripButton.Enabled = false;
+            BoldToolStripButton.Enabled = false;
+            ItalicToolStripButton.Enabled = false;
+            UnderlineToolStripButton.Enabled = false;
+            StrikethroughToolStripButton.Enabled = false;
+            BulletToolStripButton.Enabled = false;
+            FontColorToolStripButton.Enabled = false;
         }
 
         public void ClearToolbarFormattingIcons()
         {
-            boldToolStripButton.Checked = false;
-            italicToolStripButton.Checked = false;
-            underlineToolStripButton.Checked = false;
-            strikethroughToolStripButton.Checked = false;
-            bulletToolStripButton.Checked = false;
+            BoldToolStripButton.Checked = false;
+            ItalicToolStripButton.Checked = false;
+            UnderlineToolStripButton.Checked = false;
+            StrikethroughToolStripButton.Checked = false;
+            BulletToolStripButton.Checked = false;
         }
 
         public void EndOfButtonFormatWork()
@@ -895,6 +897,11 @@ namespace Notepad_Light
             Redo();
         }
 
+        /// <summary>
+        /// this will apply the font formatting across the entire document/richtextbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // setup the initial dialog values from settings
@@ -1052,7 +1059,7 @@ namespace Notepad_Light
             {
                 e.SuppressKeyPress = true;
                 rtbPage.Select(rtbPage.GetFirstCharIndexOfCurrentLine(), 0);
-                increaseIndentToolStripButton.PerformClick();
+                IncreaseIndentToolStripButton.PerformClick();
             }
 
             // if the user deletes the bullet, we need to remove bullet formatting
@@ -1061,7 +1068,7 @@ namespace Notepad_Light
                 if (rtbPage.SelectionStart == rtbPage.GetFirstCharIndexOfCurrentLine() && rtbPage.SelectionBullet == true)
                 {
                     e.SuppressKeyPress = true;
-                    bulletToolStripButton.PerformClick();
+                    BulletToolStripButton.PerformClick();
                 }
             }
         }
@@ -1124,7 +1131,7 @@ namespace Notepad_Light
                 TimeSpan tSpan2 = gStopwatch.Elapsed;
                 tSpan = gStopwatch.Elapsed;
                 tSpan = tSpan2.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
-                toolStripLabelTimer.Text = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
+                TimerToolStripLabel.Text = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
             }
         }
 
@@ -1135,7 +1142,7 @@ namespace Notepad_Light
 
         private void FindToolStripButton_Click(object sender, EventArgs e)
         {
-            if (findToolStripTextBox.Text == string.Empty)
+            if (FindToolStripTextBox.Text == string.Empty)
             {
                 return;
             }
@@ -1145,27 +1152,27 @@ namespace Notepad_Light
                 if (Properties.Settings.Default.SearchOption == "Up")
                 {
                     // search up the file and find any word match
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, 0, rtbPage.SelectionStart, RichTextBoxFinds.Reverse);
+                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, 0, rtbPage.SelectionStart, RichTextBoxFinds.Reverse);
                 }
                 else if (Properties.Settings.Default.SearchOption == "Down")
                 {
                     // search from the top down and find any word match
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
                 }
                 else if (Properties.Settings.Default.SearchOption == "MatchCase")
                 {
                     // only find words that match the case exactly
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
+                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
                 }
                 else
                 {
                     // only find words that have the entire word in the search textbox
-                    indexToText = rtbPage.Find(findToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
+                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
                 }
 
                 if (indexToText >= 0)
                 {
-                    MoveCursorToLocation(indexToText, findToolStripTextBox.Text.Length);
+                    MoveCursorToLocation(indexToText, FindToolStripTextBox.Text.Length);
                 }
             }
         }
@@ -1301,24 +1308,24 @@ namespace Notepad_Light
             {
                 // stop the timer
                 gStopwatch.Stop();
-                toolStripButtonStartStopTimer.Text = Strings.startTimeText;
-                toolStripButtonStartStopTimer.Image = Properties.Resources.StatusRun_16x;
+                StartStopTimerToolStripButton.Text = Strings.startTimeText;
+                StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
             }
             else
             {
                 timer1.Enabled = true;
                 gStopwatch.Start();
-                toolStripButtonStartStopTimer.Text = Strings.stopTimeText;
-                toolStripButtonStartStopTimer.Image = Properties.Resources.Stop_16x;
+                StartStopTimerToolStripButton.Text = Strings.stopTimeText;
+                StartStopTimerToolStripButton.Image = Properties.Resources.Stop_16x;
             }
         }
 
         private void ToolStripButtonResetTimer_Click(object sender, EventArgs e)
         {
             gStopwatch.Reset();
-            toolStripLabelTimer.Text = Strings.zeroTimer;
-            toolStripButtonStartStopTimer.Image = Properties.Resources.StatusRun_16x;
-            toolStripButtonStartStopTimer.Text = Strings.startTimeText;
+            TimerToolStripLabel.Text = Strings.zeroTimer;
+            StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
+            StartStopTimerToolStripButton.Text = Strings.startTimeText;
             ClearTimeSpanVariables();
         }
     }
