@@ -13,7 +13,7 @@ namespace Notepad_Light
         public bool gChanged = false;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
-        private int editedHours, editedMinutes, editedSeconds;
+        private int editedHours, editedMinutes, editedSeconds, charFrom;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
 
@@ -1224,6 +1224,12 @@ namespace Notepad_Light
         {
             try
             {
+                if (gRtf)
+                {
+                    e.HasMorePages = RtfPrint.Print(rtbPage, ref charFrom, e);
+                    return;
+                }
+
                 Cursor = Cursors.WaitCursor;
                 int charactersOnPage = 0;
                 int linesPerPage = 0;
@@ -1271,6 +1277,22 @@ namespace Notepad_Light
         {
             rtbPage.SelectionAlignment = HorizontalAlignment.Right;
             EndOfButtonFormatWork();
+        }
+
+        private void FontColorToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != rtbPage.SelectionColor)
+            {
+                rtbPage.SelectionColor = colorDialog1.Color;
+            }
+        }
+
+        private void printDocument1_BeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            if (gRtf)
+            {
+                charFrom = 0;
+            }
         }
 
         private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)
