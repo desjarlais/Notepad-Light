@@ -1208,13 +1208,16 @@ namespace Notepad_Light
                 int charactersOnPage = 0;
                 int linesPerPage = 0;
 
+                // TODO: still need to get the actual font size instead of a static 12
+                Font f = new Font(Properties.Settings.Default.DefaultFontName, 12.0f);
+
                 // Sets the value of charactersOnPage to the number of characters 
-                // of stringToPrint that will fit within the bounds of the page.
-                e.Graphics?.MeasureString(gPrintString, this.Font, e.MarginBounds.Size, StringFormat.GenericTypographic,
+                // of strToPrint that will fit within the bounds of the page.
+                e.Graphics?.MeasureString(gPrintString, f, e.MarginBounds.Size, StringFormat.GenericTypographic,
                     out charactersOnPage, out linesPerPage);
 
                 // Draws the string within the bounds of the page
-                e.Graphics?.DrawString(gPrintString, this.Font, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
+                e.Graphics?.DrawString(gPrintString, f, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
 
                 // Remove the portion of the string that has been printed.
                 gPrintString = gPrintString.Substring(charactersOnPage);
