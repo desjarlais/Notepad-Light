@@ -9,6 +9,7 @@ namespace Notepad_Light
     {
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
+        public string gPrintString = string.Empty;
         public bool gChanged = false;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
@@ -357,6 +358,28 @@ namespace Notepad_Light
                 // if the file no longer exists, remove from mru
                 RemoveFileFromMRU(filePath, buttonIndex);
             }
+        }
+
+        public void Print()
+        {
+            printDialog1.Document = printDocument1;
+            if (printDialog1.ShowDialog() == DialogResult.OK)
+            {
+                gPrintString = rtbPage.Text;
+                printDocument1.Print();
+            }
+        }
+
+        public void PrintPreview()
+        {
+            printPreviewDialog1.Document = printDocument1;   
+            printPreviewDialog1.ShowDialog();
+        }
+
+        public void PageSetup()
+        {
+            pageSetupDialog1.Document = printDocument1;
+            pageSetupDialog1.ShowDialog();
         }
 
         public void ClearRecentMenuItems()
@@ -1160,6 +1183,53 @@ namespace Notepad_Light
         private void ReportBugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             App.PlatformSpecificProcessStart(Strings.githubIssues);
+        }
+
+        private void PrintToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Print();
+        }
+
+        private void PrintPreviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintPreview();
+        }
+
+        private void PageSetupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PageSetup();
+        }
+
+        private void PrintDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                int charactersOnPage = 0;
+                int linesPerPage = 0;
+
+                // Sets the value of charactersOnPage to the number of characters 
+                // of stringToPrint that will fit within the bounds of the page.
+                e.Graphics?.MeasureString(gPrintString, this.Font, e.MarginBounds.Size, StringFormat.GenericTypographic,
+                    out charactersOnPage, out linesPerPage);
+
+                // Draws the string within the bounds of the page
+                e.Graphics?.DrawString(gPrintString, this.Font, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
+
+                // Remove the portion of the string that has been printed.
+                gPrintString = gPrintString.Substring(charactersOnPage);
+
+                // Check to see if more pages are to be printed.
+                e.HasMorePages = (gPrintString.Length > 0);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("PrintPage Error: " + ex.Message);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)

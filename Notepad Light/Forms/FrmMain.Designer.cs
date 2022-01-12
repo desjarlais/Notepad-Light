@@ -53,6 +53,10 @@
             this.RecentToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.RecentToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.PrintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PrintPreviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PageSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -88,6 +92,7 @@
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ErrorLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SubmitFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -122,7 +127,10 @@
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ReportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -246,6 +254,10 @@
             this.OpenToolStripMenuItem,
             this.RecentToolStripMenuItem,
             this.ToolStripSeparator,
+            this.PrintToolStripMenuItem,
+            this.PrintPreviewToolStripMenuItem,
+            this.PageSetupToolStripMenuItem,
+            this.ToolStripSeparator12,
             this.SaveToolStripMenuItem,
             this.SaveAsToolStripMenuItem,
             this.ToolStripSeparator1,
@@ -331,6 +343,32 @@
             // 
             this.ToolStripSeparator.Name = "ToolStripSeparator";
             this.ToolStripSeparator.Size = new System.Drawing.Size(143, 6);
+            // 
+            // PrintToolStripMenuItem
+            // 
+            this.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
+            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.PrintToolStripMenuItem.Text = "Print";
+            this.PrintToolStripMenuItem.Click += new System.EventHandler(this.PrintToolStripMenuItem_Click);
+            // 
+            // PrintPreviewToolStripMenuItem
+            // 
+            this.PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem";
+            this.PrintPreviewToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.PrintPreviewToolStripMenuItem.Text = "Print Preview";
+            this.PrintPreviewToolStripMenuItem.Click += new System.EventHandler(this.PrintPreviewToolStripMenuItem_Click);
+            // 
+            // PageSetupToolStripMenuItem
+            // 
+            this.PageSetupToolStripMenuItem.Name = "PageSetupToolStripMenuItem";
+            this.PageSetupToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.PageSetupToolStripMenuItem.Text = "Page Setup";
+            this.PageSetupToolStripMenuItem.Click += new System.EventHandler(this.PageSetupToolStripMenuItem_Click);
+            // 
+            // ToolStripSeparator12
+            // 
+            this.ToolStripSeparator12.Name = "ToolStripSeparator12";
+            this.ToolStripSeparator12.Size = new System.Drawing.Size(143, 6);
             // 
             // SaveToolStripMenuItem
             // 
@@ -603,7 +641,7 @@
             // 
             this.AboutToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Dialog_16x;
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.AboutToolStripMenuItem.Text = "&About...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -611,7 +649,7 @@
             // 
             this.ErrorLogToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ErrorSummary_16x;
             this.ErrorLogToolStripMenuItem.Name = "ErrorLogToolStripMenuItem";
-            this.ErrorLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ErrorLogToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.ErrorLogToolStripMenuItem.Text = "Error Log";
             this.ErrorLogToolStripMenuItem.Click += new System.EventHandler(this.ErrorLogToolStripMenuItem_Click);
             // 
@@ -619,9 +657,17 @@
             // 
             this.SubmitFeedbackToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Report_16x;
             this.SubmitFeedbackToolStripMenuItem.Name = "SubmitFeedbackToolStripMenuItem";
-            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.SubmitFeedbackToolStripMenuItem.Text = "Submit Feedback";
             this.SubmitFeedbackToolStripMenuItem.Click += new System.EventHandler(this.SubmitFeedbackToolStripMenuItem_Click);
+            // 
+            // ReportBugToolStripMenuItem
+            // 
+            this.ReportBugToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Bug_16x;
+            this.ReportBugToolStripMenuItem.Name = "ReportBugToolStripMenuItem";
+            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.ReportBugToolStripMenuItem.Text = "Report Bug";
+            this.ReportBugToolStripMenuItem.Click += new System.EventHandler(this.ReportBugToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -919,13 +965,24 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
-            // ReportBugToolStripMenuItem
+            // printDialog1
             // 
-            this.ReportBugToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Bug_16x;
-            this.ReportBugToolStripMenuItem.Name = "ReportBugToolStripMenuItem";
-            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.ReportBugToolStripMenuItem.Text = "Report Bug";
-            this.ReportBugToolStripMenuItem.Click += new System.EventHandler(this.ReportBugToolStripMenuItem_Click);
+            this.printDialog1.UseEXDialog = true;
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.PrintDocument1_PrintPage);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
             // 
             // FrmMain
             // 
@@ -1049,5 +1106,13 @@
         private ToolStripMenuItem OptionsToolStripMenuItem;
         private ToolStripMenuItem SubmitFeedbackToolStripMenuItem;
         private ToolStripMenuItem ReportBugToolStripMenuItem;
+        private ToolStripMenuItem PrintToolStripMenuItem;
+        private ToolStripMenuItem PrintPreviewToolStripMenuItem;
+        private ToolStripMenuItem PageSetupToolStripMenuItem;
+        private ToolStripSeparator ToolStripSeparator12;
+        private PrintDialog printDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private PrintPreviewDialog printPreviewDialog1;
+        private PageSetupDialog pageSetupDialog1;
     }
 }
