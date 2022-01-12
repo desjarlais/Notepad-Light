@@ -21,6 +21,7 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Print
 * Print Preview
 * Edit Font formatting
+* Change selected text font color
 * Most Recently Used (MRU)
 * Zoom
 * Word Wrap
