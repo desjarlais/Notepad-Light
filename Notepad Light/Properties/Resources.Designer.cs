@@ -63,6 +63,36 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AlignCenter_16x {
+            get {
+                object obj = ResourceManager.GetObject("AlignCenter_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AlignLeft_16x {
+            get {
+                object obj = ResourceManager.GetObject("AlignLeft_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AlignRight_16x {
+            get {
+                object obj = ResourceManager.GetObject("AlignRight_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Bold_16x {
             get {
                 object obj = ResourceManager.GetObject("Bold_16x", resourceCulture);

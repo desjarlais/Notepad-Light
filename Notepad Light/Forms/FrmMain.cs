@@ -58,6 +58,7 @@ namespace Notepad_Light
             WordWrapToolStripMenuItem.Checked = rtbPage.WordWrap;
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
+            UpdateToolbarIcons();
         }
 
         #region Functions
@@ -562,6 +563,26 @@ namespace Notepad_Light
                 {
                     bulletToolStripButton.Checked = false;
                 }
+
+                // alignment
+                if (rtbPage.SelectionAlignment == HorizontalAlignment.Left)
+                {
+                    LeftJustifiedToolStripButton.Checked = true;
+                    CenterJustifiedToolStripButton.Checked = false;
+                    RightJustifiedToolStripButton.Checked = false;
+                }
+                else if (rtbPage.SelectionAlignment == HorizontalAlignment.Center)
+                {
+                    CenterJustifiedToolStripButton.Checked = true;
+                    LeftJustifiedToolStripButton.Checked = false;
+                    RightJustifiedToolStripButton.Checked = false;
+                }
+                else if (rtbPage.SelectionAlignment == HorizontalAlignment.Right)
+                {
+                    RightJustifiedToolStripButton.Checked = true;
+                    CenterJustifiedToolStripButton.Checked = false;
+                    LeftJustifiedToolStripButton.Checked = false;
+                }
             }
             catch (Exception ex)
             {
@@ -1007,7 +1028,7 @@ namespace Notepad_Light
             {
                 rtbPage.SelectionIndent -= 30;
             }
-
+            
             EndOfButtonFormatWork();
         }
 
@@ -1045,12 +1066,9 @@ namespace Notepad_Light
 
         private void RecentToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (sender is not null)
-            {
 #pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString(), 1);
+            OpenRecentFile(sender.ToString(), 1);
 #pragma warning restore CS8604 // Possible null reference argument.
-            }
         }
 
         private void RecentToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -1233,6 +1251,24 @@ namespace Notepad_Light
             {
                 Cursor = Cursors.Default;
             }
+        }
+
+        private void LeftJustifiedToolStripButton_Click(object sender, EventArgs e)
+        {
+            rtbPage.SelectionAlignment = HorizontalAlignment.Left;
+            EndOfButtonFormatWork();
+        }
+
+        private void CenterJustifiedToolStripButton_Click(object sender, EventArgs e)
+        {
+            rtbPage.SelectionAlignment = HorizontalAlignment.Center;
+            EndOfButtonFormatWork();
+        }
+
+        private void RightJustifiedToolStripButton_Click(object sender, EventArgs e)
+        {
+            rtbPage.SelectionAlignment = HorizontalAlignment.Right;
+            EndOfButtonFormatWork();
         }
 
         private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)

@@ -131,6 +131,9 @@
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.LeftJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.CenterJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.RightJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -692,6 +695,9 @@
             this.underlineToolStripButton,
             this.strikethroughToolStripButton,
             this.toolStripSeparator11,
+            this.LeftJustifiedToolStripButton,
+            this.CenterJustifiedToolStripButton,
+            this.RightJustifiedToolStripButton,
             this.bulletToolStripButton,
             this.decreaseIndentToolStripButton,
             this.increaseIndentToolStripButton,
@@ -935,7 +941,7 @@
             // 
             this.findToolStripTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.findToolStripTextBox.Name = "findToolStripTextBox";
-            this.findToolStripTextBox.Size = new System.Drawing.Size(200, 25);
+            this.findToolStripTextBox.Size = new System.Drawing.Size(160, 25);
             // 
             // findToolStripButton
             // 
@@ -983,6 +989,39 @@
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
+            // 
+            // LeftJustifiedToolStripButton
+            // 
+            this.LeftJustifiedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.LeftJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.AlignLeft_16x;
+            this.LeftJustifiedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LeftJustifiedToolStripButton.Name = "LeftJustifiedToolStripButton";
+            this.LeftJustifiedToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.LeftJustifiedToolStripButton.Text = "Left";
+            this.LeftJustifiedToolStripButton.ToolTipText = "Left Align";
+            this.LeftJustifiedToolStripButton.Click += new System.EventHandler(this.LeftJustifiedToolStripButton_Click);
+            // 
+            // CenterJustifiedToolStripButton
+            // 
+            this.CenterJustifiedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CenterJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.AlignCenter_16x;
+            this.CenterJustifiedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CenterJustifiedToolStripButton.Name = "CenterJustifiedToolStripButton";
+            this.CenterJustifiedToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.CenterJustifiedToolStripButton.Text = "Center";
+            this.CenterJustifiedToolStripButton.ToolTipText = "Center Align";
+            this.CenterJustifiedToolStripButton.Click += new System.EventHandler(this.CenterJustifiedToolStripButton_Click);
+            // 
+            // RightJustifiedToolStripButton
+            // 
+            this.RightJustifiedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RightJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.AlignRight_16x;
+            this.RightJustifiedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RightJustifiedToolStripButton.Name = "RightJustifiedToolStripButton";
+            this.RightJustifiedToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.RightJustifiedToolStripButton.Text = "Right";
+            this.RightJustifiedToolStripButton.ToolTipText = "Right Align";
+            this.RightJustifiedToolStripButton.Click += new System.EventHandler(this.RightJustifiedToolStripButton_Click);
             // 
             // FrmMain
             // 
@@ -1114,5 +1153,8 @@
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintPreviewDialog printPreviewDialog1;
         private PageSetupDialog pageSetupDialog1;
+        private ToolStripButton LeftJustifiedToolStripButton;
+        private ToolStripButton CenterJustifiedToolStripButton;
+        private ToolStripButton RightJustifiedToolStripButton;
     }
 }
