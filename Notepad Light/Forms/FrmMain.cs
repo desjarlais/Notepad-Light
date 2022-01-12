@@ -913,8 +913,13 @@ namespace Notepad_Light
             {
                 // update richtextbox control
                 rtbPage.Font = fontDialog1.Font;
-                rtbPage.ForeColor = fontDialog1.Color;
-
+                
+                // only update color for rtf
+                if (gRtf)
+                {
+                    rtbPage.ForeColor = fontDialog1.Color;
+                }
+                
                 // update settings
                 Properties.Settings.Default.DefaultFontName = fontDialog1.Font.Name;
                 Properties.Settings.Default.DefaultFontSize = Convert.ToInt32(fontDialog1.Font.Size);
@@ -1231,26 +1236,26 @@ namespace Notepad_Light
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
+
+                // print rtf
                 if (gRtf)
                 {
                     e.HasMorePages = RtfPrint.Print(rtbPage, ref charFrom, e);
                     return;
                 }
 
-                Cursor = Cursors.WaitCursor;
+                // print plain text
                 int charactersOnPage = 0;
                 int linesPerPage = 0;
 
-                // TODO: still need to get the actual font size instead of a static 12
-                Font f = new Font(Properties.Settings.Default.DefaultFontName, 12.0f);
-
                 // Sets the value of charactersOnPage to the number of characters 
                 // of strToPrint that will fit within the bounds of the page.
-                e.Graphics?.MeasureString(gPrintString, f, e.MarginBounds.Size, StringFormat.GenericTypographic,
+                e.Graphics?.MeasureString(gPrintString, rtbPage.SelectionFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
                     out charactersOnPage, out linesPerPage);
 
                 // Draws the string within the bounds of the page
-                e.Graphics?.DrawString(gPrintString, f, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
+                e.Graphics?.DrawString(gPrintString, rtbPage.SelectionFont, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
 
                 // Remove the portion of the string that has been printed.
                 gPrintString = gPrintString.Substring(charactersOnPage);
