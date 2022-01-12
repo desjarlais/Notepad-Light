@@ -18,6 +18,8 @@ There are plenty of notepad applications, so this is just another one in the mix
   * bullets
   * indenting
 * Cut / Copy / Paste 
+* Print
+* Print Preview
 * Edit Font formatting
 * Most Recently Used (MRU)
 * Zoom
