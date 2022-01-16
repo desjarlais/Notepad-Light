@@ -2,6 +2,7 @@ using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text;
 
 namespace Notepad_Light
 {
@@ -50,7 +51,7 @@ namespace Notepad_Light
                 appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             }
 
-            // set initial zoom to 100
+            // set initial zoom to 100 and update menu
             zoomToolStripMenuItem100.Checked = true;
             ApplyZoom(1.0f);
 
@@ -124,6 +125,8 @@ namespace Notepad_Light
                     return;
                 }
             }
+
+            UpdateToolbarIcons();
         }
 
         /// <summary>
@@ -170,11 +173,12 @@ namespace Notepad_Light
                     LoadRtfFile(filePath);
                 }
 
-                UpdateMRU();
-                UpdateFormTitle(filePath);
                 gChanged = false;
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
+                gPrevPageLength = rtbPage.TextLength;
+                UpdateMRU();
+                UpdateFormTitle(filePath);
             }
             catch (Exception ex)
             {
@@ -182,6 +186,7 @@ namespace Notepad_Light
             }
             finally
             {
+                UpdateToolbarIcons();
                 Cursor = Cursors.Default;
             }
         }
@@ -241,6 +246,8 @@ namespace Notepad_Light
                     gChanged = false;
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
+                    gPrevPageLength = rtbPage.TextLength;
+                    UpdateToolbarIcons();                    
                 }
             }
             catch (Exception ex)
@@ -288,6 +295,8 @@ namespace Notepad_Light
 
                     gChanged = false;
                 }
+
+                UpdateToolbarIcons();
             }
             catch (Exception ex)
             {
@@ -316,7 +325,6 @@ namespace Notepad_Light
                         Cursor = Cursors.WaitCursor;
                         rtbPage.SaveFile(sfdSaveAs.FileName);
                         UpdateFormTitle(sfdSaveAs.FileName);
-                        UpdateStatusBar();
                         gChanged = false;
                     }
                 }
@@ -327,6 +335,8 @@ namespace Notepad_Light
             }
             finally
             {
+                UpdateStatusBar();
+                UpdateToolbarIcons();
                 Cursor = Cursors.Default;
             }
         }
@@ -359,6 +369,8 @@ namespace Notepad_Light
                 // if the file no longer exists, remove from mru
                 RemoveFileFromMRU(filePath, buttonIndex);
             }
+
+            gPrevPageLength = rtbPage.TextLength;
         }
 
         public void Print()
@@ -584,6 +596,18 @@ namespace Notepad_Light
                     CenterJustifiedToolStripButton.Checked = false;
                     LeftJustifiedToolStripButton.Checked = false;
                 }
+
+                // save icon
+                if (gChanged)
+                {
+                    SaveToolStripButton.Enabled = true;
+                    SaveToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    SaveToolStripButton.Enabled = false;
+                    SaveToolStripMenuItem.Enabled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -601,6 +625,9 @@ namespace Notepad_Light
             gChanged = true;
         }
 
+        /// <summary>
+        /// if the file is rtf, we can light up the formatting
+        /// </summary>
         public void EnableToolbarFormattingIcons()
         {
             BoldToolStripButton.Enabled = true;
@@ -611,6 +638,9 @@ namespace Notepad_Light
             FontColorToolStripButton.Enabled = true;
         }
 
+        /// <summary>
+        /// if the file is plain text, no formatting should be applied
+        /// </summary>
         public void DisableToolbarFormattingIcons()
         {
             BoldToolStripButton.Enabled = false;
@@ -621,6 +651,9 @@ namespace Notepad_Light
             FontColorToolStripButton.Enabled = false;
         }
 
+        /// <summary>
+        /// clear all of the formatting icon states
+        /// </summary>
         public void ClearToolbarFormattingIcons()
         {
             BoldToolStripButton.Checked = false;
@@ -779,19 +812,26 @@ namespace Notepad_Light
 
         #endregion
 
+        /// <summary>
+        /// when the selection changes, we need to update the UI
+        /// we also want to update the modified state of the file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RtbPage_SelectionChanged(object sender, EventArgs e)
         {
-            UpdateLnColValues();
-            UpdateToolbarIcons();
-
             // check if content was added
             if (gPrevPageLength != rtbPage.TextLength)
             {
                 gChanged = true;
             }
-
+            
             // now update the prevPageLength
             gPrevPageLength = rtbPage.TextLength;
+
+            UpdateLnColValues();
+            UpdateToolbarIcons();
+
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -937,6 +977,7 @@ namespace Notepad_Light
         {
             rtbPage.ResetText();
             rtbPage.Font = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
+            EndOfButtonFormatWork();
         }
 
         private void HelpToolStripButton_Click(object sender, EventArgs e)

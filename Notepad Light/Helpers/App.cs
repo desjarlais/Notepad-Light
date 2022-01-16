@@ -78,16 +78,5 @@ namespace Notepad_Light.Helpers
         //    }
         //    return returnImage;
         //}
-
-        //public static string SwapClipboardHtmlText(String replacementHtmlText)
-        //{
-        //    string? returnHtmlText = null;
-        //    if (Clipboard.ContainsText(TextDataFormat.Html))
-        //    {
-        //        returnHtmlText = Clipboard.GetText(TextDataFormat.Html);
-        //        Clipboard.SetText(replacementHtmlText, TextDataFormat.Html);
-        //    }
-        //    return returnHtmlText;
-        //}
     }
 }
