@@ -46,10 +46,10 @@ namespace Notepad_Light
                     
                     mruCount++;
                 }
-
-                // update status bar with app version                
-                appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             }
+
+            // update status bar with app version                
+            appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
 
             // set initial zoom to 100 and update menu
             zoomToolStripMenuItem100.Checked = true;
