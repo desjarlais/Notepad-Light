@@ -17,6 +17,7 @@ There are plenty of notepad applications, so this is just another one in the mix
   * strikethrough / strikeout
   * bullets
   * indenting
+  * font color
 * Cut / Copy / Paste 
 * Print
 * Print Preview
