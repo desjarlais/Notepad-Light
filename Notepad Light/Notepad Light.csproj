@@ -10,7 +10,13 @@
     <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <FileVersion>1.0.0.2</FileVersion>
     <PackageIcon>TextFile_white_16x.png</PackageIcon>
+    <StartupObject>Notepad_Light.Program</StartupObject>
+    <ApplicationIcon>textfile icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="textfile icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="D:\Icons\VS2019\vswin2019\TextFile\TextFile_white_16x.png">

@@ -2,7 +2,6 @@ using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 
 namespace Notepad_Light
 {
@@ -1288,12 +1287,11 @@ namespace Notepad_Light
 
                 // print plain text
                 int charactersOnPage = 0;
-                int linesPerPage = 0;
 
                 // Sets the value of charactersOnPage to the number of characters 
                 // of strToPrint that will fit within the bounds of the page.
                 e.Graphics?.MeasureString(gPrintString, rtbPage.SelectionFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
-                    out charactersOnPage, out linesPerPage);
+                    out charactersOnPage, out _);
 
                 // Draws the string within the bounds of the page
                 e.Graphics?.DrawString(gPrintString, rtbPage.SelectionFont, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
@@ -1338,6 +1336,12 @@ namespace Notepad_Light
             {
                 rtbPage.SelectionColor = colorDialog1.Color;
             }
+        }
+
+        private void FindToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbPage.Focus();
+            FindToolStripButton.PerformClick();
         }
 
         private void printDocument1_BeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e)
