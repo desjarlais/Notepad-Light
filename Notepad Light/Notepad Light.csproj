@@ -7,11 +7,14 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.0.3</AssemblyVersion>
-    <FileVersion>1.0.0.3</FileVersion>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
     <PackageIcon>TextFile_white_16x.png</PackageIcon>
     <StartupObject>Notepad_Light.Program</StartupObject>
     <ApplicationIcon>textfile icon.ico</ApplicationIcon>
+    <PackageProjectUrl>https://github.com/desjarlais/Notepad-Light</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/desjarlais/Notepad-Light</RepositoryUrl>
+    <Description>C# Notepad application for taking notes.</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -94,6 +94,7 @@ namespace Notepad_Light
             if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf)
             {
                 EnableToolbarFormattingIcons();
+                
             }
             else
             {
@@ -173,6 +174,9 @@ namespace Notepad_Light
                     LoadRtfFile(filePath);
                 }
 
+                // now check the encoding
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
+
                 gChanged = false;
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
@@ -222,6 +226,9 @@ namespace Notepad_Light
 
                     // update the title with the file path
                     UpdateFormTitle(ofdFileOpen.FileName);
+
+                    // now check the encoding
+                    EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName);
 
                     // if the file was opened and is in the mru, we don't want to add it
                     // this will check if it exists and if it does, don't update the mru
@@ -318,12 +325,22 @@ namespace Notepad_Light
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
                     sfdSaveAs.Filter = "Plain Text (*.txt)|*.txt | RTF (*.rtf)|*.rtf";
+                    sfdSaveAs.AddExtension = true;
                     sfdSaveAs.Title = "Save As";
+                    sfdSaveAs.AutoUpgradeEnabled = true;
 
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
                         Cursor = Cursors.WaitCursor;
-                        rtbPage.SaveFile(sfdSaveAs.FileName);
+                        if (sfdSaveAs.FilterIndex == 1)
+                        {
+                            rtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
+                        }
+                        else
+                        {
+                            rtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
+                        }
+
                         UpdateFormTitle(sfdSaveAs.FileName);
                         gChanged = false;
                     }

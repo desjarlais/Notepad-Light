@@ -1,20 +1,34 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Notepad_Light.Helpers
 {
     public class App
     {
-        public enum supportedEncoding 
+        /// <summary>
+        /// given a file, return the encoding
+        /// </summary>
+        /// <param name="filePath">file to check encoding</param>
+        /// <returns></returns>
+        public static string GetFileEncoding(string filePath)
         {
-            // list of .net 5+ supported encodings
-            utf16 = 1200,
-            unicodeFFFE = 1201,
-            utf32 = 12000,
-            utf32BE = 12001,
-            usascii = 20127,
-            iso88591 = 28591,
-            utf8 = 65001
+            // read the BOM
+            var bom = new byte[4];
+            using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                file.Read(bom);
+            }
+
+            // determine the encoding based on the BOM
+            // supported encoding for .net5+ (utf8, utf16, utf32, utf32BE, unicodeFFFE, usascii, iso88591)
+            if (bom[0] == 0x00 && bom[1] == 0x00 && bom[2] == 0x00 && bom[3] == 0x00) return Encoding.UTF8.EncodingName; // UTF8 or ANSI
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) return Encoding.UTF8.EncodingName; // UTF-8 with BOM
+            if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode.EncodingName; //UTF-16LE
+            if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.Unicode.EncodingName; //UTF-16BE
+            if (bom[0] == 0xff && bom[1] == 0xfe && bom[2] == 0 && bom[3] == 0) return Encoding.UTF32.EncodingName; //UTF-32LE
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32.EncodingName;  //UTF-32BE
+            return Encoding.ASCII.EncodingName;
         }
 
         public static void PlatformSpecificProcessStart(string url)
