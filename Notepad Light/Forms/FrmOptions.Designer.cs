@@ -1,6 +1,6 @@
 ﻿namespace Notepad_Light.Forms
 {
-    partial class FrmSettings
+    partial class FrmOptions
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOptions));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.LstMRU = new System.Windows.Forms.ListBox();
             this.BtnClearMRU = new System.Windows.Forms.Button();
@@ -206,7 +206,7 @@
             this.rdoFindDirectionUp.Text = "Up";
             this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
             // 
-            // FrmSettings
+            // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -221,9 +221,9 @@
             this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmSettings";
+            this.Name = "FrmOptions";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Settings";
+            this.Text = "Options";
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

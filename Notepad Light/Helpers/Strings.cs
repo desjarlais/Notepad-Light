@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace Notepad_Light.Helpers
+﻿namespace Notepad_Light.Helpers
 {
     public static class Strings
     {

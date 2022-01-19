@@ -2,6 +2,7 @@ using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
+using System.Drawing.Printing;
 
 namespace Notepad_Light
 {
@@ -1224,7 +1225,7 @@ namespace Notepad_Light
 
         private void FileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmSettings fOptions = new FrmSettings()
+            FrmOptions fOptions = new FrmOptions()
             {
                 Owner = this
             };
@@ -1272,7 +1273,7 @@ namespace Notepad_Light
             PageSetup();
         }
 
-        private void PrintDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        private void PrintDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
             try
             {
@@ -1344,7 +1345,7 @@ namespace Notepad_Light
             FindToolStripButton.PerformClick();
         }
 
-        private void printDocument1_BeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        private void printDocument1_BeginPrint(object sender, PrintEventArgs e)
         {
             if (gRtf)
             {

@@ -1,18 +1,15 @@
 ﻿namespace Notepad_Light.Forms
 {
-    public partial class FrmSettings : Form
+    public partial class FrmOptions : Form
     {
-        public FrmSettings()
+        public FrmOptions()
         {
             InitializeComponent();
 
             // update options
             ckbUsePasteUI.Checked = Properties.Settings.Default.UsePasteUI;
             cboNewDocFormat.Text = Properties.Settings.Default.NewDocumentFormat;
-
-            // update the paste options
-            
-            
+                        
             // check the file MRU and populate the list
             if (Properties.Settings.Default.FileMRU.Count > 0)
             {
