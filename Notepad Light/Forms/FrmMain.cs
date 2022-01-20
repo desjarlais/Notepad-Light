@@ -740,10 +740,10 @@ namespace Notepad_Light
             {
                 rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style | FontStyle.Strikeout);
             }
-
+            
             EndOfButtonFormatWork();
         }
-
+        
         /// <summary>
         /// given a position, move the cursor to that location in the richtextbox
         /// </summary>

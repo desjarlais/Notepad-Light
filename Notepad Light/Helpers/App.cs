@@ -28,7 +28,7 @@ namespace Notepad_Light.Helpers
             if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.Unicode.EncodingName; //UTF-16BE
             if (bom[0] == 0xff && bom[1] == 0xfe && bom[2] == 0 && bom[3] == 0) return Encoding.UTF32.EncodingName; //UTF-32LE
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32.EncodingName;  //UTF-32BE
-            return Encoding.ASCII.EncodingName;
+            return Encoding.UTF8.EncodingName;
         }
 
         public static void PlatformSpecificProcessStart(string url)
