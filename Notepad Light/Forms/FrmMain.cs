@@ -447,6 +447,7 @@ namespace Notepad_Light
 
                 // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
+                MessageBox.Show("File No Longer Exists, Removing From MRU", "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             // clear the menu and add back the remaining files
