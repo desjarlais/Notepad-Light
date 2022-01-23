@@ -1382,8 +1382,14 @@ namespace Notepad_Light
             {
                 Owner = this
             };
-
             fEditedTimer.ShowDialog(this);
+            
+            // if the time was adjusted, reset the timer and update with the new time
+            if (fEditedTimer._isAdjustedTime)
+            {
+                ResetTimerToolStripButton.PerformClick();
+            }
+
             string[] dataArray = _EditedTime.Split(_semiColonDelim);
             editedHours = Convert.ToInt32(dataArray.ElementAt(0));
             editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));

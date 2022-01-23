@@ -5,8 +5,8 @@ namespace Notepad_Light.Forms
 {
     public partial class FrmEditTimer : Form
     {
-        private bool _isAdjustedTime;
-        private bool _timeErrorEntered;
+        public bool _isAdjustedTime;
+        public bool _timeErrorEntered;
 
         public FrmEditTimer(string fromMainForm)
         {
