@@ -127,6 +127,7 @@
             this.StartStopTimerToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.TimerToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.ResetTimerToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.EditTimerToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.FindToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.FindToolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
@@ -245,11 +246,13 @@
             // 
             this.rtbPage.AcceptsTab = true;
             this.rtbPage.AutoWordSelection = true;
+            this.rtbPage.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbPage.CausesValidation = false;
             this.rtbPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbPage.Location = new System.Drawing.Point(0, 49);
             this.rtbPage.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.rtbPage.Name = "rtbPage";
+            this.rtbPage.ShowSelectionMargin = true;
             this.rtbPage.Size = new System.Drawing.Size(1135, 426);
             this.rtbPage.TabIndex = 1;
             this.rtbPage.Text = "";
@@ -747,6 +750,7 @@
             this.StartStopTimerToolStripButton,
             this.TimerToolStripLabel,
             this.ResetTimerToolStripButton,
+            this.EditTimerToolStripButton,
             this.ToolStripSeparator2,
             this.FindToolStripLabel,
             this.FindToolStripTextBox,
@@ -1010,6 +1014,15 @@
             this.ResetTimerToolStripButton.Text = "Reset";
             this.ResetTimerToolStripButton.Click += new System.EventHandler(this.ToolStripButtonResetTimer_Click);
             // 
+            // EditTimerToolStripButton
+            // 
+            this.EditTimerToolStripButton.Image = global::Notepad_Light.Properties.Resources.Time_color_16x;
+            this.EditTimerToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EditTimerToolStripButton.Name = "EditTimerToolStripButton";
+            this.EditTimerToolStripButton.Size = new System.Drawing.Size(47, 22);
+            this.EditTimerToolStripButton.Text = "Edit";
+            this.EditTimerToolStripButton.Click += new System.EventHandler(this.EditTimerToolStripButton_Click);
+            // 
             // ToolStripSeparator2
             // 
             this.ToolStripSeparator2.Name = "ToolStripSeparator2";
@@ -1213,5 +1226,6 @@
         private ToolStripMenuItem FindToolStripMenuItem;
         private ToolStripStatusLabel toolStripStatusLabel7;
         private ToolStripStatusLabel EncodingToolStripStatusLabel;
+        private ToolStripButton EditTimerToolStripButton;
     }
 }

@@ -14,9 +14,12 @@ namespace Notepad_Light
         public bool gChanged = false;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
+        private string _EditedTime = string.Empty;
         private int editedHours, editedMinutes, editedSeconds, charFrom;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+
+        private const char _semiColonDelim = ':';
 
         public FrmMain()
         {
@@ -61,6 +64,16 @@ namespace Notepad_Light
             UpdateStatusBar();
             UpdateToolbarIcons();
         }
+
+        #region Class Properties
+        /// <summary>
+        /// used for the adjust labor dialog return value
+        /// </summary>
+        public string EditedTime
+        {
+            set => _EditedTime = value;
+        }
+        #endregion
 
         #region Functions
 
@@ -1361,6 +1374,21 @@ namespace Notepad_Light
         {
             rtbPage.Focus();
             FindToolStripButton.PerformClick();
+        }
+
+        private void EditTimerToolStripButton_Click(object sender, EventArgs e)
+        {
+            FrmEditTimer fEditedTimer = new FrmEditTimer(TimerToolStripLabel.Text)
+            {
+                Owner = this
+            };
+
+            fEditedTimer.ShowDialog(this);
+            string[] dataArray = _EditedTime.Split(_semiColonDelim);
+            editedHours = Convert.ToInt32(dataArray.ElementAt(0));
+            editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
+            editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
+            TimerToolStripLabel.Text = _EditedTime;
         }
 
         private void printDocument1_BeginPrint(object sender, PrintEventArgs e)
