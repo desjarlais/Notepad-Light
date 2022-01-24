@@ -4,6 +4,7 @@
     {
         // general strings
         public const string semiColon = " : ";
+        public const string semiColonNoSpaces = ":";
         public const string defaultFileName = "Untitled";
         public const string rtf = "Rtf";
         public const string plainText = "Text";
@@ -13,7 +14,8 @@
         public const string startTimeText = "Start";
         public const string stopTimeText = "Stop";
         public const string zeroTimer = "00:00:00";
-        public const string zeroEditTime = "00:00";
+        public const string zeroHRMIN = "00:00";
+        public const string zeroSEC = "00";
         public const string empty = "empty";
         public const string rtfExt = ".rtf";
         public const string txtExt = ".txt";

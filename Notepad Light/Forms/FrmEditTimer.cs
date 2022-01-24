@@ -1,5 +1,4 @@
-﻿using System;
-using Notepad_Light.Helpers;
+﻿using Notepad_Light.Helpers;
 
 namespace Notepad_Light.Forms
 {
@@ -31,7 +30,7 @@ namespace Notepad_Light.Forms
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             // reset the time value to 0, otherwise the value will stay with the invalid input
-            mskTxtBxNewTime.Text = Strings.zeroEditTime;
+            mskTxtBxNewTime.Text = Strings.zeroHRMIN;
             _timeErrorEntered = true;
         }
 
@@ -42,23 +41,19 @@ namespace Notepad_Light.Forms
 
             // Set the adjustedlaborproperty with the new time value so the main form can handle the time as needed
             if (!mskTxtBxNewTime.MaskCompleted) return;
-            string adjustedtime = mskTxtBxNewTime.Text;
-            char[] adjDelim = { ':' };
-            string[] adjArray = adjustedtime.Split(adjDelim);
-            string adjHours = adjArray.ElementAt(0);
-            string adjMinutes = adjArray.ElementAt(1);
-            string adjustedtime2 = adjHours + ":" + adjMinutes + ":00";
-
-            // check if this was an error that caused 00:00 to be added
-            // if it was an error, reset the value back to the original
-            if (_timeErrorEntered)
-            {
-                adjustedtime2 = lblOriginalTime.Text;
-            }
 
             if (Owner is FrmMain f)
             {
-                f.EditedTime = adjustedtime2;
+                // check if this was an error that caused 00:00 to be added
+                // if it was an error, reset the value back to the original
+                if (_timeErrorEntered)
+                {
+                    f.EditedTime = lblOriginalTime.Text;
+                }
+                else
+                {
+                    f.EditedTime = App.ConvertTimeValueHRMIN(mskTxtBxNewTime.Text);
+                }
             }
 
             Close();

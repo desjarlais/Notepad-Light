@@ -1388,13 +1388,13 @@ namespace Notepad_Light
             if (fEditedTimer._isAdjustedTime)
             {
                 ResetTimerToolStripButton.PerformClick();
-            }
 
-            string[] dataArray = _EditedTime.Split(_semiColonDelim);
-            editedHours = Convert.ToInt32(dataArray.ElementAt(0));
-            editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
-            editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
-            TimerToolStripLabel.Text = _EditedTime;
+                string[] dataArray = _EditedTime.Split(_semiColonDelim);
+                editedHours = Convert.ToInt32(dataArray.ElementAt(0));
+                editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
+                editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
+                TimerToolStripLabel.Text = _EditedTime;
+            }
         }
 
         private void printDocument1_BeginPrint(object sender, PrintEventArgs e)

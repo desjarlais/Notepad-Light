@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -60,37 +61,62 @@ namespace Notepad_Light.Helpers
             }
         }
 
-        //public static Stream SwapClipboardAudio(Stream replacementAudioStream)
-        //{
-        //    Stream? returnAudioStream = null;
-        //    if (Clipboard.ContainsAudio())
-        //    {
-        //        returnAudioStream = Clipboard.GetAudioStream();
-        //        Clipboard.SetAudio(replacementAudioStream);
-        //    }
-        //    return returnAudioStream;
-        //}
+        public static string ConvertTimeValueHRMIN(string input)
+        {
+            char[] adjDelim = { ':' };
+            string[] adjArray = input.Split(adjDelim);
+            string adjHours = adjArray.ElementAt(0);
+            string adjMinutes = adjArray.ElementAt(1);
+            return adjHours + Strings.semiColonNoSpaces + adjMinutes + Strings.semiColonNoSpaces + Strings.zeroSEC;
+        }
 
-        //public static StringCollection SwapClipboardFileDropList(StringCollection replacementList)
-        //{
-        //    StringCollection? returnList = null;
-        //    if (Clipboard.ContainsFileDropList())
-        //    {
-        //        returnList = Clipboard.GetFileDropList();
-        //        Clipboard.SetFileDropList(replacementList);
-        //    }
-        //    return returnList;
-        //}
+        public static string ConvertTimeValueHRMINSEC(string input)
+        {
+            char[] adjDelim = { ':' };
+            string[] adjArray = input.Split(adjDelim);
+            string adjHours = adjArray.ElementAt(0);
+            string adjMinutes = adjArray.ElementAt(1);
+            string adjSeconds = adjArray.ElementAt(2);
+            return adjHours + Strings.semiColonNoSpaces + adjMinutes + Strings.semiColonNoSpaces + adjSeconds;
+        }
 
-        //public static Image SwapClipboardImage(Image replacementImage)
-        //{
-        //    Image? returnImage = null;
-        //    if (Clipboard.ContainsImage())
-        //    {
-        //        returnImage = Clipboard.GetImage();
-        //        Clipboard.SetImage(replacementImage);
-        //    }
-        //    return returnImage;
-        //}
+        public static Stream SwapClipboardAudio(Stream replacementAudioStream)
+        {
+            Stream? returnAudioStream = null;
+            if (Clipboard.ContainsAudio())
+            {
+                returnAudioStream = Clipboard.GetAudioStream();
+                Clipboard.SetAudio(replacementAudioStream);
+            }
+#pragma warning disable CS8603 // Possible null reference return.
+            return returnAudioStream;
+#pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        public static StringCollection SwapClipboardFileDropList(StringCollection replacementList)
+        {
+            StringCollection? returnList = null;
+            if (Clipboard.ContainsFileDropList())
+            {
+                returnList = Clipboard.GetFileDropList();
+                Clipboard.SetFileDropList(replacementList);
+            }
+#pragma warning disable CS8603 // Possible null reference return.
+            return returnList;
+#pragma warning restore CS8603 // Possible null reference return.
+        }
+
+        public static Image SwapClipboardImage(Image replacementImage)
+        {
+            Image? returnImage = null;
+            if (Clipboard.ContainsImage())
+            {
+                returnImage = Clipboard.GetImage();
+                Clipboard.SetImage(replacementImage);
+            }
+#pragma warning disable CS8603 // Possible null reference return.
+            return returnImage;
+#pragma warning restore CS8603 // Possible null reference return.
+        }
     }
 }
