@@ -164,6 +164,7 @@ namespace Notepad_Light
             DisableToolbarFormattingIcons();
             gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.plainText;
+            ApplyTextColor();
         }
 
         /// <summary>
@@ -883,6 +884,18 @@ namespace Notepad_Light
             ChangeMenuItemBackColor(Color.White);
         }
 
+        public void ApplyTextColor()
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                rtbPage.ForeColor = Color.White;
+            }
+            else
+            {
+                rtbPage.ForeColor = Color.Black;
+            }
+        }
+
         /// <summary>
         /// change text color of controls and menu items
         /// </summary>
@@ -1456,6 +1469,9 @@ namespace Notepad_Light
             {
                 ApplyLightMode();
             }
+
+            // update text color
+            ApplyTextColor();
         }
 
         private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
