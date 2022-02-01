@@ -851,6 +851,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// change UI to have a black background and white text
+        /// </summary>
         public void ApplyDarkMode()
         {
             // dark mode = RGB (32, 32, 32)
@@ -864,12 +867,12 @@ namespace Notepad_Light
             ChangeMenuItemBackColor(Color.FromArgb(32, 32, 32));
         }
 
+        /// <summary>
+        /// change the background to have the default UI
+        /// </summary>
         public void ApplyLightMode()
         {
-            // apply default values for controls
-            // toolstrip = RGB (240, 240, 240)
-            // statusbar = RGB (240, 240, 240)
-            // richtextbox = RGB (255, 255, 255)
+            // toolstrip, statusbar, richtextbox = RGB (240, 240, 240) 
             // font color = RGB (0, 0, 0) 
             menuStrip1.BackColor = Color.FromArgb(240, 240, 240);
             toolStrip1.BackColor = Color.FromArgb(240, 240, 240);
@@ -880,6 +883,10 @@ namespace Notepad_Light
             ChangeMenuItemBackColor(Color.White);
         }
 
+        /// <summary>
+        /// change text color of controls and menu items
+        /// </summary>
+        /// <param name="clr"></param>
         public void ChangeControlTextColor(Color clr)
         {
             // update toolstrip items
@@ -950,6 +957,10 @@ namespace Notepad_Light
             HelpToolStripMenuItem.ForeColor = clr;
         }
 
+        /// <summary>
+        /// change the background color of the menu items
+        /// </summary>
+        /// <param name="clr"></param>
         public void ChangeMenuItemBackColor(Color clr)
         {
             FileToolStripMenuItem.BackColor = clr;
@@ -1535,6 +1546,7 @@ namespace Notepad_Light
             if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != rtbPage.SelectionColor)
             {
                 rtbPage.SelectionColor = colorDialog1.Color;
+                gChanged = true;
             }
         }
 
