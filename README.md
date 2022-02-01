@@ -29,3 +29,4 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Word Wrap
 * Timer
 * Find / Search for text
+* Dark Mode
