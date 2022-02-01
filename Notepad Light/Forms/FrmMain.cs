@@ -63,6 +63,16 @@ namespace Notepad_Light
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
             UpdateToolbarIcons();
+
+            // update theme
+            if (Properties.Settings.Default.DarkMode)
+            {
+                ApplyDarkMode();
+            }
+            else
+            {
+                ApplyLightMode();
+            }
         }
 
         #region Class Properties
@@ -841,6 +851,154 @@ namespace Notepad_Light
             }
         }
 
+        public void ApplyDarkMode()
+        {
+            // dark mode = RGB (32, 32, 32)
+            // font color = RGB (255, 255, 255)
+            menuStrip1.BackColor = Color.FromArgb(32, 32, 32);
+            toolStrip1.BackColor = Color.FromArgb(32, 32, 32);
+            statusStrip1.BackColor = Color.FromArgb(32, 32, 32);
+            rtbPage.BackColor = Color.FromArgb(32, 32, 32);
+            rtbPage.SelectionColor = Color.White;
+            ChangeControlTextColor(Color.White);
+            ChangeMenuItemBackColor(Color.FromArgb(32, 32, 32));
+        }
+
+        public void ApplyLightMode()
+        {
+            // apply default values for controls
+            // toolstrip = RGB (240, 240, 240)
+            // statusbar = RGB (240, 240, 240)
+            // richtextbox = RGB (255, 255, 255)
+            // font color = RGB (0, 0, 0) 
+            menuStrip1.BackColor = Color.FromArgb(240, 240, 240);
+            toolStrip1.BackColor = Color.FromArgb(240, 240, 240);
+            statusStrip1.BackColor = Color.FromArgb(240, 240, 240);
+            rtbPage.BackColor = Color.FromArgb(255, 255, 255);
+            rtbPage.SelectionColor = Color.Black;
+            ChangeControlTextColor(Color.Black);
+            ChangeMenuItemBackColor(Color.White);
+        }
+
+        public void ChangeControlTextColor(Color clr)
+        {
+            // update toolstrip items
+            TimerToolStripLabel.ForeColor = clr;
+            TimerToolStripLabelOnly.ForeColor = clr;
+            StartStopTimerToolStripButton.ForeColor = clr;
+            ResetTimerToolStripButton.ForeColor = clr;
+            EditTimerToolStripButton.ForeColor = clr;
+            FindToolStripButton.ForeColor = clr;
+            FindToolStripLabel.ForeColor = clr;
+            
+            // update status bar items
+            toolStripStatusLabelCol.ForeColor = clr;
+            toolStripStatusLabelColumn.ForeColor = clr;
+            toolStripStatusLabelLn.ForeColor = clr;
+            toolStripStatusLabelLine.ForeColor = clr;
+            toolStripStatusLabelFType.ForeColor = clr;
+            toolStripStatusLabelFileType.ForeColor = clr;
+            toolStripStatusLabelAppVer.ForeColor = clr;
+            appVersionToolStripStatusLabel.ForeColor = clr;
+            EncodingToolStripStatusLabel.ForeColor = clr;
+
+            // update menu items
+            FileToolStripMenuItem.ForeColor = clr;
+            NewToolStripMenuItem.ForeColor = clr;
+            OpenToolStripMenuItem.ForeColor = clr;
+            RecentToolStripMenuItem.ForeColor = clr;
+            RecentToolStripMenuItem1.ForeColor = clr;
+            RecentToolStripMenuItem2.ForeColor = clr;
+            RecentToolStripMenuItem3.ForeColor = clr;
+            RecentToolStripMenuItem4.ForeColor = clr;
+            RecentToolStripMenuItem5.ForeColor = clr;
+            PrintToolStripMenuItem.ForeColor = clr;
+            PrintPreviewToolStripMenuItem.ForeColor = clr;
+            PageSetupToolStripMenuItem.ForeColor = clr;
+            SaveAsToolStripMenuItem.ForeColor = clr;
+            SaveToolStripMenuItem.ForeColor = clr;
+            OptionsToolStripMenuItem.ForeColor = clr;
+            ExitToolStripMenuItem.ForeColor = clr;
+            EditToolStripMenuItem.ForeColor = clr;
+            UndoToolStripMenuItem.ForeColor = clr;
+            RedoToolStripMenuItem.ForeColor = clr;
+            CutToolStripMenuItem.ForeColor = clr;
+            CopyToolStripMenuItem.ForeColor = clr;
+            PasteToolStripMenuItem.ForeColor = clr;
+            SelectAllToolStripMenuItem.ForeColor = clr;
+            ClearAllTextToolStripMenuItem.ForeColor = clr;
+            FindToolStripMenuItem.ForeColor = clr;
+            EditFontToolStripMenuItem.ForeColor = clr;
+            ClearFormattingToolStripMenuItem.ForeColor = clr;
+            BoldToolStripMenuItem.ForeColor = clr;
+            ItalicToolStripMenuItem.ForeColor = clr;
+            UnderlineToolStripMenuItem.ForeColor = clr;
+            StrikethroughToolStripMenuItem.ForeColor = clr;
+            WordWrapToolStripMenuItem.ForeColor = clr;
+            ZoomToolStripMenuItem.ForeColor = clr;
+            zoomToolStripMenuItem100.ForeColor = clr;
+            zoomToolStripMenuItem150.ForeColor = clr;
+            zoomToolStripMenuItem200.ForeColor = clr;
+            zoomToolStripMenuItem250.ForeColor = clr;
+            zoomToolStripMenuItem300.ForeColor = clr;
+            AboutToolStripMenuItem.ForeColor = clr;
+            ErrorLogToolStripMenuItem.ForeColor = clr;
+            SubmitFeedbackToolStripMenuItem.ForeColor = clr;
+            ReportBugToolStripMenuItem.ForeColor = clr;
+            FormatToolStripMenuItem.ForeColor = clr;
+            ViewToolStripMenuItem.ForeColor = clr;
+            HelpToolStripMenuItem.ForeColor = clr;
+        }
+
+        public void ChangeMenuItemBackColor(Color clr)
+        {
+            FileToolStripMenuItem.BackColor = clr;
+            NewToolStripMenuItem.BackColor = clr;
+            OpenToolStripMenuItem.BackColor = clr;
+            RecentToolStripMenuItem.BackColor = clr;
+            RecentToolStripMenuItem1.BackColor = clr;
+            RecentToolStripMenuItem2.BackColor = clr;
+            RecentToolStripMenuItem3.BackColor = clr;
+            RecentToolStripMenuItem4.BackColor = clr;
+            RecentToolStripMenuItem5.BackColor = clr;
+            PrintToolStripMenuItem.BackColor = clr;
+            PrintPreviewToolStripMenuItem.BackColor = clr;
+            PageSetupToolStripMenuItem.BackColor = clr;
+            SaveAsToolStripMenuItem.BackColor = clr;
+            SaveToolStripMenuItem.BackColor = clr;
+            OptionsToolStripMenuItem.BackColor = clr;
+            ExitToolStripMenuItem.BackColor = clr;
+            EditToolStripMenuItem.BackColor = clr;
+            UndoToolStripMenuItem.BackColor = clr;
+            RedoToolStripMenuItem.BackColor = clr;
+            CutToolStripMenuItem.BackColor = clr;
+            CopyToolStripMenuItem.BackColor = clr;
+            PasteToolStripMenuItem.BackColor = clr;
+            SelectAllToolStripMenuItem.BackColor = clr;
+            ClearAllTextToolStripMenuItem.BackColor = clr;
+            FindToolStripMenuItem.BackColor = clr;
+            EditFontToolStripMenuItem.BackColor = clr;
+            ClearFormattingToolStripMenuItem.BackColor = clr;
+            BoldToolStripMenuItem.BackColor = clr;
+            ItalicToolStripMenuItem.BackColor = clr;
+            UnderlineToolStripMenuItem.BackColor = clr;
+            StrikethroughToolStripMenuItem.BackColor = clr;
+            WordWrapToolStripMenuItem.BackColor = clr;
+            ZoomToolStripMenuItem.BackColor = clr;
+            zoomToolStripMenuItem100.BackColor = clr;
+            zoomToolStripMenuItem150.BackColor = clr;
+            zoomToolStripMenuItem200.BackColor = clr;
+            zoomToolStripMenuItem250.BackColor = clr;
+            zoomToolStripMenuItem300.BackColor = clr;
+            AboutToolStripMenuItem.BackColor = clr;
+            ErrorLogToolStripMenuItem.BackColor = clr;
+            SubmitFeedbackToolStripMenuItem.BackColor = clr;
+            ReportBugToolStripMenuItem.BackColor = clr;
+            FormatToolStripMenuItem.BackColor = clr;
+            ViewToolStripMenuItem.BackColor = clr;
+            HelpToolStripMenuItem.BackColor = clr;
+        }
+
         #endregion
 
         /// <summary>
@@ -1277,6 +1435,16 @@ namespace Notepad_Light
             {
                 ClearRecentMenuItems();
             }
+
+            // update the theme
+            if (Properties.Settings.Default.DarkMode)
+            {
+                ApplyDarkMode();
+            }
+            else
+            {
+                ApplyLightMode();
+            }
         }
 
         private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1395,6 +1563,11 @@ namespace Notepad_Light
                 editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
                 TimerToolStripLabel.Text = _EditedTime;
             }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            ApplyDarkMode();
         }
 
         private void printDocument1_BeginPrint(object sender, PrintEventArgs e)

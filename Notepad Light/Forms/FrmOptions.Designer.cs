@@ -43,9 +43,13 @@
             this.rdoMatchCase = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionDown = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rdoDarkMode = new System.Windows.Forms.RadioButton();
+            this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -84,7 +88,7 @@
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(481, 288);
+            this.BtnOK.Location = new System.Drawing.Point(481, 320);
             this.BtnOK.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(81, 22);
@@ -95,7 +99,7 @@
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(564, 288);
+            this.BtnCancel.Location = new System.Drawing.Point(564, 320);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(81, 22);
@@ -206,11 +210,45 @@
             this.rdoFindDirectionUp.Text = "Up";
             this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rdoLightMode);
+            this.groupBox2.Controls.Add(this.rdoDarkMode);
+            this.groupBox2.Location = new System.Drawing.Point(6, 292);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(284, 52);
+            this.groupBox2.TabIndex = 7;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Theme";
+            // 
+            // rdoDarkMode
+            // 
+            this.rdoDarkMode.AutoSize = true;
+            this.rdoDarkMode.Location = new System.Drawing.Point(3, 19);
+            this.rdoDarkMode.Name = "rdoDarkMode";
+            this.rdoDarkMode.Size = new System.Drawing.Size(83, 19);
+            this.rdoDarkMode.TabIndex = 0;
+            this.rdoDarkMode.TabStop = true;
+            this.rdoDarkMode.Text = "Dark Mode";
+            this.rdoDarkMode.UseVisualStyleBackColor = true;
+            // 
+            // rdoLightMode
+            // 
+            this.rdoLightMode.AutoSize = true;
+            this.rdoLightMode.Location = new System.Drawing.Point(103, 19);
+            this.rdoLightMode.Name = "rdoLightMode";
+            this.rdoLightMode.Size = new System.Drawing.Size(86, 19);
+            this.rdoLightMode.TabIndex = 1;
+            this.rdoLightMode.TabStop = true;
+            this.rdoLightMode.Text = "Light Mode";
+            this.rdoLightMode.UseVisualStyleBackColor = true;
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 320);
+            this.ClientSize = new System.Drawing.Size(654, 352);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.BtnCancel);
@@ -229,6 +267,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -249,5 +289,8 @@
         private RadioButton rdoFindDirectionUp;
         private RadioButton rdoWholeWord;
         private RadioButton rdoMatchCase;
+        private GroupBox groupBox2;
+        private RadioButton rdoLightMode;
+        private RadioButton rdoDarkMode;
     }
 }

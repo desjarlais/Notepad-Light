@@ -24,6 +24,16 @@
                 case "MatchCase": rdoMatchCase.Checked = true; break;
                 case "WholeWord": rdoWholeWord.Checked = true; break;
             }
+
+            // update theme
+            if (Properties.Settings.Default.DarkMode)
+            {
+                rdoDarkMode.Checked = true;
+            }
+            else
+            {
+                rdoLightMode.Checked = true;
+            }
         }
 
         public void UpdateMRUListbox()
@@ -70,6 +80,15 @@
             else
             {
                 Properties.Settings.Default.SearchOption = "Down";
+            }
+
+            if (rdoDarkMode.Checked == true)
+            {
+                Properties.Settings.Default.DarkMode = true;
+            }
+            else
+            {
+                Properties.Settings.Default.DarkMode = false;
             }
 
             Close();

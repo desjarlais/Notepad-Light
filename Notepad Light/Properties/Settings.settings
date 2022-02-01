@@ -31,5 +31,8 @@
     <Setting Name="SearchOption" Type="System.String" Scope="User">
       <Value Profile="(Default)">Down</Value>
     </Setting>
+    <Setting Name="DarkMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
