@@ -863,8 +863,9 @@ namespace Notepad_Light
             toolStrip1.BackColor = Color.FromArgb(32, 32, 32);
             statusStrip1.BackColor = Color.FromArgb(32, 32, 32);
             rtbPage.BackColor = Color.FromArgb(32, 32, 32);
-            rtbPage.SelectionColor = Color.White;
+            rtbPage.ForeColor = Color.White;
             ChangeControlTextColor(Color.White);
+            ChangeSubMenuItemBackColor(Color.FromArgb(32, 32, 32));
             ChangeMenuItemBackColor(Color.FromArgb(32, 32, 32));
         }
 
@@ -879,11 +880,15 @@ namespace Notepad_Light
             toolStrip1.BackColor = Color.FromArgb(240, 240, 240);
             statusStrip1.BackColor = Color.FromArgb(240, 240, 240);
             rtbPage.BackColor = Color.FromArgb(255, 255, 255);
-            rtbPage.SelectionColor = Color.Black;
+            rtbPage.ForeColor = Color.Black;
             ChangeControlTextColor(Color.Black);
-            ChangeMenuItemBackColor(Color.White);
+            ChangeSubMenuItemBackColor(Color.White);
+            ChangeMenuItemBackColor(Color.FromArgb(240, 240, 240));
         }
 
+        /// <summary>
+        /// plain text files can have the text color changed
+        /// </summary>
         public void ApplyTextColor()
         {
             if (Properties.Settings.Default.DarkMode)
@@ -970,13 +975,22 @@ namespace Notepad_Light
             HelpToolStripMenuItem.ForeColor = clr;
         }
 
-        /// <summary>
-        /// change the background color of the menu items
-        /// </summary>
-        /// <param name="clr"></param>
         public void ChangeMenuItemBackColor(Color clr)
         {
             FileToolStripMenuItem.BackColor = clr;
+            EditToolStripMenuItem.BackColor = clr;
+            FormatToolStripMenuItem.BackColor = clr;
+            ViewToolStripMenuItem.BackColor = clr;
+            HelpToolStripMenuItem.BackColor = clr;
+        }
+
+        /// <summary>
+        /// change the background color of the sub menu items
+        /// </summary>
+        /// <param name="clr"></param>
+        public void ChangeSubMenuItemBackColor(Color clr)
+        {
+            // sub menu items can be pure white
             NewToolStripMenuItem.BackColor = clr;
             OpenToolStripMenuItem.BackColor = clr;
             RecentToolStripMenuItem.BackColor = clr;
@@ -992,7 +1006,6 @@ namespace Notepad_Light
             SaveToolStripMenuItem.BackColor = clr;
             OptionsToolStripMenuItem.BackColor = clr;
             ExitToolStripMenuItem.BackColor = clr;
-            EditToolStripMenuItem.BackColor = clr;
             UndoToolStripMenuItem.BackColor = clr;
             RedoToolStripMenuItem.BackColor = clr;
             CutToolStripMenuItem.BackColor = clr;
@@ -1018,9 +1031,6 @@ namespace Notepad_Light
             ErrorLogToolStripMenuItem.BackColor = clr;
             SubmitFeedbackToolStripMenuItem.BackColor = clr;
             ReportBugToolStripMenuItem.BackColor = clr;
-            FormatToolStripMenuItem.BackColor = clr;
-            ViewToolStripMenuItem.BackColor = clr;
-            HelpToolStripMenuItem.BackColor = clr;
         }
 
         #endregion
