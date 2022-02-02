@@ -211,6 +211,9 @@ namespace Notepad_Light
                 gPrevPageLength = rtbPage.TextLength;
                 UpdateMRU();
                 UpdateFormTitle(filePath);
+
+                // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
+                rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
             }
             catch (Exception ex)
             {
@@ -282,7 +285,10 @@ namespace Notepad_Light
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
-                    UpdateToolbarIcons();                    
+                    UpdateToolbarIcons();
+
+                    // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
+                    rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
                 }
             }
             catch (Exception ex)
@@ -902,10 +908,10 @@ namespace Notepad_Light
 
         /// <summary>
         /// plain text files can have the text color changed
+        /// if the file is rtf, no changes will be made
         /// </summary>
         public void ApplyTextColor()
         {
-            // currently I'm not changing text color for rtf files
             if (gRtf)
             {
                 return;
