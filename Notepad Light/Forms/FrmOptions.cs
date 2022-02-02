@@ -8,7 +8,6 @@
 
             // update options
             ckbUsePasteUI.Checked = Properties.Settings.Default.UsePasteUI;
-            cboNewDocFormat.Text = Properties.Settings.Default.NewDocumentFormat;
                         
             // check the file MRU and populate the list
             if (Properties.Settings.Default.FileMRU.Count > 0)
@@ -62,7 +61,6 @@
         private void BtnOK_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.UsePasteUI = ckbUsePasteUI.Checked;
-            Properties.Settings.Default.NewDocumentFormat = cboNewDocFormat.Text;
             Properties.Settings.Default.Save();
 
             if (rdoFindDirectionUp.Checked == true)

@@ -36,16 +36,14 @@
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cboNewDocFormat = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.rdoWholeWord = new System.Windows.Forms.RadioButton();
             this.rdoMatchCase = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionDown = new System.Windows.Forms.RadioButton();
             this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rdoDarkMode = new System.Windows.Forms.RadioButton();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
+            this.rdoDarkMode = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -111,8 +109,6 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.ckbUsePasteUI);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.cboNewDocFormat);
             this.groupBox3.Location = new System.Drawing.Point(295, 202);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
@@ -125,33 +121,13 @@
             // ckbUsePasteUI
             // 
             this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(12, 49);
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(13, 23);
             this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUsePasteUI.Name = "ckbUsePasteUI";
             this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
             this.ckbUsePasteUI.TabIndex = 1;
             this.ckbUsePasteUI.Text = "Use Paste UI";
             this.ckbUsePasteUI.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 15);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "New Document Format:";
-            // 
-            // cboNewDocFormat
-            // 
-            this.cboNewDocFormat.FormattingEnabled = true;
-            this.cboNewDocFormat.Items.AddRange(new object[] {
-            "Plain Text",
-            "Rtf"});
-            this.cboNewDocFormat.Location = new System.Drawing.Point(152, 19);
-            this.cboNewDocFormat.Name = "cboNewDocFormat";
-            this.cboNewDocFormat.Size = new System.Drawing.Size(182, 23);
-            this.cboNewDocFormat.TabIndex = 5;
             // 
             // groupBox5
             // 
@@ -221,17 +197,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Theme";
             // 
-            // rdoDarkMode
-            // 
-            this.rdoDarkMode.AutoSize = true;
-            this.rdoDarkMode.Location = new System.Drawing.Point(3, 19);
-            this.rdoDarkMode.Name = "rdoDarkMode";
-            this.rdoDarkMode.Size = new System.Drawing.Size(83, 19);
-            this.rdoDarkMode.TabIndex = 0;
-            this.rdoDarkMode.TabStop = true;
-            this.rdoDarkMode.Text = "Dark Mode";
-            this.rdoDarkMode.UseVisualStyleBackColor = true;
-            // 
             // rdoLightMode
             // 
             this.rdoLightMode.AutoSize = true;
@@ -242,6 +207,17 @@
             this.rdoLightMode.TabStop = true;
             this.rdoLightMode.Text = "Light Mode";
             this.rdoLightMode.UseVisualStyleBackColor = true;
+            // 
+            // rdoDarkMode
+            // 
+            this.rdoDarkMode.AutoSize = true;
+            this.rdoDarkMode.Location = new System.Drawing.Point(3, 19);
+            this.rdoDarkMode.Name = "rdoDarkMode";
+            this.rdoDarkMode.Size = new System.Drawing.Size(83, 19);
+            this.rdoDarkMode.TabIndex = 0;
+            this.rdoDarkMode.TabStop = true;
+            this.rdoDarkMode.Text = "Dark Mode";
+            this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 
@@ -282,8 +258,6 @@
         private Button BtnCancel;
         private GroupBox groupBox3;
         private CheckBox ckbUsePasteUI;
-        private Label label2;
-        private ComboBox cboNewDocFormat;
         private GroupBox groupBox5;
         private RadioButton rdoFindDirectionDown;
         private RadioButton rdoFindDirectionUp;

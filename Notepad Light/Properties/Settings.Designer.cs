@@ -111,18 +111,6 @@ namespace Notepad_Light.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Plain Text")]
-        public string NewDocumentFormat {
-            get {
-                return ((string)(this["NewDocumentFormat"]));
-            }
-            set {
-                this["NewDocumentFormat"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Down")]
         public string SearchOption {
             get {

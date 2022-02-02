@@ -18,6 +18,7 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+        public Color clrDarkModeBackground;
 
         private const char _semiColonDelim = ':';
 
@@ -27,6 +28,9 @@ namespace Notepad_Light
 
             // init stopwatch for timer
             gStopwatch = new Stopwatch();
+
+            // dark mode color
+            clrDarkModeBackground = Color.FromArgb(32, 32, 32);
 
             // init file MRU
             if (Properties.Settings.Default.FileMRU.Count > 0)
@@ -89,7 +93,7 @@ namespace Notepad_Light
 
         public void UpdateStatusBar()
         {
-            if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf || gCurrentFileName.EndsWith(Strings.rtfExt))
+            if (gRtf || gCurrentFileName.EndsWith(Strings.rtfExt))
             {
                 EnableToolbarFormattingIcons();
                 toolStripStatusLabelFileType.Text = Strings.rtf;
@@ -114,7 +118,7 @@ namespace Notepad_Light
             UpdateFormTitle(Strings.defaultFileName);
             UpdateStatusBar();
             
-            if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf)
+            if (gRtf)
             {
                 EnableToolbarFormattingIcons();
                 
@@ -857,16 +861,22 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyDarkMode()
         {
-            // dark mode = RGB (32, 32, 32)
+            // dark mode = RGB (32, 32, 32) 
             // font color = RGB (255, 255, 255)
-            menuStrip1.BackColor = Color.FromArgb(32, 32, 32);
-            toolStrip1.BackColor = Color.FromArgb(32, 32, 32);
-            statusStrip1.BackColor = Color.FromArgb(32, 32, 32);
-            rtbPage.BackColor = Color.FromArgb(32, 32, 32);
-            rtbPage.ForeColor = Color.White;
+            menuStrip1.BackColor = clrDarkModeBackground;
+            toolStrip1.BackColor = clrDarkModeBackground;
+            statusStrip1.BackColor = clrDarkModeBackground;
             ChangeControlTextColor(Color.White);
-            ChangeSubMenuItemBackColor(Color.FromArgb(32, 32, 32));
-            ChangeMenuItemBackColor(Color.FromArgb(32, 32, 32));
+            ChangeSubMenuItemBackColor(clrDarkModeBackground);
+            ChangeMenuItemBackColor(clrDarkModeBackground);
+
+            rtbPage.BackColor = clrDarkModeBackground;
+
+            // don't change text color for rtf
+            if (gRtf == false)
+            {    
+                rtbPage.ForeColor = Color.White;
+            }
         }
 
         /// <summary>
@@ -876,14 +886,18 @@ namespace Notepad_Light
         {
             // toolstrip, statusbar, richtextbox = RGB (240, 240, 240) 
             // font color = RGB (0, 0, 0) 
-            menuStrip1.BackColor = Color.FromArgb(240, 240, 240);
-            toolStrip1.BackColor = Color.FromArgb(240, 240, 240);
-            statusStrip1.BackColor = Color.FromArgb(240, 240, 240);
-            rtbPage.BackColor = Color.FromArgb(255, 255, 255);
-            rtbPage.ForeColor = Color.Black;
+            menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+            toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+            statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             ChangeControlTextColor(Color.Black);
             ChangeSubMenuItemBackColor(Color.White);
-            ChangeMenuItemBackColor(Color.FromArgb(240, 240, 240));
+            ChangeMenuItemBackColor(Color.FromKnownColor(KnownColor.Control));
+            rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
+            
+            if (gRtf == false)
+            {
+                rtbPage.ForeColor = Color.Black;
+            }
         }
 
         /// <summary>
@@ -891,6 +905,12 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyTextColor()
         {
+            // currently I'm not changing text color for rtf files
+            if (gRtf)
+            {
+                return;
+            }
+
             if (Properties.Settings.Default.DarkMode)
             {
                 rtbPage.ForeColor = Color.White;
@@ -1031,6 +1051,21 @@ namespace Notepad_Light
             ErrorLogToolStripMenuItem.BackColor = clr;
             SubmitFeedbackToolStripMenuItem.BackColor = clr;
             ReportBugToolStripMenuItem.BackColor = clr;
+        }
+
+        /// <summary>
+        /// known issue in toolstripseparator not using back/fore colors
+        /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
+        /// </summary>
+        /// <param name="sender">object param from the paint event</param>
+        /// <param name="e">eventarg from paint event</param>
+        /// <param name="cFill">backcolor for the separator</param>
+        /// <param name="cLine">forecolor for the separator</param>
+        public void PaintToolStripSeparator(object sender, PaintEventArgs e, Color cFill, Color cLine)
+        {
+            ToolStripSeparator sep = (ToolStripSeparator)sender;
+            e.Graphics.FillRectangle(new SolidBrush(cFill), 0, 0, sep.Width, sep.Height);
+            e.Graphics.DrawLine(new Pen(cLine), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
         }
 
         #endregion
@@ -1454,16 +1489,6 @@ namespace Notepad_Light
             };
             fOptions.ShowDialog();
 
-            // coming back from settings, adjust file type
-            if (Properties.Settings.Default.NewDocumentFormat == Strings.rtf)
-            {
-                gRtf = true;
-            }
-            else
-            {
-                gRtf = false;
-            }
-
             // also need to update the file mru in case it was cleared
             if (Properties.Settings.Default.FileMRU.Count == 0)
             {
@@ -1603,9 +1628,88 @@ namespace Notepad_Light
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void ToolStripSeparator1_Paint(object sender, PaintEventArgs e)
         {
-            ApplyDarkMode();
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }            
+        }
+
+        private void ToolStripSeparator3_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
+        }
+
+        private void ToolStripSeparator4_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
+        }
+
+        private void ToolStripSeparator13_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
+        }
+
+        private void ToolStripSeparator10_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
+        }
+
+        private void toolStripSeparator14_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
+        }
+
+        private void toolStripSeparator12_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
         }
 
         private void printDocument1_BeginPrint(object sender, PrintEventArgs e)

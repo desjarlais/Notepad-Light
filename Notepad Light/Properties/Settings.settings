@@ -25,9 +25,6 @@
     <Setting Name="BulletFirstIndent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="NewDocumentFormat" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Plain Text</Value>
-    </Setting>
     <Setting Name="SearchOption" Type="System.String" Scope="User">
       <Value Profile="(Default)">Down</Value>
     </Setting>
