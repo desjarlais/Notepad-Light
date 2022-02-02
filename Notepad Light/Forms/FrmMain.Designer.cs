@@ -141,6 +141,7 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.autosaveTimer = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -1094,6 +1095,11 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // autosaveTimer
+            // 
+            this.autosaveTimer.Interval = 1000;
+            this.autosaveTimer.Tick += new System.EventHandler(this.autosaveTimer_Tick);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1234,5 +1240,6 @@
         private ToolStripButton EditTimerToolStripButton;
         private ToolStripSeparator toolStripSeparator12;
         private ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.Timer autosaveTimer;
     }
 }

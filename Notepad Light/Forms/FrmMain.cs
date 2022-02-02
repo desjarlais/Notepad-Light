@@ -15,7 +15,8 @@ namespace Notepad_Light
         public bool gRtf = false;
         public int gPrevPageLength = 0;
         private string _EditedTime = string.Empty;
-        private int editedHours, editedMinutes, editedSeconds, charFrom;
+        public string unsavedFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
         public Color clrDarkModeBackground;
@@ -77,6 +78,9 @@ namespace Notepad_Light
             {
                 ApplyLightMode();
             }
+
+            // start the autosave timer
+            autosaveTimer.Start();
         }
 
         #region Class Properties
@@ -1074,6 +1078,50 @@ namespace Notepad_Light
             e.Graphics.DrawLine(new Pen(cLine), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
         }
 
+        /// <summary>
+        /// Write to the temp file async
+        /// </summary>
+        async void BackgroundFileSaveAsync()
+        {
+            var task = new Task(() => WriteTempFile());
+            task.Start();
+            await task;
+        }
+
+        /// <summary>
+        /// write the contents of the textbox to the temp file
+        /// </summary>
+        public void WriteTempFile()
+        {
+            // if the file is unsaved, write it out to the 
+            if (gChanged == false)
+            {
+                // if no changes were made, nothing to save
+                return;
+            }
+
+            if (gCurrentFileName == Strings.defaultFileName)
+            {
+                using (StreamWriter sw = new StreamWriter(unsavedFolderPath + "\\" + gCurrentFileName + Strings.txtExt, false))
+                {
+                    // need to avoid cross thread operation
+                    rtbPage.Invoke((MethodInvoker)delegate {
+                        foreach (string ls in rtbPage.Lines)
+                        {
+                            sw.WriteLine(ls);
+                        }
+                    });
+                }
+            }
+            else
+            {
+                // need to avoid cross thread operation
+                rtbPage.Invoke((MethodInvoker)delegate {
+                    FileSave();
+                });
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -1715,6 +1763,18 @@ namespace Notepad_Light
             else
             {
                 PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+            }
+        }
+
+        private void autosaveTimer_Tick(object sender, EventArgs e)
+        {
+            ticks++;
+
+            // using a 10 minute default autosave interval
+            if (ticks > 600)
+            {
+                ticks = 0;
+                BackgroundFileSaveAsync();
             }
         }
 
