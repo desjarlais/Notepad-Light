@@ -19,7 +19,7 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        public Color clrDarkModeBackground;
+        public Color clrDarkModeBackground, clrDarkModeTextBackground;
 
         private const char _semiColonDelim = ':';
 
@@ -32,6 +32,7 @@ namespace Notepad_Light
 
             // dark mode color
             clrDarkModeBackground = Color.FromArgb(32, 32, 32);
+            clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
 
             // init file MRU
             if (Properties.Settings.Default.FileMRU.Count > 0)
@@ -172,7 +173,6 @@ namespace Notepad_Light
             DisableToolbarFormattingIcons();
             gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.plainText;
-            ApplyTextColor();
         }
 
         /// <summary>
@@ -880,13 +880,7 @@ namespace Notepad_Light
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
             ChangeMenuItemBackColor(clrDarkModeBackground);
 
-            rtbPage.BackColor = clrDarkModeBackground;
-
-            // don't change text color for rtf
-            if (gRtf == false)
-            {    
-                rtbPage.ForeColor = Color.White;
-            }
+            rtbPage.BackColor = clrDarkModeTextBackground;
         }
 
         /// <summary>
@@ -903,11 +897,6 @@ namespace Notepad_Light
             ChangeSubMenuItemBackColor(Color.White);
             ChangeMenuItemBackColor(Color.FromKnownColor(KnownColor.Control));
             rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
-            
-            if (gRtf == false)
-            {
-                rtbPage.ForeColor = Color.Black;
-            }
         }
 
         /// <summary>
@@ -1083,7 +1072,7 @@ namespace Notepad_Light
         /// </summary>
         async void BackgroundFileSaveAsync()
         {
-            var task = new Task(() => WriteTempFile());
+            var task = new Task(() => WriteFileContents());
             task.Start();
             await task;
         }
@@ -1091,7 +1080,7 @@ namespace Notepad_Light
         /// <summary>
         /// write the contents of the textbox to the temp file
         /// </summary>
-        public void WriteTempFile()
+        public void WriteFileContents()
         {
             // if the file is unsaved, write it out to the 
             if (gChanged == false)
