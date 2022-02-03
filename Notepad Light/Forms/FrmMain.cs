@@ -15,7 +15,7 @@ namespace Notepad_Light
         public bool gRtf = false;
         public int gPrevPageLength = 0;
         private string _EditedTime = string.Empty;
-        public string unsavedFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public string unsavedFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
@@ -1082,32 +1082,43 @@ namespace Notepad_Light
         /// </summary>
         public void WriteFileContents()
         {
-            // if the file is unsaved, write it out to the 
-            if (gChanged == false)
+            try
             {
-                // if no changes were made, nothing to save
-                return;
-            }
+                // if the file is unsaved, write it out to the 
+                if (gChanged == false)
+                {
+                    // if no changes were made, nothing to save
+                    return;
+                }
 
-            if (gCurrentFileName == Strings.defaultFileName)
-            {
-                using (StreamWriter sw = new StreamWriter(unsavedFolderPath + "\\" + gCurrentFileName + Strings.txtExt, false))
+                if (gCurrentFileName == Strings.defaultFileName)
+                {
+                    using (StreamWriter sw = new StreamWriter(unsavedFolderPath + "\\" + gCurrentFileName + Strings.txtExt, false))
+                    {
+                        // need to avoid cross thread operation
+                        rtbPage.Invoke((MethodInvoker)delegate {
+                            foreach (string ls in rtbPage.Lines)
+                            {
+                                sw.WriteLine(ls);
+                            }
+                        });
+                    }
+                }
+                else
                 {
                     // need to avoid cross thread operation
                     rtbPage.Invoke((MethodInvoker)delegate {
-                        foreach (string ls in rtbPage.Lines)
-                        {
-                            sw.WriteLine(ls);
-                        }
+                        FileSave();
                     });
                 }
+
+                // after autosaving, update the changed state and save icons
+                gChanged = false;
+                UpdateToolbarIcons();
             }
-            else
+            catch (Exception ex)
             {
-                // need to avoid cross thread operation
-                rtbPage.Invoke((MethodInvoker)delegate {
-                    FileSave();
-                });
+                Logger.Log("WriteFileContents Error: " + ex.Message);
             }
         }
 
