@@ -35,6 +35,7 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ckbReverseTextColor = new System.Windows.Forms.CheckBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.rdoWholeWord = new System.Windows.Forms.RadioButton();
@@ -44,11 +45,13 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.ckbReverseTextColor = new System.Windows.Forms.CheckBox();
+            this.nudAutoSaveInterval = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -109,16 +112,28 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.nudAutoSaveInterval);
             this.groupBox3.Controls.Add(this.ckbReverseTextColor);
             this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Location = new System.Drawing.Point(295, 202);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Size = new System.Drawing.Size(350, 84);
+            this.groupBox3.Size = new System.Drawing.Size(350, 116);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
+            // 
+            // ckbReverseTextColor
+            // 
+            this.ckbReverseTextColor.AutoSize = true;
+            this.ckbReverseTextColor.Location = new System.Drawing.Point(13, 46);
+            this.ckbReverseTextColor.Name = "ckbReverseTextColor";
+            this.ckbReverseTextColor.Size = new System.Drawing.Size(312, 19);
+            this.ckbReverseTextColor.TabIndex = 8;
+            this.ckbReverseTextColor.Text = "Flip Text Color When Theme Changes (Plain Text Only)";
+            this.ckbReverseTextColor.UseVisualStyleBackColor = true;
             // 
             // ckbUsePasteUI
             // 
@@ -221,15 +236,36 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
-            // ckbReverseTextColor
+            // nudAutoSaveInterval
             // 
-            this.ckbReverseTextColor.AutoSize = true;
-            this.ckbReverseTextColor.Location = new System.Drawing.Point(13, 46);
-            this.ckbReverseTextColor.Name = "ckbReverseTextColor";
-            this.ckbReverseTextColor.Size = new System.Drawing.Size(312, 19);
-            this.ckbReverseTextColor.TabIndex = 8;
-            this.ckbReverseTextColor.Text = "Flip Text Color When Theme Changes (Plain Text Only)";
-            this.ckbReverseTextColor.UseVisualStyleBackColor = true;
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(118, 79);
+            this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudAutoSaveInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudAutoSaveInterval.Name = "nudAutoSaveInterval";
+            this.nudAutoSaveInterval.Size = new System.Drawing.Size(42, 23);
+            this.nudAutoSaveInterval.TabIndex = 9;
+            this.nudAutoSaveInterval.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 81);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "AutoSave Interval";
             // 
             // FrmOptions
             // 
@@ -257,6 +293,7 @@
             this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -279,5 +316,7 @@
         private RadioButton rdoLightMode;
         private RadioButton rdoDarkMode;
         private CheckBox ckbReverseTextColor;
+        private NumericUpDown nudAutoSaveInterval;
+        private Label label1;
     }
 }

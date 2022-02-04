@@ -14,6 +14,7 @@ namespace Notepad_Light
         public bool gChanged = false;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
+        public int autoSaveInterval, autoSaveTicks;
         private string _EditedTime = string.Empty;
         public string unsavedFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
@@ -69,6 +70,7 @@ namespace Notepad_Light
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
             UpdateToolbarIcons();
+            UpdateAutoSaveInterval();
 
             // update theme
             if (Properties.Settings.Default.DarkMode)
@@ -95,6 +97,12 @@ namespace Notepad_Light
         #endregion
 
         #region Functions
+
+        public void UpdateAutoSaveInterval()
+        {
+            autoSaveInterval = Properties.Settings.Default.AutoSaveInterval;
+            autoSaveTicks = autoSaveInterval * 60;
+        }
 
         public void UpdateStatusBar()
         {
@@ -1110,6 +1118,9 @@ namespace Notepad_Light
                             {
                                 sw.WriteLine(ls);
                             }
+
+                            gChanged = false;
+                            UpdateToolbarIcons();
                         });
                     }
                 }
@@ -1120,10 +1131,6 @@ namespace Notepad_Light
                         FileSave();
                     });
                 }
-
-                // after autosaving, update the changed state and save icons
-                gChanged = false;
-                UpdateToolbarIcons();
             }
             catch (Exception ex)
             {
@@ -1577,6 +1584,9 @@ namespace Notepad_Light
             {
                 ApplyLightMode();
             }
+
+            // update the ticks
+            UpdateAutoSaveInterval();
         }
 
         private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1807,7 +1817,7 @@ namespace Notepad_Light
             ticks++;
 
             // using a 10 minute default autosave interval
-            if (ticks > 600)
+            if (ticks > autoSaveTicks)
             {
                 ticks = 0;
                 BackgroundFileSaveAsync();

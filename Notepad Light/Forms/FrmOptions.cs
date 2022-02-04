@@ -71,6 +71,7 @@
         {
             Properties.Settings.Default.UsePasteUI = ckbUsePasteUI.Checked;
             Properties.Settings.Default.Save();
+            Properties.Settings.Default.AutoSaveInterval = (int)nudAutoSaveInterval.Value;
 
             if (rdoFindDirectionUp.Checked == true)
             {
