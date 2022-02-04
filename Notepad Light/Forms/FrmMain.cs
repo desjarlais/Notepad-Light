@@ -1702,11 +1702,11 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }            
         }
 
@@ -1714,11 +1714,11 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
         }
 
@@ -1726,11 +1726,11 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
         }
 
@@ -1738,11 +1738,11 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
         }
 
@@ -1750,11 +1750,11 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
         }
 
@@ -1762,23 +1762,43 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
+        }
+
+        private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Cut();
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Copy();
+        }
+
+        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
+
+        private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            rtbPage.SelectAll();
         }
 
         private void toolStripSeparator12_Paint(object sender, PaintEventArgs e)
         {
             if (Properties.Settings.Default.DarkMode)
             {
-                PaintToolStripSeparator(sender, e, Color.FromArgb(32, 32, 32), Color.White);
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
             }
             else
             {
-                PaintToolStripSeparator(sender, e, Color.White, Color.FromArgb(32, 32, 32));
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
         }
 
