@@ -44,6 +44,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
+            this.ckbReverseTextColor = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -108,6 +109,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.ckbReverseTextColor);
             this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Location = new System.Drawing.Point(295, 202);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
@@ -219,6 +221,16 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
+            // ckbReverseTextColor
+            // 
+            this.ckbReverseTextColor.AutoSize = true;
+            this.ckbReverseTextColor.Location = new System.Drawing.Point(13, 46);
+            this.ckbReverseTextColor.Name = "ckbReverseTextColor";
+            this.ckbReverseTextColor.Size = new System.Drawing.Size(312, 19);
+            this.ckbReverseTextColor.TabIndex = 8;
+            this.ckbReverseTextColor.Text = "Flip Text Color When Theme Changes (Plain Text Only)";
+            this.ckbReverseTextColor.UseVisualStyleBackColor = true;
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -266,5 +278,6 @@
         private GroupBox groupBox2;
         private RadioButton rdoLightMode;
         private RadioButton rdoDarkMode;
+        private CheckBox ckbReverseTextColor;
     }
 }

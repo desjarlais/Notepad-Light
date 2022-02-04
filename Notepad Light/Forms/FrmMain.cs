@@ -879,8 +879,12 @@ namespace Notepad_Light
             ChangeControlTextColor(Color.White);
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
             ChangeMenuItemBackColor(clrDarkModeBackground);
-
             rtbPage.BackColor = clrDarkModeTextBackground;
+
+            if (Properties.Settings.Default.ReverseTextColorWithTheme)
+            {
+                ApplyTextColor();
+            }
         }
 
         /// <summary>
@@ -897,6 +901,11 @@ namespace Notepad_Light
             ChangeSubMenuItemBackColor(Color.White);
             ChangeMenuItemBackColor(Color.FromKnownColor(KnownColor.Control));
             rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
+
+            if (Properties.Settings.Default.ReverseTextColorWithTheme)
+            {
+                ApplyTextColor();
+            }
         }
 
         /// <summary>
@@ -1068,7 +1077,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// Write to the temp file async
+        /// write file contents
         /// </summary>
         async void BackgroundFileSaveAsync()
         {
@@ -1078,7 +1087,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// write the contents of the textbox to the temp file
+        /// depending on the file currently active, save its contents
         /// </summary>
         public void WriteFileContents()
         {
@@ -1428,6 +1437,16 @@ namespace Notepad_Light
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
                 }
+
+                gChanged = true;
+                UpdateToolbarIcons();
+            }
+
+            // if delete key is pressed change the saved state
+            if (e.KeyCode == Keys.Delete)
+            {
+                gChanged = true;
+                UpdateToolbarIcons();
             }
         }
 
@@ -1558,9 +1577,6 @@ namespace Notepad_Light
             {
                 ApplyLightMode();
             }
-
-            // update text color
-            ApplyTextColor();
         }
 
         private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)

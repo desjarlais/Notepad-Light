@@ -132,5 +132,17 @@ namespace Notepad_Light.Properties {
                 this["DarkMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReverseTextColorWithTheme {
+            get {
+                return ((bool)(this["ReverseTextColorWithTheme"]));
+            }
+            set {
+                this["ReverseTextColorWithTheme"] = value;
+            }
+        }
     }
 }

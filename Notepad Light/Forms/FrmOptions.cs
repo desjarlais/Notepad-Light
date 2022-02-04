@@ -33,6 +33,15 @@
             {
                 rdoLightMode.Checked = true;
             }
+
+            if (Properties.Settings.Default.ReverseTextColorWithTheme == true)
+            {
+                ckbReverseTextColor.Checked = true;
+            }
+            else
+            {
+                ckbReverseTextColor.Checked = false;
+            }
         }
 
         public void UpdateMRUListbox()
@@ -87,6 +96,15 @@
             else
             {
                 Properties.Settings.Default.DarkMode = false;
+            }
+
+            if (ckbReverseTextColor.Checked == true)
+            {
+                Properties.Settings.Default.ReverseTextColorWithTheme = true;
+            }
+            else
+            {
+                Properties.Settings.Default.ReverseTextColorWithTheme = false;
             }
 
             Close();
