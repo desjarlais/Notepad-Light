@@ -35,6 +35,8 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.nudAutoSaveInterval = new System.Windows.Forms.NumericUpDown();
             this.ckbReverseTextColor = new System.Windows.Forms.CheckBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -45,13 +47,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.nudAutoSaveInterval = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -124,6 +124,37 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 81);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(153, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "AutoSave Interval (minutes)";
+            // 
+            // nudAutoSaveInterval
+            // 
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(172, 79);
+            this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudAutoSaveInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudAutoSaveInterval.Name = "nudAutoSaveInterval";
+            this.nudAutoSaveInterval.Size = new System.Drawing.Size(42, 23);
+            this.nudAutoSaveInterval.TabIndex = 9;
+            this.nudAutoSaveInterval.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // ckbReverseTextColor
             // 
@@ -236,37 +267,6 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
-            // nudAutoSaveInterval
-            // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(118, 79);
-            this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudAutoSaveInterval.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudAutoSaveInterval.Name = "nudAutoSaveInterval";
-            this.nudAutoSaveInterval.Size = new System.Drawing.Size(42, 23);
-            this.nudAutoSaveInterval.TabIndex = 9;
-            this.nudAutoSaveInterval.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 81);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "AutoSave Interval";
-            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -289,11 +289,11 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).EndInit();
             this.ResumeLayout(false);
 
         }

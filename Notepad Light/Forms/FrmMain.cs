@@ -11,7 +11,6 @@ namespace Notepad_Light
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
         public string gPrintString = string.Empty;
-        public bool gChanged = false;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
         public int autoSaveInterval, autoSaveTicks;
@@ -127,7 +126,7 @@ namespace Notepad_Light
         public void CreateNewDocument()
         {
             rtbPage.Clear();
-            gChanged = false;
+            //gChanged = false;
             UpdateFormTitle(Strings.defaultFileName);
             UpdateStatusBar();
             
@@ -145,11 +144,11 @@ namespace Notepad_Light
         public void FileNew()
         {
             // clear the textbox
-            if (gChanged == false)
+            if (rtbPage.Modified == false)
             {
                 CreateNewDocument();
             }
-            else if (gChanged == true)
+            else if (rtbPage.Modified == true)
             {
                 DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -216,8 +215,7 @@ namespace Notepad_Light
 
                 // now check the encoding
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
-
-                gChanged = false;
+                rtbPage.Modified = false;
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = rtbPage.TextLength;
@@ -293,7 +291,7 @@ namespace Notepad_Light
                     }
 
                     // lastly, set the saved back to false and update the ui and cursor
-                    gChanged = false;
+                    rtbPage.Modified = false;
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
@@ -323,14 +321,14 @@ namespace Notepad_Light
                 Cursor = Cursors.WaitCursor;
 
                 // if gChanged is false, no changes to save
-                if (gChanged == false)
+                if (rtbPage.Modified == false)
                 {
                     return;
                 }
 
                 // if gChanged is true, untitled needs to be save as
                 // any other file name do regular save of the content
-                if (gCurrentFileName.ToString() == Strings.defaultFileName && gChanged == true)
+                if (gCurrentFileName.ToString() == Strings.defaultFileName && rtbPage.Modified == true)
                 {
                     FileSaveAs();
                 }
@@ -346,7 +344,7 @@ namespace Notepad_Light
                         rtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.RichText);
                     }
 
-                    gChanged = false;
+                    rtbPage.Modified = false;
                 }
 
                 UpdateToolbarIcons();
@@ -388,7 +386,7 @@ namespace Notepad_Light
                         }
 
                         UpdateFormTitle(sfdSaveAs.FileName);
-                        gChanged = false;
+                        rtbPage.Modified = false;
                     }
                 }
             }
@@ -407,7 +405,7 @@ namespace Notepad_Light
         public void OpenRecentFile(string filePath, int buttonIndex)
         {
             // if there are unsaved changes, prompt the user before opening
-            if (gChanged)
+            if (rtbPage.Modified)
             {
                 DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -504,7 +502,7 @@ namespace Notepad_Light
         public void Cut()
         {
             rtbPage.Cut();
-            gChanged = true;
+            rtbPage.Modified = true;
         }
 
         public void Copy()
@@ -514,7 +512,7 @@ namespace Notepad_Light
 
         public void Paste()
         {
-            gChanged = true;
+            rtbPage.Modified = true;
 
             if (Properties.Settings.Default.UsePasteUI == false)
             {
@@ -537,7 +535,7 @@ namespace Notepad_Light
                     case Strings.rtf: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
                     case Strings.pasteUnicode: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
                     case Strings.pasteImage: rtbPage.Paste(); break;
-                    default: gChanged = false; break;
+                    default: rtbPage.Modified = false; break;
                 }
             }
         }
@@ -545,13 +543,13 @@ namespace Notepad_Light
         public void Undo()
         {
             rtbPage.Undo();
-            gChanged = true;
+            rtbPage.Modified = true;
         }
 
         public void Redo()
         {
             rtbPage.Redo();
-            gChanged = true;
+            rtbPage.Modified = true;
         }
 
         /// <summary>
@@ -560,7 +558,7 @@ namespace Notepad_Light
         /// <param name="fromFormClosingEvent"></param>
         public void ExitAppWork(bool fromFormClosingEvent)
         {
-            if (gChanged == true)
+            if (rtbPage.Modified == true)
             {
                 DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -662,7 +660,7 @@ namespace Notepad_Light
                 }
 
                 // save icon
-                if (gChanged)
+                if (rtbPage.Modified)
                 {
                     SaveToolStripButton.Enabled = true;
                     SaveToolStripMenuItem.Enabled = true;
@@ -686,7 +684,7 @@ namespace Notepad_Light
             rtbPage.SelectionColor = Color.FromName(Properties.Settings.Default.DefaultFontColorName);
             rtbPage.SelectionIndent = 0;
             rtbPage.SelectionAlignment = HorizontalAlignment.Left;
-            gChanged = true;
+            rtbPage.Modified = true;
         }
 
         /// <summary>
@@ -731,7 +729,7 @@ namespace Notepad_Light
         {
             rtbPage.Focus();
             UpdateToolbarIcons();
-            gChanged = true;
+            rtbPage.Modified = true;
         }
 
         public void ApplyBold()
@@ -1102,7 +1100,7 @@ namespace Notepad_Light
             try
             {
                 // if the file is unsaved, write it out to the 
-                if (gChanged == false)
+                if (rtbPage.Modified == false)
                 {
                     // if no changes were made, nothing to save
                     return;
@@ -1119,7 +1117,7 @@ namespace Notepad_Light
                                 sw.WriteLine(ls);
                             }
 
-                            gChanged = false;
+                            rtbPage.Modified = false;
                             UpdateToolbarIcons();
                         });
                     }
@@ -1151,7 +1149,7 @@ namespace Notepad_Light
             // check if content was added
             if (gPrevPageLength != rtbPage.TextLength)
             {
-                gChanged = true;
+                rtbPage.Modified = true;
             }
             
             // now update the prevPageLength
@@ -1445,14 +1443,14 @@ namespace Notepad_Light
                     BulletToolStripButton.PerformClick();
                 }
 
-                gChanged = true;
+                rtbPage.Modified = true;
                 UpdateToolbarIcons();
             }
 
             // if delete key is pressed change the saved state
             if (e.KeyCode == Keys.Delete)
             {
-                gChanged = true;
+                rtbPage.Modified = true;
                 UpdateToolbarIcons();
             }
         }
@@ -1677,7 +1675,7 @@ namespace Notepad_Light
             if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != rtbPage.SelectionColor)
             {
                 rtbPage.SelectionColor = colorDialog1.Color;
-                gChanged = true;
+                rtbPage.Modified = true;
             }
         }
 
