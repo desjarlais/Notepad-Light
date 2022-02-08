@@ -375,7 +375,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileSave Error = " + ex.Message);
+                WriteErrorLogContent("FileSave Error : " + ex.Message);
             }
             finally
             {
@@ -416,7 +416,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileSaveAs Error :\r\n\r\n" + ex.Message);
+                WriteErrorLogContent("FileSaveAs Error :" + ex.Message);
             }
             finally
             {
@@ -1836,11 +1836,15 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// toggle the start/stop behavior of the timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)
         {
             if (gStopwatch.IsRunning)
             {
-                // stop the timer
                 gStopwatch.Stop();
                 StartStopTimerToolStripButton.Text = Strings.startTimeText;
                 StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
@@ -1854,6 +1858,11 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// reset the timer and ui back to zero
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStripButtonResetTimer_Click(object sender, EventArgs e)
         {
             gStopwatch.Reset();

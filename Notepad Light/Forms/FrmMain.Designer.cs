@@ -745,7 +745,7 @@
             // 
             this.SubmitFeedbackToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Report_16x;
             this.SubmitFeedbackToolStripMenuItem.Name = "SubmitFeedbackToolStripMenuItem";
-            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.SubmitFeedbackToolStripMenuItem.Text = "Submit Feedback";
             this.SubmitFeedbackToolStripMenuItem.Click += new System.EventHandler(this.SubmitFeedbackToolStripMenuItem_Click);
             // 
@@ -753,7 +753,7 @@
             // 
             this.ReportBugToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Bug_16x;
             this.ReportBugToolStripMenuItem.Name = "ReportBugToolStripMenuItem";
-            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.ReportBugToolStripMenuItem.Text = "Report Bug";
             this.ReportBugToolStripMenuItem.Click += new System.EventHandler(this.ReportBugToolStripMenuItem_Click);
             // 
@@ -761,7 +761,7 @@
             // 
             this.AboutToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Dialog_16x;
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.AboutToolStripMenuItem.Text = "&About...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -823,6 +823,7 @@
             this.NewToolStripButton.Name = "NewToolStripButton";
             this.NewToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.NewToolStripButton.Text = "&New";
+            this.NewToolStripButton.ToolTipText = "Create New Document";
             this.NewToolStripButton.Click += new System.EventHandler(this.NewToolStripButton_Click);
             // 
             // OpenToolStripButton
@@ -833,6 +834,7 @@
             this.OpenToolStripButton.Name = "OpenToolStripButton";
             this.OpenToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.OpenToolStripButton.Text = "&Open";
+            this.OpenToolStripButton.ToolTipText = "Open File";
             this.OpenToolStripButton.Click += new System.EventHandler(this.OpenToolStripButton_Click);
             // 
             // SaveToolStripButton
@@ -843,6 +845,7 @@
             this.SaveToolStripButton.Name = "SaveToolStripButton";
             this.SaveToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.SaveToolStripButton.Text = "&Save";
+            this.SaveToolStripButton.ToolTipText = "Save File";
             this.SaveToolStripButton.Click += new System.EventHandler(this.SaveToolStripButton_Click);
             // 
             // ToolStripSeparator6
@@ -918,7 +921,7 @@
             this.BoldToolStripButton.Name = "BoldToolStripButton";
             this.BoldToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.BoldToolStripButton.Text = "Bold";
-            this.BoldToolStripButton.ToolTipText = "Bold";
+            this.BoldToolStripButton.ToolTipText = "Apply Bold";
             this.BoldToolStripButton.Click += new System.EventHandler(this.BoldToolStripButton_Click);
             // 
             // ItalicToolStripButton
@@ -929,7 +932,7 @@
             this.ItalicToolStripButton.Name = "ItalicToolStripButton";
             this.ItalicToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.ItalicToolStripButton.Text = "Italic";
-            this.ItalicToolStripButton.ToolTipText = "Italic";
+            this.ItalicToolStripButton.ToolTipText = "Apply Italic";
             this.ItalicToolStripButton.Click += new System.EventHandler(this.ItalicToolStripButton_Click);
             // 
             // UnderlineToolStripButton
@@ -940,6 +943,7 @@
             this.UnderlineToolStripButton.Name = "UnderlineToolStripButton";
             this.UnderlineToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.UnderlineToolStripButton.Text = "Underline";
+            this.UnderlineToolStripButton.ToolTipText = "Apply Underline";
             this.UnderlineToolStripButton.Click += new System.EventHandler(this.UnderlineToolStripButton_Click);
             // 
             // StrikethroughToolStripButton
@@ -950,6 +954,7 @@
             this.StrikethroughToolStripButton.Name = "StrikethroughToolStripButton";
             this.StrikethroughToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.StrikethroughToolStripButton.Text = "Strikethrough";
+            this.StrikethroughToolStripButton.ToolTipText = "Apply Strikethrough";
             this.StrikethroughToolStripButton.Click += new System.EventHandler(this.StrikethroughToolStripButton_Click);
             // 
             // FontColorToolStripButton
@@ -1053,6 +1058,7 @@
             this.StartStopTimerToolStripButton.Name = "StartStopTimerToolStripButton";
             this.StartStopTimerToolStripButton.Size = new System.Drawing.Size(51, 22);
             this.StartStopTimerToolStripButton.Text = "Start";
+            this.StartStopTimerToolStripButton.ToolTipText = "Start Timer";
             this.StartStopTimerToolStripButton.Click += new System.EventHandler(this.ToolStripButtonStartStopTimer_Click);
             // 
             // TimerToolStripLabel
@@ -1069,6 +1075,7 @@
             this.ResetTimerToolStripButton.Name = "ResetTimerToolStripButton";
             this.ResetTimerToolStripButton.Size = new System.Drawing.Size(55, 22);
             this.ResetTimerToolStripButton.Text = "Reset";
+            this.ResetTimerToolStripButton.ToolTipText = "Reset Current Timer";
             this.ResetTimerToolStripButton.Click += new System.EventHandler(this.ToolStripButtonResetTimer_Click);
             // 
             // EditTimerToolStripButton
@@ -1078,6 +1085,7 @@
             this.EditTimerToolStripButton.Name = "EditTimerToolStripButton";
             this.EditTimerToolStripButton.Size = new System.Drawing.Size(47, 22);
             this.EditTimerToolStripButton.Text = "Edit";
+            this.EditTimerToolStripButton.ToolTipText = "Edit Current Timer";
             this.EditTimerToolStripButton.Click += new System.EventHandler(this.EditTimerToolStripButton_Click);
             // 
             // ToolStripSeparator2
@@ -1104,6 +1112,7 @@
             this.FindToolStripButton.Name = "FindToolStripButton";
             this.FindToolStripButton.Size = new System.Drawing.Size(78, 22);
             this.FindToolStripButton.Text = "Find Next";
+            this.FindToolStripButton.ToolTipText = "Find Next Search Result";
             this.FindToolStripButton.Click += new System.EventHandler(this.FindToolStripButton_Click);
             // 
             // ToolStripSeparator5
@@ -1119,6 +1128,7 @@
             this.HelpToolStripButton.Name = "HelpToolStripButton";
             this.HelpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.HelpToolStripButton.Text = "He&lp";
+            this.HelpToolStripButton.ToolTipText = "Open Help Page";
             this.HelpToolStripButton.Click += new System.EventHandler(this.HelpToolStripButton_Click);
             // 
             // timer1
