@@ -49,6 +49,7 @@
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,7 +99,6 @@
             this.zoomToolStripMenuItem250 = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem300 = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ErrorLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SubmitFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,6 +124,7 @@
             this.LeftJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.CenterJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.RightJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             this.BulletToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.DecreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.IncreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -147,7 +148,6 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.autosaveTimer = new System.Windows.Forms.Timer(this.components);
-            this.selectAllToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -277,33 +277,40 @@
             this.toolStripSeparator15,
             this.selectAllToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 120);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(123, 98);
             // 
             // cutToolStripMenuItem1
             // 
             this.cutToolStripMenuItem1.Name = "cutToolStripMenuItem1";
-            this.cutToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.cutToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
             this.cutToolStripMenuItem1.Text = "Cut";
             this.cutToolStripMenuItem1.Click += new System.EventHandler(this.cutToolStripMenuItem1_Click);
             // 
             // copyToolStripMenuItem1
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
             this.copyToolStripMenuItem1.Text = "Copy";
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
             // 
             // pasteToolStripMenuItem1
             // 
             this.pasteToolStripMenuItem1.Name = "pasteToolStripMenuItem1";
-            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.pasteToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
             this.pasteToolStripMenuItem1.Text = "Paste";
             this.pasteToolStripMenuItem1.Click += new System.EventHandler(this.pasteToolStripMenuItem1_Click);
             // 
             // toolStripSeparator15
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator15.Size = new System.Drawing.Size(119, 6);
+            // 
+            // selectAllToolStripMenuItem1
+            // 
+            this.selectAllToolStripMenuItem1.Name = "selectAllToolStripMenuItem1";
+            this.selectAllToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.selectAllToolStripMenuItem1.Text = "Select All";
+            this.selectAllToolStripMenuItem1.Click += new System.EventHandler(this.selectAllToolStripMenuItem1_Click);
             // 
             // menuStrip1
             // 
@@ -727,7 +734,6 @@
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ErrorLogToolStripMenuItem,
             this.SubmitFeedbackToolStripMenuItem,
             this.ReportBugToolStripMenuItem,
             this.AboutToolStripMenuItem});
@@ -735,19 +741,11 @@
             this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
             this.HelpToolStripMenuItem.Text = "&Help";
             // 
-            // ErrorLogToolStripMenuItem
-            // 
-            this.ErrorLogToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ErrorSummary_16x;
-            this.ErrorLogToolStripMenuItem.Name = "ErrorLogToolStripMenuItem";
-            this.ErrorLogToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.ErrorLogToolStripMenuItem.Text = "Error Log";
-            this.ErrorLogToolStripMenuItem.Click += new System.EventHandler(this.ErrorLogToolStripMenuItem_Click);
-            // 
             // SubmitFeedbackToolStripMenuItem
             // 
             this.SubmitFeedbackToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Report_16x;
             this.SubmitFeedbackToolStripMenuItem.Name = "SubmitFeedbackToolStripMenuItem";
-            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SubmitFeedbackToolStripMenuItem.Text = "Submit Feedback";
             this.SubmitFeedbackToolStripMenuItem.Click += new System.EventHandler(this.SubmitFeedbackToolStripMenuItem_Click);
             // 
@@ -755,7 +753,7 @@
             // 
             this.ReportBugToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Bug_16x;
             this.ReportBugToolStripMenuItem.Name = "ReportBugToolStripMenuItem";
-            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ReportBugToolStripMenuItem.Text = "Report Bug";
             this.ReportBugToolStripMenuItem.Click += new System.EventHandler(this.ReportBugToolStripMenuItem_Click);
             // 
@@ -763,7 +761,7 @@
             // 
             this.AboutToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Dialog_16x;
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AboutToolStripMenuItem.Text = "&About...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -795,6 +793,7 @@
             this.LeftJustifiedToolStripButton,
             this.CenterJustifiedToolStripButton,
             this.RightJustifiedToolStripButton,
+            this.toolStripSeparator16,
             this.BulletToolStripButton,
             this.DecreaseIndentToolStripButton,
             this.IncreaseIndentToolStripButton,
@@ -1001,6 +1000,11 @@
             this.RightJustifiedToolStripButton.ToolTipText = "Right Align";
             this.RightJustifiedToolStripButton.Click += new System.EventHandler(this.RightJustifiedToolStripButton_Click);
             // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
+            // 
             // BulletToolStripButton
             // 
             this.BulletToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1145,13 +1149,6 @@
             this.autosaveTimer.Interval = 1000;
             this.autosaveTimer.Tick += new System.EventHandler(this.autosaveTimer_Tick);
             // 
-            // selectAllToolStripMenuItem1
-            // 
-            this.selectAllToolStripMenuItem1.Name = "selectAllToolStripMenuItem1";
-            this.selectAllToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.selectAllToolStripMenuItem1.Text = "Select All";
-            this.selectAllToolStripMenuItem1.Click += new System.EventHandler(this.selectAllToolStripMenuItem1_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1207,7 +1204,6 @@
         private ToolStripMenuItem HelpToolStripMenuItem;
         private ToolStripMenuItem AboutToolStripMenuItem;
         private OpenFileDialog openFileDialog1;
-        private ToolStripMenuItem ErrorLogToolStripMenuItem;
         private RichTextBox rtbPage;
         private ToolStrip toolStrip1;
         private ToolStripButton NewToolStripButton;
@@ -1300,5 +1296,6 @@
         private ToolStripMenuItem pasteToolStripMenuItem1;
         private ToolStripSeparator toolStripSeparator15;
         private ToolStripMenuItem selectAllToolStripMenuItem1;
+        private ToolStripSeparator toolStripSeparator16;
     }
 }

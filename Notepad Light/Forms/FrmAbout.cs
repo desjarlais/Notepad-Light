@@ -22,5 +22,10 @@ namespace Notepad_Light.Forms
         {
             App.PlatformSpecificProcessStart(Strings.mainWebsite);
         }
+
+        private void BtnOpenErrorLog_Click(object sender, EventArgs e)
+        {
+            App.PlatformSpecificProcessStart(Strings.mainWebsite);
+        }
     }
 }

@@ -27,10 +27,10 @@ namespace Notepad_Light
         {
             InitializeComponent();
 
-            // init stopwatch for timer
+            // initialize stopwatch for timer
             gStopwatch = new Stopwatch();
 
-            // dark mode color
+            // initialize dark mode colors
             clrDarkModeBackground = Color.FromArgb(32, 32, 32);
             clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
 
@@ -64,8 +64,10 @@ namespace Notepad_Light
             zoomToolStripMenuItem100.Checked = true;
             ApplyZoom(1.0f);
 
-            // set wordwrap value, filename in title and enable icons
+            // set word wrap
             WordWrapToolStripMenuItem.Checked = rtbPage.WordWrap;
+
+            // update title, status, toolbars and autosave intervals
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
             UpdateToolbarIcons();
@@ -123,10 +125,12 @@ namespace Notepad_Light
             gCurrentFileName = docName;
         }
 
+        /// <summary>
+        /// mostly just UI setup work, it doesn't really create a new file/document
+        /// </summary>
         public void CreateNewDocument()
         {
             rtbPage.Clear();
-            //gChanged = false;
             UpdateFormTitle(Strings.defaultFileName);
             UpdateStatusBar();
             
@@ -141,9 +145,12 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// there is no file->close, so new handles unsaved doc situations
+        /// </summary>
         public void FileNew()
         {
-            // clear the textbox
+            // if there are no unsaved changes, we can just create a new blank document
             if (rtbPage.Modified == false)
             {
                 CreateNewDocument();
@@ -166,16 +173,16 @@ namespace Notepad_Light
                 }
             }
 
+            // update the UI after the new doc and unsaved work is done
             UpdateToolbarIcons();
         }
 
         /// <summary>
-        /// when loading plain text files, we need to disable icons for formatting
+        /// load file and update UI
         /// </summary>
         /// <param name="filePath"></param>
         public void LoadPlainTextFile(string filePath)
         {
-            // setup plain text open
             rtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             DisableToolbarFormattingIcons();
             gRtf = false;
@@ -183,20 +190,27 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// when loading rtf files, enable the formatting buttons
+        /// load rtf and update UI
         /// </summary>
         /// <param name="filePath"></param>
         public void LoadRtfFile(string filePath)
         {
-            // setup rtf open
             rtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
             EnableToolbarFormattingIcons();
             gRtf = true;
             toolStripStatusLabelFileType.Text = Strings.rtf;
         }
 
+        public void WriteErrorLogContent(string output)
+        {
+            using (StreamWriter sw = new StreamWriter(unsavedFolderPath + "\\NotepadLightErrorLog" + Strings.txtExt, true))
+            {
+                sw.WriteLine(DateTime.Now + Strings.semiColon + output);
+            }
+        }
+
         /// <summary>
-        /// file open from the MRU
+        /// file opened from the MRU menu button
         /// </summary>
         /// <param name="filePath"></param>
         public void FileOpen(string filePath)
@@ -213,7 +227,7 @@ namespace Notepad_Light
                     LoadRtfFile(filePath);
                 }
 
-                // now check the encoding
+                // update encoding
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
                 rtbPage.Modified = false;
                 ClearToolbarFormattingIcons();
@@ -227,7 +241,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                Logger.Log("FileOpen Error = " + ex.Message);
+                WriteErrorLogContent("FileOpen Error = " + ex.Message);
             }
             finally
             {
@@ -268,7 +282,7 @@ namespace Notepad_Light
                     // update the title with the file path
                     UpdateFormTitle(ofdFileOpen.FileName);
 
-                    // now check the encoding
+                    // update the encoding
                     EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName);
 
                     // if the file was opened and is in the mru, we don't want to add it
@@ -297,13 +311,13 @@ namespace Notepad_Light
                     gPrevPageLength = rtbPage.TextLength;
                     UpdateToolbarIcons();
 
-                    // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
+                    // force both scrollbars, weird bug in richtextbox where it doesn't always show scrollbars
                     rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
                 }
             }
             catch (Exception ex)
             {
-                Logger.Log("FileOpen Error = " + ex.Message);
+                WriteErrorLogContent("FileOpen Error = " + ex.Message);
             }
             finally
             {
@@ -351,7 +365,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                Logger.Log("FileSave Error = " + ex.Message);
+                WriteErrorLogContent("FileSave Error = " + ex.Message);
             }
             finally
             {
@@ -392,7 +406,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                Logger.Log("FileSaveAs Error :\r\n\r\n" + ex.Message);
+                WriteErrorLogContent("FileSaveAs Error :\r\n\r\n" + ex.Message);
             }
             finally
             {
@@ -673,7 +687,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                Logger.Log("UpdateToolbarIcons Error" + ex.Message);
+                WriteErrorLogContent("UpdateToolbarIcons Error" + ex.Message);
             }
         }
 
@@ -877,8 +891,6 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyDarkMode()
         {
-            // dark mode = RGB (32, 32, 32) 
-            // font color = RGB (255, 255, 255)
             menuStrip1.BackColor = clrDarkModeBackground;
             toolStrip1.BackColor = clrDarkModeBackground;
             statusStrip1.BackColor = clrDarkModeBackground;
@@ -886,11 +898,7 @@ namespace Notepad_Light
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
             ChangeMenuItemBackColor(clrDarkModeBackground);
             rtbPage.BackColor = clrDarkModeTextBackground;
-
-            if (Properties.Settings.Default.ReverseTextColorWithTheme)
-            {
-                ApplyTextColor();
-            }
+            ApplyTextColor();
         }
 
         /// <summary>
@@ -898,8 +906,6 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
-            // toolstrip, statusbar, richtextbox = RGB (240, 240, 240) 
-            // font color = RGB (0, 0, 0) 
             menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
@@ -907,11 +913,7 @@ namespace Notepad_Light
             ChangeSubMenuItemBackColor(Color.White);
             ChangeMenuItemBackColor(Color.FromKnownColor(KnownColor.Control));
             rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
-
-            if (Properties.Settings.Default.ReverseTextColorWithTheme)
-            {
-                ApplyTextColor();
-            }
+            ApplyTextColor();
         }
 
         /// <summary>
@@ -920,18 +922,23 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyTextColor()
         {
+            // if the file is rtf or the setting says not to reverse the default text color, don't do anything
             if (gRtf)
             {
                 return;
             }
-
-            if (Properties.Settings.Default.DarkMode)
+            
+            // for plain text, check the setting and apply the reverse color for text
+            if (Properties.Settings.Default.ReverseTextColorWithTheme)
             {
-                rtbPage.ForeColor = Color.White;
-            }
-            else
-            {
-                rtbPage.ForeColor = Color.Black;
+                if (Properties.Settings.Default.DarkMode)
+                {
+                    rtbPage.ForeColor = Color.White;
+                }
+                else
+                {
+                    rtbPage.ForeColor = Color.Black;
+                }
             }
         }
 
@@ -1001,7 +1008,6 @@ namespace Notepad_Light
             zoomToolStripMenuItem250.ForeColor = clr;
             zoomToolStripMenuItem300.ForeColor = clr;
             AboutToolStripMenuItem.ForeColor = clr;
-            ErrorLogToolStripMenuItem.ForeColor = clr;
             SubmitFeedbackToolStripMenuItem.ForeColor = clr;
             ReportBugToolStripMenuItem.ForeColor = clr;
             FormatToolStripMenuItem.ForeColor = clr;
@@ -1024,7 +1030,6 @@ namespace Notepad_Light
         /// <param name="clr"></param>
         public void ChangeSubMenuItemBackColor(Color clr)
         {
-            // sub menu items can be pure white
             NewToolStripMenuItem.BackColor = clr;
             OpenToolStripMenuItem.BackColor = clr;
             RecentToolStripMenuItem.BackColor = clr;
@@ -1062,7 +1067,6 @@ namespace Notepad_Light
             zoomToolStripMenuItem250.BackColor = clr;
             zoomToolStripMenuItem300.BackColor = clr;
             AboutToolStripMenuItem.BackColor = clr;
-            ErrorLogToolStripMenuItem.BackColor = clr;
             SubmitFeedbackToolStripMenuItem.BackColor = clr;
             ReportBugToolStripMenuItem.BackColor = clr;
         }
@@ -1070,6 +1074,7 @@ namespace Notepad_Light
         /// <summary>
         /// known issue in toolstripseparator not using back/fore colors
         /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
+        /// this is for MenuStrip toolstrip separators, but not needed for TooStrip separators
         /// </summary>
         /// <param name="sender">object param from the paint event</param>
         /// <param name="e">eventarg from paint event</param>
@@ -1132,7 +1137,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                Logger.Log("WriteFileContents Error: " + ex.Message);
+                WriteErrorLogContent("WriteFileContents Error: " + ex.Message);
             }
         }
 
@@ -1217,15 +1222,6 @@ namespace Notepad_Light
                 Owner = this
             };
             fAbout.ShowDialog();
-        }
-
-        private void ErrorLogToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FrmErrorLog fLog = new FrmErrorLog()
-            {
-                Owner = this
-            };
-            fLog.ShowDialog();
         }
 
         private void NewToolStripButton_Click(object sender, EventArgs e)
@@ -1644,7 +1640,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                Logger.Log("PrintPage Error: " + ex.Message);
+                WriteErrorLogContent("PrintPage Error: " + ex.Message);
             }
             finally
             {

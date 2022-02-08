@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblVersion = new System.Windows.Forms.Label();
+            this.BtnOpenErrorLog = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -102,11 +103,22 @@
             this.lblVersion.TabIndex = 0;
             this.lblVersion.Text = "Version: ";
             // 
+            // BtnOpenErrorLog
+            // 
+            this.BtnOpenErrorLog.Location = new System.Drawing.Point(12, 156);
+            this.BtnOpenErrorLog.Name = "BtnOpenErrorLog";
+            this.BtnOpenErrorLog.Size = new System.Drawing.Size(108, 23);
+            this.BtnOpenErrorLog.TabIndex = 2;
+            this.BtnOpenErrorLog.Text = "Open Error Log";
+            this.BtnOpenErrorLog.UseVisualStyleBackColor = true;
+            this.BtnOpenErrorLog.Click += new System.EventHandler(this.BtnOpenErrorLog_Click);
+            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(411, 187);
+            this.Controls.Add(this.BtnOpenErrorLog);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -131,5 +143,6 @@
         private Label label1;
         private PictureBox pictureBox1;
         private Label lblVersion;
+        private Button BtnOpenErrorLog;
     }
 }
