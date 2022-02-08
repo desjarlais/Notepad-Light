@@ -85,6 +85,12 @@ namespace Notepad_Light
 
             // start the autosave timer
             autosaveTimer.Start();
+
+            // make sure log file exists
+            if (!File.Exists(Path.GetTempPath() + "\\NotepadLightErrorLog" + Strings.txtExt))
+            {
+                File.Create(Path.GetTempPath() + "\\NotepadLightErrorLog" + Strings.txtExt);
+            }
         }
 
         #region Class Properties
@@ -201,9 +207,13 @@ namespace Notepad_Light
             toolStripStatusLabelFileType.Text = Strings.rtf;
         }
 
+        /// <summary>
+        /// write exception details to error log file
+        /// </summary>
+        /// <param name="output"></param>
         public void WriteErrorLogContent(string output)
         {
-            using (StreamWriter sw = new StreamWriter(unsavedFolderPath + "\\NotepadLightErrorLog" + Strings.txtExt, true))
+            using (StreamWriter sw = new StreamWriter(Path.GetTempPath() + "\\NotepadLightErrorLog" + Strings.txtExt, true))
             {
                 sw.WriteLine(DateTime.Now + Strings.semiColon + output);
             }
