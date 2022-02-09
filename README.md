@@ -10,7 +10,7 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Supports plain text and rtf file formats
 * Users can create, open and save new files
 * Users can open and save existing files
-* AutoSave every 10 minutes
+* AutoSave every 10 minutes (choose between 1-10 minute increments)
 * Undo / Redo 
 * Basic text formatting in rtf 
   * bold
@@ -27,8 +27,7 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Left, center and right justified
 * Change selected text font color
 * Change selected text background (highlight) color
-* Word Count
-* Character count
+* Document Stats (Word count, Character count, Line count)
 * Most Recently Used (MRU) - max of 5
 * Zoom
 * Word Wrap
