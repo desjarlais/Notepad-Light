@@ -27,6 +27,8 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Left, center and right justified
 * Change selected text font color
 * Change selected text background (highlight) color
+* Word Count
+* Character count
 * Most Recently Used (MRU) - max of 5
 * Zoom
 * Word Wrap
