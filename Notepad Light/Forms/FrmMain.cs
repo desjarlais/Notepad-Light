@@ -1010,6 +1010,12 @@ namespace Notepad_Light
             toolStripStatusLabelAppVer.ForeColor = clr;
             appVersionToolStripStatusLabel.ForeColor = clr;
             EncodingToolStripStatusLabel.ForeColor = clr;
+            WordCountToolStripStatusLabel.ForeColor = clr;
+            LinesToolStripStatusLabel.ForeColor = clr;
+            CharacterCountToolStripStatusLabel.ForeColor = clr;
+            toolStripStatusLabelChar.ForeColor = clr;
+            toolStripStatusLabelWords.ForeColor = clr;
+            toolStripStatusLabelLines.ForeColor = clr;
 
             // update menu items
             FileToolStripMenuItem.ForeColor = clr;
