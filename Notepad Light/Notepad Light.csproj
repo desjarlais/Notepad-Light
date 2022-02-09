@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.0.10</AssemblyVersion>
-    <FileVersion>1.0.0.10</FileVersion>
+    <AssemblyVersion>1.0.0.11</AssemblyVersion>
+    <FileVersion>1.0.0.11</FileVersion>
     <PackageIcon>TextFile_white_16x.png</PackageIcon>
     <StartupObject>Notepad_Light.Program</StartupObject>
     <ApplicationIcon>textfile icon.ico</ApplicationIcon>

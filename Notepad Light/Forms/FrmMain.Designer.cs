@@ -975,7 +975,7 @@
             // LeftJustifiedToolStripButton
             // 
             this.LeftJustifiedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.LeftJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.AlignLeft_16x;
+            this.LeftJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.TextLeftJustify_16x;
             this.LeftJustifiedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.LeftJustifiedToolStripButton.Name = "LeftJustifiedToolStripButton";
             this.LeftJustifiedToolStripButton.Size = new System.Drawing.Size(23, 22);
@@ -986,7 +986,7 @@
             // CenterJustifiedToolStripButton
             // 
             this.CenterJustifiedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CenterJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.AlignCenter_16x;
+            this.CenterJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.TextCenter_16x;
             this.CenterJustifiedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CenterJustifiedToolStripButton.Name = "CenterJustifiedToolStripButton";
             this.CenterJustifiedToolStripButton.Size = new System.Drawing.Size(23, 22);
@@ -997,7 +997,7 @@
             // RightJustifiedToolStripButton
             // 
             this.RightJustifiedToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RightJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.AlignRight_16x;
+            this.RightJustifiedToolStripButton.Image = global::Notepad_Light.Properties.Resources.TextRightJustify_16x;
             this.RightJustifiedToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RightJustifiedToolStripButton.Name = "RightJustifiedToolStripButton";
             this.RightJustifiedToolStripButton.Size = new System.Drawing.Size(23, 22);
@@ -1023,7 +1023,7 @@
             // DecreaseIndentToolStripButton
             // 
             this.DecreaseIndentToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DecreaseIndentToolStripButton.Image = global::Notepad_Light.Properties.Resources.leftindent;
+            this.DecreaseIndentToolStripButton.Image = global::Notepad_Light.Properties.Resources.TextOutdent_16x;
             this.DecreaseIndentToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DecreaseIndentToolStripButton.Name = "DecreaseIndentToolStripButton";
             this.DecreaseIndentToolStripButton.Size = new System.Drawing.Size(23, 22);
@@ -1033,7 +1033,7 @@
             // IncreaseIndentToolStripButton
             // 
             this.IncreaseIndentToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.IncreaseIndentToolStripButton.Image = global::Notepad_Light.Properties.Resources.rightindent;
+            this.IncreaseIndentToolStripButton.Image = global::Notepad_Light.Properties.Resources.TextIndent_16x;
             this.IncreaseIndentToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.IncreaseIndentToolStripButton.Name = "IncreaseIndentToolStripButton";
             this.IncreaseIndentToolStripButton.Size = new System.Drawing.Size(23, 22);

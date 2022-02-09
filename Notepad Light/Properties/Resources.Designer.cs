@@ -63,36 +63,6 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap AlignCenter_16x {
-            get {
-                object obj = ResourceManager.GetObject("AlignCenter_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignLeft_16x {
-            get {
-                object obj = ResourceManager.GetObject("AlignLeft_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AlignRight_16x {
-            get {
-                object obj = ResourceManager.GetObject("AlignRight_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Bold_16x {
             get {
                 object obj = ResourceManager.GetObject("Bold_16x", resourceCulture);
@@ -243,16 +213,6 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap leftindent {
-            get {
-                object obj = ResourceManager.GetObject("leftindent", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap PageGuide_16x {
             get {
                 object obj = ResourceManager.GetObject("PageGuide_16x", resourceCulture);
@@ -313,16 +273,6 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rightindent {
-            get {
-                object obj = ResourceManager.GetObject("rightindent", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap SaveAs_16x {
             get {
                 object obj = ResourceManager.GetObject("SaveAs_16x", resourceCulture);
@@ -376,6 +326,66 @@ namespace Notepad_Light.Properties {
         internal static System.Drawing.Bitmap StrikeThrough_16x {
             get {
                 object obj = ResourceManager.GetObject("StrikeThrough_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextCenter_16x {
+            get {
+                object obj = ResourceManager.GetObject("TextCenter_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextIndent_16x {
+            get {
+                object obj = ResourceManager.GetObject("TextIndent_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextIndent_exp_16x {
+            get {
+                object obj = ResourceManager.GetObject("TextIndent_exp_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextLeftJustify_16x {
+            get {
+                object obj = ResourceManager.GetObject("TextLeftJustify_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextOutdent_16x {
+            get {
+                object obj = ResourceManager.GetObject("TextOutdent_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextRightJustify_16x {
+            get {
+                object obj = ResourceManager.GetObject("TextRightJustify_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

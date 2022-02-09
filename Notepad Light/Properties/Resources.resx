@@ -112,21 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AlignCenter_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AlignCenter_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignLeft_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AlignLeft_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="AlignRight_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AlignRight_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Bold_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Bold_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -172,9 +163,6 @@
   <data name="Italic_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Italic_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="leftindent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\leftindent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="PageGuide_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PageGuide_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -193,9 +181,6 @@
   <data name="Restart_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Restart_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="rightindent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rightindent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SaveAs_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SaveAs_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -213,6 +198,24 @@
   </data>
   <data name="StrikeThrough_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StrikeThrough_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextCenter_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextCenter_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextIndent_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextIndent_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextIndent_exp_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextIndent_exp_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextLeftJustify_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextLeftJustify_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextOutdent_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextOutdent_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextRightJustify_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextRightJustify_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TimePicker_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TimePicker_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -87,9 +87,9 @@ namespace Notepad_Light
             autosaveTimer.Start();
 
             // make sure log file exists
-            if (!File.Exists(Path.GetTempPath() + "\\NotepadLightErrorLog" + Strings.txtExt))
+            if (!File.Exists(Path.GetTempPath() + "\\NotepadLightErrorLog.txt"))
             {
-                File.Create(Path.GetTempPath() + "\\NotepadLightErrorLog" + Strings.txtExt);
+                File.Create(Path.GetTempPath() + "\\NotepadLightErrorLog.txt");
             }
         }
 
@@ -428,6 +428,12 @@ namespace Notepad_Light
 
         public void OpenRecentFile(string filePath, int buttonIndex)
         {
+            // do nothing if there is no file
+            if (filePath == Strings.empty)
+            {
+                return;
+            }
+
             // if there are unsaved changes, prompt the user before opening
             if (rtbPage.Modified)
             {
@@ -436,12 +442,6 @@ namespace Notepad_Light
                 {
                     FileSave();
                 }
-            }
-
-            // do nothing if there is no file
-            if (filePath == Strings.empty)
-            {
-                return;
             }
 
             // if there is a file/path, open it
@@ -725,7 +725,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// if the file is plain text, no formatting should be applied
+        /// plain text files don't need formatting buttons so they can be disabled
         /// </summary>
         public void DisableToolbarFormattingIcons()
         {
@@ -738,7 +738,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// clear all of the formatting icon states
+        /// clear all of the formatting icon ui states
         /// </summary>
         public void ClearToolbarFormattingIcons()
         {
@@ -749,6 +749,9 @@ namespace Notepad_Light
             BulletToolStripButton.Checked = false;
         }
 
+        /// <summary>
+        /// ui work needed after formatting buttons have been applied/used
+        /// </summary>
         public void EndOfButtonFormatWork()
         {
             rtbPage.Focus();
