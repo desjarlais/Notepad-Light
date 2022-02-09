@@ -10,7 +10,7 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Supports plain text and rtf file formats
 * Users can create, open and save new files
 * Users can open and save existing files
-* AutoSave every 10 minutes
+* AutoSave every 10 minutes (choose between 1-10 minute increments)
 * Undo / Redo 
 * Basic text formatting in rtf 
   * bold
