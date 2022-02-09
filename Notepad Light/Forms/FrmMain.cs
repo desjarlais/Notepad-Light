@@ -72,6 +72,7 @@ namespace Notepad_Light
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
             UpdateToolbarIcons();
+            UpdateLnColValues();
             UpdateWordAndCharCount(rtbPage.Text);
             UpdateAutoSaveInterval();
 
@@ -140,6 +141,7 @@ namespace Notepad_Light
         {
             rtbPage.Clear();
             UpdateFormTitle(Strings.defaultFileName);
+            gRtf = false;
             UpdateStatusBar();
             
             if (gRtf)
@@ -241,7 +243,6 @@ namespace Notepad_Light
 
                 // update encoding
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
-                rtbPage.Modified = false;
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = rtbPage.TextLength;
@@ -251,6 +252,7 @@ namespace Notepad_Light
 
                 // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
                 rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+                rtbPage.Modified = false;
             }
             catch (Exception ex)
             {
@@ -318,7 +320,6 @@ namespace Notepad_Light
                     }
 
                     // lastly, set the saved back to false and update the ui and cursor
-                    rtbPage.Modified = false;
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
@@ -327,6 +328,7 @@ namespace Notepad_Light
 
                     // force both scrollbars, weird bug in richtextbox where it doesn't always show scrollbars
                     rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+                    rtbPage.Modified = false;
                 }
             }
             catch (Exception ex)
@@ -707,7 +709,7 @@ namespace Notepad_Light
 
         public void UpdateWordAndCharCount(string input)
         {
-            int wCount = input.Split(new char[] { ' ', '.', '?' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            int wCount = input.Split(new char[] { ' ', '.', '?', ',', ':', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
             WordCountToolStripStatusLabel.Text = wCount.ToString();
             CharacterCountToolStripStatusLabel.Text = rtbPage.Text.Length.ToString();
         }
@@ -866,6 +868,9 @@ namespace Notepad_Light
         {
             int line = rtbPage.GetLineFromCharIndex(rtbPage.SelectionStart);
             int column = rtbPage.SelectionStart - rtbPage.GetFirstCharIndexFromLine(line);
+
+            line++;
+            column++;
 
             toolStripStatusLabelLine.Text = line.ToString();
             toolStripStatusLabelColumn.Text = column.ToString();
