@@ -3,6 +3,7 @@ using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
 using System.Drawing.Printing;
+using System.Runtime.CompilerServices;
 
 namespace Notepad_Light
 {
@@ -71,6 +72,7 @@ namespace Notepad_Light
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
             UpdateToolbarIcons();
+            UpdateWordAndCharCount(rtbPage.Text);
             UpdateAutoSaveInterval();
 
             // update theme
@@ -245,6 +247,7 @@ namespace Notepad_Light
                 gPrevPageLength = rtbPage.TextLength;
                 UpdateMRU();
                 UpdateFormTitle(filePath);
+                UpdateWordAndCharCount(rtbPage.Text);
 
                 // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
                 rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
@@ -320,6 +323,7 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
                     UpdateToolbarIcons();
+                    UpdateWordAndCharCount(rtbPage.Text);
 
                     // force both scrollbars, weird bug in richtextbox where it doesn't always show scrollbars
                     rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
@@ -699,6 +703,13 @@ namespace Notepad_Light
             {
                 WriteErrorLogContent("UpdateToolbarIcons Error" + ex.Message);
             }
+        }
+
+        public void UpdateWordAndCharCount(string input)
+        {
+            int wCount = input.Split(new char[] { ' ', '.', '?' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            WordCountToolStripStatusLabel.Text = wCount.ToString();
+            CharacterCountToolStripStatusLabel.Text = rtbPage.Text.Length.ToString();
         }
 
         public void ClearFormatting()
@@ -1177,6 +1188,7 @@ namespace Notepad_Light
 
             UpdateLnColValues();
             UpdateToolbarIcons();
+            UpdateWordAndCharCount(rtbPage.Text);
 
         }
 
