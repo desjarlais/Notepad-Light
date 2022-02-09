@@ -73,7 +73,7 @@ namespace Notepad_Light
             UpdateStatusBar();
             UpdateToolbarIcons();
             UpdateLnColValues();
-            UpdateWordAndCharCount(rtbPage.Text);
+            UpdateDocStats();
             UpdateAutoSaveInterval();
 
             // update theme
@@ -248,7 +248,7 @@ namespace Notepad_Light
                 gPrevPageLength = rtbPage.TextLength;
                 UpdateMRU();
                 UpdateFormTitle(filePath);
-                UpdateWordAndCharCount(rtbPage.Text);
+                UpdateDocStats();
 
                 // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
                 rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
@@ -324,7 +324,7 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
                     UpdateToolbarIcons();
-                    UpdateWordAndCharCount(rtbPage.Text);
+                    UpdateDocStats();
 
                     // force both scrollbars, weird bug in richtextbox where it doesn't always show scrollbars
                     rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
@@ -707,11 +707,23 @@ namespace Notepad_Light
             }
         }
 
-        public void UpdateWordAndCharCount(string input)
+        /// <summary>
+        /// gather details for word, char and line count
+        /// </summary>
+        public void UpdateDocStats()
         {
-            int wCount = input.Split(new char[] { ' ', '.', '?', ',', ':', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
-            WordCountToolStripStatusLabel.Text = wCount.ToString();
+            int totalWordCount = 0;
+            int lineCount;
+            foreach (string line in rtbPage.Lines)
+            {
+                lineCount = line.Split(new char[] { ' ', '.', '?', ',', ':', '\t', '=', ';' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                totalWordCount += lineCount;
+            }
+            
+            // update the ui with the values
+            WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
             CharacterCountToolStripStatusLabel.Text = rtbPage.Text.Length.ToString();
+            LinesToolStripStatusLabel.Text = rtbPage.Lines.Length.ToString();
         }
 
         public void ClearFormatting()
@@ -1193,7 +1205,7 @@ namespace Notepad_Light
 
             UpdateLnColValues();
             UpdateToolbarIcons();
-            UpdateWordAndCharCount(rtbPage.Text);
+            UpdateDocStats();
 
         }
 
