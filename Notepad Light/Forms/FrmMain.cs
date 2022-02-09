@@ -722,6 +722,7 @@ namespace Notepad_Light
             StrikethroughToolStripButton.Enabled = true;
             BulletToolStripButton.Enabled = true;
             FontColorToolStripButton.Enabled = true;
+            HighlightTextToolStripButton.Enabled = true;
         }
 
         /// <summary>
@@ -735,6 +736,7 @@ namespace Notepad_Light
             StrikethroughToolStripButton.Enabled = false;
             BulletToolStripButton.Enabled = false;
             FontColorToolStripButton.Enabled = false;
+            HighlightTextToolStripButton.Enabled = false;
         }
 
         /// <summary>
@@ -1800,6 +1802,15 @@ namespace Notepad_Light
         private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Paste();
+        }
+
+        private void HighlightTextToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != rtbPage.SelectionBackColor)
+            {
+                rtbPage.SelectionBackColor = colorDialog1.Color;
+                rtbPage.Modified = true;
+            }
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)

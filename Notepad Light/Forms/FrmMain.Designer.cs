@@ -120,6 +120,7 @@
             this.UnderlineToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.StrikethroughToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.FontColorToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.HighlightTextToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.LeftJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.CenterJustifiedToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -148,6 +149,7 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.autosaveTimer = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -788,7 +790,9 @@
             this.ItalicToolStripButton,
             this.UnderlineToolStripButton,
             this.StrikethroughToolStripButton,
+            this.toolStripSeparator17,
             this.FontColorToolStripButton,
+            this.HighlightTextToolStripButton,
             this.ToolStripSeparator11,
             this.LeftJustifiedToolStripButton,
             this.CenterJustifiedToolStripButton,
@@ -966,6 +970,17 @@
             this.FontColorToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.FontColorToolStripButton.Text = "Font Color";
             this.FontColorToolStripButton.Click += new System.EventHandler(this.FontColorToolStripButton_Click);
+            // 
+            // HighlightTextToolStripButton
+            // 
+            this.HighlightTextToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.HighlightTextToolStripButton.Image = global::Notepad_Light.Properties.Resources.HighlightText_16x;
+            this.HighlightTextToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.HighlightTextToolStripButton.Name = "HighlightTextToolStripButton";
+            this.HighlightTextToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.HighlightTextToolStripButton.Text = "Text Highlight";
+            this.HighlightTextToolStripButton.ToolTipText = "Highlight Text Color";
+            this.HighlightTextToolStripButton.Click += new System.EventHandler(this.HighlightTextToolStripButton_Click);
             // 
             // ToolStripSeparator11
             // 
@@ -1159,6 +1174,11 @@
             this.autosaveTimer.Interval = 1000;
             this.autosaveTimer.Tick += new System.EventHandler(this.autosaveTimer_Tick);
             // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(6, 25);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1307,5 +1327,7 @@
         private ToolStripSeparator toolStripSeparator15;
         private ToolStripMenuItem selectAllToolStripMenuItem1;
         private ToolStripSeparator toolStripSeparator16;
+        private ToolStripButton HighlightTextToolStripButton;
+        private ToolStripSeparator toolStripSeparator17;
     }
 }
