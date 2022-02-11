@@ -1,4 +1,6 @@
-﻿namespace Notepad_Light.Forms
+﻿using Notepad_Light.Helpers;
+
+namespace Notepad_Light.Forms
 {
     public partial class FrmOptions : Form
     {
@@ -34,6 +36,7 @@
                 rdoLightMode.Checked = true;
             }
 
+            // update reverse text
             if (Properties.Settings.Default.ReverseTextColorWithTheme == true)
             {
                 ckbReverseTextColor.Checked = true;
@@ -41,6 +44,16 @@
             else
             {
                 ckbReverseTextColor.Checked = false;
+            }
+
+            // update file format dropdown
+            if (Properties.Settings.Default.NewFileFormat == Strings.plainText)
+            {
+                cbxNewFileFormat.SelectedIndex = 0;
+            }
+            else
+            {
+                cbxNewFileFormat.SelectedIndex = 1;
             }
         }
 
@@ -106,6 +119,15 @@
             else
             {
                 Properties.Settings.Default.ReverseTextColorWithTheme = false;
+            }
+
+            if (cbxNewFileFormat.SelectedIndex == 0)
+            {
+                Properties.Settings.Default.NewFileFormat = Strings.plainText;
+            }
+            else
+            {
+                Properties.Settings.Default.NewFileFormat = Strings.rtf;
             }
 
             Close();

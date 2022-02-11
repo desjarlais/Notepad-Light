@@ -156,5 +156,17 @@ namespace Notepad_Light.Properties {
                 this["AutoSaveInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Text")]
+        public string NewFileFormat {
+            get {
+                return ((string)(this["NewFileFormat"]));
+            }
+            set {
+                this["NewFileFormat"] = value;
+            }
+        }
     }
 }

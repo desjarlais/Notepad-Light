@@ -37,5 +37,8 @@
     <Setting Name="AutoSaveInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="NewFileFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Text</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

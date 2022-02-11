@@ -47,6 +47,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
+            this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -90,7 +92,7 @@
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(481, 320);
+            this.BtnOK.Location = new System.Drawing.Point(479, 362);
             this.BtnOK.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(81, 22);
@@ -101,7 +103,7 @@
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(564, 320);
+            this.BtnCancel.Location = new System.Drawing.Point(562, 362);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(81, 22);
@@ -112,6 +114,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.cbxNewFileFormat);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.nudAutoSaveInterval);
             this.groupBox3.Controls.Add(this.ckbReverseTextColor);
@@ -120,7 +124,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Size = new System.Drawing.Size(350, 116);
+            this.groupBox3.Size = new System.Drawing.Size(350, 158);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
@@ -128,7 +132,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 81);
+            this.label1.Location = new System.Drawing.Point(14, 123);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -136,7 +140,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(172, 79);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(173, 121);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -159,7 +163,7 @@
             // ckbReverseTextColor
             // 
             this.ckbReverseTextColor.AutoSize = true;
-            this.ckbReverseTextColor.Location = new System.Drawing.Point(13, 46);
+            this.ckbReverseTextColor.Location = new System.Drawing.Point(14, 88);
             this.ckbReverseTextColor.Name = "ckbReverseTextColor";
             this.ckbReverseTextColor.Size = new System.Drawing.Size(312, 19);
             this.ckbReverseTextColor.TabIndex = 8;
@@ -169,7 +173,7 @@
             // ckbUsePasteUI
             // 
             this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(13, 23);
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(14, 60);
             this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUsePasteUI.Name = "ckbUsePasteUI";
             this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
@@ -240,7 +244,7 @@
             this.groupBox2.Controls.Add(this.rdoDarkMode);
             this.groupBox2.Location = new System.Drawing.Point(6, 292);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(284, 52);
+            this.groupBox2.Size = new System.Drawing.Size(284, 68);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Theme";
@@ -267,11 +271,31 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
+            // cbxNewFileFormat
+            // 
+            this.cbxNewFileFormat.FormattingEnabled = true;
+            this.cbxNewFileFormat.Items.AddRange(new object[] {
+            "Plain Text",
+            "RTF"});
+            this.cbxNewFileFormat.Location = new System.Drawing.Point(113, 23);
+            this.cbxNewFileFormat.Name = "cbxNewFileFormat";
+            this.cbxNewFileFormat.Size = new System.Drawing.Size(221, 23);
+            this.cbxNewFileFormat.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 15);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "New File Format";
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 352);
+            this.ClientSize = new System.Drawing.Size(654, 394);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
@@ -318,5 +342,7 @@
         private CheckBox ckbReverseTextColor;
         private NumericUpDown nudAutoSaveInterval;
         private Label label1;
+        private Label label2;
+        private ComboBox cbxNewFileFormat;
     }
 }

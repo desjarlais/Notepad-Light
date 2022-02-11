@@ -11,6 +11,7 @@ namespace Notepad_Light
     {
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
+        public string gTempFilePath = string.Empty;
         public string gPrintString = string.Empty;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
@@ -89,10 +90,15 @@ namespace Notepad_Light
             // start the autosave timer
             autosaveTimer.Start();
 
-            // make sure log file exists
-            if (!File.Exists(Path.GetTempPath() + "\\NotepadLightErrorLog.txt"))
+            // make sure log file exists, clear it if it does
+            gTempFilePath = Path.GetTempPath() + "\\NotepadLightErrorLog.txt";
+            if (!File.Exists(gTempFilePath))
             {
-                File.Create(Path.GetTempPath() + "\\NotepadLightErrorLog.txt");
+                File.Create(gTempFilePath);
+            }
+            else
+            {
+                File.WriteAllText(gTempFilePath, string.Empty);
             }
         }
 
@@ -141,18 +147,20 @@ namespace Notepad_Light
         {
             rtbPage.Clear();
             UpdateFormTitle(Strings.defaultFileName);
-            gRtf = false;
-            UpdateStatusBar();
-            
-            if (gRtf)
+
+            // check for file type and update UI accordingly
+            if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
             {
+                gRtf = true;
                 EnableToolbarFormattingIcons();
-                
             }
             else
             {
+                gRtf = false;
                 ClearToolbarFormattingIcons();
             }
+            
+            UpdateStatusBar();
         }
 
         /// <summary>
@@ -217,7 +225,7 @@ namespace Notepad_Light
         /// <param name="output"></param>
         public void WriteErrorLogContent(string output)
         {
-            using (StreamWriter sw = new StreamWriter(Path.GetTempPath() + "\\NotepadLightErrorLog" + Strings.txtExt, true))
+            using (StreamWriter sw = new StreamWriter(gTempFilePath + Strings.txtExt, true))
             {
                 sw.WriteLine(DateTime.Now + Strings.semiColon + output);
             }
@@ -323,7 +331,6 @@ namespace Notepad_Light
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
-                    UpdateToolbarIcons();
                     UpdateDocStats();
 
                     // force both scrollbars, weird bug in richtextbox where it doesn't always show scrollbars
@@ -337,6 +344,7 @@ namespace Notepad_Light
             }
             finally
             {
+                UpdateToolbarIcons();
                 Cursor = Cursors.Default;
             }
         }
