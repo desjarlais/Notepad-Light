@@ -35,6 +35,8 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nudAutoSaveInterval = new System.Windows.Forms.NumericUpDown();
             this.ckbReverseTextColor = new System.Windows.Forms.CheckBox();
@@ -47,8 +49,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -128,6 +128,26 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 15);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "New File Format";
+            // 
+            // cbxNewFileFormat
+            // 
+            this.cbxNewFileFormat.FormattingEnabled = true;
+            this.cbxNewFileFormat.Items.AddRange(new object[] {
+            "Plain Text",
+            "Rtf"});
+            this.cbxNewFileFormat.Location = new System.Drawing.Point(113, 23);
+            this.cbxNewFileFormat.Name = "cbxNewFileFormat";
+            this.cbxNewFileFormat.Size = new System.Drawing.Size(221, 23);
+            this.cbxNewFileFormat.TabIndex = 11;
             // 
             // label1
             // 
@@ -270,26 +290,6 @@
             this.rdoDarkMode.TabStop = true;
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
-            // 
-            // cbxNewFileFormat
-            // 
-            this.cbxNewFileFormat.FormattingEnabled = true;
-            this.cbxNewFileFormat.Items.AddRange(new object[] {
-            "Plain Text",
-            "RTF"});
-            this.cbxNewFileFormat.Location = new System.Drawing.Point(113, 23);
-            this.cbxNewFileFormat.Name = "cbxNewFileFormat";
-            this.cbxNewFileFormat.Size = new System.Drawing.Size(221, 23);
-            this.cbxNewFileFormat.TabIndex = 11;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 27);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 15);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "New File Format";
             // 
             // FrmOptions
             // 

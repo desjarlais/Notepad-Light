@@ -3,7 +3,6 @@ using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
 using System.Drawing.Printing;
-using System.Runtime.CompilerServices;
 
 namespace Notepad_Light
 {
@@ -99,6 +98,12 @@ namespace Notepad_Light
             else
             {
                 File.WriteAllText(gTempFilePath, string.Empty);
+            }
+
+            // change ui if the default is rtf
+            if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
+            {
+                CreateNewDocument();
             }
         }
 
@@ -1170,15 +1175,13 @@ namespace Notepad_Light
 
                 if (gCurrentFileName == Strings.defaultFileName)
                 {
-                    using (StreamWriter sw = new StreamWriter(unsavedFolderPath + "\\" + gCurrentFileName + Strings.txtExt, false))
+                    // using rtf for all temp files, if the file is plain text, it will still have the same contents
+                    string tempFilePath = unsavedFolderPath + "\\" + gCurrentFileName + Strings.rtf;
+                    using (StreamWriter sw = new StreamWriter(tempFilePath, false))
                     {
                         // need to avoid cross thread operation
                         rtbPage.Invoke((MethodInvoker)delegate {
-                            foreach (string ls in rtbPage.Lines)
-                            {
-                                sw.WriteLine(ls);
-                            }
-
+                            rtbPage.SaveFile(tempFilePath);
                             rtbPage.Modified = false;
                             UpdateToolbarIcons();
                         });
