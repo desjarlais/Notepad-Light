@@ -3,7 +3,7 @@
 There are plenty of notepad applications, so this is just another one in the mix.
 
 ![image](https://github.com/desjarlais/desjarlais.github.io/blob/master/img/notepadlightlightmode.jpg)
-![image](https://github.com/desjarlais/desjarlais.github.io/blob/master/img/notepadlightdarkmode.jpg)
+![image](https://github.com/desjarlais/desjarlais.github.io/blob/master/img/notepadlightdarkmode2.jpg)
 
 # Features
 
