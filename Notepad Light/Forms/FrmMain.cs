@@ -729,7 +729,7 @@ namespace Notepad_Light
             int lineCount;
             foreach (string line in rtbPage.Lines)
             {
-                lineCount = line.Split(new char[] { ' ', '.', '?', ',', ':', '\t', '=', ';' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                lineCount = line.Split(new char[] { ' ', '.', '?', ',', ':', '\t', '=', ';', '-' }, StringSplitOptions.RemoveEmptyEntries).Length;
                 totalWordCount += lineCount;
             }
             
@@ -1204,26 +1204,14 @@ namespace Notepad_Light
         #endregion
 
         /// <summary>
-        /// when the selection changes, we need to update the UI
-        /// we also want to update the modified state of the file
+        /// update line/column and toolbars
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void RtbPage_SelectionChanged(object sender, EventArgs e)
         {
-            //// check if content was added
-            //if (gPrevPageLength != rtbPage.TextLength)
-            //{
-            //    rtbPage.Modified = true;
-            //}
-            
-            //// now update the prevPageLength
-            //gPrevPageLength = rtbPage.TextLength;
-
             UpdateLnColValues();
             UpdateToolbarIcons();
-            //UpdateDocStats();
-
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1860,6 +1848,11 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// when text is changed, need to update saved state and ui/stats
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rtbPage_TextChanged(object sender, EventArgs e)
         {
             // check if content was added
