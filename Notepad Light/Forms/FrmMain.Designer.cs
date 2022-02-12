@@ -323,6 +323,7 @@
             this.rtbPage.Size = new System.Drawing.Size(1135, 426);
             this.rtbPage.TabIndex = 1;
             this.rtbPage.Text = "";
+            this.rtbPage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbPage_LinkClicked);
             this.rtbPage.SelectionChanged += new System.EventHandler(this.RtbPage_SelectionChanged);
             this.rtbPage.TextChanged += new System.EventHandler(this.rtbPage_TextChanged);
             this.rtbPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RtbPage_KeyDown);

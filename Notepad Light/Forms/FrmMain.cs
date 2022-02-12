@@ -180,7 +180,7 @@ namespace Notepad_Light
             }
             else if (rtbPage.Modified == true)
             {
-                DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     FileSaveAs();
@@ -456,7 +456,7 @@ namespace Notepad_Light
             // if there are unsaved changes, prompt the user before opening
             if (rtbPage.Modified)
             {
-                DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     FileSave();
@@ -603,7 +603,7 @@ namespace Notepad_Light
         {
             if (rtbPage.Modified == true)
             {
-                DialogResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     FileSave();
@@ -1872,6 +1872,14 @@ namespace Notepad_Light
             gPrevPageLength = rtbPage.TextLength;
             UpdateDocStats();
             UpdateToolbarIcons();
+        }
+
+        private void rtbPage_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            if (e.LinkText is not null)
+            {
+                App.PlatformSpecificProcessStart(e.LinkText.ToString());
+            }
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)

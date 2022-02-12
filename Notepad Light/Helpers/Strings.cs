@@ -19,6 +19,8 @@
         public const string empty = "empty";
         public const string rtfExt = ".rtf";
         public const string txtExt = ".txt";
+        public const string saveChangePrompt = "Do you want to save your changes?";
+        public const string saveChangesTitle = "Save Changes";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
