@@ -1211,18 +1211,18 @@ namespace Notepad_Light
         /// <param name="e"></param>
         private void RtbPage_SelectionChanged(object sender, EventArgs e)
         {
-            // check if content was added
-            if (gPrevPageLength != rtbPage.TextLength)
-            {
-                rtbPage.Modified = true;
-            }
+            //// check if content was added
+            //if (gPrevPageLength != rtbPage.TextLength)
+            //{
+            //    rtbPage.Modified = true;
+            //}
             
-            // now update the prevPageLength
-            gPrevPageLength = rtbPage.TextLength;
+            //// now update the prevPageLength
+            //gPrevPageLength = rtbPage.TextLength;
 
             UpdateLnColValues();
             UpdateToolbarIcons();
-            UpdateDocStats();
+            //UpdateDocStats();
 
         }
 
@@ -1489,6 +1489,7 @@ namespace Notepad_Light
                 e.SuppressKeyPress = true;
                 rtbPage.Select(rtbPage.GetFirstCharIndexOfCurrentLine(), 0);
                 IncreaseIndentToolStripButton.PerformClick();
+                return;
             }
 
             // if the user deletes the bullet, we need to remove bullet formatting
@@ -1499,16 +1500,16 @@ namespace Notepad_Light
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
                 }
-
-                rtbPage.Modified = true;
-                UpdateToolbarIcons();
+                // backspace causes selectionchange so the stats update there
             }
 
             // if delete key is pressed change the saved state
             if (e.KeyCode == Keys.Delete)
             {
+                gPrevPageLength = rtbPage.TextLength;
                 rtbPage.Modified = true;
                 UpdateToolbarIcons();
+                UpdateDocStats();
             }
         }
 
@@ -1857,6 +1858,20 @@ namespace Notepad_Light
                 rtbPage.SelectionBackColor = colorDialog1.Color;
                 rtbPage.Modified = true;
             }
+        }
+
+        private void rtbPage_TextChanged(object sender, EventArgs e)
+        {
+            // check if content was added
+            if (gPrevPageLength != rtbPage.TextLength)
+            {
+                rtbPage.Modified = true;
+            }
+
+            // now update the prevPageLength
+            gPrevPageLength = rtbPage.TextLength;
+            UpdateDocStats();
+            UpdateToolbarIcons();
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
