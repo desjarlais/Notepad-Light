@@ -3,11 +3,41 @@ using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
 using System.Drawing.Printing;
+using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
+using System.Text;
+using System.Drawing.Drawing2D;
 
 namespace Notepad_Light
 {
     public partial class FrmMain : Form
     {
+        // pinvoke
+        const int MM_ISOTROPIC = 7;
+        const int MM_ANISOTROPIC = 8;
+
+        [DllImport("gdiplus.dll")]
+        private static extern uint GdipEmfToWmfBits(IntPtr _hEmf, uint _bufferSize,
+            byte[] _buffer, int _mappingMode, EmfToWmfBitsFlags _flags);
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr SetMetaFileBitsEx(uint _bufferSize,
+            byte[] _buffer);
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr CopyMetaFile(IntPtr hWmf,
+            string filename);
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteMetaFile(IntPtr hWmf);
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteEnhMetaFile(IntPtr hEmf);
+
+        private enum EmfToWmfBitsFlags
+        {
+            EmfToWmfBitsFlagsDefault = 0x00000000,
+            EmfToWmfBitsFlagsEmbedEmf = 0x00000001,
+            EmfToWmfBitsFlagsIncludePlaceable = 0x00000002,
+            EmfToWmfBitsFlagsNoXORClip = 0x00000004
+        };
+
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
         public string gTempFilePath = string.Empty;
@@ -761,6 +791,7 @@ namespace Notepad_Light
             BulletToolStripButton.Enabled = true;
             FontColorToolStripButton.Enabled = true;
             HighlightTextToolStripButton.Enabled = true;
+            PictureToolStripMenuItem.Enabled = true;
         }
 
         /// <summary>
@@ -775,6 +806,7 @@ namespace Notepad_Light
             BulletToolStripButton.Enabled = false;
             FontColorToolStripButton.Enabled = false;
             HighlightTextToolStripButton.Enabled = false;
+            PictureToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1004,7 +1036,7 @@ namespace Notepad_Light
         /// <param name="clr"></param>
         public void ChangeControlTextColor(Color clr)
         {
-            // update toolstrip items
+            // update toolstrip buttons
             TimerToolStripLabel.ForeColor = clr;
             TimerToolStripLabelOnly.ForeColor = clr;
             StartStopTimerToolStripButton.ForeColor = clr;
@@ -1013,7 +1045,7 @@ namespace Notepad_Light
             FindToolStripButton.ForeColor = clr;
             FindToolStripLabel.ForeColor = clr;
             
-            // update status bar items
+            // update status bar labels
             toolStripStatusLabelCol.ForeColor = clr;
             toolStripStatusLabelColumn.ForeColor = clr;
             toolStripStatusLabelLn.ForeColor = clr;
@@ -1030,7 +1062,7 @@ namespace Notepad_Light
             toolStripStatusLabelWords.ForeColor = clr;
             toolStripStatusLabelLines.ForeColor = clr;
 
-            // update menu items
+            // update File menu
             FileToolStripMenuItem.ForeColor = clr;
             NewToolStripMenuItem.ForeColor = clr;
             OpenToolStripMenuItem.ForeColor = clr;
@@ -1047,6 +1079,8 @@ namespace Notepad_Light
             SaveToolStripMenuItem.ForeColor = clr;
             OptionsToolStripMenuItem.ForeColor = clr;
             ExitToolStripMenuItem.ForeColor = clr;
+
+            // update Edit menu
             EditToolStripMenuItem.ForeColor = clr;
             UndoToolStripMenuItem.ForeColor = clr;
             RedoToolStripMenuItem.ForeColor = clr;
@@ -1056,12 +1090,22 @@ namespace Notepad_Light
             SelectAllToolStripMenuItem.ForeColor = clr;
             ClearAllTextToolStripMenuItem.ForeColor = clr;
             FindToolStripMenuItem.ForeColor = clr;
+
+            // update Formatting menu
+            FormatToolStripMenuItem.ForeColor = clr;
             EditFontToolStripMenuItem.ForeColor = clr;
             ClearFormattingToolStripMenuItem.ForeColor = clr;
             BoldToolStripMenuItem.ForeColor = clr;
             ItalicToolStripMenuItem.ForeColor = clr;
             UnderlineToolStripMenuItem.ForeColor = clr;
             StrikethroughToolStripMenuItem.ForeColor = clr;
+
+            // update Insert menu
+            InsertToolStripMenuItem.ForeColor = clr;
+            PictureToolStripMenuItem.ForeColor = clr;
+
+            // update View menu
+            ViewToolStripMenuItem.ForeColor = clr;
             WordWrapToolStripMenuItem.ForeColor = clr;
             ZoomToolStripMenuItem.ForeColor = clr;
             zoomToolStripMenuItem100.ForeColor = clr;
@@ -1069,18 +1113,19 @@ namespace Notepad_Light
             zoomToolStripMenuItem200.ForeColor = clr;
             zoomToolStripMenuItem250.ForeColor = clr;
             zoomToolStripMenuItem300.ForeColor = clr;
+
+            // update help menu
+            HelpToolStripMenuItem.ForeColor = clr;
             AboutToolStripMenuItem.ForeColor = clr;
             SubmitFeedbackToolStripMenuItem.ForeColor = clr;
-            ReportBugToolStripMenuItem.ForeColor = clr;
-            FormatToolStripMenuItem.ForeColor = clr;
-            ViewToolStripMenuItem.ForeColor = clr;
-            HelpToolStripMenuItem.ForeColor = clr;
+            ReportBugToolStripMenuItem.ForeColor = clr;            
         }
 
         public void ChangeMenuItemBackColor(Color clr)
         {
             FileToolStripMenuItem.BackColor = clr;
             EditToolStripMenuItem.BackColor = clr;
+            InsertToolStripMenuItem.BackColor = clr;
             FormatToolStripMenuItem.BackColor = clr;
             ViewToolStripMenuItem.BackColor = clr;
             HelpToolStripMenuItem.BackColor = clr;
@@ -1092,6 +1137,7 @@ namespace Notepad_Light
         /// <param name="clr"></param>
         public void ChangeSubMenuItemBackColor(Color clr)
         {
+            // update File menu
             NewToolStripMenuItem.BackColor = clr;
             OpenToolStripMenuItem.BackColor = clr;
             RecentToolStripMenuItem.BackColor = clr;
@@ -1107,6 +1153,8 @@ namespace Notepad_Light
             SaveToolStripMenuItem.BackColor = clr;
             OptionsToolStripMenuItem.BackColor = clr;
             ExitToolStripMenuItem.BackColor = clr;
+
+            // update Edit menu
             UndoToolStripMenuItem.BackColor = clr;
             RedoToolStripMenuItem.BackColor = clr;
             CutToolStripMenuItem.BackColor = clr;
@@ -1115,12 +1163,17 @@ namespace Notepad_Light
             SelectAllToolStripMenuItem.BackColor = clr;
             ClearAllTextToolStripMenuItem.BackColor = clr;
             FindToolStripMenuItem.BackColor = clr;
+            // update Insert menu
+            PictureToolStripMenuItem.BackColor = clr;
+
+            // update Formatting menu
             EditFontToolStripMenuItem.BackColor = clr;
             ClearFormattingToolStripMenuItem.BackColor = clr;
             BoldToolStripMenuItem.BackColor = clr;
             ItalicToolStripMenuItem.BackColor = clr;
             UnderlineToolStripMenuItem.BackColor = clr;
             StrikethroughToolStripMenuItem.BackColor = clr;
+            // update View menu
             WordWrapToolStripMenuItem.BackColor = clr;
             ZoomToolStripMenuItem.BackColor = clr;
             zoomToolStripMenuItem100.BackColor = clr;
@@ -1128,9 +1181,100 @@ namespace Notepad_Light
             zoomToolStripMenuItem200.BackColor = clr;
             zoomToolStripMenuItem250.BackColor = clr;
             zoomToolStripMenuItem300.BackColor = clr;
+
+            // update Help menu
             AboutToolStripMenuItem.BackColor = clr;
             SubmitFeedbackToolStripMenuItem.BackColor = clr;
             ReportBugToolStripMenuItem.BackColor = clr;
+        }
+
+        private static Image ReplaceTransparency(Image image, Color background)
+        {
+            Bitmap bitmap = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
+
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                graphics.Clear(background);
+                graphics.CompositingMode = CompositingMode.SourceOver;
+                graphics.DrawImage(image, 0, 0, image.Width, image.Height);
+            }
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static string GetEmbedImageString(Image image)
+        {
+            Metafile metafile;
+            float dpiX; float dpiY;
+
+            using (Graphics g = Graphics.FromImage(image))
+            {
+                IntPtr hDC = g.GetHdc();
+                metafile = new Metafile(hDC, EmfType.EmfOnly);
+                g.ReleaseHdc(hDC);
+            }
+
+            using (Graphics g = Graphics.FromImage(metafile))
+            {
+                g.DrawImage(image, 0, 0);
+                dpiX = g.DpiX;
+                dpiY = g.DpiY;
+            }
+
+            IntPtr _hEmf = metafile.GetHenhmetafile();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            uint _bufferSize = GdipEmfToWmfBits(_hEmf, 0, null, MM_ANISOTROPIC,
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            byte[] _buffer = new byte[_bufferSize];
+            GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, MM_ANISOTROPIC,
+                                        EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            IntPtr hmf = SetMetaFileBitsEx(_bufferSize, _buffer);
+            string tempfile = Path.GetTempFileName();
+            CopyMetaFile(hmf, tempfile);
+            DeleteMetaFile(hmf);
+            DeleteEnhMetaFile(_hEmf);
+
+            var stream = new MemoryStream();
+            byte[] data = File.ReadAllBytes(tempfile);
+            int count = data.Length;
+            stream.Write(data, 0, count);
+
+            string proto = @"{\rtf1{\pict\wmetafile8\picw" + (int)(((float)image.Width / dpiX) * 2540)
+                              + @"\pich" + (int)(((float)image.Height / dpiY) * 2540)
+                              + @"\picwgoal" + (int)(((float)image.Width / dpiX) * 1440)
+                              + @"\pichgoal" + (int)(((float)image.Height / dpiY) * 1440)
+                              + " " + BitConverter.ToString(stream.ToArray()).Replace("-", "")
+                              + "}}";
+            return proto;
+        }
+
+        /// <summary>
+        /// check the image for any transparent pixels
+        /// looping all pixels can be slow on large images
+        /// using every 5 pixels to balance out that perf hit
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        bool ContainsTransparent(Bitmap image)
+        {
+            // increment every 5 pixels for performance reasons
+            for (int y = 0; y < image.Height; y += 5)
+            {
+                for (int x = 0; x < image.Width; x += 5)
+                {
+                    if (image.GetPixel(x, y).A != 255)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -1872,6 +2016,43 @@ namespace Notepad_Light
             if (e.LinkText is not null)
             {
                 App.PlatformSpecificProcessStart(e.LinkText.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PictureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp)|*.jpg; *.jpeg; *.gif; *.png; *.bmp";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    // get the image from the dialog
+                    Image img = Image.FromFile(ofd.FileName);
+
+                    // creating a bitmap to check for transparencies
+                    // depending on the ui theme, apply the same color to the background
+                    Bitmap bmp = new Bitmap(img);
+                    if (ContainsTransparent(bmp))
+                    {
+                        if (Properties.Settings.Default.DarkMode)
+                        {
+                            img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeTextBackground);
+                        }
+                        else
+                        {
+                            img = ReplaceTransparency(Image.FromFile(ofd.FileName), Color.White);
+                        }
+                    }
+                    
+                    // now convert the image to rtf so it can be displayed in the rtb
+                    rtbPage.SelectedRtf = GetEmbedImageString(img);
+                    rtbPage.Focus();
+                }
             }
         }
 
