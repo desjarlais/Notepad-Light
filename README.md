@@ -20,13 +20,12 @@ There are plenty of notepad applications, so this is just another one in the mix
   * bullets
   * indenting
   * font color
+  * change selected text background (highlight) color
+  * edit font style, size, color
+  * left, middle and right justified
 * Cut / Copy / Paste 
 * Print
 * Print Preview
-* Edit Font formatting
-* Left, center and right justified
-* Change selected text font color
-* Change selected text background (highlight) color
 * Document Stats (Word count, Character count, Line count)
 * Most Recently Used Files (MRU) - max of 5
 * Zoom
