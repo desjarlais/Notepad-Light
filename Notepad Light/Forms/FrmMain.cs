@@ -40,13 +40,12 @@ namespace Notepad_Light
 
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
-        public string gTempFilePath = string.Empty;
+        public string gErrorLog = string.Empty;
         public string gPrintString = string.Empty;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
         public int autoSaveInterval, autoSaveTicks;
         private string _EditedTime = string.Empty;
-        public string unsavedFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
@@ -105,7 +104,7 @@ namespace Notepad_Light
             UpdateLnColValues();
             UpdateDocStats();
             UpdateAutoSaveInterval();
-
+            
             // update theme
             if (Properties.Settings.Default.DarkMode)
             {
@@ -119,16 +118,10 @@ namespace Notepad_Light
             // start the autosave timer
             autosaveTimer.Start();
 
-            // make sure log file exists, clear it if it does
-            gTempFilePath = Path.GetTempPath() + "\\NotepadLightErrorLog.txt";
-            if (!File.Exists(gTempFilePath))
-            {
-                File.Create(gTempFilePath);
-            }
-            else
-            {
-                File.WriteAllText(gTempFilePath, string.Empty);
-            }
+            // make sure files exist
+            gErrorLog = Strings.appFolderDirectory + "NotepadLightErrors.txt";
+            UpdateTemplateMenu();
+            Templates.UpdateTemplatesFromFiles();
 
             // change ui if the default is rtf
             if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
@@ -148,6 +141,16 @@ namespace Notepad_Light
         #endregion
 
         #region Functions
+
+        public void UpdateTemplateMenu()
+        {
+            Template1ToolStripMenuItem.Text = Properties.Settings.Default.Template1;
+            Template2ToolStripMenuItem.Text = Properties.Settings.Default.Template2;
+            Template3ToolStripMenuItem.Text = Properties.Settings.Default.Template3;
+            Template4ToolStripMenuItem.Text = Properties.Settings.Default.Template4;
+            Template5ToolStripMenuItem.Text = Properties.Settings.Default.Template5;
+            FileExistChecks();
+        }
 
         public void UpdateAutoSaveInterval()
         {
@@ -173,6 +176,60 @@ namespace Notepad_Light
         {
             this.Text = "Notepad Light - " + docName;
             gCurrentFileName = docName;
+        }
+
+        /// <summary>
+        /// function to make sure files that are used in the app exist
+        /// </summary>
+        public void FileExistChecks()
+        {
+            // create Notepad folder
+            if (!Directory.Exists(Strings.appFolderDirectory))
+            {
+                Directory.CreateDirectory(Strings.appFolderDirectory);
+            }
+            
+            // error log
+            if (!File.Exists(gErrorLog))
+            {
+                // create the temp file when it doesn't exist
+                File.Create(gErrorLog);
+            }
+            else
+            {
+                // if it does exist, clear it out on startup
+                File.WriteAllText(gErrorLog, string.Empty);
+            }
+
+            // template 1
+            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template1 + Strings.txtExt))
+            {
+                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template1 + Strings.txtExt);
+            }
+
+            // template 2
+            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template2 + Strings.txtExt))
+            {
+                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template2 + Strings.txtExt);
+            }
+
+            // template 3 
+            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template3 + Strings.txtExt))
+            {
+                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template3 + Strings.txtExt);
+            }
+
+            // template 4
+            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template4 + Strings.txtExt))
+            {
+                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template4 + Strings.txtExt);
+            }
+
+            // template 5
+            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template5 + Strings.txtExt))
+            {
+                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template5 + Strings.txtExt);
+            }
         }
 
         /// <summary>
@@ -260,7 +317,7 @@ namespace Notepad_Light
         /// <param name="output"></param>
         public void WriteErrorLogContent(string output)
         {
-            using (StreamWriter sw = new StreamWriter(gTempFilePath + Strings.txtExt, true))
+            using (StreamWriter sw = new StreamWriter(gErrorLog, true))
             {
                 sw.WriteLine(DateTime.Now + Strings.semiColon + output);
             }
@@ -1091,6 +1148,10 @@ namespace Notepad_Light
             ClearAllTextToolStripMenuItem.ForeColor = clr;
             FindToolStripMenuItem.ForeColor = clr;
 
+            // update Insert menu
+            InsertToolStripMenuItem.ForeColor = clr;
+            PictureToolStripMenuItem.ForeColor = clr;
+
             // update Formatting menu
             FormatToolStripMenuItem.ForeColor = clr;
             EditFontToolStripMenuItem.ForeColor = clr;
@@ -1100,9 +1161,14 @@ namespace Notepad_Light
             UnderlineToolStripMenuItem.ForeColor = clr;
             StrikethroughToolStripMenuItem.ForeColor = clr;
 
-            // update Insert menu
-            InsertToolStripMenuItem.ForeColor = clr;
-            PictureToolStripMenuItem.ForeColor = clr;
+            // update Templates menu
+            TemplatesToolStripMenuItem.ForeColor = clr;
+            Template1ToolStripMenuItem.ForeColor = clr;
+            Template2ToolStripMenuItem.ForeColor = clr;
+            Template3ToolStripMenuItem.ForeColor = clr;
+            Template4ToolStripMenuItem.ForeColor = clr;
+            Template5ToolStripMenuItem.ForeColor = clr;
+            ManageTemplatesToolStripMenuItem.ForeColor = clr;
 
             // update View menu
             ViewToolStripMenuItem.ForeColor = clr;
@@ -1173,6 +1239,15 @@ namespace Notepad_Light
             ItalicToolStripMenuItem.BackColor = clr;
             UnderlineToolStripMenuItem.BackColor = clr;
             StrikethroughToolStripMenuItem.BackColor = clr;
+
+            // update Templates menu
+            Template1ToolStripMenuItem.BackColor = clr;
+            Template2ToolStripMenuItem.BackColor = clr;
+            Template3ToolStripMenuItem.BackColor = clr;
+            Template4ToolStripMenuItem.BackColor = clr;
+            Template5ToolStripMenuItem.BackColor = clr;
+            ManageTemplatesToolStripMenuItem.BackColor = clr;
+
             // update View menu
             WordWrapToolStripMenuItem.BackColor = clr;
             ZoomToolStripMenuItem.BackColor = clr;
@@ -1293,6 +1368,18 @@ namespace Notepad_Light
             e.Graphics.DrawLine(new Pen(cLine), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
         }
 
+        public void InsertTemplate(int templateNumber)
+        {
+            switch (templateNumber)
+            {
+                case 1: rtbPage.SelectedText = Templates.GetTemplate1().ToString(); break;
+                case 2: rtbPage.SelectedText = Templates.GetTemplate2().ToString(); break;
+                case 3: rtbPage.SelectedText = Templates.GetTemplate3().ToString(); break;
+                case 4: rtbPage.SelectedText = Templates.GetTemplate4().ToString(); break;
+                case 5: rtbPage.SelectedText = Templates.GetTemplate5().ToString(); break;
+            }
+        }
+
         /// <summary>
         /// write file contents
         /// </summary>
@@ -1320,12 +1407,12 @@ namespace Notepad_Light
                 if (gCurrentFileName == Strings.defaultFileName)
                 {
                     // using rtf for all temp files, if the file is plain text, it will still have the same contents
-                    string tempFilePath = unsavedFolderPath + "\\" + gCurrentFileName + Strings.rtf;
+                    string tempFilePath = Strings.appFolderDirectory + "\\" + gCurrentFileName;
                     using (StreamWriter sw = new StreamWriter(tempFilePath, false))
                     {
                         // need to avoid cross thread operation
                         rtbPage.Invoke((MethodInvoker)delegate {
-                            rtbPage.SaveFile(tempFilePath);
+                            rtbPage.SaveFile(tempFilePath, RichTextBoxStreamType.RichText);
                             rtbPage.Modified = false;
                             UpdateToolbarIcons();
                         });
@@ -2048,12 +2135,48 @@ namespace Notepad_Light
                             img = ReplaceTransparency(Image.FromFile(ofd.FileName), Color.White);
                         }
                     }
-                    
+
                     // now convert the image to rtf so it can be displayed in the rtb
                     rtbPage.SelectedRtf = GetEmbedImageString(img);
                     rtbPage.Focus();
                 }
             }
+        }
+
+        private void Template1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertTemplate(1);
+        }
+
+        private void Template2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertTemplate(2);
+        }
+
+        private void Template3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertTemplate(3);
+        }
+
+        private void Template4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertTemplate(4);
+        }
+
+        private void Template5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertTemplate(5);
+        }
+
+        private void ManageTemplatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmManageTemplates fTemplates = new FrmManageTemplates()
+            {
+                Owner = this
+            };
+            fTemplates.ShowDialog(this);
+            Templates.WriteTemplatesToFile();
+            UpdateTemplateMenu();
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)

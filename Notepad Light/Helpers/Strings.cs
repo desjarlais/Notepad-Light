@@ -21,10 +21,14 @@
         public const string txtExt = ".txt";
         public const string saveChangePrompt = "Do you want to save your changes?";
         public const string saveChangesTitle = "Save Changes";
-
+        public const string pathDivider = "\\";
+        
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
         public const string githubIssues = "https://github.com/desjarlais/Notepad-Light/issues";
         public const string githubDiscussion = "https://github.com/desjarlais/Notepad-Light/discussions";
+
+        // file paths
+        public static string appFolderDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light";
     }
 }

@@ -2,10 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Notepad_Light.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ErrorLog" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /&gt;</Value>
-    </Setting>
     <Setting Name="DefaultFontName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Arial</Value>
     </Setting>
@@ -39,6 +35,21 @@
     </Setting>
     <Setting Name="NewFileFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">Text</Value>
+    </Setting>
+    <Setting Name="Template1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Template 1</Value>
+    </Setting>
+    <Setting Name="Template2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Template 2</Value>
+    </Setting>
+    <Setting Name="Template3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Template 3</Value>
+    </Setting>
+    <Setting Name="Template4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Template 4</Value>
+    </Setting>
+    <Setting Name="Template5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Template 5</Value>
     </Setting>
   </Settings>
 </SettingsFile>
