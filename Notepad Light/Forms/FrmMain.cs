@@ -2179,6 +2179,18 @@ namespace Notepad_Light
             UpdateTemplateMenu();
         }
 
+        private void toolStripSeparator18_Paint(object sender, PaintEventArgs e)
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
+            }
+            else
+            {
+                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
+            }
+        }
+
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             rtbPage.SelectAll();

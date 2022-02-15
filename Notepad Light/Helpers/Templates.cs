@@ -37,26 +37,31 @@ namespace Notepad_Light.Helpers
 
         public static void SetTemplate1(string input)
         {
+            sbTemplate1.Clear();
             sbTemplate1.Append(input);
         }
 
         public static void SetTemplate2(string input)
         {
+            sbTemplate2.Clear();
             sbTemplate2.Append(input);
         }
 
         public static void SetTemplate3(string input)
         {
+            sbTemplate3.Clear();
             sbTemplate3.Append(input);
         }
 
         public static void SetTemplate4(string input)
         {
+            sbTemplate4.Clear();
             sbTemplate4.Append(input);
         }
 
         public static void SetTemplate5(string input)
         {
+            sbTemplate5.Clear();
             sbTemplate5.Append(input);
         }
 

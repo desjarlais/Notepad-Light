@@ -99,6 +99,14 @@
             this.ItalicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UnderlineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StrikethroughToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TemplatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Template1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Template2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Template3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Template4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Template5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.ManageTemplatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WordWrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ZoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -159,14 +167,6 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.autosaveTimer = new System.Windows.Forms.Timer(this.components);
-            this.TemplatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Template1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Template2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Template3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Template4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Template5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
-            this.ManageTemplatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -688,7 +688,7 @@
             // 
             this.PictureToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Image_16x;
             this.PictureToolStripMenuItem.Name = "PictureToolStripMenuItem";
-            this.PictureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PictureToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.PictureToolStripMenuItem.Text = "Picture";
             this.PictureToolStripMenuItem.Click += new System.EventHandler(this.PictureToolStripMenuItem_Click);
             // 
@@ -755,6 +755,68 @@
             this.StrikethroughToolStripMenuItem.Name = "StrikethroughToolStripMenuItem";
             this.StrikethroughToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.StrikethroughToolStripMenuItem.Text = "Strikethrough";
+            // 
+            // TemplatesToolStripMenuItem
+            // 
+            this.TemplatesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Template1ToolStripMenuItem,
+            this.Template2ToolStripMenuItem,
+            this.Template3ToolStripMenuItem,
+            this.Template4ToolStripMenuItem,
+            this.Template5ToolStripMenuItem,
+            this.toolStripSeparator18,
+            this.ManageTemplatesToolStripMenuItem});
+            this.TemplatesToolStripMenuItem.Name = "TemplatesToolStripMenuItem";
+            this.TemplatesToolStripMenuItem.Size = new System.Drawing.Size(72, 22);
+            this.TemplatesToolStripMenuItem.Text = "Templates";
+            // 
+            // Template1ToolStripMenuItem
+            // 
+            this.Template1ToolStripMenuItem.Name = "Template1ToolStripMenuItem";
+            this.Template1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template1ToolStripMenuItem.Text = "Template 1";
+            this.Template1ToolStripMenuItem.Click += new System.EventHandler(this.Template1ToolStripMenuItem_Click);
+            // 
+            // Template2ToolStripMenuItem
+            // 
+            this.Template2ToolStripMenuItem.Name = "Template2ToolStripMenuItem";
+            this.Template2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template2ToolStripMenuItem.Text = "Template 2";
+            this.Template2ToolStripMenuItem.Click += new System.EventHandler(this.Template2ToolStripMenuItem_Click);
+            // 
+            // Template3ToolStripMenuItem
+            // 
+            this.Template3ToolStripMenuItem.Name = "Template3ToolStripMenuItem";
+            this.Template3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template3ToolStripMenuItem.Text = "Template 3";
+            this.Template3ToolStripMenuItem.Click += new System.EventHandler(this.Template3ToolStripMenuItem_Click);
+            // 
+            // Template4ToolStripMenuItem
+            // 
+            this.Template4ToolStripMenuItem.Name = "Template4ToolStripMenuItem";
+            this.Template4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template4ToolStripMenuItem.Text = "Template 4";
+            this.Template4ToolStripMenuItem.Click += new System.EventHandler(this.Template4ToolStripMenuItem_Click);
+            // 
+            // Template5ToolStripMenuItem
+            // 
+            this.Template5ToolStripMenuItem.Name = "Template5ToolStripMenuItem";
+            this.Template5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template5ToolStripMenuItem.Text = "Template 5";
+            this.Template5ToolStripMenuItem.Click += new System.EventHandler(this.Template5ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator18.Paint += new System.Windows.Forms.PaintEventHandler(this.toolStripSeparator18_Paint);
+            // 
+            // ManageTemplatesToolStripMenuItem
+            // 
+            this.ManageTemplatesToolStripMenuItem.Name = "ManageTemplatesToolStripMenuItem";
+            this.ManageTemplatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ManageTemplatesToolStripMenuItem.Text = "Manage Templates";
+            this.ManageTemplatesToolStripMenuItem.Click += new System.EventHandler(this.ManageTemplatesToolStripMenuItem_Click);
             // 
             // ViewToolStripMenuItem
             // 
@@ -1264,67 +1326,6 @@
             // 
             this.autosaveTimer.Interval = 1000;
             this.autosaveTimer.Tick += new System.EventHandler(this.autosaveTimer_Tick);
-            // 
-            // TemplatesToolStripMenuItem
-            // 
-            this.TemplatesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Template1ToolStripMenuItem,
-            this.Template2ToolStripMenuItem,
-            this.Template3ToolStripMenuItem,
-            this.Template4ToolStripMenuItem,
-            this.Template5ToolStripMenuItem,
-            this.toolStripSeparator18,
-            this.ManageTemplatesToolStripMenuItem});
-            this.TemplatesToolStripMenuItem.Name = "TemplatesToolStripMenuItem";
-            this.TemplatesToolStripMenuItem.Size = new System.Drawing.Size(72, 22);
-            this.TemplatesToolStripMenuItem.Text = "Templates";
-            // 
-            // Template1ToolStripMenuItem
-            // 
-            this.Template1ToolStripMenuItem.Name = "Template1ToolStripMenuItem";
-            this.Template1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.Template1ToolStripMenuItem.Text = "Template 1";
-            this.Template1ToolStripMenuItem.Click += new System.EventHandler(this.Template1ToolStripMenuItem_Click);
-            // 
-            // Template2ToolStripMenuItem
-            // 
-            this.Template2ToolStripMenuItem.Name = "Template2ToolStripMenuItem";
-            this.Template2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.Template2ToolStripMenuItem.Text = "Template 2";
-            this.Template2ToolStripMenuItem.Click += new System.EventHandler(this.Template2ToolStripMenuItem_Click);
-            // 
-            // Template3ToolStripMenuItem
-            // 
-            this.Template3ToolStripMenuItem.Name = "Template3ToolStripMenuItem";
-            this.Template3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.Template3ToolStripMenuItem.Text = "Template 3";
-            this.Template3ToolStripMenuItem.Click += new System.EventHandler(this.Template3ToolStripMenuItem_Click);
-            // 
-            // Template4ToolStripMenuItem
-            // 
-            this.Template4ToolStripMenuItem.Name = "Template4ToolStripMenuItem";
-            this.Template4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.Template4ToolStripMenuItem.Text = "Template 4";
-            this.Template4ToolStripMenuItem.Click += new System.EventHandler(this.Template4ToolStripMenuItem_Click);
-            // 
-            // Template5ToolStripMenuItem
-            // 
-            this.Template5ToolStripMenuItem.Name = "Template5ToolStripMenuItem";
-            this.Template5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.Template5ToolStripMenuItem.Text = "Template 5";
-            this.Template5ToolStripMenuItem.Click += new System.EventHandler(this.Template5ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator18
-            // 
-            this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(177, 6);
-            // 
-            // ManageTemplatesToolStripMenuItem
-            // 
-            this.ManageTemplatesToolStripMenuItem.Name = "ManageTemplatesToolStripMenuItem";
-            this.ManageTemplatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.ManageTemplatesToolStripMenuItem.Text = "Manage Templates";
-            this.ManageTemplatesToolStripMenuItem.Click += new System.EventHandler(this.ManageTemplatesToolStripMenuItem_Click);
             // 
             // FrmMain
             // 
