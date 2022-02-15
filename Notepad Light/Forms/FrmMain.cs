@@ -119,7 +119,7 @@ namespace Notepad_Light
             autosaveTimer.Start();
 
             // make sure files exist
-            gErrorLog = Strings.appFolderDirectory + "NotepadLightErrors.txt";
+            gErrorLog = Strings.appFolderFullPath + "NotepadLightErrors.txt";
             UpdateTemplateMenu();
             Templates.UpdateTemplatesFromFiles();
 

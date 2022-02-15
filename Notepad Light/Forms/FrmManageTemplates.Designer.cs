@@ -181,6 +181,7 @@
             this.tbTemplateText.Location = new System.Drawing.Point(3, 19);
             this.tbTemplateText.Multiline = true;
             this.tbTemplateText.Name = "tbTemplateText";
+            this.tbTemplateText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbTemplateText.Size = new System.Drawing.Size(794, 434);
             this.tbTemplateText.TabIndex = 0;
             // 
