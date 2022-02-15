@@ -30,5 +30,6 @@
 
         // file paths
         public static string appFolderDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light";
+        public static string appFolderFullPath = appFolderDirectory + pathDivider;
     }
 }

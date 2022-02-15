@@ -215,5 +215,17 @@ namespace Notepad_Light.Properties {
                 this["Template5"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RemoveTempFilesOnExit {
+            get {
+                return ((bool)(this["RemoveTempFilesOnExit"]));
+            }
+            set {
+                this["RemoveTempFilesOnExit"] = value;
+            }
+        }
     }
 }

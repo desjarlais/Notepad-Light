@@ -188,11 +188,10 @@ namespace Notepad_Light
             {
                 Directory.CreateDirectory(Strings.appFolderDirectory);
             }
-            
-            // error log
+
+            // create the error temp file when it doesn't exist
             if (!File.Exists(gErrorLog))
             {
-                // create the temp file when it doesn't exist
                 File.Create(gErrorLog);
             }
             else
@@ -202,33 +201,33 @@ namespace Notepad_Light
             }
 
             // template 1
-            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template1 + Strings.txtExt))
+            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template1 + Strings.txtExt))
             {
-                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template1 + Strings.txtExt);
+                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template1 + Strings.txtExt);
             }
 
             // template 2
-            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template2 + Strings.txtExt))
+            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template2 + Strings.txtExt))
             {
-                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template2 + Strings.txtExt);
+                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template2 + Strings.txtExt);
             }
 
             // template 3 
-            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template3 + Strings.txtExt))
+            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template3 + Strings.txtExt))
             {
-                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template3 + Strings.txtExt);
+                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template3 + Strings.txtExt);
             }
 
             // template 4
-            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template4 + Strings.txtExt))
+            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template4 + Strings.txtExt))
             {
-                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template4 + Strings.txtExt);
+                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template4 + Strings.txtExt);
             }
 
             // template 5
-            if (!File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template5 + Strings.txtExt))
+            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template5 + Strings.txtExt))
             {
-                File.Create(Strings.appFolderDirectory + Strings.pathDivider + Properties.Settings.Default.Template5 + Strings.txtExt);
+                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template5 + Strings.txtExt);
             }
         }
 
@@ -702,6 +701,41 @@ namespace Notepad_Light
             if (!fromFormClosingEvent)
             {
                 Application.Exit();
+            }
+
+            if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
+            {
+                CleanupTempFiles();
+            }
+        }
+
+        public void CleanupTempFiles()
+        {
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(Strings.appFolderDirectory);
+                foreach (FileInfo f in dir.GetFiles("*.txt", SearchOption.AllDirectories))
+                {
+                    if (f.Name == Template1ToolStripMenuItem.Text + Strings.txtExt
+                        || f.Name == Template2ToolStripMenuItem.Text + Strings.txtExt
+                        || f.Name == Template3ToolStripMenuItem.Text + Strings.txtExt
+                        || f.Name == Template4ToolStripMenuItem.Text + Strings.txtExt
+                        || f.Name == Template5ToolStripMenuItem.Text + Strings.txtExt
+                        || f.Name == gErrorLog
+                        || f.Name == Strings.defaultFileName + Strings.txtExt)
+                    {
+                        // leave templates, error log and unsaved files alone
+                        continue;
+                    }
+                    else
+                    {
+                        f.Delete();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteErrorLogContent("CleanupTempFiles Error: " + ex.Message);
             }
         }
 
@@ -1580,11 +1614,6 @@ namespace Notepad_Light
             rtbPage.ResetText();
             rtbPage.Font = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
             EndOfButtonFormatWork();
-        }
-
-        private void HelpToolStripButton_Click(object sender, EventArgs e)
-        {
-            App.PlatformSpecificProcessStart(Strings.githubIssues);
         }
 
         private void OpenToolStripButton_Click(object sender, EventArgs e)

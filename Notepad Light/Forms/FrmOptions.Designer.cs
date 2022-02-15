@@ -49,6 +49,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
+            this.cbxCleanupTempAppFilesOnExit = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -114,17 +115,18 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cbxCleanupTempAppFilesOnExit);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.cbxNewFileFormat);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.nudAutoSaveInterval);
             this.groupBox3.Controls.Add(this.ckbReverseTextColor);
             this.groupBox3.Controls.Add(this.ckbUsePasteUI);
-            this.groupBox3.Location = new System.Drawing.Point(295, 202);
+            this.groupBox3.Location = new System.Drawing.Point(6, 192);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Size = new System.Drawing.Size(350, 158);
+            this.groupBox3.Size = new System.Drawing.Size(442, 192);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
@@ -152,7 +154,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 123);
+            this.label1.Location = new System.Drawing.Point(14, 170);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -160,7 +162,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(173, 121);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(173, 168);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -207,9 +209,9 @@
             this.groupBox5.Controls.Add(this.rdoMatchCase);
             this.groupBox5.Controls.Add(this.rdoFindDirectionDown);
             this.groupBox5.Controls.Add(this.rdoFindDirectionUp);
-            this.groupBox5.Location = new System.Drawing.Point(6, 202);
+            this.groupBox5.Location = new System.Drawing.Point(453, 200);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(284, 84);
+            this.groupBox5.Size = new System.Drawing.Size(192, 84);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Find Options";
@@ -262,9 +264,9 @@
             // 
             this.groupBox2.Controls.Add(this.rdoLightMode);
             this.groupBox2.Controls.Add(this.rdoDarkMode);
-            this.groupBox2.Location = new System.Drawing.Point(6, 292);
+            this.groupBox2.Location = new System.Drawing.Point(453, 290);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(284, 68);
+            this.groupBox2.Size = new System.Drawing.Size(192, 68);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Theme";
@@ -290,6 +292,16 @@
             this.rdoDarkMode.TabStop = true;
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
+            // 
+            // cbxCleanupTempAppFilesOnExit
+            // 
+            this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
+            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(14, 117);
+            this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
+            this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(230, 19);
+            this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
+            this.cbxCleanupTempAppFilesOnExit.Text = "Remove Unused Template Files On Exit";
+            this.cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 
@@ -344,5 +356,6 @@
         private Label label1;
         private Label label2;
         private ComboBox cbxNewFileFormat;
+        private CheckBox cbxCleanupTempAppFilesOnExit;
     }
 }

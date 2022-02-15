@@ -55,6 +55,15 @@ namespace Notepad_Light.Forms
             {
                 cbxNewFileFormat.SelectedIndex = 1;
             }
+
+            if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
+            {
+                cbxCleanupTempAppFilesOnExit.Checked = true;
+            }
+            else
+            {
+                cbxCleanupTempAppFilesOnExit.Checked = false;
+            }
         }
 
         public void UpdateMRUListbox()
@@ -128,6 +137,15 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.NewFileFormat = Strings.rtf;
+            }
+
+            if (cbxCleanupTempAppFilesOnExit.Checked == true)
+            {
+                Properties.Settings.Default.RemoveTempFilesOnExit = true;
+            }
+            else
+            {
+                Properties.Settings.Default.RemoveTempFilesOnExit = false;
             }
 
             Close();
