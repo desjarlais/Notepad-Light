@@ -119,7 +119,7 @@ namespace Notepad_Light
             autosaveTimer.Start();
 
             // make sure files exist
-            gErrorLog = Strings.appFolderFullPath + "NotepadLightErrors.txt";
+            gErrorLog = Strings.appFolderFullPath + "NLErrors.txt";
             UpdateTemplateMenu();
             Templates.UpdateTemplatesFromFiles();
 
@@ -721,7 +721,7 @@ namespace Notepad_Light
                         || f.Name == Template3ToolStripMenuItem.Text + Strings.txtExt
                         || f.Name == Template4ToolStripMenuItem.Text + Strings.txtExt
                         || f.Name == Template5ToolStripMenuItem.Text + Strings.txtExt
-                        || f.Name == gErrorLog
+                        || f.Name == "NLErrors.txt"
                         || f.Name == Strings.defaultFileName + Strings.txtExt)
                     {
                         // leave templates, error log and unsaved files alone
@@ -736,6 +736,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 WriteErrorLogContent("CleanupTempFiles Error: " + ex.Message);
+                WriteErrorLogContent("Stack Trace: " + ex.StackTrace);
             }
         }
 
