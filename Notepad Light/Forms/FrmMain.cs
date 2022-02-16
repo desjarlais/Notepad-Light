@@ -210,7 +210,7 @@ namespace Notepad_Light
             if (File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName))
             {
                 int count = 1;
-                foreach (string line in File.ReadLines(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + "\\TemplateList.txt"))
+                foreach (string line in File.ReadLines(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName))
                 {
                     switch (count)
                     {
