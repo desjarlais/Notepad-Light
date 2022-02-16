@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
-using System.Text;
 using System.Drawing.Drawing2D;
 
 namespace Notepad_Light
@@ -118,7 +117,7 @@ namespace Notepad_Light
             // start the autosave timer
             autosaveTimer.Start();
 
-            // make sure files exist
+            // setup log and app files
             gErrorLog = Strings.appFolderFullPath + "NLErrors.txt";
             UpdateTemplateMenu();
             Templates.UpdateTemplatesFromFiles();
@@ -221,6 +220,7 @@ namespace Notepad_Light
                         case 5: Properties.Settings.Default.Template5 = line; break;
                         default: break;
                     }
+                    count++;
                 }
             }
             else
