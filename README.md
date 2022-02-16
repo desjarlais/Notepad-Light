@@ -33,3 +33,5 @@ There are plenty of notepad applications, so this is just another one in the mix
 * Timer
 * Find / Search for text
 * Dark Mode
+* Insert Pictures
+* Create and Insert Template / boilerplate text
