@@ -1,4 +1,5 @@
 ﻿using Notepad_Light.Helpers;
+using System.Text;
 
 namespace Notepad_Light.Forms
 {
@@ -47,8 +48,23 @@ namespace Notepad_Light.Forms
             Properties.Settings.Default.Template3 = tbxTemplate3.Text;
             Properties.Settings.Default.Template4 = tbxTemplate4.Text;
             Properties.Settings.Default.Template5 = tbxTemplate5.Text;
+
+            // update the backup text file with these names
+            // first clear the file
+            File.WriteAllText(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + Strings.txtExt, string.Empty);
             
-            // save current template
+            // get the current list of names
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(Properties.Settings.Default.Template1);
+            sb.AppendLine(Properties.Settings.Default.Template2);
+            sb.AppendLine(Properties.Settings.Default.Template3);
+            sb.AppendLine(Properties.Settings.Default.Template4);
+            sb.AppendLine(Properties.Settings.Default.Template5);
+
+            // push those names to the file
+            File.WriteAllText(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + Strings.txtExt, sb.ToString());
+
+            // update the current templates
             if (rdoTemplate1.Checked)
             {
                 Templates.SetTemplate1(tbTemplateText.Text);

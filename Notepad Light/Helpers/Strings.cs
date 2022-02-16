@@ -1,4 +1,6 @@
-﻿namespace Notepad_Light.Helpers
+﻿using System.Configuration;
+
+namespace Notepad_Light.Helpers
 {
     public static class Strings
     {
@@ -6,6 +8,7 @@
         public const string semiColon = " : ";
         public const string semiColonNoSpaces = ":";
         public const string defaultFileName = "Untitled";
+        public const string backupTemplateFileName = "TemplateBackup";
         public const string rtf = "Rtf";
         public const string plainText = "Text";
         public const string pasteHtml = "Html";
@@ -30,6 +33,8 @@
 
         // file paths
         public static string appFolderDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light";
+        public static string appFolderTemplateDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light\\Templates";
+        public static string appFolderTemplatesFullPath = appFolderTemplateDir + pathDivider;
         public static string appFolderFullPath = appFolderDirectory + pathDivider;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManageTemplates));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rdoTemplate1 = new System.Windows.Forms.RadioButton();
             this.rdoTemplate2 = new System.Windows.Forms.RadioButton();
@@ -41,16 +42,16 @@
             this.tbxTemplate2 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbTemplateText = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.BtnSaveTemplates = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.BtnCancel);
+            this.groupBox1.Controls.Add(this.BtnSaveTemplates);
             this.groupBox1.Controls.Add(this.rdoTemplate1);
             this.groupBox1.Controls.Add(this.rdoTemplate2);
             this.groupBox1.Controls.Add(this.rdoTemplate3);
@@ -173,7 +174,7 @@
             this.groupBox2.Size = new System.Drawing.Size(800, 456);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Template Text";
+            this.groupBox2.Text = "Text";
             // 
             // tbTemplateText
             // 
@@ -185,21 +186,9 @@
             this.tbTemplateText.Size = new System.Drawing.Size(794, 434);
             this.tbTemplateText.TabIndex = 0;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.BtnSaveTemplates);
-            this.groupBox3.Controls.Add(this.BtnCancel);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox3.Location = new System.Drawing.Point(0, 578);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(800, 50);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Commands";
-            // 
             // BtnSaveTemplates
             // 
-            this.BtnSaveTemplates.Location = new System.Drawing.Point(573, 15);
+            this.BtnSaveTemplates.Location = new System.Drawing.Point(677, 20);
             this.BtnSaveTemplates.Name = "BtnSaveTemplates";
             this.BtnSaveTemplates.Size = new System.Drawing.Size(117, 23);
             this.BtnSaveTemplates.TabIndex = 0;
@@ -209,9 +198,9 @@
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(696, 15);
+            this.BtnCancel.Location = new System.Drawing.Point(677, 49);
             this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(92, 23);
+            this.BtnCancel.Size = new System.Drawing.Size(117, 23);
             this.BtnCancel.TabIndex = 1;
             this.BtnCancel.Text = "Close Form";
             this.BtnCancel.UseVisualStyleBackColor = true;
@@ -222,9 +211,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 628);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmManageTemplates";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Manage Templates";
@@ -232,7 +221,6 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -242,7 +230,6 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private TextBox tbTemplateText;
-        private GroupBox groupBox3;
         private Button BtnCancel;
         private RadioButton rdoTemplate1;
         private RadioButton rdoTemplate2;

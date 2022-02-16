@@ -200,34 +200,60 @@ namespace Notepad_Light
                 File.WriteAllText(gErrorLog, string.Empty);
             }
 
-            // template 1
-            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template1 + Strings.txtExt))
+            // check the backup templates folder
+            if (!Directory.Exists(Strings.appFolderTemplateDir))
             {
-                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template1 + Strings.txtExt);
-            }
+                Directory.CreateDirectory(Strings.appFolderTemplateDir);
+            }         
 
-            // template 2
-            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template2 + Strings.txtExt))
+            // check the previous templates file
+            if (File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName))
             {
-                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template2 + Strings.txtExt);
+                int count = 1;
+                foreach (string line in File.ReadLines(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + "\\TemplateList.txt"))
+                {
+                    switch (count)
+                    {
+                        case 1: Properties.Settings.Default.Template1 = line; break;
+                        case 2: Properties.Settings.Default.Template2 = line; break;
+                        case 3: Properties.Settings.Default.Template3 = line; break;
+                        case 4: Properties.Settings.Default.Template4 = line; break;
+                        case 5: Properties.Settings.Default.Template5 = line; break;
+                        default: break;
+                    }
+                }
             }
-
-            // template 3 
-            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template3 + Strings.txtExt))
+            else
             {
-                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template3 + Strings.txtExt);
-            }
+                // template 1
+                if (!File.Exists(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt))
+                {
+                    File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt);
+                }
 
-            // template 4
-            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template4 + Strings.txtExt))
-            {
-                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template4 + Strings.txtExt);
-            }
+                // template 2
+                if (!File.Exists(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt))
+                {
+                    File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt);
+                }
 
-            // template 5
-            if (!File.Exists(Strings.appFolderFullPath + Properties.Settings.Default.Template5 + Strings.txtExt))
-            {
-                File.Create(Strings.appFolderFullPath + Properties.Settings.Default.Template5 + Strings.txtExt);
+                // template 3 
+                if (!File.Exists(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt))
+                {
+                    File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt);
+                }
+
+                // template 4
+                if (!File.Exists(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt))
+                {
+                    File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt);
+                }
+
+                // template 5
+                if (!File.Exists(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt))
+                {
+                    File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt);
+                }
             }
         }
 
@@ -703,32 +729,35 @@ namespace Notepad_Light
                 Application.Exit();
             }
 
+            // if enabled, remove all non-app related files or no longer used templates
             if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
             {
                 CleanupTempFiles();
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CleanupTempFiles()
         {
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(Strings.appFolderDirectory);
+                DirectoryInfo dir = new DirectoryInfo(Strings.appFolderTemplateDir);
                 foreach (FileInfo f in dir.GetFiles("*.txt", SearchOption.AllDirectories))
                 {
                     if (f.Name == Template1ToolStripMenuItem.Text + Strings.txtExt
                         || f.Name == Template2ToolStripMenuItem.Text + Strings.txtExt
                         || f.Name == Template3ToolStripMenuItem.Text + Strings.txtExt
                         || f.Name == Template4ToolStripMenuItem.Text + Strings.txtExt
-                        || f.Name == Template5ToolStripMenuItem.Text + Strings.txtExt
-                        || f.Name == "NLErrors.txt"
-                        || f.Name == Strings.defaultFileName + Strings.txtExt)
+                        || f.Name == Template5ToolStripMenuItem.Text + Strings.txtExt)
                     {
-                        // leave templates, error log and unsaved files alone
+                        // leave current templates
                         continue;
                     }
                     else
                     {
+                        // delete old templates
                         f.Delete();
                     }
                 }
