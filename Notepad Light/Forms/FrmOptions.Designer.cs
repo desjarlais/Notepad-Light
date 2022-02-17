@@ -35,6 +35,7 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbxCleanupTempAppFilesOnExit = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,7 +50,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.cbxCleanupTempAppFilesOnExit = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -131,6 +131,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
             // 
+            // cbxCleanupTempAppFilesOnExit
+            // 
+            this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
+            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(17, 113);
+            this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
+            this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(230, 19);
+            this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
+            this.cbxCleanupTempAppFilesOnExit.Text = "Remove Unused Template Files On Exit";
+            this.cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -148,13 +158,13 @@
             "Rtf"});
             this.cbxNewFileFormat.Location = new System.Drawing.Point(113, 23);
             this.cbxNewFileFormat.Name = "cbxNewFileFormat";
-            this.cbxNewFileFormat.Size = new System.Drawing.Size(221, 23);
+            this.cbxNewFileFormat.Size = new System.Drawing.Size(134, 23);
             this.cbxNewFileFormat.TabIndex = 11;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 170);
+            this.label1.Location = new System.Drawing.Point(17, 147);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -162,7 +172,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(173, 168);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 145);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -185,17 +195,17 @@
             // ckbReverseTextColor
             // 
             this.ckbReverseTextColor.AutoSize = true;
-            this.ckbReverseTextColor.Location = new System.Drawing.Point(14, 88);
+            this.ckbReverseTextColor.Location = new System.Drawing.Point(17, 84);
             this.ckbReverseTextColor.Name = "ckbReverseTextColor";
-            this.ckbReverseTextColor.Size = new System.Drawing.Size(312, 19);
+            this.ckbReverseTextColor.Size = new System.Drawing.Size(308, 19);
             this.ckbReverseTextColor.TabIndex = 8;
-            this.ckbReverseTextColor.Text = "Flip Text Color When Theme Changes (Plain Text Only)";
+            this.ckbReverseTextColor.Text = "Apply Text Color Opposite Of Theme (Plain Text Only)";
             this.ckbReverseTextColor.UseVisualStyleBackColor = true;
             // 
             // ckbUsePasteUI
             // 
             this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(14, 60);
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(17, 56);
             this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUsePasteUI.Name = "ckbUsePasteUI";
             this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
@@ -292,16 +302,6 @@
             this.rdoDarkMode.TabStop = true;
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
-            // 
-            // cbxCleanupTempAppFilesOnExit
-            // 
-            this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
-            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(14, 117);
-            this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
-            this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(230, 19);
-            this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
-            this.cbxCleanupTempAppFilesOnExit.Text = "Remove Unused Template Files On Exit";
-            this.cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 

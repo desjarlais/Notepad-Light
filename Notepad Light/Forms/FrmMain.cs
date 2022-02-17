@@ -305,8 +305,9 @@ namespace Notepad_Light
             {
                 CreateNewDocument();
             }
-            else if (rtbPage.Modified == true)
+            else
             {
+                // if we have changes, prompt the user
                 DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
@@ -1162,6 +1163,17 @@ namespace Notepad_Light
                 else
                 {
                     rtbPage.ForeColor = Color.Black;
+                }
+            }
+            else
+            {
+                if (Properties.Settings.Default.DarkMode)
+                {
+                    rtbPage.ForeColor = Color.Black;
+                }
+                else
+                {
+                    rtbPage.ForeColor = Color.White;
                 }
             }
         }

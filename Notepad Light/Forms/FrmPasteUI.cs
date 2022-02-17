@@ -50,5 +50,13 @@ namespace Notepad_Light.Forms
             SelectedPasteOption = "Cancel";
             Close();
         }
+
+        private void cboClipFormats_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnOK.PerformClick();
+            }
+        }
     }
 }

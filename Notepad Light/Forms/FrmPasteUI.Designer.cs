@@ -51,6 +51,7 @@
             this.cboClipFormats.Name = "cboClipFormats";
             this.cboClipFormats.Size = new System.Drawing.Size(255, 23);
             this.cboClipFormats.TabIndex = 1;
+            this.cboClipFormats.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cboClipFormats_KeyDown);
             // 
             // BtnOK
             // 
