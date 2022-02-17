@@ -49,7 +49,6 @@ namespace Notepad_Light
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
         public Color clrDarkModeBackground, clrDarkModeTextBackground;
-
         private const char _semiColonDelim = ':';
 
         public FrmMain()
@@ -206,18 +205,34 @@ namespace Notepad_Light
             }         
 
             // check the previous templates file
-            if (File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName))
+            if (File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + Strings.txtExt))
             {
                 int count = 1;
-                foreach (string line in File.ReadLines(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName))
+                foreach (string line in File.ReadLines(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + Strings.txtExt))
                 {
+                    // update the settings and template menu
                     switch (count)
                     {
-                        case 1: Properties.Settings.Default.Template1 = line; break;
-                        case 2: Properties.Settings.Default.Template2 = line; break;
-                        case 3: Properties.Settings.Default.Template3 = line; break;
-                        case 4: Properties.Settings.Default.Template4 = line; break;
-                        case 5: Properties.Settings.Default.Template5 = line; break;
+                        case 1: 
+                            Properties.Settings.Default.Template1 = line;
+                            Template1ToolStripMenuItem.Text = line;
+                            break;
+                        case 2: 
+                            Properties.Settings.Default.Template2 = line;
+                            Template2ToolStripMenuItem.Text = line;
+                            break;
+                        case 3: 
+                            Properties.Settings.Default.Template3 = line;
+                            Template3ToolStripMenuItem.Text = line;
+                            break;
+                        case 4:
+                            Properties.Settings.Default.Template4 = line;
+                            Template4ToolStripMenuItem.Text = line;
+                            break;
+                        case 5: 
+                            Properties.Settings.Default.Template5 = line;
+                            Template5ToolStripMenuItem.Text = line;
+                            break;
                         default: break;
                     }
                     count++;
@@ -281,7 +296,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// there is no file->close, so new handles unsaved doc situations
+        /// there is no file->close, new handles unsaved doc situations
         /// </summary>
         public void FileNew()
         {

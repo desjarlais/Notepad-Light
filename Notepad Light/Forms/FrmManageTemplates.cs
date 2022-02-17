@@ -87,11 +87,6 @@ namespace Notepad_Light.Forms
             }
         }
 
-        private void BtnCloseForm_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void rdoTemplate1_CheckedChanged(object sender, EventArgs e)
         {
             // turn on 1

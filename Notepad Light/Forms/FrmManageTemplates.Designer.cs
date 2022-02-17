@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmManageTemplates));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BtnSaveTemplates = new System.Windows.Forms.Button();
             this.rdoTemplate1 = new System.Windows.Forms.RadioButton();
             this.rdoTemplate2 = new System.Windows.Forms.RadioButton();
             this.rdoTemplate3 = new System.Windows.Forms.RadioButton();
@@ -42,15 +43,12 @@
             this.tbxTemplate2 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbTemplateText = new System.Windows.Forms.TextBox();
-            this.BtnSaveTemplates = new System.Windows.Forms.Button();
-            this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.BtnCancel);
             this.groupBox1.Controls.Add(this.BtnSaveTemplates);
             this.groupBox1.Controls.Add(this.rdoTemplate1);
             this.groupBox1.Controls.Add(this.rdoTemplate2);
@@ -69,6 +67,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Templates";
+            // 
+            // BtnSaveTemplates
+            // 
+            this.BtnSaveTemplates.Location = new System.Drawing.Point(639, 20);
+            this.BtnSaveTemplates.Name = "BtnSaveTemplates";
+            this.BtnSaveTemplates.Size = new System.Drawing.Size(155, 23);
+            this.BtnSaveTemplates.TabIndex = 0;
+            this.BtnSaveTemplates.Text = "Save Selected Template";
+            this.BtnSaveTemplates.UseVisualStyleBackColor = true;
+            this.BtnSaveTemplates.Click += new System.EventHandler(this.BtnSaveTemplates_Click);
             // 
             // rdoTemplate1
             // 
@@ -174,7 +182,7 @@
             this.groupBox2.Size = new System.Drawing.Size(800, 456);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Text";
+            this.groupBox2.Text = "Text (any formatted text will be stripped out on save)";
             // 
             // tbTemplateText
             // 
@@ -185,26 +193,6 @@
             this.tbTemplateText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbTemplateText.Size = new System.Drawing.Size(794, 434);
             this.tbTemplateText.TabIndex = 0;
-            // 
-            // BtnSaveTemplates
-            // 
-            this.BtnSaveTemplates.Location = new System.Drawing.Point(677, 20);
-            this.BtnSaveTemplates.Name = "BtnSaveTemplates";
-            this.BtnSaveTemplates.Size = new System.Drawing.Size(117, 23);
-            this.BtnSaveTemplates.TabIndex = 0;
-            this.BtnSaveTemplates.Text = "Save Templates";
-            this.BtnSaveTemplates.UseVisualStyleBackColor = true;
-            this.BtnSaveTemplates.Click += new System.EventHandler(this.BtnSaveTemplates_Click);
-            // 
-            // BtnCancel
-            // 
-            this.BtnCancel.Location = new System.Drawing.Point(677, 49);
-            this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(117, 23);
-            this.BtnCancel.TabIndex = 1;
-            this.BtnCancel.Text = "Close Form";
-            this.BtnCancel.UseVisualStyleBackColor = true;
-            this.BtnCancel.Click += new System.EventHandler(this.BtnCloseForm_Click);
             // 
             // FrmManageTemplates
             // 
@@ -230,7 +218,6 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private TextBox tbTemplateText;
-        private Button BtnCancel;
         private RadioButton rdoTemplate1;
         private RadioButton rdoTemplate2;
         private RadioButton rdoTemplate3;
