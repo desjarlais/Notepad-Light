@@ -2208,10 +2208,11 @@ namespace Notepad_Light
                     Image img = Image.FromFile(ofd.FileName);
 
                     // creating a bitmap to check for transparencies
-                    // depending on the ui theme, apply the same color to the background
                     Bitmap bmp = new Bitmap(img);
                     if (ContainsTransparent(bmp))
                     {
+                        // depending on the ui theme, apply the same color to the background
+                        // TODO: not sure this is really what I want to happen since this changes the image
                         if (Properties.Settings.Default.DarkMode)
                         {
                             img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeTextBackground);
@@ -2275,6 +2276,17 @@ namespace Notepad_Light
             {
                 PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
             }
+        }
+
+        /// <summary>
+        /// when the richtextbox gets focus, the cursor does not move to the mouse location
+        /// using mouse move to accomplish this cursor position behavior
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rtbPage_MouseMove(object sender, MouseEventArgs e)
+        {
+            rtbPage.Focus();
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)

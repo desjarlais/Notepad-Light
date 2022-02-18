@@ -336,6 +336,7 @@
             this.rtbPage.SelectionChanged += new System.EventHandler(this.RtbPage_SelectionChanged);
             this.rtbPage.TextChanged += new System.EventHandler(this.rtbPage_TextChanged);
             this.rtbPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RtbPage_KeyDown);
+            this.rtbPage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.rtbPage_MouseMove);
             // 
             // contextMenuStrip1
             // 
