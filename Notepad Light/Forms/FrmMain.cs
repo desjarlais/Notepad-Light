@@ -98,7 +98,6 @@ namespace Notepad_Light
             // update title, status, toolbars and autosave intervals
             UpdateFormTitle(gCurrentFileName);
             UpdateStatusBar();
-            UpdateToolbarIcons();
             UpdateLnColValues();
             UpdateDocStats();
             UpdateAutoSaveInterval();
@@ -113,6 +112,8 @@ namespace Notepad_Light
                 ApplyLightMode();
             }
 
+            rtbPage.Modified = false;
+
             // start the autosave timer
             autosaveTimer.Start();
 
@@ -126,6 +127,8 @@ namespace Notepad_Light
             {
                 CreateNewDocument();
             }
+
+            UpdateToolbarIcons();
         }
 
         #region Class Properties
@@ -382,7 +385,6 @@ namespace Notepad_Light
                     LoadRtfFile(filePath);
                 }
 
-                // update encoding
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
@@ -390,8 +392,6 @@ namespace Notepad_Light
                 UpdateMRU();
                 UpdateFormTitle(filePath);
                 UpdateDocStats();
-
-                // force both scrollbars weird bug in richtextbox where it doesn't always show scrollbars
                 rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
                 rtbPage.Modified = false;
             }
@@ -425,7 +425,6 @@ namespace Notepad_Light
                 // add the contents to the textbox
                 if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                 {
-                    // first load the file contents
                     if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
@@ -435,10 +434,7 @@ namespace Notepad_Light
                         LoadRtfFile(ofdFileOpen.FileName);
                     }
 
-                    // update the title with the file path
                     UpdateFormTitle(ofdFileOpen.FileName);
-
-                    // update the encoding
                     EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName);
 
                     // if the file was opened and is in the mru, we don't want to add it
@@ -460,13 +456,10 @@ namespace Notepad_Light
                         UpdateMRU();
                     }
 
-                    // lastly, set the saved back to false and update the ui and cursor
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
                     UpdateDocStats();
-
-                    // force both scrollbars, weird bug in richtextbox where it doesn't always show scrollbars
                     rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
                     rtbPage.Modified = false;
                 }
@@ -497,8 +490,8 @@ namespace Notepad_Light
                     return;
                 }
 
-                // if gChanged is true, untitled needs to be save as
-                // any other file name do regular save of the content
+                // if modified is true, untitled needs to be save as
+                // any other file name is a regular save
                 if (gCurrentFileName.ToString() == Strings.defaultFileName && rtbPage.Modified == true)
                 {
                     FileSaveAs();
@@ -662,7 +655,7 @@ namespace Notepad_Light
 
                 // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
-                MessageBox.Show("File No Longer Exists, Removing From MRU", "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("File No Longer Exists, Removing From Recent Files", "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             // clear the menu and add back the remaining files
@@ -729,6 +722,8 @@ namespace Notepad_Light
         /// <param name="fromFormClosingEvent"></param>
         public void ExitAppWork(bool fromFormClosingEvent)
         {
+            Properties.Settings.Default.Save();
+
             if (rtbPage.Modified == true)
             {
                 DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -748,14 +743,14 @@ namespace Notepad_Light
             // if enabled, remove all non-app related files or no longer used templates
             if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
             {
-                CleanupTempFiles();
+                CleanupTemplateFiles();
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void CleanupTempFiles()
+        public void CleanupTemplateFiles()
         {
             try
             {
@@ -929,6 +924,7 @@ namespace Notepad_Light
             FontColorToolStripButton.Enabled = true;
             HighlightTextToolStripButton.Enabled = true;
             PictureToolStripMenuItem.Enabled = true;
+            TableToolStripMenuItem.Enabled = true;
         }
 
         /// <summary>
@@ -944,6 +940,7 @@ namespace Notepad_Light
             FontColorToolStripButton.Enabled = false;
             HighlightTextToolStripButton.Enabled = false;
             PictureToolStripMenuItem.Enabled = false;
+            TableToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1147,7 +1144,7 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyTextColor()
         {
-            // if the file is rtf or the setting says not to reverse the default text color, don't do anything
+            // if the file is rtf no changes need to be made
             if (gRtf)
             {
                 return;
@@ -1242,6 +1239,7 @@ namespace Notepad_Light
             // update Insert menu
             InsertToolStripMenuItem.ForeColor = clr;
             PictureToolStripMenuItem.ForeColor = clr;
+            TableToolStripMenuItem.ForeColor = clr;
 
             // update Formatting menu
             FormatToolStripMenuItem.ForeColor = clr;
@@ -1322,6 +1320,7 @@ namespace Notepad_Light
             FindToolStripMenuItem.BackColor = clr;
             // update Insert menu
             PictureToolStripMenuItem.BackColor = clr;
+            TableToolStripMenuItem.BackColor = clr;
 
             // update Formatting menu
             EditFontToolStripMenuItem.BackColor = clr;
@@ -1427,7 +1426,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
-        bool ContainsTransparent(Bitmap image)
+        public static bool ContainsTransparent(Bitmap image)
         {
             // increment every 5 pixels for performance reasons
             for (int y = 0; y < image.Height; y += 5)
@@ -1798,6 +1797,7 @@ namespace Notepad_Light
             }
 
             // if the user deletes the bullet, we need to remove bullet formatting
+            // backspace causes selectionchange so the stats update there
             if (e.KeyCode == Keys.Back)
             {
                 if (rtbPage.SelectionStart == rtbPage.GetFirstCharIndexOfCurrentLine() && rtbPage.SelectionBullet == true)
@@ -1805,7 +1805,6 @@ namespace Notepad_Light
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
                 }
-                // backspace causes selectionchange so the stats update there
             }
 
             // if delete key is pressed change the saved state
@@ -1948,6 +1947,8 @@ namespace Notepad_Light
 
             // update the ticks
             UpdateAutoSaveInterval();
+
+            Properties.Settings.Default.Save();
         }
 
         private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2193,7 +2194,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// allow the user to select a picture to insert into the document/file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2289,6 +2290,16 @@ namespace Notepad_Light
             rtbPage.Focus();
         }
 
+        private void tableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmInsertTable fTable = new FrmInsertTable()
+            {
+                Owner = this
+            };
+            fTable.ShowDialog(this);
+            rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 800);
+        }
+
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             rtbPage.SelectAll();
@@ -2306,11 +2317,15 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// increment each second until we hit the autosave threshold
+        /// then reset and call the background save
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void autosaveTimer_Tick(object sender, EventArgs e)
         {
             ticks++;
-
-            // using a 10 minute default autosave interval
             if (ticks > autoSaveTicks)
             {
                 ticks = 0;
