@@ -32,6 +32,7 @@ namespace Notepad_Light.Helpers
         private const int WM_USER = 0x0400;
         private const int EM_FORMATRANGE = WM_USER + 57;
         private const int Hundredth2Twips = 20 * 72 / 100;
+
         [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 

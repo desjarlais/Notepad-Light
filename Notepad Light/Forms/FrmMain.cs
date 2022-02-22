@@ -11,7 +11,7 @@ namespace Notepad_Light
 {
     public partial class FrmMain : Form
     {
-        // pinvoke
+        // P/Invoke declarations
         const int MM_ISOTROPIC = 7;
         const int MM_ANISOTROPIC = 8;
 
@@ -2297,7 +2297,7 @@ namespace Notepad_Light
                 Owner = this
             };
             fTable.ShowDialog(this);
-            rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 800);
+            rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
