@@ -1,6 +1,10 @@
 # Notepad-Light
 
-There are plenty of notepad applications, so this is just another one in the mix.
+There are plenty of notepad applications, so this is just another one in the mix.  The intent is not necessarily to make a word processor, there are plenty of those and those are going to be much better than what I can do.  The idea really stems from me wanting a better note taking application.  Notepad is to limited and even though WordPad is close for an out of the box solution, at least in Windows, but it still misses a few things I wanted in my day to day note taking workflow.  
+
+I probably should have called it WordPad light, but I still want the main theme to be for taking notes so I stayed with Notepad.
+
+OneNote style apps are close, but they are too open on a per page basis...I still like a line by line approach with some structure instead of a throw whatever you want on the page approach, which is more of a messy experience. 
 
 ![image](https://github.com/desjarlais/desjarlais.github.io/blob/master/img/notepadlightlightmode.jpg)
 ![image](https://github.com/desjarlais/desjarlais.github.io/blob/master/img/notepadlightdarkmode2.jpg)
