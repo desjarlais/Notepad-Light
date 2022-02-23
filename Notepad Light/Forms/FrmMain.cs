@@ -916,6 +916,7 @@ namespace Notepad_Light
         /// </summary>
         public void EnableToolbarFormattingIcons()
         {
+            // enable toolstrip buttons
             BoldToolStripButton.Enabled = true;
             ItalicToolStripButton.Enabled = true;
             UnderlineToolStripButton.Enabled = true;
@@ -925,6 +926,12 @@ namespace Notepad_Light
             HighlightTextToolStripButton.Enabled = true;
             PictureToolStripMenuItem.Enabled = true;
             TableToolStripMenuItem.Enabled = true;
+
+            // enable menu strip buttons
+            BoldToolStripMenuItem.Enabled = true;
+            ItalicToolStripMenuItem.Enabled = true;
+            UnderlineToolStripMenuItem.Enabled = true;
+            StrikethroughToolStripMenuItem.Enabled = true;
         }
 
         /// <summary>
@@ -932,6 +939,7 @@ namespace Notepad_Light
         /// </summary>
         public void DisableToolbarFormattingIcons()
         {
+            // disable toolstrip buttons
             BoldToolStripButton.Enabled = false;
             ItalicToolStripButton.Enabled = false;
             UnderlineToolStripButton.Enabled = false;
@@ -941,6 +949,12 @@ namespace Notepad_Light
             HighlightTextToolStripButton.Enabled = false;
             PictureToolStripMenuItem.Enabled = false;
             TableToolStripMenuItem.Enabled = false;
+
+            // disable menustrip buttons
+            BoldToolStripMenuItem.Enabled = false;
+            ItalicToolStripMenuItem.Enabled = false;
+            UnderlineToolStripMenuItem.Enabled = false;
+            StrikethroughToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1116,11 +1130,11 @@ namespace Notepad_Light
             menuStrip1.BackColor = clrDarkModeBackground;
             toolStrip1.BackColor = clrDarkModeBackground;
             statusStrip1.BackColor = clrDarkModeBackground;
+            rtbPage.BackColor = clrDarkModeTextBackground;
+
             ChangeControlTextColor(Color.White);
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
             ChangeMenuItemBackColor(clrDarkModeBackground);
-            rtbPage.BackColor = clrDarkModeTextBackground;
-            ApplyTextColor();
         }
 
         /// <summary>
@@ -1131,48 +1145,11 @@ namespace Notepad_Light
             menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+            rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
+
             ChangeControlTextColor(Color.Black);
             ChangeSubMenuItemBackColor(Color.White);
             ChangeMenuItemBackColor(Color.FromKnownColor(KnownColor.Control));
-            rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
-            ApplyTextColor();
-        }
-
-        /// <summary>
-        /// plain text files can have the text color changed
-        /// if the file is rtf, no changes will be made
-        /// </summary>
-        public void ApplyTextColor()
-        {
-            // if the file is rtf no changes need to be made
-            if (gRtf)
-            {
-                return;
-            }
-            
-            // for plain text, check the setting and apply the reverse color for text
-            if (Properties.Settings.Default.ReverseTextColorWithTheme)
-            {
-                if (Properties.Settings.Default.DarkMode)
-                {
-                    rtbPage.ForeColor = Color.White;
-                }
-                else
-                {
-                    rtbPage.ForeColor = Color.Black;
-                }
-            }
-            else
-            {
-                if (Properties.Settings.Default.DarkMode)
-                {
-                    rtbPage.ForeColor = Color.Black;
-                }
-                else
-                {
-                    rtbPage.ForeColor = Color.White;
-                }
-            }
         }
 
         /// <summary>

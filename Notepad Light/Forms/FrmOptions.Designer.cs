@@ -40,7 +40,6 @@
             this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nudAutoSaveInterval = new System.Windows.Forms.NumericUpDown();
-            this.ckbReverseTextColor = new System.Windows.Forms.CheckBox();
             this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.rdoWholeWord = new System.Windows.Forms.RadioButton();
@@ -120,7 +119,6 @@
             this.groupBox3.Controls.Add(this.cbxNewFileFormat);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.nudAutoSaveInterval);
-            this.groupBox3.Controls.Add(this.ckbReverseTextColor);
             this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Location = new System.Drawing.Point(6, 192);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
@@ -134,7 +132,7 @@
             // cbxCleanupTempAppFilesOnExit
             // 
             this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
-            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(17, 113);
+            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(17, 79);
             this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
             this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(230, 19);
             this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
@@ -164,7 +162,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 147);
+            this.label1.Location = new System.Drawing.Point(17, 113);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -172,7 +170,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 145);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 111);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -191,16 +189,6 @@
             0,
             0,
             0});
-            // 
-            // ckbReverseTextColor
-            // 
-            this.ckbReverseTextColor.AutoSize = true;
-            this.ckbReverseTextColor.Location = new System.Drawing.Point(17, 84);
-            this.ckbReverseTextColor.Name = "ckbReverseTextColor";
-            this.ckbReverseTextColor.Size = new System.Drawing.Size(308, 19);
-            this.ckbReverseTextColor.TabIndex = 8;
-            this.ckbReverseTextColor.Text = "Apply Text Color Opposite Of Theme (Plain Text Only)";
-            this.ckbReverseTextColor.UseVisualStyleBackColor = true;
             // 
             // ckbUsePasteUI
             // 
@@ -351,7 +339,6 @@
         private GroupBox groupBox2;
         private RadioButton rdoLightMode;
         private RadioButton rdoDarkMode;
-        private CheckBox ckbReverseTextColor;
         private NumericUpDown nudAutoSaveInterval;
         private Label label1;
         private Label label2;

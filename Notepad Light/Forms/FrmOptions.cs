@@ -36,16 +36,6 @@ namespace Notepad_Light.Forms
                 rdoLightMode.Checked = true;
             }
 
-            // update reverse text
-            if (Properties.Settings.Default.ReverseTextColorWithTheme == true)
-            {
-                ckbReverseTextColor.Checked = true;
-            }
-            else
-            {
-                ckbReverseTextColor.Checked = false;
-            }
-
             // update file format dropdown
             if (Properties.Settings.Default.NewFileFormat == Strings.plainText)
             {
@@ -119,15 +109,6 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.DarkMode = false;
-            }
-
-            if (ckbReverseTextColor.Checked == true)
-            {
-                Properties.Settings.Default.ReverseTextColorWithTheme = true;
-            }
-            else
-            {
-                Properties.Settings.Default.ReverseTextColorWithTheme = false;
             }
 
             if (cbxNewFileFormat.SelectedIndex == 0)
