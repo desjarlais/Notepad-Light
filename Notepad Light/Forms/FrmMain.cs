@@ -537,6 +537,17 @@ namespace Notepad_Light
                     sfdSaveAs.Title = "Save As";
                     sfdSaveAs.AutoUpgradeEnabled = true;
 
+                    // change the file type dropdown based on the current file format
+                    if (gRtf)
+                    {
+                        sfdSaveAs.FilterIndex = 2;
+                    }
+                    else
+                    {
+                        sfdSaveAs.FilterIndex = 1;
+                    }
+
+                    // save out the file based on the user selections
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
                         Cursor = Cursors.WaitCursor;
@@ -1295,6 +1306,7 @@ namespace Notepad_Light
             SelectAllToolStripMenuItem.BackColor = clr;
             ClearAllTextToolStripMenuItem.BackColor = clr;
             FindToolStripMenuItem.BackColor = clr;
+
             // update Insert menu
             PictureToolStripMenuItem.BackColor = clr;
             TableToolStripMenuItem.BackColor = clr;
@@ -1345,7 +1357,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// convert an image to rtf
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
@@ -1374,8 +1386,7 @@ namespace Notepad_Light
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             byte[] _buffer = new byte[_bufferSize];
-            GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, MM_ANISOTROPIC,
-                                        EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, MM_ANISOTROPIC, EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             IntPtr hmf = SetMetaFileBitsEx(_bufferSize, _buffer);
             string tempfile = Path.GetTempFileName();
             CopyMetaFile(hmf, tempfile);
@@ -1387,13 +1398,13 @@ namespace Notepad_Light
             int count = data.Length;
             stream.Write(data, 0, count);
 
-            string proto = @"{\rtf1{\pict\wmetafile8\picw" + (int)(((float)image.Width / dpiX) * 2540)
+            string rtfImage = @"{\rtf1{\pict\wmetafile8\picw" + (int)(((float)image.Width / dpiX) * 2540)
                               + @"\pich" + (int)(((float)image.Height / dpiY) * 2540)
                               + @"\picwgoal" + (int)(((float)image.Width / dpiX) * 1440)
                               + @"\pichgoal" + (int)(((float)image.Height / dpiY) * 1440)
                               + " " + BitConverter.ToString(stream.ToArray()).Replace("-", "")
                               + "}}";
-            return proto;
+            return rtfImage;
         }
 
         /// <summary>
@@ -1405,7 +1416,6 @@ namespace Notepad_Light
         /// <returns></returns>
         public static bool ContainsTransparent(Bitmap image)
         {
-            // increment every 5 pixels for performance reasons
             for (int y = 0; y < image.Height; y += 5)
             {
                 for (int x = 0; x < image.Width; x += 5)
@@ -2179,7 +2189,7 @@ namespace Notepad_Light
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp)|*.jpg; *.jpeg; *.gif; *.png; *.bmp";
+                ofd.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf)|*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     // get the image from the dialog
