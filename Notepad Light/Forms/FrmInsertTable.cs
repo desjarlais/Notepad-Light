@@ -2,7 +2,8 @@
 {
     public partial class FrmInsertTable : Form
     {
-        public int fCols, fRows;
+        public int fCols = 0;
+        public int fRows = 0;
 
         public FrmInsertTable()
         {

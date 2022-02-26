@@ -1784,7 +1784,7 @@ namespace Notepad_Light
             }
 
             // if the user deletes the bullet, we need to remove bullet formatting
-            // backspace causes selectionchange so the stats update there
+            // backspace causes selectionchange so the ui/stats update there
             if (e.KeyCode == Keys.Back)
             {
                 if (rtbPage.SelectionStart == rtbPage.GetFirstCharIndexOfCurrentLine() && rtbPage.SelectionBullet == true)
@@ -1794,7 +1794,7 @@ namespace Notepad_Light
                 }
             }
 
-            // if delete key is pressed change the saved state
+            // if delete key is pressed change the saved state and update ui/stats
             if (e.KeyCode == Keys.Delete)
             {
                 gPrevPageLength = rtbPage.TextLength;
@@ -1934,7 +1934,6 @@ namespace Notepad_Light
 
             // update the ticks
             UpdateAutoSaveInterval();
-
             Properties.Settings.Default.Save();
         }
 
@@ -2284,7 +2283,13 @@ namespace Notepad_Light
                 Owner = this
             };
             fTable.ShowDialog(this);
-            rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
+
+            // if the user cancelled the form, row and col should be 0 and nothing needs to happen
+            // otherwise, the value will be between 1 and 10, so call inserttable
+            if (fTable.fRows > 0 && fTable.fCols > 0)
+            {
+                rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
+            }
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
