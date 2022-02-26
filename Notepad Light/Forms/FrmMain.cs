@@ -1438,11 +1438,19 @@ namespace Notepad_Light
         /// <param name="e">eventarg from paint event</param>
         /// <param name="cFill">backcolor for the separator</param>
         /// <param name="cLine">forecolor for the separator</param>
-        public void PaintToolStripSeparator(object sender, PaintEventArgs e, Color cFill, Color cLine)
+        public void PaintToolStripSeparator(object sender, PaintEventArgs e)
         {
             ToolStripSeparator sep = (ToolStripSeparator)sender;
-            e.Graphics.FillRectangle(new SolidBrush(cFill), 0, 0, sep.Width, sep.Height);
-            e.Graphics.DrawLine(new Pen(cLine), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
+            if (Properties.Settings.Default.DarkMode)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(clrDarkModeBackground), 0, 0, sep.Width, sep.Height);
+                e.Graphics.DrawLine(new Pen(Color.White), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, sep.Width, sep.Height);
+                e.Graphics.DrawLine(new Pen(clrDarkModeBackground), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
+            }            
         }
 
         public void InsertTemplate(int templateNumber)
@@ -2058,74 +2066,32 @@ namespace Notepad_Light
 
         private void ToolStripSeparator1_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }            
+            PaintToolStripSeparator(sender, e);
         }
 
         private void ToolStripSeparator3_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         private void ToolStripSeparator4_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         private void ToolStripSeparator13_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         private void ToolStripSeparator10_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         private void toolStripSeparator14_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -2255,14 +2221,7 @@ namespace Notepad_Light
 
         private void toolStripSeparator18_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         /// <summary>
@@ -2299,14 +2258,7 @@ namespace Notepad_Light
 
         private void toolStripSeparator12_Paint(object sender, PaintEventArgs e)
         {
-            if (Properties.Settings.Default.DarkMode)
-            {
-                PaintToolStripSeparator(sender, e, clrDarkModeBackground, Color.White);
-            }
-            else
-            {
-                PaintToolStripSeparator(sender, e, Color.White, clrDarkModeBackground);
-            }
+            PaintToolStripSeparator(sender, e);
         }
 
         /// <summary>
