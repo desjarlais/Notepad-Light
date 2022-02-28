@@ -2138,11 +2138,11 @@ namespace Notepad_Light
 
                     // creating a bitmap to check for transparencies
                     Bitmap bmp = new Bitmap(img);
-                    if (ContainsTransparent(bmp) && Properties.Settings.Default.UseImageTransparency == true)
+                    if (ContainsTransparent(bmp))
                     {
                         // depending on the ui theme, apply the same color to the background
                         // TODO: not sure this is really what I want to happen since this changes the image
-                        if (Properties.Settings.Default.DarkMode)
+                        if (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency == true)
                         {
                             img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeTextBackground);
                         }
