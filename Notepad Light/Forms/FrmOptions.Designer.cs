@@ -49,6 +49,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
+            this.cbxInsertPictureWithTransparency = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -114,6 +115,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cbxInsertPictureWithTransparency);
             this.groupBox3.Controls.Add(this.cbxCleanupTempAppFilesOnExit);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.cbxNewFileFormat);
@@ -162,7 +164,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 113);
+            this.label1.Location = new System.Drawing.Point(17, 138);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -170,7 +172,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 111);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 136);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -291,6 +293,16 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
+            // cbxInsertPictureWithTransparency
+            // 
+            this.cbxInsertPictureWithTransparency.AutoSize = true;
+            this.cbxInsertPictureWithTransparency.Location = new System.Drawing.Point(17, 104);
+            this.cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
+            this.cbxInsertPictureWithTransparency.Size = new System.Drawing.Size(200, 19);
+            this.cbxInsertPictureWithTransparency.TabIndex = 14;
+            this.cbxInsertPictureWithTransparency.Text = "Insert Pictures With Transparency";
+            this.cbxInsertPictureWithTransparency.UseVisualStyleBackColor = true;
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -344,5 +356,6 @@
         private Label label2;
         private ComboBox cbxNewFileFormat;
         private CheckBox cbxCleanupTempAppFilesOnExit;
+        private CheckBox cbxInsertPictureWithTransparency;
     }
 }

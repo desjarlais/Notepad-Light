@@ -46,13 +46,24 @@ namespace Notepad_Light.Forms
                 cbxNewFileFormat.SelectedIndex = 1;
             }
 
-            if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
+            // update remove temp files
+            if (Properties.Settings.Default.RemoveTempFilesOnExit)
             {
                 cbxCleanupTempAppFilesOnExit.Checked = true;
             }
             else
             {
                 cbxCleanupTempAppFilesOnExit.Checked = false;
+            }
+
+            // update image transparency
+            if (Properties.Settings.Default.UseImageTransparency)
+            {
+                cbxInsertPictureWithTransparency.Checked = true;
+            }
+            else
+            {
+                cbxInsertPictureWithTransparency.Checked = false;
             }
         }
 
@@ -127,6 +138,15 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.RemoveTempFilesOnExit = false;
+            }
+
+            if (cbxInsertPictureWithTransparency.Checked == true)
+            {
+                Properties.Settings.Default.UseImageTransparency = true;
+            }
+            else
+            {
+                Properties.Settings.Default.UseImageTransparency= false;
             }
 
             Close();

@@ -215,5 +215,17 @@ namespace Notepad_Light.Properties {
                 this["RemoveTempFilesOnExit"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseImageTransparency {
+            get {
+                return ((bool)(this["UseImageTransparency"]));
+            }
+            set {
+                this["UseImageTransparency"] = value;
+            }
+        }
     }
 }

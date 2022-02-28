@@ -2138,7 +2138,7 @@ namespace Notepad_Light
 
                     // creating a bitmap to check for transparencies
                     Bitmap bmp = new Bitmap(img);
-                    if (ContainsTransparent(bmp))
+                    if (ContainsTransparent(bmp) && Properties.Settings.Default.UseImageTransparency == true)
                     {
                         // depending on the ui theme, apply the same color to the background
                         // TODO: not sure this is really what I want to happen since this changes the image
