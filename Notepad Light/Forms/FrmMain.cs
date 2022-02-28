@@ -1,4 +1,4 @@
-using Notepad_Light.Forms;
+﻿using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
@@ -902,7 +902,8 @@ namespace Notepad_Light
             int lineCount;
             foreach (string line in rtbPage.Lines)
             {
-                lineCount = line.Split(new char[] { ' ', '.', '?', ',', ':', '\t', '=', ';', '-' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', };
+                lineCount = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
                 totalWordCount += lineCount;
             }
             
@@ -937,12 +938,6 @@ namespace Notepad_Light
             HighlightTextToolStripButton.Enabled = true;
             PictureToolStripMenuItem.Enabled = true;
             TableToolStripMenuItem.Enabled = true;
-
-            // enable menu strip buttons
-            BoldToolStripMenuItem.Enabled = true;
-            ItalicToolStripMenuItem.Enabled = true;
-            UnderlineToolStripMenuItem.Enabled = true;
-            StrikethroughToolStripMenuItem.Enabled = true;
         }
 
         /// <summary>
@@ -960,19 +955,14 @@ namespace Notepad_Light
             HighlightTextToolStripButton.Enabled = false;
             PictureToolStripMenuItem.Enabled = false;
             TableToolStripMenuItem.Enabled = false;
-
-            // disable menustrip buttons
-            BoldToolStripMenuItem.Enabled = false;
-            ItalicToolStripMenuItem.Enabled = false;
-            UnderlineToolStripMenuItem.Enabled = false;
-            StrikethroughToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
-        /// clear all of the formatting icon ui states
+        /// clear the icon states that are based on selection
         /// </summary>
         public void ClearToolbarFormattingIcons()
         {
+            // clear the toolstrip icons
             BoldToolStripButton.Checked = false;
             ItalicToolStripButton.Checked = false;
             UnderlineToolStripButton.Checked = false;
@@ -1233,10 +1223,6 @@ namespace Notepad_Light
             FormatToolStripMenuItem.ForeColor = clr;
             EditFontToolStripMenuItem.ForeColor = clr;
             ClearFormattingToolStripMenuItem.ForeColor = clr;
-            BoldToolStripMenuItem.ForeColor = clr;
-            ItalicToolStripMenuItem.ForeColor = clr;
-            UnderlineToolStripMenuItem.ForeColor = clr;
-            StrikethroughToolStripMenuItem.ForeColor = clr;
 
             // update Templates menu
             TemplatesToolStripMenuItem.ForeColor = clr;
@@ -1314,10 +1300,6 @@ namespace Notepad_Light
             // update Formatting menu
             EditFontToolStripMenuItem.BackColor = clr;
             ClearFormattingToolStripMenuItem.BackColor = clr;
-            BoldToolStripMenuItem.BackColor = clr;
-            ItalicToolStripMenuItem.BackColor = clr;
-            UnderlineToolStripMenuItem.BackColor = clr;
-            StrikethroughToolStripMenuItem.BackColor = clr;
 
             // update Templates menu
             Template1ToolStripMenuItem.BackColor = clr;
@@ -1432,7 +1414,7 @@ namespace Notepad_Light
         /// <summary>
         /// known issue in toolstripseparator not using back/fore colors
         /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
-        /// this is for MenuStrip toolstrip separators, but not needed for TooStrip separators
+        /// this is for MenuStrip toolstrip separators, but not needed for ToolStrip separators
         /// </summary>
         /// <param name="sender">object param from the paint event</param>
         /// <param name="e">eventarg from paint event</param>
@@ -1663,7 +1645,6 @@ namespace Notepad_Light
         private void ClearAllTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbPage.ResetText();
-            rtbPage.Font = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
             EndOfButtonFormatWork();
         }
 
@@ -2080,11 +2061,6 @@ namespace Notepad_Light
         }
 
         private void ToolStripSeparator13_Paint(object sender, PaintEventArgs e)
-        {
-            PaintToolStripSeparator(sender, e);
-        }
-
-        private void ToolStripSeparator10_Paint(object sender, PaintEventArgs e)
         {
             PaintToolStripSeparator(sender, e);
         }
