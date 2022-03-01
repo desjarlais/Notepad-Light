@@ -5,41 +5,10 @@ namespace Notepad_Light.Helpers
 {
     class RtfPrint
     {
-        // P/Invoke declarations
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct CHARRANGE
-        {
-            internal int cpMin;
-            internal int cpMax;
-        }
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct RECT
-        {
-            internal int Left;
-            internal int Top;
-            internal int Right;
-            internal int Bottom;
-        }
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct FORMATRANGE
-        {
-            internal IntPtr hdc;
-            internal IntPtr hdcTarget;
-            internal RECT rc;
-            internal RECT rcPage;
-            internal CHARRANGE chrg;
-        }
-        private const int WM_USER = 0x0400;
-        private const int EM_FORMATRANGE = WM_USER + 57;
-        private const int Hundredth2Twips = 20 * 72 / 100;
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-
         public static bool Print(RichTextBox box, ref int charFrom, PrintPageEventArgs e)
         {
             // Prints text in <box>, starting at <charFrom>.  Returns <true> if more pages are needed
-            FORMATRANGE fmtRange;
+            Win32.FORMATRANGE fmtRange;
             // Allocate device context for output device
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             IntPtr hdc = e.Graphics.GetHdc();
@@ -48,16 +17,16 @@ namespace Notepad_Light.Helpers
             fmtRange.hdcTarget = hdc;
 
             // Set printable area, converted from 0.01" to twips
-            fmtRange.rc.Top = Convert.ToInt32(e.MarginBounds.Top * Hundredth2Twips);
-            fmtRange.rc.Bottom = Convert.ToInt32(e.MarginBounds.Bottom * Hundredth2Twips);
-            fmtRange.rc.Left = Convert.ToInt32(e.MarginBounds.Left * Hundredth2Twips);
-            fmtRange.rc.Right = Convert.ToInt32(e.MarginBounds.Right * Hundredth2Twips);
+            fmtRange.rc.Top = Convert.ToInt32(e.MarginBounds.Top * Win32.Hundredth2Twips);
+            fmtRange.rc.Bottom = Convert.ToInt32(e.MarginBounds.Bottom * Win32.Hundredth2Twips);
+            fmtRange.rc.Left = Convert.ToInt32(e.MarginBounds.Left * Win32.Hundredth2Twips);
+            fmtRange.rc.Right = Convert.ToInt32(e.MarginBounds.Right * Win32.Hundredth2Twips);
 
             // Set page area, converted from 0.01" to twips
-            fmtRange.rcPage.Top = Convert.ToInt32(e.PageBounds.Top * Hundredth2Twips);
-            fmtRange.rcPage.Bottom = Convert.ToInt32(e.PageBounds.Bottom * Hundredth2Twips);
-            fmtRange.rcPage.Left = Convert.ToInt32(e.PageBounds.Left * Hundredth2Twips);
-            fmtRange.rcPage.Right = Convert.ToInt32(e.PageBounds.Right * Hundredth2Twips);
+            fmtRange.rcPage.Top = Convert.ToInt32(e.PageBounds.Top * Win32.Hundredth2Twips);
+            fmtRange.rcPage.Bottom = Convert.ToInt32(e.PageBounds.Bottom * Win32.Hundredth2Twips);
+            fmtRange.rcPage.Left = Convert.ToInt32(e.PageBounds.Left * Win32.Hundredth2Twips);
+            fmtRange.rcPage.Right = Convert.ToInt32(e.PageBounds.Right * Win32.Hundredth2Twips);
 
             // Set character range to print
             fmtRange.chrg.cpMin = charFrom;
@@ -68,7 +37,7 @@ namespace Notepad_Light.Helpers
             Marshal.StructureToPtr(fmtRange, hdlRange, false);
 
             // Send RichTextBox the EM_FORMATRANGE message to print the text
-            IntPtr res = SendMessage(box.Handle, EM_FORMATRANGE, (IntPtr)1, hdlRange);
+            IntPtr res = Win32.SendMessage(box.Handle, Win32.EM_FORMATRANGE, (IntPtr)1, hdlRange);
             int err = Marshal.GetLastWin32Error();
 
             // Release resources

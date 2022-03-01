@@ -35,6 +35,7 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbxInsertPictureWithTransparency = new System.Windows.Forms.CheckBox();
             this.cbxCleanupTempAppFilesOnExit = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
@@ -49,7 +50,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.cbxInsertPictureWithTransparency = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -131,14 +131,24 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
             // 
+            // cbxInsertPictureWithTransparency
+            // 
+            this.cbxInsertPictureWithTransparency.AutoSize = true;
+            this.cbxInsertPictureWithTransparency.Location = new System.Drawing.Point(17, 104);
+            this.cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
+            this.cbxInsertPictureWithTransparency.Size = new System.Drawing.Size(200, 19);
+            this.cbxInsertPictureWithTransparency.TabIndex = 14;
+            this.cbxInsertPictureWithTransparency.Text = "Insert Pictures With Transparency";
+            this.cbxInsertPictureWithTransparency.UseVisualStyleBackColor = true;
+            // 
             // cbxCleanupTempAppFilesOnExit
             // 
             this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
             this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(17, 79);
             this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
-            this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(230, 19);
+            this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(220, 19);
             this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
-            this.cbxCleanupTempAppFilesOnExit.Text = "Remove Unused Template Files On Exit";
+            this.cbxCleanupTempAppFilesOnExit.Text = "Delete Unused Template Files On Exit";
             this.cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -209,9 +219,9 @@
             this.groupBox5.Controls.Add(this.rdoMatchCase);
             this.groupBox5.Controls.Add(this.rdoFindDirectionDown);
             this.groupBox5.Controls.Add(this.rdoFindDirectionUp);
-            this.groupBox5.Location = new System.Drawing.Point(453, 200);
+            this.groupBox5.Location = new System.Drawing.Point(453, 192);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(192, 84);
+            this.groupBox5.Size = new System.Drawing.Size(192, 92);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Find Options";
@@ -292,16 +302,6 @@
             this.rdoDarkMode.TabStop = true;
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
-            // 
-            // cbxInsertPictureWithTransparency
-            // 
-            this.cbxInsertPictureWithTransparency.AutoSize = true;
-            this.cbxInsertPictureWithTransparency.Location = new System.Drawing.Point(17, 104);
-            this.cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
-            this.cbxInsertPictureWithTransparency.Size = new System.Drawing.Size(200, 19);
-            this.cbxInsertPictureWithTransparency.TabIndex = 14;
-            this.cbxInsertPictureWithTransparency.Text = "Insert Pictures With Transparency";
-            this.cbxInsertPictureWithTransparency.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 

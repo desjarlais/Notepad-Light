@@ -3,7 +3,6 @@ using Notepad_Light.Helpers;
 using System.Diagnostics;
 using System.Reflection;
 using System.Drawing.Printing;
-using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 
@@ -11,32 +10,6 @@ namespace Notepad_Light
 {
     public partial class FrmMain : Form
     {
-        // P/Invoke declarations
-        const int MM_ISOTROPIC = 7;
-        const int MM_ANISOTROPIC = 8;
-
-        [DllImport("gdiplus.dll")]
-        private static extern uint GdipEmfToWmfBits(IntPtr _hEmf, uint _bufferSize,
-            byte[] _buffer, int _mappingMode, EmfToWmfBitsFlags _flags);
-        [DllImport("gdi32.dll")]
-        private static extern IntPtr SetMetaFileBitsEx(uint _bufferSize,
-            byte[] _buffer);
-        [DllImport("gdi32.dll")]
-        private static extern IntPtr CopyMetaFile(IntPtr hWmf,
-            string filename);
-        [DllImport("gdi32.dll")]
-        private static extern bool DeleteMetaFile(IntPtr hWmf);
-        [DllImport("gdi32.dll")]
-        private static extern bool DeleteEnhMetaFile(IntPtr hEmf);
-
-        private enum EmfToWmfBitsFlags
-        {
-            EmfToWmfBitsFlagsDefault = 0x00000000,
-            EmfToWmfBitsFlagsEmbedEmf = 0x00000001,
-            EmfToWmfBitsFlagsIncludePlaceable = 0x00000002,
-            EmfToWmfBitsFlagsNoXORClip = 0x00000004
-        };
-
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
         public string gErrorLog = string.Empty;
@@ -1364,16 +1337,16 @@ namespace Notepad_Light
 
             IntPtr _hEmf = metafile.GetHenhmetafile();
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            uint _bufferSize = GdipEmfToWmfBits(_hEmf, 0, null, MM_ANISOTROPIC,
+            uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null, Win32.MM_ANISOTROPIC,
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-            EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             byte[] _buffer = new byte[_bufferSize];
-            GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, MM_ANISOTROPIC, EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
-            IntPtr hmf = SetMetaFileBitsEx(_bufferSize, _buffer);
+            Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            IntPtr hmf = Win32.SetMetaFileBitsEx(_bufferSize, _buffer);
             string tempfile = Path.GetTempFileName();
-            CopyMetaFile(hmf, tempfile);
-            DeleteMetaFile(hmf);
-            DeleteEnhMetaFile(_hEmf);
+            Win32.CopyMetaFile(hmf, tempfile);
+            Win32.DeleteMetaFile(hmf);
+            Win32.DeleteEnhMetaFile(_hEmf);
 
             var stream = new MemoryStream();
             byte[] data = File.ReadAllBytes(tempfile);
@@ -1764,6 +1737,7 @@ namespace Notepad_Light
         {
             // if the line has a bullet and the tab was pressed, indent the line
             // need to suppress the key to prevent the cursor from moving around
+            // tab will cause selectionchange so the ui/stats update there
             if (e.KeyCode == Keys.Tab && rtbPage.SelectionBullet == true)
             {
                 e.SuppressKeyPress = true;
