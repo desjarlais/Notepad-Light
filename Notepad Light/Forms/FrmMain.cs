@@ -387,6 +387,11 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
+                
+                // prompt for changes
+                SaveChanges();
+
+                // now start the file open process
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Select File To Open.",
@@ -549,14 +554,8 @@ namespace Notepad_Light
             }
         }
 
-        public void OpenRecentFile(string filePath, int buttonIndex)
+        public void SaveChanges()
         {
-            // do nothing if there is no file
-            if (filePath == Strings.empty)
-            {
-                return;
-            }
-
             // if there are unsaved changes, prompt the user before opening
             if (rtbPage.Modified)
             {
@@ -566,6 +565,18 @@ namespace Notepad_Light
                     FileSave();
                 }
             }
+        }
+
+        public void OpenRecentFile(string filePath, int buttonIndex)
+        {
+            // do nothing if there is no file
+            if (filePath == Strings.empty)
+            {
+                return;
+            }
+
+            // if there are unsaved changes, prompt the user before opening
+            SaveChanges();
 
             // if there is a file/path, open it
             if (File.Exists(filePath))
@@ -706,15 +717,7 @@ namespace Notepad_Light
         public void ExitAppWork(bool fromFormClosingEvent)
         {
             Properties.Settings.Default.Save();
-
-            if (rtbPage.Modified == true)
-            {
-                DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    FileSave();
-                }
-            }
+            SaveChanges();
 
             // formclosingevent will fire twice if we call app exit anywhere from form closing
             // only call app.exit if we aren't coming from the event
