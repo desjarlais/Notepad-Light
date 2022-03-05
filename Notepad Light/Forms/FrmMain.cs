@@ -483,8 +483,6 @@ namespace Notepad_Light
 
                     rtbPage.Modified = false;
                 }
-
-                UpdateToolbarIcons();
             }
             catch (Exception ex)
             {
@@ -492,6 +490,7 @@ namespace Notepad_Light
             }
             finally
             {
+                UpdateToolbarIcons();
                 Cursor = Cursors.Default;
             }
         }
@@ -880,7 +879,7 @@ namespace Notepad_Light
                 totalWordCount += lineCount;
             }
             
-            // update the ui with the values
+            // update the ui with counts
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
             CharacterCountToolStripStatusLabel.Text = rtbPage.Text.Length.ToString();
             LinesToolStripStatusLabel.Text = rtbPage.Lines.Length.ToString();
@@ -918,7 +917,6 @@ namespace Notepad_Light
         /// </summary>
         public void DisableToolbarFormattingIcons()
         {
-            // disable toolstrip buttons
             BoldToolStripButton.Enabled = false;
             ItalicToolStripButton.Enabled = false;
             UnderlineToolStripButton.Enabled = false;
@@ -935,7 +933,6 @@ namespace Notepad_Light
         /// </summary>
         public void ClearToolbarFormattingIcons()
         {
-            // clear the toolstrip icons
             BoldToolStripButton.Checked = false;
             ItalicToolStripButton.Checked = false;
             UnderlineToolStripButton.Checked = false;

@@ -44,11 +44,9 @@ namespace Notepad_Light.Helpers
         public const int MM_ANISOTROPIC = 8;
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-                
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);                
         [DllImport("gdiplus.dll")]
-        public static extern uint GdipEmfToWmfBits(IntPtr _hEmf, uint _bufferSize,
-            byte[] _buffer, int _mappingMode, EmfToWmfBitsFlags _flags);
+        public static extern uint GdipEmfToWmfBits(IntPtr _hEmf, uint _bufferSize, byte[] _buffer, int _mappingMode, EmfToWmfBitsFlags _flags);
         [DllImport("gdi32.dll")]
         public static extern IntPtr SetMetaFileBitsEx(uint _bufferSize, byte[] _buffer);
         [DllImport("gdi32.dll")]
