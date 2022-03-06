@@ -38,4 +38,5 @@ OneNote style apps are close, but they are too open on a per page basis...I stil
 * Find / Search for text
 * Dark Mode
 * Insert Pictures
+* Insert Table
 * Create and Insert Template / boilerplate text
