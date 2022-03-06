@@ -684,7 +684,7 @@ namespace Notepad_Light
                     Owner = this
                 };
                 pFrm.ShowDialog();
-                
+
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
                 {
@@ -903,7 +903,6 @@ namespace Notepad_Light
         /// </summary>
         public void EnableToolbarFormattingIcons()
         {
-            // enable toolstrip buttons
             BoldToolStripButton.Enabled = true;
             ItalicToolStripButton.Enabled = true;
             UnderlineToolStripButton.Enabled = true;
@@ -2199,6 +2198,11 @@ namespace Notepad_Light
             {
                 rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
             }
+        }
+
+        private void dateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rtbPage.SelectedText = DateTime.Now.ToString();
         }
 
         private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)

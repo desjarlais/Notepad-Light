@@ -123,6 +123,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DateTimeAxis_16x {
+            get {
+                object obj = ResourceManager.GetObject("DateTimeAxis_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Dialog_16x {
             get {
                 object obj = ResourceManager.GetObject("Dialog_16x", resourceCulture);
