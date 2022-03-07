@@ -39,4 +39,5 @@ OneNote style apps are close, but they are too open on a per page basis...I stil
 * Dark Mode
 * Insert Pictures
 * Insert Table
+* Insert Date/Time
 * Create and Insert Template / boilerplate text
