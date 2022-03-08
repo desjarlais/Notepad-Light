@@ -151,7 +151,7 @@ namespace Notepad_Light.Helpers
             }
 
             sb.Append(@"\pard");
-            sb.Append(@"}");
+            sb.Append("}");
 
             return sb.ToString();
         }

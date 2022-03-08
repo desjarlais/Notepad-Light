@@ -25,7 +25,8 @@ namespace Notepad_Light.Helpers
         public const string saveChangePrompt = "Do you want to save your changes?";
         public const string saveChangesTitle = "Save Changes";
         public const string pathDivider = "\\";
-        
+        public const string AppTitle = "Notepad Light - ";
+
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
         public const string githubIssues = "https://github.com/desjarlais/Notepad-Light/issues";
@@ -36,5 +37,12 @@ namespace Notepad_Light.Helpers
         public static string appFolderTemplateDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light\\Templates";
         public static string appFolderTemplatesFullPath = appFolderTemplateDir + pathDivider;
         public static string appFolderFullPath = appFolderDirectory + pathDivider;
+
+        // rtf tags
+        public const string rtfStart = @"{\rtf1";
+        public const string paragraph = @"\pard";
+        public const string rtfTableRowStart = @"\trowd";
+        public const string rtfTableCell = @"\cellx";
+        public const string rtfEnd = "}";
     }
 }

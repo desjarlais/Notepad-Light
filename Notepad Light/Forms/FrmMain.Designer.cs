@@ -687,7 +687,7 @@
             // 
             this.PictureToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Image_16x;
             this.PictureToolStripMenuItem.Name = "PictureToolStripMenuItem";
-            this.PictureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PictureToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.PictureToolStripMenuItem.Text = "Picture";
             this.PictureToolStripMenuItem.Click += new System.EventHandler(this.PictureToolStripMenuItem_Click);
             // 
@@ -695,7 +695,7 @@
             // 
             this.TableToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Table_16x;
             this.TableToolStripMenuItem.Name = "TableToolStripMenuItem";
-            this.TableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.TableToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.TableToolStripMenuItem.Text = "Table";
             this.TableToolStripMenuItem.Click += new System.EventHandler(this.tableToolStripMenuItem_Click);
             // 
@@ -703,7 +703,7 @@
             // 
             this.dateTimeToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.DateTimeAxis_16x;
             this.dateTimeToolStripMenuItem.Name = "dateTimeToolStripMenuItem";
-            this.dateTimeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dateTimeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.dateTimeToolStripMenuItem.Text = "Date / Time";
             this.dateTimeToolStripMenuItem.Click += new System.EventHandler(this.dateTimeToolStripMenuItem_Click);
             // 

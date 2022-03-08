@@ -102,6 +102,7 @@ namespace Notepad_Light
             }
 
             UpdateToolbarIcons();
+            rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
         }
 
         #region Class Properties
@@ -148,7 +149,7 @@ namespace Notepad_Light
 
         public void UpdateFormTitle(string docName)
         {
-            this.Text = "Notepad Light - " + docName;
+            this.Text = Strings.AppTitle + docName;
             gCurrentFileName = docName;
         }
 
@@ -438,7 +439,6 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = rtbPage.TextLength;
                     UpdateDocStats();
-                    rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
                     rtbPage.Modified = false;
                 }
             }
@@ -1190,6 +1190,7 @@ namespace Notepad_Light
             InsertToolStripMenuItem.ForeColor = clr;
             PictureToolStripMenuItem.ForeColor = clr;
             TableToolStripMenuItem.ForeColor = clr;
+            dateTimeToolStripMenuItem.ForeColor = clr;
 
             // update Formatting menu
             FormatToolStripMenuItem.ForeColor = clr;
@@ -1268,6 +1269,7 @@ namespace Notepad_Light
             // update Insert menu
             PictureToolStripMenuItem.BackColor = clr;
             TableToolStripMenuItem.BackColor = clr;
+            dateTimeToolStripMenuItem.BackColor = clr;
 
             // update Formatting menu
             EditFontToolStripMenuItem.BackColor = clr;
@@ -1336,13 +1338,14 @@ namespace Notepad_Light
 
             IntPtr _hEmf = metafile.GetHenhmetafile();
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null, Win32.MM_ANISOTROPIC,
+            uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-            Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+
             byte[] _buffer = new byte[_bufferSize];
             Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             IntPtr hmf = Win32.SetMetaFileBitsEx(_bufferSize, _buffer);
             string tempfile = Path.GetTempFileName();
+            
             Win32.CopyMetaFile(hmf, tempfile);
             Win32.DeleteMetaFile(hmf);
             Win32.DeleteEnhMetaFile(_hEmf);
@@ -2114,7 +2117,6 @@ namespace Notepad_Light
                     if (ContainsTransparent(bmp))
                     {
                         // depending on the ui theme, apply the same color to the background
-                        // TODO: not sure this is really what I want to happen since this changes the image
                         if (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency == true)
                         {
                             img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeTextBackground);
@@ -2125,7 +2127,7 @@ namespace Notepad_Light
                         }
                     }
 
-                    // now convert the image to rtf so it can be displayed in the rtb
+                    // convert the image to rtf so it can be displayed in the rtb
                     rtbPage.SelectedRtf = GetEmbedImageString(img);
                     rtbPage.Focus();
                 }
