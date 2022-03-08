@@ -1,5 +1,6 @@
 ﻿using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
+
 using System.Diagnostics;
 using System.Reflection;
 using System.Drawing.Printing;
@@ -366,7 +367,6 @@ namespace Notepad_Light
                 UpdateMRU();
                 UpdateFormTitle(filePath);
                 UpdateDocStats();
-                rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
                 rtbPage.Modified = false;
             }
             catch (Exception ex)
@@ -396,7 +396,7 @@ namespace Notepad_Light
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Select File To Open.",
-                    Filter = "Text Files | *.txt; *.rtf; ",
+                    Filter = "Text Documents | *.txt; *.rtf; ",
                     RestoreDirectory = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 };
@@ -509,7 +509,7 @@ namespace Notepad_Light
             {
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
-                    sfdSaveAs.Filter = "Plain Text (*.txt)|*.txt | RTF (*.rtf)|*.rtf";
+                    sfdSaveAs.Filter = "Text Document (*.txt)|*.txt |Rich Text Format (RTF) (*.rtf)|*.rtf";
                     sfdSaveAs.AddExtension = true;
                     sfdSaveAs.Title = "Save As";
                     sfdSaveAs.AutoUpgradeEnabled = true;
@@ -1866,9 +1866,17 @@ namespace Notepad_Light
                     indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
                 }
 
+                // move to the location of the find result
                 if (indexToText >= 0)
                 {
                     MoveCursorToLocation(indexToText, FindToolStripTextBox.Text.Length);
+                }
+
+                // end of the document, restart at the beginning
+                if (indexToText == -1)
+                {
+                    MoveCursorToLocation(0, 0);
+                    FindToolStripButton.PerformClick();
                 }
             }
         }
