@@ -567,7 +567,7 @@ namespace Notepad_Light
             }
         }
 
-        public void OpenRecentFile(string filePath, int buttonIndex)
+        public void OpenRecentFile(string filePath)
         {
             // do nothing if there is no file
             if (filePath == Strings.empty)
@@ -586,7 +586,7 @@ namespace Notepad_Light
             else
             {
                 // if the file no longer exists, remove from mru
-                RemoveFileFromMRU(filePath, buttonIndex);
+                RemoveFileFromMRU(filePath);
             }
 
             gPrevPageLength = rtbPage.TextLength;
@@ -629,7 +629,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="path"></param>
         /// <param name="index"></param>
-        public void RemoveFileFromMRU(string path, int index)
+        public void RemoveFileFromMRU(string path)
         {
             int mruIndex = 0;
             int badIndex = 0;
@@ -1355,10 +1355,10 @@ namespace Notepad_Light
             int count = data.Length;
             stream.Write(data, 0, count);
 
-            string rtfImage = @"{\rtf1{\pict\wmetafile8\picw" + (int)(((float)image.Width / dpiX) * 2540)
-                              + @"\pich" + (int)(((float)image.Height / dpiY) * 2540)
-                              + @"\picwgoal" + (int)(((float)image.Width / dpiX) * 1440)
-                              + @"\pichgoal" + (int)(((float)image.Height / dpiY) * 1440)
+            string rtfImage = @"{\rtf1{\pict\wmetafile8\picw" + (int)((image.Width / dpiX) * 2540)
+                              + @"\pich" + (int)((image.Height / dpiY) * 2540)
+                              + @"\picwgoal" + (int)((image.Width / dpiX) * 1440)
+                              + @"\pichgoal" + (int)((image.Height / dpiY) * 1440)
                               + " " + BitConverter.ToString(stream.ToArray()).Replace("-", "")
                               + "}}";
             return rtfImage;
@@ -1371,7 +1371,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
-        public static bool ContainsTransparent(Bitmap image)
+        public static bool ContainsTransparentPixel(Bitmap image)
         {
             for (int y = 0; y < image.Height; y += 5)
             {
@@ -1772,7 +1772,7 @@ namespace Notepad_Light
         private void RecentToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 #pragma warning disable CS8604 // Possible null reference argument.
-            OpenRecentFile(sender.ToString(), 1);
+            OpenRecentFile(sender.ToString());
 #pragma warning restore CS8604 // Possible null reference argument.
         }
 
@@ -1781,7 +1781,7 @@ namespace Notepad_Light
             if (sender is not null)
             {
 #pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString(), 2);
+                OpenRecentFile(sender.ToString());
 #pragma warning restore CS8604 // Possible null reference argument.
             }
         }
@@ -1791,7 +1791,7 @@ namespace Notepad_Light
             if (sender is not null)
             {
 #pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString(), 3);
+                OpenRecentFile(sender.ToString());
 #pragma warning restore CS8604 // Possible null reference argument.
             }
         }
@@ -1801,7 +1801,7 @@ namespace Notepad_Light
             if (sender is not null)
             {
 #pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString(), 4);
+                OpenRecentFile(sender.ToString());
 #pragma warning restore CS8604 // Possible null reference argument.
             }
         }
@@ -1811,7 +1811,7 @@ namespace Notepad_Light
             if (sender is not null)
             {
 #pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString(), 5);
+                OpenRecentFile(sender.ToString());
 #pragma warning restore CS8604 // Possible null reference argument.
             }
         }
@@ -2122,7 +2122,7 @@ namespace Notepad_Light
 
                     // creating a bitmap to check for transparencies
                     Bitmap bmp = new Bitmap(img);
-                    if (ContainsTransparent(bmp))
+                    if (ContainsTransparentPixel(bmp))
                     {
                         // depending on the ui theme, apply the same color to the background
                         if (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency == true)
