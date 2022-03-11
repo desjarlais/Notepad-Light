@@ -891,8 +891,8 @@ namespace Notepad_Light
         public void ClearFormatting()
         {
             rtbPage.SelectionBullet = false;
-            rtbPage.SelectionFont = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
-            rtbPage.SelectionColor = Color.FromName(Properties.Settings.Default.DefaultFontColorName);
+            rtbPage.SelectionFont = new Font("Segoe UI", 9);
+            rtbPage.SelectionColor = Color.Black;
             rtbPage.SelectionIndent = 0;
             rtbPage.SelectionAlignment = HorizontalAlignment.Left;
             rtbPage.Modified = true;
@@ -1589,25 +1589,30 @@ namespace Notepad_Light
         private void EditFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // setup the initial dialog values from settings
-            fontDialog1.ShowColor = true;
-            fontDialog1.Font = new Font(Properties.Settings.Default.DefaultFontName, Properties.Settings.Default.DefaultFontSize);
-            fontDialog1.Color = Color.FromName(Properties.Settings.Default.DefaultFontColorName);
-
+            if (gRtf)
+            {
+                fontDialog1.ShowColor = true;
+                fontDialog1.ShowEffects = true;
+            }
+            else
+            {
+                fontDialog1.ShowColor = false;
+                fontDialog1.ShowEffects = false;
+            }
+            
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
-                // update richtextbox control
-                rtbPage.Font = fontDialog1.Font;
-                
-                // only update color for rtf
+                // rtf will allow font and color changes
                 if (gRtf)
                 {
-                    rtbPage.ForeColor = fontDialog1.Color;
+                    rtbPage.SelectionFont = fontDialog1.Font;
+                    rtbPage.SelectionColor = fontDialog1.Color;
                 }
-                
-                // update settings
-                Properties.Settings.Default.DefaultFontName = fontDialog1.Font.Name;
-                Properties.Settings.Default.DefaultFontSize = Convert.ToInt32(fontDialog1.Font.Size);
-                Properties.Settings.Default.DefaultFontColorName = fontDialog1.Color.Name;
+                else
+                {
+                    // for plain text, only change font
+                    rtbPage.Font = fontDialog1.Font;
+                }
             }
         }
 
