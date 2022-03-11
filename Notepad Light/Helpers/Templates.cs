@@ -67,20 +67,20 @@ namespace Notepad_Light.Helpers
 
         public static void WriteTemplatesToFile()
         {
-            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + ".txt", sbTemplate1.ToString());
-            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + ".txt", sbTemplate2.ToString());
-            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + ".txt", sbTemplate3.ToString());
-            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + ".txt", sbTemplate4.ToString());
-            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + ".txt", sbTemplate5.ToString());
+            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt, sbTemplate1.ToString());
+            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt, sbTemplate2.ToString());
+            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt, sbTemplate3.ToString());
+            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt, sbTemplate4.ToString());
+            File.WriteAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt, sbTemplate5.ToString());
         }
 
         public static void UpdateTemplatesFromFiles()
         {
-            sbTemplate1.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + ".txt"));
-            sbTemplate2.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + ".txt"));
-            sbTemplate3.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + ".txt"));
-            sbTemplate4.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + ".txt"));
-            sbTemplate5.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + ".txt"));
+            sbTemplate1.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt));
+            sbTemplate2.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt));
+            sbTemplate3.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt));
+            sbTemplate4.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt));
+            sbTemplate5.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt));
         }
     }
 }

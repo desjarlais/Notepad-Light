@@ -20,10 +20,10 @@ namespace Notepad_Light.Forms
             // update the find direction
             switch (Properties.Settings.Default.SearchOption.ToString())
             {
-                case "Up": rdoFindDirectionUp.Checked = true; break;
-                case "Down": rdoFindDirectionDown.Checked = true; break;
-                case "MatchCase": rdoMatchCase.Checked = true; break;
-                case "WholeWord": rdoWholeWord.Checked = true; break;
+                case Strings.findUp: rdoFindDirectionUp.Checked = true; break;
+                case Strings.findDown: rdoFindDirectionDown.Checked = true; break;
+                case Strings.findMatchCase: rdoMatchCase.Checked = true; break;
+                case Strings.findWholeWord: rdoWholeWord.Checked = true; break;
             }
 
             // update theme
@@ -98,19 +98,19 @@ namespace Notepad_Light.Forms
 
             if (rdoFindDirectionUp.Checked == true)
             {
-                Properties.Settings.Default.SearchOption = "Up";
+                Properties.Settings.Default.SearchOption = Strings.findUp;
             }
             else if (rdoMatchCase.Checked == true)
             {
-                Properties.Settings.Default.SearchOption = "MatchCase";
+                Properties.Settings.Default.SearchOption = Strings.findMatchCase;
             }
             else if (rdoWholeWord.Checked == true)
             {
-                Properties.Settings.Default.SearchOption = "WholeWord";
+                Properties.Settings.Default.SearchOption = Strings.findWholeWord;
             }
             else
             {
-                Properties.Settings.Default.SearchOption = "Down";
+                Properties.Settings.Default.SearchOption = Strings.findDown;
             }
 
             if (rdoDarkMode.Checked == true)

@@ -26,6 +26,11 @@ namespace Notepad_Light.Helpers
         public const string saveChangesTitle = "Save Changes";
         public const string pathDivider = "\\";
         public const string AppTitle = "Notepad Light - ";
+        public const string findUp = "Up";
+        public const string findDown = "Down";
+        public const string findMatchCase = "MatchCase";
+        public const string findWholeWord = "WholeWord";
+        public const string errorLogFile = "NLErrors.txt";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";

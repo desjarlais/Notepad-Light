@@ -63,11 +63,11 @@ namespace Notepad_Light
             appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
 
             // set initial zoom to 100 and update menu
-            zoomToolStripMenuItem100.Checked = true;
+            ZoomToolStripMenuItem100.Checked = true;
             ApplyZoom(1.0f);
 
             // set word wrap
-            WordWrapToolStripMenuItem.Checked = rtbPage.WordWrap;
+            WordWrapToolStripMenuItem.Checked = RtbPage.WordWrap;
 
             // update title, status, toolbars and autosave intervals
             UpdateFormTitle(gCurrentFileName);
@@ -86,7 +86,7 @@ namespace Notepad_Light
                 ApplyLightMode();
             }
 
-            rtbPage.Modified = false;
+            RtbPage.Modified = false;
 
             // start the autosave timer
             autosaveTimer.Start();
@@ -103,7 +103,7 @@ namespace Notepad_Light
             }
 
             UpdateToolbarIcons();
-            rtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+            RtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
         }
 
         #region Class Properties
@@ -125,7 +125,7 @@ namespace Notepad_Light
             Template3ToolStripMenuItem.Text = Properties.Settings.Default.Template3;
             Template4ToolStripMenuItem.Text = Properties.Settings.Default.Template4;
             Template5ToolStripMenuItem.Text = Properties.Settings.Default.Template5;
-            FileExistChecks();
+            SetupAppFiles();
         }
 
         public void UpdateAutoSaveInterval()
@@ -157,7 +157,7 @@ namespace Notepad_Light
         /// <summary>
         /// function to make sure files that are used in the app exist
         /// </summary>
-        public void FileExistChecks()
+        public void SetupAppFiles()
         {
             // create Notepad folder
             if (!Directory.Exists(Strings.appFolderDirectory))
@@ -255,7 +255,7 @@ namespace Notepad_Light
         /// </summary>
         public void CreateNewDocument()
         {
-            rtbPage.Clear();
+            RtbPage.Clear();
             UpdateFormTitle(Strings.defaultFileName);
 
             // check for file type and update UI accordingly
@@ -279,7 +279,7 @@ namespace Notepad_Light
         public void FileNew()
         {
             // if there are no unsaved changes, we can just create a new blank document
-            if (rtbPage.Modified == false)
+            if (RtbPage.Modified == false)
             {
                 CreateNewDocument();
             }
@@ -312,7 +312,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadPlainTextFile(string filePath)
         {
-            rtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             DisableToolbarFormattingIcons();
             gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.plainText;
@@ -324,7 +324,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadRtfFile(string filePath)
         {
-            rtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
+            RtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
             EnableToolbarFormattingIcons();
             gRtf = true;
             toolStripStatusLabelFileType.Text = Strings.rtf;
@@ -363,11 +363,11 @@ namespace Notepad_Light
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
-                gPrevPageLength = rtbPage.TextLength;
+                gPrevPageLength = RtbPage.TextLength;
                 UpdateMRU();
                 UpdateFormTitle(filePath);
                 UpdateDocStats();
-                rtbPage.Modified = false;
+                RtbPage.Modified = false;
             }
             catch (Exception ex)
             {
@@ -437,9 +437,9 @@ namespace Notepad_Light
 
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
-                    gPrevPageLength = rtbPage.TextLength;
+                    gPrevPageLength = RtbPage.TextLength;
                     UpdateDocStats();
-                    rtbPage.Modified = false;
+                    RtbPage.Modified = false;
                 }
             }
             catch (Exception ex)
@@ -463,14 +463,14 @@ namespace Notepad_Light
                 Cursor = Cursors.WaitCursor;
 
                 // if gChanged is false, no changes to save
-                if (rtbPage.Modified == false)
+                if (RtbPage.Modified == false)
                 {
                     return;
                 }
 
                 // if modified is true, untitled needs to be save as
                 // any other file name is a regular save
-                if (gCurrentFileName.ToString() == Strings.defaultFileName && rtbPage.Modified == true)
+                if (gCurrentFileName.ToString() == Strings.defaultFileName && RtbPage.Modified == true)
                 {
                     FileSaveAs();
                 }
@@ -478,15 +478,15 @@ namespace Notepad_Light
                 {
                     if (gCurrentFileName.EndsWith(Strings.txtExt))
                     {
-                        rtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
+                        RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
                     }
                     
                     if (gCurrentFileName.EndsWith(Strings.rtfExt))
                     {
-                        rtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.RichText);
+                        RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.RichText);
                     }
 
-                    rtbPage.Modified = false;
+                    RtbPage.Modified = false;
                 }
             }
             catch (Exception ex)
@@ -530,15 +530,15 @@ namespace Notepad_Light
                         Cursor = Cursors.WaitCursor;
                         if (sfdSaveAs.FilterIndex == 1)
                         {
-                            rtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
+                            RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
                         }
                         else
                         {
-                            rtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
+                            RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
                         }
 
                         UpdateFormTitle(sfdSaveAs.FileName);
-                        rtbPage.Modified = false;
+                        RtbPage.Modified = false;
                     }
                 }
             }
@@ -557,7 +557,7 @@ namespace Notepad_Light
         public void SaveChanges()
         {
             // if there are unsaved changes, prompt the user before opening
-            if (rtbPage.Modified)
+            if (RtbPage.Modified)
             {
                 DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -589,7 +589,7 @@ namespace Notepad_Light
                 RemoveFileFromMRU(filePath);
             }
 
-            gPrevPageLength = rtbPage.TextLength;
+            gPrevPageLength = RtbPage.TextLength;
         }
 
         public void Print()
@@ -597,7 +597,7 @@ namespace Notepad_Light
             printDialog1.Document = printDocument1;
             if (printDialog1.ShowDialog() == DialogResult.OK)
             {
-                gPrintString = rtbPage.Text;
+                gPrintString = RtbPage.Text;
                 printDocument1.Print();
             }
         }
@@ -605,7 +605,7 @@ namespace Notepad_Light
         public void PrintPreview()
         {
             printPreviewDialog1.Document = printDocument1;
-            gPrintString = rtbPage.Text;
+            gPrintString = RtbPage.Text;
             printPreviewDialog1.ShowDialog();
         }
 
@@ -659,22 +659,22 @@ namespace Notepad_Light
 
         public void Cut()
         {
-            rtbPage.Cut();
-            rtbPage.Modified = true;
+            RtbPage.Cut();
+            RtbPage.Modified = true;
         }
 
         public void Copy()
         {
-            rtbPage.Copy();
+            RtbPage.Copy();
         }
 
         public void Paste()
         {
-            rtbPage.Modified = true;
+            RtbPage.Modified = true;
 
             if (Properties.Settings.Default.UsePasteUI == false)
             {
-                rtbPage.Paste();
+                RtbPage.Paste();
             }
             else
             {
@@ -688,26 +688,26 @@ namespace Notepad_Light
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
                 {
-                    case Strings.plainText: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
-                    case Strings.pasteHtml: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
-                    case Strings.rtf: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
-                    case Strings.pasteUnicode: rtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
-                    case Strings.pasteImage: rtbPage.Paste(); break;
-                    default: rtbPage.Modified = false; break;
+                    case Strings.plainText: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
+                    case Strings.pasteHtml: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
+                    case Strings.rtf: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
+                    case Strings.pasteUnicode: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
+                    case Strings.pasteImage: RtbPage.Paste(); break;
+                    default: RtbPage.Modified = false; break;
                 }
             }
         }
 
         public void Undo()
         {
-            rtbPage.Undo();
-            rtbPage.Modified = true;
+            RtbPage.Undo();
+            RtbPage.Modified = true;
         }
 
         public void Redo()
         {
-            rtbPage.Redo();
-            rtbPage.Modified = true;
+            RtbPage.Redo();
+            RtbPage.Modified = true;
         }
 
         /// <summary>
@@ -774,14 +774,14 @@ namespace Notepad_Light
             try
             {
                 // if multiple selections exist like Ctrl+A, disable all buttons
-                if (rtbPage.SelectionFont is null)
+                if (RtbPage.SelectionFont is null)
                 {
                     ClearToolbarFormattingIcons();
                     return;
                 }
 
                 // bold
-                if (rtbPage.SelectionFont.Bold == true)
+                if (RtbPage.SelectionFont.Bold == true)
                 {
                     BoldToolStripButton.Checked = true;
                 }
@@ -791,7 +791,7 @@ namespace Notepad_Light
                 }
 
                 // italic
-                if (rtbPage.SelectionFont.Italic == true)
+                if (RtbPage.SelectionFont.Italic == true)
                 {
                     ItalicToolStripButton.Checked = true;
                 }
@@ -801,7 +801,7 @@ namespace Notepad_Light
                 }
 
                 // underline
-                if (rtbPage.SelectionFont.Underline == true)
+                if (RtbPage.SelectionFont.Underline == true)
                 {
                     UnderlineToolStripButton.Checked = true;
                 }
@@ -811,7 +811,7 @@ namespace Notepad_Light
                 }
 
                 // strikethrough
-                if (rtbPage.SelectionFont.Strikeout == true)
+                if (RtbPage.SelectionFont.Strikeout == true)
                 {
                     StrikethroughToolStripButton.Checked = true;
                 }
@@ -821,7 +821,7 @@ namespace Notepad_Light
                 }
 
                 // bullets
-                if (rtbPage.SelectionBullet == true)
+                if (RtbPage.SelectionBullet == true)
                 {
                     BulletToolStripButton.Checked = true;
                 }
@@ -831,19 +831,19 @@ namespace Notepad_Light
                 }
 
                 // alignment
-                if (rtbPage.SelectionAlignment == HorizontalAlignment.Left)
+                if (RtbPage.SelectionAlignment == HorizontalAlignment.Left)
                 {
                     LeftJustifiedToolStripButton.Checked = true;
                     CenterJustifiedToolStripButton.Checked = false;
                     RightJustifiedToolStripButton.Checked = false;
                 }
-                else if (rtbPage.SelectionAlignment == HorizontalAlignment.Center)
+                else if (RtbPage.SelectionAlignment == HorizontalAlignment.Center)
                 {
                     CenterJustifiedToolStripButton.Checked = true;
                     LeftJustifiedToolStripButton.Checked = false;
                     RightJustifiedToolStripButton.Checked = false;
                 }
-                else if (rtbPage.SelectionAlignment == HorizontalAlignment.Right)
+                else if (RtbPage.SelectionAlignment == HorizontalAlignment.Right)
                 {
                     RightJustifiedToolStripButton.Checked = true;
                     CenterJustifiedToolStripButton.Checked = false;
@@ -851,7 +851,7 @@ namespace Notepad_Light
                 }
 
                 // save icon
-                if (rtbPage.Modified)
+                if (RtbPage.Modified)
                 {
                     SaveToolStripButton.Enabled = true;
                     SaveToolStripMenuItem.Enabled = true;
@@ -875,7 +875,7 @@ namespace Notepad_Light
         {
             int totalWordCount = 0;
             int lineCount;
-            foreach (string line in rtbPage.Lines)
+            foreach (string line in RtbPage.Lines)
             {
                 char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', };
                 lineCount = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
@@ -884,18 +884,18 @@ namespace Notepad_Light
             
             // update the ui with counts
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
-            CharacterCountToolStripStatusLabel.Text = rtbPage.Text.Length.ToString();
-            LinesToolStripStatusLabel.Text = rtbPage.Lines.Length.ToString();
+            CharacterCountToolStripStatusLabel.Text = RtbPage.Text.Length.ToString();
+            LinesToolStripStatusLabel.Text = RtbPage.Lines.Length.ToString();
         }
 
         public void ClearFormatting()
         {
-            rtbPage.SelectionBullet = false;
-            rtbPage.SelectionFont = new Font("Segoe UI", 9);
-            rtbPage.SelectionColor = Color.Black;
-            rtbPage.SelectionIndent = 0;
-            rtbPage.SelectionAlignment = HorizontalAlignment.Left;
-            rtbPage.Modified = true;
+            RtbPage.SelectionBullet = false;
+            RtbPage.SelectionFont = new Font("Segoe UI", 9);
+            RtbPage.SelectionColor = Color.Black;
+            RtbPage.SelectionIndent = 0;
+            RtbPage.SelectionAlignment = HorizontalAlignment.Left;
+            RtbPage.Modified = true;
         }
 
         /// <summary>
@@ -947,20 +947,20 @@ namespace Notepad_Light
         /// </summary>
         public void EndOfButtonFormatWork()
         {
-            rtbPage.Focus();
+            RtbPage.Focus();
             UpdateToolbarIcons();
-            rtbPage.Modified = true;
+            RtbPage.Modified = true;
         }
 
         public void ApplyBold()
         {
-            if (rtbPage.SelectionFont.Bold == true)
+            if (RtbPage.SelectionFont.Bold == true)
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style & ~FontStyle.Bold);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Bold);
             }
             else
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style | FontStyle.Bold);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Bold);
             }
 
             EndOfButtonFormatWork();
@@ -968,13 +968,13 @@ namespace Notepad_Light
 
         public void ApplyItalic()
         {
-            if (rtbPage.SelectionFont.Italic == true)
+            if (RtbPage.SelectionFont.Italic == true)
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style & ~FontStyle.Italic);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Italic);
             }
             else
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style | FontStyle.Italic);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Italic);
             }
 
             EndOfButtonFormatWork();
@@ -982,13 +982,13 @@ namespace Notepad_Light
 
         public void ApplyUnderline()
         {
-            if (rtbPage.SelectionFont.Underline == true)
+            if (RtbPage.SelectionFont.Underline == true)
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style & ~FontStyle.Underline);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Underline);
             }
             else
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style | FontStyle.Underline);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Underline);
             }
 
             EndOfButtonFormatWork();
@@ -996,13 +996,13 @@ namespace Notepad_Light
 
         public void ApplyStrikethrough()
         {
-            if (rtbPage.SelectionFont.Strikeout == true)
+            if (RtbPage.SelectionFont.Strikeout == true)
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style & ~FontStyle.Strikeout);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Strikeout);
             }
             else
             {
-                rtbPage.SelectionFont = new Font(rtbPage.SelectionFont, rtbPage.SelectionFont.Style | FontStyle.Strikeout);
+                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Strikeout);
             }
             
             EndOfButtonFormatWork();
@@ -1015,8 +1015,8 @@ namespace Notepad_Light
         /// <param name="length"></param>
         public void MoveCursorToLocation(int startLocation, int length)
         {
-            rtbPage.SelectionStart = startLocation;
-            rtbPage.SelectionLength = length;
+            RtbPage.SelectionStart = startLocation;
+            RtbPage.SelectionLength = length;
         }
 
         /// <summary>
@@ -1044,8 +1044,8 @@ namespace Notepad_Light
         /// </summary>
         public void UpdateLnColValues()
         {
-            int line = rtbPage.GetLineFromCharIndex(rtbPage.SelectionStart);
-            int column = rtbPage.SelectionStart - rtbPage.GetFirstCharIndexFromLine(line);
+            int line = RtbPage.GetLineFromCharIndex(RtbPage.SelectionStart);
+            int column = RtbPage.SelectionStart - RtbPage.GetFirstCharIndexFromLine(line);
 
             line++;
             column++;
@@ -1069,11 +1069,11 @@ namespace Notepad_Light
         /// </summary>
         public void ResetZoomMenu()
         {
-            zoomToolStripMenuItem100.Checked = false;
-            zoomToolStripMenuItem150.Checked = false;
-            zoomToolStripMenuItem200.Checked = false;
-            zoomToolStripMenuItem250.Checked = false;
-            zoomToolStripMenuItem300.Checked = false;
+            ZoomToolStripMenuItem100.Checked = false;
+            ZoomToolStripMenuItem150.Checked = false;
+            ZoomToolStripMenuItem200.Checked = false;
+            ZoomToolStripMenuItem250.Checked = false;
+            ZoomToolStripMenuItem300.Checked = false;
         }
 
         /// <summary>
@@ -1083,15 +1083,15 @@ namespace Notepad_Light
         /// <param name="zoomPercentage"></param>
         public void ApplyZoom(float zoomPercentage)
         {
-            rtbPage.ZoomFactor = zoomPercentage;
+            RtbPage.ZoomFactor = zoomPercentage;
             ResetZoomMenu();
             switch (zoomPercentage)
             {
-                case 1.0f: zoomToolStripMenuItem100.Checked = true; break;
-                case 1.5f: zoomToolStripMenuItem150.Checked = true; break;
-                case 2.0f: zoomToolStripMenuItem200.Checked = true; break;
-                case 2.5f: zoomToolStripMenuItem250.Checked = true; break;
-                case 3.0f: zoomToolStripMenuItem300.Checked = true; break;
+                case 1.0f: ZoomToolStripMenuItem100.Checked = true; break;
+                case 1.5f: ZoomToolStripMenuItem150.Checked = true; break;
+                case 2.0f: ZoomToolStripMenuItem200.Checked = true; break;
+                case 2.5f: ZoomToolStripMenuItem250.Checked = true; break;
+                case 3.0f: ZoomToolStripMenuItem300.Checked = true; break;
             }
         }
 
@@ -1103,7 +1103,7 @@ namespace Notepad_Light
             menuStrip1.BackColor = clrDarkModeBackground;
             toolStrip1.BackColor = clrDarkModeBackground;
             statusStrip1.BackColor = clrDarkModeBackground;
-            rtbPage.BackColor = clrDarkModeTextBackground;
+            RtbPage.BackColor = clrDarkModeTextBackground;
 
             ChangeControlTextColor(Color.White);
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
@@ -1118,7 +1118,7 @@ namespace Notepad_Light
             menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            rtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
+            RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
 
             ChangeControlTextColor(Color.Black);
             ChangeSubMenuItemBackColor(Color.White);
@@ -1210,11 +1210,11 @@ namespace Notepad_Light
             ViewToolStripMenuItem.ForeColor = clr;
             WordWrapToolStripMenuItem.ForeColor = clr;
             ZoomToolStripMenuItem.ForeColor = clr;
-            zoomToolStripMenuItem100.ForeColor = clr;
-            zoomToolStripMenuItem150.ForeColor = clr;
-            zoomToolStripMenuItem200.ForeColor = clr;
-            zoomToolStripMenuItem250.ForeColor = clr;
-            zoomToolStripMenuItem300.ForeColor = clr;
+            ZoomToolStripMenuItem100.ForeColor = clr;
+            ZoomToolStripMenuItem150.ForeColor = clr;
+            ZoomToolStripMenuItem200.ForeColor = clr;
+            ZoomToolStripMenuItem250.ForeColor = clr;
+            ZoomToolStripMenuItem300.ForeColor = clr;
 
             // update help menu
             HelpToolStripMenuItem.ForeColor = clr;
@@ -1286,11 +1286,11 @@ namespace Notepad_Light
             // update View menu
             WordWrapToolStripMenuItem.BackColor = clr;
             ZoomToolStripMenuItem.BackColor = clr;
-            zoomToolStripMenuItem100.BackColor = clr;
-            zoomToolStripMenuItem150.BackColor = clr;
-            zoomToolStripMenuItem200.BackColor = clr;
-            zoomToolStripMenuItem250.BackColor = clr;
-            zoomToolStripMenuItem300.BackColor = clr;
+            ZoomToolStripMenuItem100.BackColor = clr;
+            ZoomToolStripMenuItem150.BackColor = clr;
+            ZoomToolStripMenuItem200.BackColor = clr;
+            ZoomToolStripMenuItem250.BackColor = clr;
+            ZoomToolStripMenuItem300.BackColor = clr;
 
             // update Help menu
             AboutToolStripMenuItem.BackColor = clr;
@@ -1414,11 +1414,11 @@ namespace Notepad_Light
         {
             switch (templateNumber)
             {
-                case 1: rtbPage.SelectedText = Templates.GetTemplate1().ToString(); break;
-                case 2: rtbPage.SelectedText = Templates.GetTemplate2().ToString(); break;
-                case 3: rtbPage.SelectedText = Templates.GetTemplate3().ToString(); break;
-                case 4: rtbPage.SelectedText = Templates.GetTemplate4().ToString(); break;
-                case 5: rtbPage.SelectedText = Templates.GetTemplate5().ToString(); break;
+                case 1: RtbPage.SelectedText = Templates.GetTemplate1().ToString(); break;
+                case 2: RtbPage.SelectedText = Templates.GetTemplate2().ToString(); break;
+                case 3: RtbPage.SelectedText = Templates.GetTemplate3().ToString(); break;
+                case 4: RtbPage.SelectedText = Templates.GetTemplate4().ToString(); break;
+                case 5: RtbPage.SelectedText = Templates.GetTemplate5().ToString(); break;
             }
         }
 
@@ -1440,7 +1440,7 @@ namespace Notepad_Light
             try
             {
                 // if the file is unsaved, write it out to the 
-                if (rtbPage.Modified == false)
+                if (RtbPage.Modified == false)
                 {
                     // if no changes were made, nothing to save
                     return;
@@ -1453,9 +1453,9 @@ namespace Notepad_Light
                     using (StreamWriter sw = new StreamWriter(tempFilePath, false))
                     {
                         // need to avoid cross thread operation
-                        rtbPage.Invoke((MethodInvoker)delegate {
-                            rtbPage.SaveFile(tempFilePath, RichTextBoxStreamType.RichText);
-                            rtbPage.Modified = false;
+                        RtbPage.Invoke((MethodInvoker)delegate {
+                            RtbPage.SaveFile(tempFilePath, RichTextBoxStreamType.RichText);
+                            RtbPage.Modified = false;
                             UpdateToolbarIcons();
                         });
                     }
@@ -1463,7 +1463,7 @@ namespace Notepad_Light
                 else
                 {
                     // need to avoid cross thread operation
-                    rtbPage.Invoke((MethodInvoker)delegate {
+                    RtbPage.Invoke((MethodInvoker)delegate {
                         FileSave();
                     });
                 }
@@ -1534,7 +1534,7 @@ namespace Notepad_Light
 
         private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbPage.SelectAll();
+            RtbPage.SelectAll();
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1605,13 +1605,13 @@ namespace Notepad_Light
                 // rtf will allow font and color changes
                 if (gRtf)
                 {
-                    rtbPage.SelectionFont = fontDialog1.Font;
-                    rtbPage.SelectionColor = fontDialog1.Color;
+                    RtbPage.SelectionFont = fontDialog1.Font;
+                    RtbPage.SelectionColor = fontDialog1.Color;
                 }
                 else
                 {
                     // for plain text, only change font
-                    rtbPage.Font = fontDialog1.Font;
+                    RtbPage.Font = fontDialog1.Font;
                 }
             }
         }
@@ -1624,7 +1624,7 @@ namespace Notepad_Light
 
         private void ClearAllTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbPage.ResetText();
+            RtbPage.ResetText();
             EndOfButtonFormatWork();
         }
 
@@ -1686,14 +1686,14 @@ namespace Notepad_Light
 
         private void WordWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (rtbPage.WordWrap == true)
+            if (RtbPage.WordWrap == true)
             {
-                rtbPage.WordWrap = false;
+                RtbPage.WordWrap = false;
                 WordWrapToolStripMenuItem.Checked = false;
             }
             else
             {
-                rtbPage.WordWrap = true;
+                RtbPage.WordWrap = true;
                 WordWrapToolStripMenuItem.Checked = true;
             }
         }
@@ -1701,20 +1701,20 @@ namespace Notepad_Light
         private void BulletToolStripButton_Click(object sender, EventArgs e)
         {
             // toggle the bullet and set the indent value
-            if (rtbPage.SelectionBullet == true)
+            if (RtbPage.SelectionBullet == true)
             {
-                rtbPage.SelectionBullet = false;
-                rtbPage.SelectionIndent = 0;
+                RtbPage.SelectionBullet = false;
+                RtbPage.SelectionIndent = 0;
             }
-            else if (rtbPage.SelectionBullet == false && Properties.Settings.Default.BulletFirstIndent == true)
+            else if (RtbPage.SelectionBullet == false && Properties.Settings.Default.BulletFirstIndent == true)
             {
-                rtbPage.SelectionBullet = true;
-                rtbPage.SelectionIndent = 30;
+                RtbPage.SelectionBullet = true;
+                RtbPage.SelectionIndent = 30;
             }
             else
             {
-                rtbPage.SelectionBullet = true;
-                rtbPage.SelectionIndent = 0;
+                RtbPage.SelectionBullet = true;
+                RtbPage.SelectionIndent = 0;
             }
 
             EndOfButtonFormatWork();
@@ -1722,9 +1722,9 @@ namespace Notepad_Light
 
         private void DecreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
-            if (rtbPage.SelectionIndent > 0)
+            if (RtbPage.SelectionIndent > 0)
             {
-                rtbPage.SelectionIndent -= 30;
+                RtbPage.SelectionIndent -= 30;
             }
             
             EndOfButtonFormatWork();
@@ -1732,9 +1732,9 @@ namespace Notepad_Light
 
         private void IncreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
-            if (rtbPage.SelectionIndent < 150)
+            if (RtbPage.SelectionIndent < 150)
             {
-                rtbPage.SelectionIndent += 30;
+                RtbPage.SelectionIndent += 30;
             }
 
             EndOfButtonFormatWork();
@@ -1745,10 +1745,10 @@ namespace Notepad_Light
             // if the line has a bullet and the tab was pressed, indent the line
             // need to suppress the key to prevent the cursor from moving around
             // tab will cause selectionchange so the ui/stats update there
-            if (e.KeyCode == Keys.Tab && rtbPage.SelectionBullet == true)
+            if (e.KeyCode == Keys.Tab && RtbPage.SelectionBullet == true)
             {
                 e.SuppressKeyPress = true;
-                rtbPage.Select(rtbPage.GetFirstCharIndexOfCurrentLine(), 0);
+                RtbPage.Select(RtbPage.GetFirstCharIndexOfCurrentLine(), 0);
                 IncreaseIndentToolStripButton.PerformClick();
                 return;
             }
@@ -1757,7 +1757,7 @@ namespace Notepad_Light
             // backspace causes selectionchange so the ui/stats update there
             if (e.KeyCode == Keys.Back)
             {
-                if (rtbPage.SelectionStart == rtbPage.GetFirstCharIndexOfCurrentLine() && rtbPage.SelectionBullet == true)
+                if (RtbPage.SelectionStart == RtbPage.GetFirstCharIndexOfCurrentLine() && RtbPage.SelectionBullet == true)
                 {
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
@@ -1767,8 +1767,8 @@ namespace Notepad_Light
             // if delete key is pressed change the saved state and update ui/stats
             if (e.KeyCode == Keys.Delete)
             {
-                gPrevPageLength = rtbPage.TextLength;
-                rtbPage.Modified = true;
+                gPrevPageLength = RtbPage.TextLength;
+                RtbPage.Modified = true;
                 UpdateToolbarIcons();
                 UpdateDocStats();
             }
@@ -1850,25 +1850,25 @@ namespace Notepad_Light
             else
             {
                 int indexToText;
-                if (Properties.Settings.Default.SearchOption == "Up")
+                if (Properties.Settings.Default.SearchOption == Strings.findUp)
                 {
                     // search up the file and find any word match
-                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, 0, rtbPage.SelectionStart, RichTextBoxFinds.Reverse);
+                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
                 }
-                else if (Properties.Settings.Default.SearchOption == "Down")
+                else if (Properties.Settings.Default.SearchOption == Strings.findDown)
                 {
                     // search from the top down and find any word match
-                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
                 }
-                else if (Properties.Settings.Default.SearchOption == "MatchCase")
+                else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
                 {
                     // only find words that match the case exactly
-                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
+                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
                 }
                 else
                 {
                     // only find words that have the entire word in the search textbox
-                    indexToText = rtbPage.Find(FindToolStripTextBox.Text, rtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
+                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
                 }
 
                 // move to the location of the find result
@@ -1949,7 +1949,7 @@ namespace Notepad_Light
                 // print rtf
                 if (gRtf)
                 {
-                    e.HasMorePages = RtfPrint.Print(rtbPage, ref charFrom, e);
+                    e.HasMorePages = RtfPrint.Print(RtbPage, ref charFrom, e);
                     return;
                 }
 
@@ -1958,11 +1958,11 @@ namespace Notepad_Light
 
                 // Sets the value of charactersOnPage to the number of characters 
                 // of strToPrint that will fit within the bounds of the page.
-                e.Graphics?.MeasureString(gPrintString, rtbPage.SelectionFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
+                e.Graphics?.MeasureString(gPrintString, RtbPage.SelectionFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
                     out charactersOnPage, out _);
 
                 // Draws the string within the bounds of the page
-                e.Graphics?.DrawString(gPrintString, rtbPage.SelectionFont, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
+                e.Graphics?.DrawString(gPrintString, RtbPage.SelectionFont, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
 
                 // Remove the portion of the string that has been printed.
                 gPrintString = gPrintString.Substring(charactersOnPage);
@@ -1982,34 +1982,34 @@ namespace Notepad_Light
 
         private void LeftJustifiedToolStripButton_Click(object sender, EventArgs e)
         {
-            rtbPage.SelectionAlignment = HorizontalAlignment.Left;
+            RtbPage.SelectionAlignment = HorizontalAlignment.Left;
             EndOfButtonFormatWork();
         }
 
         private void CenterJustifiedToolStripButton_Click(object sender, EventArgs e)
         {
-            rtbPage.SelectionAlignment = HorizontalAlignment.Center;
+            RtbPage.SelectionAlignment = HorizontalAlignment.Center;
             EndOfButtonFormatWork();
         }
 
         private void RightJustifiedToolStripButton_Click(object sender, EventArgs e)
         {
-            rtbPage.SelectionAlignment = HorizontalAlignment.Right;
+            RtbPage.SelectionAlignment = HorizontalAlignment.Right;
             EndOfButtonFormatWork();
         }
 
         private void FontColorToolStripButton_Click(object sender, EventArgs e)
         {
-            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != rtbPage.SelectionColor)
+            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != RtbPage.SelectionColor)
             {
-                rtbPage.SelectionColor = colorDialog1.Color;
-                rtbPage.Modified = true;
+                RtbPage.SelectionColor = colorDialog1.Color;
+                RtbPage.Modified = true;
             }
         }
 
         private void FindToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbPage.Focus();
+            RtbPage.Focus();
             FindToolStripButton.PerformClick();
         }
 
@@ -2059,27 +2059,27 @@ namespace Notepad_Light
             PaintToolStripSeparator(sender, e);
         }
 
-        private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void CutContextMenu_Click(object sender, EventArgs e)
         {
             Cut();
         }
 
-        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void CopyContextMenu_Click(object sender, EventArgs e)
         {
             Copy();
         }
 
-        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void PasteContextMenu_Click(object sender, EventArgs e)
         {
             Paste();
         }
 
         private void HighlightTextToolStripButton_Click(object sender, EventArgs e)
         {
-            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != rtbPage.SelectionBackColor)
+            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != RtbPage.SelectionBackColor)
             {
-                rtbPage.SelectionBackColor = colorDialog1.Color;
-                rtbPage.Modified = true;
+                RtbPage.SelectionBackColor = colorDialog1.Color;
+                RtbPage.Modified = true;
             }
         }
 
@@ -2091,13 +2091,13 @@ namespace Notepad_Light
         private void rtbPage_TextChanged(object sender, EventArgs e)
         {
             // check if content was added
-            if (gPrevPageLength != rtbPage.TextLength)
+            if (gPrevPageLength != RtbPage.TextLength)
             {
-                rtbPage.Modified = true;
+                RtbPage.Modified = true;
             }
 
             // now update the prevPageLength
-            gPrevPageLength = rtbPage.TextLength;
+            gPrevPageLength = RtbPage.TextLength;
             UpdateDocStats();
             UpdateToolbarIcons();
         }
@@ -2141,8 +2141,8 @@ namespace Notepad_Light
                     }
 
                     // convert the image to rtf so it can be displayed in the rtb
-                    rtbPage.SelectedRtf = GetEmbedImageString(img);
-                    rtbPage.Focus();
+                    RtbPage.SelectedRtf = GetEmbedImageString(img);
+                    RtbPage.Focus();
                 }
             }
         }
@@ -2183,7 +2183,7 @@ namespace Notepad_Light
             UpdateTemplateMenu();
         }
 
-        private void toolStripSeparator18_Paint(object sender, PaintEventArgs e)
+        private void ToolStripSeparator18_Paint(object sender, PaintEventArgs e)
         {
             PaintToolStripSeparator(sender, e);
         }
@@ -2196,10 +2196,10 @@ namespace Notepad_Light
         /// <param name="e"></param>
         private void rtbPage_MouseMove(object sender, MouseEventArgs e)
         {
-            rtbPage.Focus();
+            RtbPage.Focus();
         }
 
-        private void tableToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TableToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmInsertTable fTable = new FrmInsertTable()
             {
@@ -2211,21 +2211,21 @@ namespace Notepad_Light
             // otherwise, the value will be between 1 and 10, so call inserttable
             if (fTable.fRows > 0 && fTable.fCols > 0)
             {
-                rtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
+                RtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
             }
         }
 
-        private void dateTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DateTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbPage.SelectedText = DateTime.Now.ToString();
+            RtbPage.SelectedText = DateTime.Now.ToString();
         }
 
-        private void selectAllToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void SelectAllContextMenu_Click(object sender, EventArgs e)
         {
-            rtbPage.SelectAll();
+            RtbPage.SelectAll();
         }
 
-        private void toolStripSeparator12_Paint(object sender, PaintEventArgs e)
+        private void ToolStripSeparator12_Paint(object sender, PaintEventArgs e)
         {
             PaintToolStripSeparator(sender, e);
         }
@@ -2236,7 +2236,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void autosaveTimer_Tick(object sender, EventArgs e)
+        private void AutosaveTimer_Tick(object sender, EventArgs e)
         {
             ticks++;
             if (ticks > autoSaveTicks)
