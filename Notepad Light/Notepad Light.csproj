@@ -11,21 +11,14 @@
     <FileVersion>1.0.0.30</FileVersion>
     <PackageIcon>TextFile_white_16x.png</PackageIcon>
     <StartupObject>Notepad_Light.Program</StartupObject>
-    <ApplicationIcon>textfile icon.ico</ApplicationIcon>
+    <ApplicationIcon>RichTextBox_16x.ico</ApplicationIcon>
     <PackageProjectUrl>https://github.com/desjarlais/Notepad-Light</PackageProjectUrl>
     <RepositoryUrl>https://github.com/desjarlais/Notepad-Light</RepositoryUrl>
     <Description>C# Notepad application for taking notes.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="textfile icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="D:\Icons\VS2019\vswin2019\TextFile\TextFile_white_16x.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Content Include="RichTextBox_16x.ico" />
   </ItemGroup>
 
   <ItemGroup>

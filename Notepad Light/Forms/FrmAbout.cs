@@ -25,7 +25,7 @@ namespace Notepad_Light.Forms
 
         private void BtnOpenErrorLog_Click(object sender, EventArgs e)
         {
-            App.PlatformSpecificProcessStart(Strings.appFolderFullPath + Strings.errorLogFile);
+            App.PlatformSpecificProcessStart(Strings.appFolderDirectoryUrl);
         }
     }
 }

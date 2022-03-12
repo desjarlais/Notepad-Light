@@ -35,7 +35,7 @@ namespace Notepad_Light
             // initialize dark mode colors
             clrDarkModeBackground = Color.FromArgb(32, 32, 32);
             clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
-
+            
             // init file MRU
             if (Properties.Settings.Default.FileMRU.Count > 0)
             {
@@ -91,8 +91,10 @@ namespace Notepad_Light
             // start the autosave timer
             autosaveTimer.Start();
 
-            // setup log and app files
-            gErrorLog = Strings.appFolderFullPath + "NLErrors.txt";
+            // setup log file
+            gErrorLog = Strings.appFolderDirectoryUrl + Strings.errorLogFile;
+            
+            // setup templates
             UpdateTemplateMenu();
             Templates.UpdateTemplatesFromFiles();
 
@@ -649,7 +651,7 @@ namespace Notepad_Light
 
                 // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
-                MessageBox.Show("File No Longer Exists, Removing From Recent Files", "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("File No Longer Exists, Removing From Recent Files", "Invalid File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             // clear the menu and add back the remaining files

@@ -39,6 +39,7 @@ namespace Notepad_Light.Helpers
 
         // file paths
         public static string appFolderDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light";
+        public static string appFolderDirectoryUrl = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\NLErrors.txt";
         public static string appFolderTemplateDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light\\Templates";
         public static string appFolderTemplatesFullPath = appFolderTemplateDir + pathDivider;
         public static string appFolderFullPath = appFolderDirectory + pathDivider;
