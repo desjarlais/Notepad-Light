@@ -1851,6 +1851,12 @@ namespace Notepad_Light
             }
             else
             {
+                // if the cursor is at the end of the textbox, change start position to 0
+                if (RtbPage.SelectionStart == RtbPage.Text.Length)
+                {
+                    MoveCursorToLocation(0, 0);
+                }
+
                 int indexToText;
                 if (Properties.Settings.Default.SearchOption == Strings.findUp)
                 {
@@ -1882,8 +1888,12 @@ namespace Notepad_Light
                 // end of the document, restart at the beginning
                 if (indexToText == -1)
                 {
-                    MoveCursorToLocation(0, 0);
-                    FindToolStripButton.PerformClick();
+                    // only move if something was found
+                    if (RtbPage.SelectionStart != 0)
+                    {
+                        MoveCursorToLocation(0, 0);
+                        FindToolStripButton.PerformClick();
+                    }
                 }
             }
         }
