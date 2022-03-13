@@ -89,6 +89,7 @@
             this.ClearAllTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.FindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InsertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PictureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -145,8 +146,7 @@
             this.DecreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.IncreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.FindToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.FindToolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.FindTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.FindToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.TimerToolStripLabelOnly = new System.Windows.Forms.ToolStripLabel();
@@ -577,7 +577,8 @@
             this.SelectAllToolStripMenuItem,
             this.ClearAllTextToolStripMenuItem,
             this.ToolStripSeparator13,
-            this.FindToolStripMenuItem});
+            this.FindToolStripMenuItem,
+            this.ReplaceToolStripMenuItem});
             this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
             this.EditToolStripMenuItem.Size = new System.Drawing.Size(39, 22);
             this.EditToolStripMenuItem.Text = "&Edit";
@@ -667,11 +668,20 @@
             // 
             // FindToolStripMenuItem
             // 
+            this.FindToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.FindNext_16x;
             this.FindToolStripMenuItem.Name = "FindToolStripMenuItem";
             this.FindToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
             this.FindToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.FindToolStripMenuItem.Text = "Find";
             this.FindToolStripMenuItem.Click += new System.EventHandler(this.FindToolStripMenuItem_Click);
+            // 
+            // ReplaceToolStripMenuItem
+            // 
+            this.ReplaceToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ReplaceAll_16x;
+            this.ReplaceToolStripMenuItem.Name = "ReplaceToolStripMenuItem";
+            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.ReplaceToolStripMenuItem.Text = "Replace";
+            this.ReplaceToolStripMenuItem.Click += new System.EventHandler(this.ReplaceToolStripMenuItem_Click);
             // 
             // InsertToolStripMenuItem
             // 
@@ -720,7 +730,7 @@
             // 
             this.EditFontToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Font_16x;
             this.EditFontToolStripMenuItem.Name = "EditFontToolStripMenuItem";
-            this.EditFontToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.EditFontToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.EditFontToolStripMenuItem.Text = "Edit Font";
             this.EditFontToolStripMenuItem.Click += new System.EventHandler(this.EditFontToolStripMenuItem_Click);
             // 
@@ -728,7 +738,7 @@
             // 
             this.ClearFormattingToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ClearCollection_16x;
             this.ClearFormattingToolStripMenuItem.Name = "ClearFormattingToolStripMenuItem";
-            this.ClearFormattingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ClearFormattingToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.ClearFormattingToolStripMenuItem.Text = "Clear Formatting";
             this.ClearFormattingToolStripMenuItem.Click += new System.EventHandler(this.ClearFormattingToolStripMenuItem_Click);
             // 
@@ -749,48 +759,48 @@
             // Template1ToolStripMenuItem
             // 
             this.Template1ToolStripMenuItem.Name = "Template1ToolStripMenuItem";
-            this.Template1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template1ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.Template1ToolStripMenuItem.Text = "Template 1";
             this.Template1ToolStripMenuItem.Click += new System.EventHandler(this.Template1ToolStripMenuItem_Click);
             // 
             // Template2ToolStripMenuItem
             // 
             this.Template2ToolStripMenuItem.Name = "Template2ToolStripMenuItem";
-            this.Template2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template2ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.Template2ToolStripMenuItem.Text = "Template 2";
             this.Template2ToolStripMenuItem.Click += new System.EventHandler(this.Template2ToolStripMenuItem_Click);
             // 
             // Template3ToolStripMenuItem
             // 
             this.Template3ToolStripMenuItem.Name = "Template3ToolStripMenuItem";
-            this.Template3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template3ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.Template3ToolStripMenuItem.Text = "Template 3";
             this.Template3ToolStripMenuItem.Click += new System.EventHandler(this.Template3ToolStripMenuItem_Click);
             // 
             // Template4ToolStripMenuItem
             // 
             this.Template4ToolStripMenuItem.Name = "Template4ToolStripMenuItem";
-            this.Template4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template4ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.Template4ToolStripMenuItem.Text = "Template 4";
             this.Template4ToolStripMenuItem.Click += new System.EventHandler(this.Template4ToolStripMenuItem_Click);
             // 
             // Template5ToolStripMenuItem
             // 
             this.Template5ToolStripMenuItem.Name = "Template5ToolStripMenuItem";
-            this.Template5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Template5ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.Template5ToolStripMenuItem.Text = "Template 5";
             this.Template5ToolStripMenuItem.Click += new System.EventHandler(this.Template5ToolStripMenuItem_Click);
             // 
             // ToolStripSeparator18
             // 
             this.ToolStripSeparator18.Name = "ToolStripSeparator18";
-            this.ToolStripSeparator18.Size = new System.Drawing.Size(177, 6);
+            this.ToolStripSeparator18.Size = new System.Drawing.Size(170, 6);
             this.ToolStripSeparator18.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator18_Paint);
             // 
             // ManageTemplatesToolStripMenuItem
             // 
             this.ManageTemplatesToolStripMenuItem.Name = "ManageTemplatesToolStripMenuItem";
-            this.ManageTemplatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ManageTemplatesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.ManageTemplatesToolStripMenuItem.Text = "Manage Templates";
             this.ManageTemplatesToolStripMenuItem.Click += new System.EventHandler(this.ManageTemplatesToolStripMenuItem_Click);
             // 
@@ -926,8 +936,7 @@
             this.DecreaseIndentToolStripButton,
             this.IncreaseIndentToolStripButton,
             this.ToolStripSeparator9,
-            this.FindToolStripLabel,
-            this.FindToolStripTextBox,
+            this.FindTextBox,
             this.FindToolStripButton,
             this.ToolStripSeparator2,
             this.TimerToolStripLabelOnly,
@@ -1188,25 +1197,18 @@
             this.ToolStripSeparator9.Name = "ToolStripSeparator9";
             this.ToolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
-            // FindToolStripLabel
+            // FindTextBox
             // 
-            this.FindToolStripLabel.Name = "FindToolStripLabel";
-            this.FindToolStripLabel.Size = new System.Drawing.Size(62, 22);
-            this.FindToolStripLabel.Text = "Find what:";
-            // 
-            // FindToolStripTextBox
-            // 
-            this.FindToolStripTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FindToolStripTextBox.Name = "FindToolStripTextBox";
-            this.FindToolStripTextBox.Size = new System.Drawing.Size(160, 25);
+            this.FindTextBox.Name = "FindTextBox";
+            this.FindTextBox.Size = new System.Drawing.Size(150, 25);
             // 
             // FindToolStripButton
             // 
             this.FindToolStripButton.Image = global::Notepad_Light.Properties.Resources.FindNext_16x;
             this.FindToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FindToolStripButton.Name = "FindToolStripButton";
-            this.FindToolStripButton.Size = new System.Drawing.Size(78, 22);
-            this.FindToolStripButton.Text = "Find Next";
+            this.FindToolStripButton.Size = new System.Drawing.Size(50, 22);
+            this.FindToolStripButton.Text = "Find";
             this.FindToolStripButton.ToolTipText = "Find Next Search Result";
             this.FindToolStripButton.Click += new System.EventHandler(this.FindToolStripButton_Click);
             // 
@@ -1397,8 +1399,6 @@
         private ToolStripSeparator ToolStripSeparator2;
         private System.Windows.Forms.Timer timer1;
         private ToolStripStatusLabel toolStripStatusLabelSeparator2;
-        private ToolStripLabel FindToolStripLabel;
-        private ToolStripTextBox FindToolStripTextBox;
         private ToolStripButton FindToolStripButton;
         private ToolStripSeparator ToolStripSeparator5;
         private ToolStripStatusLabel toolStripStatusLabelAppVer;
@@ -1454,5 +1454,7 @@
         private ToolStripMenuItem ManageTemplatesToolStripMenuItem;
         private ToolStripMenuItem TableToolStripMenuItem;
         private ToolStripMenuItem dateTimeToolStripMenuItem;
+        private ToolStripTextBox FindTextBox;
+        private ToolStripMenuItem ReplaceToolStripMenuItem;
     }
 }

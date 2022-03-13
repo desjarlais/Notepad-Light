@@ -1140,7 +1140,6 @@ namespace Notepad_Light
             ResetTimerToolStripButton.ForeColor = clr;
             EditTimerToolStripButton.ForeColor = clr;
             FindToolStripButton.ForeColor = clr;
-            FindToolStripLabel.ForeColor = clr;
             
             // update status bar labels
             toolStripStatusLabelCol.ForeColor = clr;
@@ -1187,6 +1186,7 @@ namespace Notepad_Light
             SelectAllToolStripMenuItem.ForeColor = clr;
             ClearAllTextToolStripMenuItem.ForeColor = clr;
             FindToolStripMenuItem.ForeColor = clr;
+            ReplaceToolStripMenuItem.ForeColor = clr;
 
             // update Insert menu
             InsertToolStripMenuItem.ForeColor = clr;
@@ -1267,6 +1267,7 @@ namespace Notepad_Light
             SelectAllToolStripMenuItem.BackColor = clr;
             ClearAllTextToolStripMenuItem.BackColor = clr;
             FindToolStripMenuItem.BackColor = clr;
+            ReplaceToolStripMenuItem.BackColor = clr;
 
             // update Insert menu
             PictureToolStripMenuItem.BackColor = clr;
@@ -1845,7 +1846,7 @@ namespace Notepad_Light
 
         private void FindToolStripButton_Click(object sender, EventArgs e)
         {
-            if (FindToolStripTextBox.Text == string.Empty)
+            if (FindTextBox.Text == string.Empty)
             {
                 return;
             }
@@ -1861,28 +1862,28 @@ namespace Notepad_Light
                 if (Properties.Settings.Default.SearchOption == Strings.findUp)
                 {
                     // search up the file and find any word match
-                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
+                    indexToText = RtbPage.Find(FindTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
                 }
                 else if (Properties.Settings.Default.SearchOption == Strings.findDown)
                 {
                     // search from the top down and find any word match
-                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
                 }
                 else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
                 {
                     // only find words that match the case exactly
-                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
+                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
                 }
                 else
                 {
                     // only find words that have the entire word in the search textbox
-                    indexToText = RtbPage.Find(FindToolStripTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
+                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
                 }
 
                 // move to the location of the find result
                 if (indexToText >= 0)
                 {
-                    MoveCursorToLocation(indexToText, FindToolStripTextBox.Text.Length);
+                    MoveCursorToLocation(indexToText, FindTextBox.Text.Length);
                 }
 
                 // end of the document, restart at the beginning
@@ -2230,6 +2231,44 @@ namespace Notepad_Light
         private void DateTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RtbPage.SelectedText = DateTime.Now.ToString();
+        }
+
+        private void ReplaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmReplace fReplace = new FrmReplace(RtbPage.Lines.ToList())
+            {
+                Owner = this
+            };
+            fReplace.ShowDialog(this);
+
+            if (fReplace.formExited)
+            {
+                return;
+            }
+
+            // now replace the value(s) from the dialog
+            if (fReplace.replaceAll)
+            {
+                ContinueSearch:
+                int indexToText = RtbPage.Find(fReplace.replaceText, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                MoveCursorToLocation(indexToText, fReplace.replaceText.Length);
+                RtbPage.SelectedText.Replace(RtbPage.SelectedText, fReplace.replaceText);
+
+                if (indexToText == -1)
+                {
+                    return;
+                }
+                else
+                {
+                    goto ContinueSearch;
+                }
+            }
+            else
+            {
+                int indexToText = RtbPage.Find(fReplace.findText, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                MoveCursorToLocation(indexToText, fReplace.findText.Length);
+                RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
+            }
         }
 
         private void SelectAllContextMenu_Click(object sender, EventArgs e)
