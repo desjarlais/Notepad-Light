@@ -2249,25 +2249,21 @@ namespace Notepad_Light
             // now replace the value(s) from the dialog
             if (fReplace.replaceAll)
             {
-                ContinueSearch:
-                int indexToText = RtbPage.Find(fReplace.replaceText, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
-                MoveCursorToLocation(indexToText, fReplace.replaceText.Length);
-                RtbPage.SelectedText.Replace(RtbPage.SelectedText, fReplace.replaceText);
-
-                if (indexToText == -1)
-                {
-                    return;
-                }
-                else
-                {
-                    goto ContinueSearch;
-                }
+                RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
             }
             else
             {
-                int indexToText = RtbPage.Find(fReplace.findText, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
-                MoveCursorToLocation(indexToText, fReplace.findText.Length);
-                RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
+                int lineCount = 0;
+                foreach (var line in RtbPage.Lines)
+                {
+                    if (lineCount == fReplace.prevLineIndex)
+                    {
+                        int indexToFindResultText = RtbPage.Find(line, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                        MoveCursorToLocation(indexToFindResultText, line.Length);
+                        RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
+                    }
+                    lineCount++;
+                }
             }
         }
 

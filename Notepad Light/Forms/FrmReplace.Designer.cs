@@ -36,7 +36,7 @@
             this.BtnFindNext = new System.Windows.Forms.Button();
             this.BtnReplace = new System.Windows.Forms.Button();
             this.cbxReplaceAll = new System.Windows.Forms.CheckBox();
-            this.tbxResults = new System.Windows.Forms.TextBox();
+            this.RtbSearchResults = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -110,22 +110,21 @@
             this.cbxReplaceAll.Text = "Replace All Occurrences";
             this.cbxReplaceAll.UseVisualStyleBackColor = true;
             // 
-            // tbxResults
+            // RtbSearchResults
             // 
-            this.tbxResults.Enabled = false;
-            this.tbxResults.Location = new System.Drawing.Point(95, 68);
-            this.tbxResults.Multiline = true;
-            this.tbxResults.Name = "tbxResults";
-            this.tbxResults.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbxResults.Size = new System.Drawing.Size(478, 62);
-            this.tbxResults.TabIndex = 9;
+            this.RtbSearchResults.Enabled = false;
+            this.RtbSearchResults.Location = new System.Drawing.Point(95, 71);
+            this.RtbSearchResults.Name = "RtbSearchResults";
+            this.RtbSearchResults.Size = new System.Drawing.Size(478, 59);
+            this.RtbSearchResults.TabIndex = 9;
+            this.RtbSearchResults.Text = "";
             // 
             // FrmReplace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(582, 207);
-            this.Controls.Add(this.tbxResults);
+            this.Controls.Add(this.RtbSearchResults);
             this.Controls.Add(this.cbxReplaceAll);
             this.Controls.Add(this.BtnReplace);
             this.Controls.Add(this.BtnFindNext);
@@ -152,6 +151,6 @@
         private Button BtnFindNext;
         private Button BtnReplace;
         private CheckBox cbxReplaceAll;
-        private TextBox tbxResults;
+        private RichTextBox RtbSearchResults;
     }
 }

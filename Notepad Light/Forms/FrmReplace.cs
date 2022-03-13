@@ -25,7 +25,7 @@
             {
                 if (line.Contains(tbxFind.Text) && searchCount != prevLineIndex)
                 {
-                    tbxResults.Text = line;
+                    RtbSearchResults.Text = line;
                     resultIndex = searchCount;
                     prevLineIndex = resultIndex;
                     return;
