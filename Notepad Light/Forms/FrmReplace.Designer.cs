@@ -92,6 +92,7 @@
             // 
             // BtnReplace
             // 
+            this.BtnReplace.Enabled = false;
             this.BtnReplace.Location = new System.Drawing.Point(498, 166);
             this.BtnReplace.Name = "BtnReplace";
             this.BtnReplace.Size = new System.Drawing.Size(75, 23);

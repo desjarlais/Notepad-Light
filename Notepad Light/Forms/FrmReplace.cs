@@ -8,8 +8,9 @@
         public string replaceText = string.Empty;
         public bool replaceAll = false;
         public string findText = string.Empty;
-        public bool formExited = false;
+        public bool formExited = true;
         public int prevLineIndex = 0;
+        public bool matchFound = false;
 
         public FrmReplace(List<string> lines)
         {
@@ -25,6 +26,8 @@
             {
                 if (line.Contains(tbxFind.Text) && searchCount != prevLineIndex)
                 {
+                    matchFound = true;
+                    BtnReplace.Enabled = true;
                     RtbSearchResults.Text = line;
                     resultIndex = searchCount;
                     prevLineIndex = resultIndex;

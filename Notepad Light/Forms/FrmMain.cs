@@ -2249,7 +2249,11 @@ namespace Notepad_Light
             // now replace the value(s) from the dialog
             if (fReplace.replaceAll)
             {
-                RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
+                if (fReplace.matchFound)
+                {
+                    RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
+                    MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             else
             {
@@ -2259,8 +2263,17 @@ namespace Notepad_Light
                     if (lineCount == fReplace.prevLineIndex)
                     {
                         int indexToFindResultText = RtbPage.Find(line, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
-                        MoveCursorToLocation(indexToFindResultText, line.Length);
-                        RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
+                        if (indexToFindResultText == -1)
+                        {
+                            MessageBox.Show("No Matches To Replace", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                        else
+                        {
+                            MoveCursorToLocation(indexToFindResultText, line.Length);
+                            RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
+                            MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                     lineCount++;
                 }
