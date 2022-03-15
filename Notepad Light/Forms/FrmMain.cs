@@ -2241,6 +2241,7 @@ namespace Notepad_Light
             };
             fReplace.ShowDialog(this);
 
+            // essentially this is a user cancelled the dialog scenario, nothing to do so return
             if (fReplace.formExited)
             {
                 return;
@@ -2252,6 +2253,7 @@ namespace Notepad_Light
                 if (fReplace.matchFound)
                 {
                     RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
+                    RtbPage.Modified = true;
                     MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -2272,6 +2274,7 @@ namespace Notepad_Light
                         {
                             MoveCursorToLocation(indexToFindResultText, line.Length);
                             RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
+                            RtbPage.Modified = true;
                             MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
