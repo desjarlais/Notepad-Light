@@ -35,7 +35,7 @@ OneNote style apps are close, but they are too open on a per page basis...I stil
 * Zoom
 * Word Wrap
 * Timer
-* Find / Search for text
+* Find and Replace text
 * Dark Mode
 * Insert Pictures
 * Insert Table
