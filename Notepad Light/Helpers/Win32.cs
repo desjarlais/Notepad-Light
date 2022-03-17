@@ -46,9 +46,9 @@ namespace Notepad_Light.Helpers
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);                
         [DllImport("gdiplus.dll")]
-        public static extern uint GdipEmfToWmfBits(IntPtr _hEmf, uint _bufferSize, byte[] _buffer, int _mappingMode, EmfToWmfBitsFlags _flags);
+        public static extern uint GdipEmfToWmfBits(IntPtr HEmf, uint bufferSize, byte[] buffer, int mappingMode, EmfToWmfBitsFlags flags);
         [DllImport("gdi32.dll")]
-        public static extern IntPtr SetMetaFileBitsEx(uint _bufferSize, byte[] _buffer);
+        public static extern IntPtr SetMetaFileBitsEx(uint bufferSize, byte[] buffer);
         [DllImport("gdi32.dll")]
         public static extern IntPtr CopyMetaFile(IntPtr hWmf, string filename);
         [DllImport("gdi32.dll")]

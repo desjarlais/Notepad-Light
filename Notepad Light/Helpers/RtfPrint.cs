@@ -10,9 +10,7 @@ namespace Notepad_Light.Helpers
             // Prints text in <box>, starting at <charFrom>.  Returns <true> if more pages are needed
             Win32.FORMATRANGE fmtRange;
             // Allocate device context for output device
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            IntPtr hdc = e.Graphics.GetHdc();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            IntPtr hdc = e.Graphics!.GetHdc();
             fmtRange.hdc = hdc;
             fmtRange.hdcTarget = hdc;
 

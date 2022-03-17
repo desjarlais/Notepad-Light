@@ -88,9 +88,7 @@ namespace Notepad_Light.Helpers
                 returnAudioStream = Clipboard.GetAudioStream();
                 Clipboard.SetAudio(replacementAudioStream);
             }
-#pragma warning disable CS8603 // Possible null reference return.
-            return returnAudioStream;
-#pragma warning restore CS8603 // Possible null reference return.
+            return returnAudioStream!;
         }
 
         public static StringCollection SwapClipboardFileDropList(StringCollection replacementList)
@@ -101,9 +99,7 @@ namespace Notepad_Light.Helpers
                 returnList = Clipboard.GetFileDropList();
                 Clipboard.SetFileDropList(replacementList);
             }
-#pragma warning disable CS8603 // Possible null reference return.
-            return returnList;
-#pragma warning restore CS8603 // Possible null reference return.
+            return returnList!;
         }
 
         public static Image SwapClipboardImage(Image replacementImage)
@@ -114,9 +110,7 @@ namespace Notepad_Light.Helpers
                 returnImage = Clipboard.GetImage();
                 Clipboard.SetImage(replacementImage);
             }
-#pragma warning disable CS8603 // Possible null reference return.
-            return returnImage;
-#pragma warning restore CS8603 // Possible null reference return.
+            return returnImage!;
         }
 
         /// <summary>
@@ -151,7 +145,7 @@ namespace Notepad_Light.Helpers
             }
 
             sb.Append(@"\pard");
-            sb.Append("}");
+            sb.Append('}');
 
             return sb.ToString();
         }

@@ -8,9 +8,7 @@ namespace Notepad_Light.Forms
         public FrmAbout()
         {
             InitializeComponent();
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            lblVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            lblVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
         }
 
         private void BtnOK_Click(object sender, EventArgs e)

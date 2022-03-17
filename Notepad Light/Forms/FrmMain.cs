@@ -172,11 +172,6 @@ namespace Notepad_Light
             {
                 File.Create(gErrorLog);
             }
-            else
-            {
-                // if it does exist, clear it out on startup
-                File.WriteAllText(gErrorLog, string.Empty);
-            }
 
             // check the backup templates folder
             if (!Directory.Exists(Strings.appFolderTemplateDir))
@@ -1340,10 +1335,7 @@ namespace Notepad_Light
             }
 
             IntPtr _hEmf = metafile.GetHenhmetafile();
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-
+            uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null!, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             byte[] _buffer = new byte[_bufferSize];
             Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             IntPtr hmf = Win32.SetMetaFileBitsEx(_bufferSize, _buffer);
@@ -1760,18 +1752,14 @@ namespace Notepad_Light
 
         private void RecentToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-#pragma warning disable CS8604 // Possible null reference argument.
-            OpenRecentFile(sender.ToString());
-#pragma warning restore CS8604 // Possible null reference argument.
+            OpenRecentFile(sender.ToString()!);
         }
 
         private void RecentToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             if (sender is not null)
             {
-#pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString());
-#pragma warning restore CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString()!);
             }
         }
 
@@ -1779,9 +1767,7 @@ namespace Notepad_Light
         {
             if (sender is not null)
             {
-#pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString());
-#pragma warning restore CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString()!);
             }
         }
 
@@ -1789,9 +1775,7 @@ namespace Notepad_Light
         {
             if (sender is not null)
             {
-#pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString());
-#pragma warning restore CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString()!);
             }
         }
 
@@ -1799,9 +1783,7 @@ namespace Notepad_Light
         {
             if (sender is not null)
             {
-#pragma warning disable CS8604 // Possible null reference argument.
-                OpenRecentFile(sender.ToString());
-#pragma warning restore CS8604 // Possible null reference argument.
+                OpenRecentFile(sender.ToString()!);
             }
         }
 
