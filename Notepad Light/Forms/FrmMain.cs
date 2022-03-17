@@ -1442,33 +1442,14 @@ namespace Notepad_Light
         {
             try
             {
-                // if the file is unsaved, write it out to the 
-                if (RtbPage.Modified == false)
-                {
-                    // if no changes were made, nothing to save
-                    return;
-                }
+                // if the doc is not modified, nothing to do
+                RtbPage.Invoke((MethodInvoker)delegate { if (RtbPage.Modified == false ) { return; }});
 
-                if (gCurrentFileName == Strings.defaultFileName)
-                {
-                    // using rtf for all temp files, if the file is plain text, it will still have the same contents
-                    string tempFilePath = Strings.appFolderDirectory + "\\" + gCurrentFileName;
-                    using (StreamWriter sw = new StreamWriter(tempFilePath, false))
-                    {
-                        // need to avoid cross thread operation
-                        RtbPage.Invoke((MethodInvoker)delegate {
-                            RtbPage.SaveFile(tempFilePath, RichTextBoxStreamType.RichText);
-                            RtbPage.Modified = false;
-                            UpdateToolbarIcons();
-                        });
-                    }
-                }
-                else
+                // save the existing changes to the file
+                if (gCurrentFileName != Strings.defaultFileName)
                 {
                     // need to avoid cross thread operation
-                    RtbPage.Invoke((MethodInvoker)delegate {
-                        FileSave();
-                    });
+                    RtbPage.Invoke((MethodInvoker)delegate { FileSave(); });
                 }
             }
             catch (Exception ex)
