@@ -2229,7 +2229,7 @@ namespace Notepad_Light
                 {
                     if (lineCount == fReplace.prevLineIndex)
                     {
-                        int indexToFindResultText = RtbPage.Find(line, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                        int indexToFindResultText = RtbPage.Find(line);
                         if (indexToFindResultText == -1)
                         {
                             MessageBox.Show("No Matches To Replace", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
