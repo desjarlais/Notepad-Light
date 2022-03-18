@@ -253,6 +253,7 @@ namespace Notepad_Light
         public void CreateNewDocument()
         {
             RtbPage.Clear();
+            ClearFormatting();
             UpdateFormTitle(Strings.defaultFileName);
 
             // check for file type and update UI accordingly
@@ -268,6 +269,7 @@ namespace Notepad_Light
             }
             
             UpdateStatusBar();
+            RtbPage.Modified = false;
         }
 
         /// <summary>
@@ -1886,7 +1888,7 @@ namespace Notepad_Light
                 ApplyLightMode();
             }
 
-            // update the ticks
+            // update the autosave ticks
             UpdateAutoSaveInterval();
             Properties.Settings.Default.Save();
         }
