@@ -1754,7 +1754,10 @@ namespace Notepad_Light
 
         private void RecentToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            OpenRecentFile(sender.ToString()!);
+            if (sender is not null)
+            {
+                OpenRecentFile(sender.ToString()!);
+            }
         }
 
         private void RecentToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -2206,7 +2209,7 @@ namespace Notepad_Light
             };
             fReplace.ShowDialog(this);
 
-            // essentially this is a user cancelled the dialog scenario, nothing to do so return
+            // essentially this is a user cancelled the dialog scenario or no matches were found
             if (fReplace.formExited)
             {
                 return;
@@ -2215,12 +2218,9 @@ namespace Notepad_Light
             // now replace the value(s) from the dialog
             if (fReplace.replaceAll)
             {
-                if (fReplace.matchFound)
-                {
-                    RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
-                    RtbPage.Modified = true;
-                    MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
+                RtbPage.Modified = true;
+                MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
