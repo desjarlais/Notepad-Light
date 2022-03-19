@@ -325,6 +325,7 @@
             this.RtbPage.Location = new System.Drawing.Point(0, 49);
             this.RtbPage.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.RtbPage.Name = "RtbPage";
+            this.RtbPage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.RtbPage.ShowSelectionMargin = true;
             this.RtbPage.Size = new System.Drawing.Size(1135, 426);
             this.RtbPage.TabIndex = 1;

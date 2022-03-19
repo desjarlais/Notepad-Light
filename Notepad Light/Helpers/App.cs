@@ -14,6 +14,14 @@ namespace Notepad_Light.Helpers
         /// <returns></returns>
         public static string GetFileEncoding(string filePath)
         {
+            // rtf is most likely going to be ascii
+            // todo, add a better check for ascii in rtf
+            // for right now, .rtf = ascii
+            if (filePath.EndsWith(Strings.rtfExt))
+            {
+                return Encoding.ASCII.EncodingName;
+            }
+
             // read the BOM
             var bom = new byte[4];
             using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))

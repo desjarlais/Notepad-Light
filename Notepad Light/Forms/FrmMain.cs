@@ -105,7 +105,6 @@ namespace Notepad_Light
             }
 
             UpdateToolbarIcons();
-            RtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
         }
 
         #region Class Properties
@@ -396,6 +395,7 @@ namespace Notepad_Light
                 {
                     Title = "Select File To Open.",
                     Filter = "Text Documents | *.txt; *.rtf; ",
+                    AutoUpgradeEnabled = true,
                     RestoreDirectory = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 };
