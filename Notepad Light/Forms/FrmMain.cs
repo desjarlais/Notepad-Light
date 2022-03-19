@@ -260,6 +260,7 @@ namespace Notepad_Light
             {
                 gRtf = true;
                 EnableToolbarFormattingIcons();
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding("Untitled.rtf");
             }
             else
             {
