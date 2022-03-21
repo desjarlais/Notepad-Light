@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Drawing.Printing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using System.Text;
 
 namespace Notepad_Light
 {
@@ -266,6 +267,7 @@ namespace Notepad_Light
             {
                 gRtf = false;
                 ClearToolbarFormattingIcons();
+                EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
             }
             
             UpdateStatusBar();
@@ -273,7 +275,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// there is no file->close, new handles unsaved doc situations
+        /// there is no file->close, file->new handles unsaved doc situations
         /// </summary>
         public void FileNew()
         {
@@ -462,14 +464,13 @@ namespace Notepad_Light
             {
                 Cursor = Cursors.WaitCursor;
 
-                // if gChanged is false, no changes to save
+                // no changes to save
                 if (RtbPage.Modified == false)
                 {
                     return;
                 }
 
-                // if modified is true, untitled needs to be save as
-                // any other file name is a regular save
+                // if modified untitled = saveas, existing files only need save
                 if (gCurrentFileName.ToString() == Strings.defaultFileName && RtbPage.Modified == true)
                 {
                     FileSaveAs();
@@ -514,7 +515,7 @@ namespace Notepad_Light
                     sfdSaveAs.Title = "Save As";
                     sfdSaveAs.AutoUpgradeEnabled = true;
 
-                    // change the file type dropdown based on the current file format
+                    // change the file type dropdown based on the selected file format
                     if (gRtf)
                     {
                         sfdSaveAs.FilterIndex = 2;
@@ -570,7 +571,7 @@ namespace Notepad_Light
         public void OpenRecentFile(string filePath)
         {
             // do nothing if there is no file
-            if (filePath == Strings.empty)
+            if (filePath == string.Empty)
             {
                 return;
             }
@@ -734,7 +735,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// remove template files no longer being used
         /// </summary>
         public void CleanupTemplateFiles()
         {
@@ -869,7 +870,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// gather details for word, char and line count
+        /// gather details for word, char and line counts
         /// </summary>
         public void UpdateDocStats()
         {
@@ -882,7 +883,7 @@ namespace Notepad_Light
                 totalWordCount += lineCount;
             }
             
-            // update the ui with counts
+            // update the ui
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
             CharacterCountToolStripStatusLabel.Text = RtbPage.Text.Length.ToString();
             LinesToolStripStatusLabel.Text = RtbPage.Lines.Length.ToString();

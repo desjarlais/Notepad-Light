@@ -15,7 +15,7 @@ namespace Notepad_Light.Helpers
         public static string GetFileEncoding(string filePath)
         {
             // rtf is most likely going to be ascii
-            // todo, add a better check for ascii in rtf
+            // todo, add a better check for ascii keywords in rtf
             // for right now, .rtf = ascii
             if (filePath.EndsWith(Strings.rtfExt))
             {

@@ -16,9 +16,7 @@ namespace Notepad_Light.Forms
             lblOriginalTime.Text = fromMainForm;
 
             mskTxtBxNewTime.ValidatingType = typeof(DateTime);
-#pragma warning disable CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
-            mskTxtBxNewTime.TypeValidationCompleted += TypeValidationCompleted;
-#pragma warning restore CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
+            mskTxtBxNewTime.TypeValidationCompleted += TypeValidationCompleted!;
         }
 
         private void TypeValidationCompleted(object sender, TypeValidationEventArgs e)
