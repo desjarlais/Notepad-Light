@@ -74,5 +74,13 @@ namespace Notepad_Light.Forms
                 BtnOk.PerformClick();
             }
         }
+
+        private void FrmEditTimer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

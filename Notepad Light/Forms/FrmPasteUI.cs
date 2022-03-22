@@ -58,5 +58,13 @@ namespace Notepad_Light.Forms
                 BtnOK.PerformClick();
             }
         }
+
+        private void FrmPasteUI_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

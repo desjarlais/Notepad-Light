@@ -156,5 +156,13 @@ namespace Notepad_Light.Forms
         {
             Close();
         }
+
+        private void FrmOptions_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

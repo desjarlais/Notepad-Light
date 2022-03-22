@@ -144,5 +144,13 @@ namespace Notepad_Light.Forms
             tbTemplateText.Clear();
             tbTemplateText.Text = Templates.GetTemplate5().ToString();
         }
+
+        private void FrmManageTemplates_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

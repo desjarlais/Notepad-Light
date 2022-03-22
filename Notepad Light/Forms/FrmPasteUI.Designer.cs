@@ -84,11 +84,13 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmPasteUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Paste Options";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmPasteUI_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

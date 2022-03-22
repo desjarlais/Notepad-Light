@@ -136,9 +136,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "FrmReplace";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Replace Text";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmReplace_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

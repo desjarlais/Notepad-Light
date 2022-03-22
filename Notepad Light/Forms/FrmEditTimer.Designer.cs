@@ -121,11 +121,13 @@
             this.Controls.Add(this.lblOriginalTime);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmEditTimer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Timer";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmEditTimer_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
