@@ -24,6 +24,8 @@ namespace Notepad_Light.Helpers
         public const string txtExt = ".txt";
         public const string saveChangePrompt = "Do you want to save your changes?";
         public const string saveChangesTitle = "Save Changes";
+        public const string replaceText = "Replace Text";
+        public const string textReplaced = "Text Replaced";
         public const string pathDivider = "\\";
         public const string AppTitle = "Notepad Light - ";
         public const string findUp = "Up";

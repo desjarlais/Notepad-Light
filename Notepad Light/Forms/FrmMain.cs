@@ -396,7 +396,7 @@ namespace Notepad_Light
                 // now start the file open process
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
-                    Title = "Select File To Open.",
+                    Title = "Open",
                     Filter = "Text Documents | *.txt; *.rtf; ",
                     AutoUpgradeEnabled = true,
                     RestoreDirectory = true,
@@ -510,9 +510,9 @@ namespace Notepad_Light
             {
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
+                    sfdSaveAs.Title = "Save As";
                     sfdSaveAs.Filter = "Text Document (*.txt)|*.txt |Rich Text Format (RTF) (*.rtf)|*.rtf";
                     sfdSaveAs.AddExtension = true;
-                    sfdSaveAs.Title = "Save As";
                     sfdSaveAs.AutoUpgradeEnabled = true;
 
                     // change the file type dropdown based on the selected file format
@@ -2212,7 +2212,7 @@ namespace Notepad_Light
             };
             fReplace.ShowDialog(this);
 
-            // essentially this is a user cancelled the dialog scenario or no matches were found
+            // user cancelled the dialog scenario or no matches were found
             if (fReplace.formExited)
             {
                 return;
@@ -2223,7 +2223,7 @@ namespace Notepad_Light
             {
                 RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
                 RtbPage.Modified = true;
-                MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Strings.textReplaced, Strings.replaceText, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -2235,7 +2235,7 @@ namespace Notepad_Light
                         int indexToFindResultText = RtbPage.Find(line);
                         if (indexToFindResultText == -1)
                         {
-                            MessageBox.Show("No Matches To Replace", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("No Matches To Replace", Strings.replaceText, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
                         else
@@ -2243,7 +2243,7 @@ namespace Notepad_Light
                             MoveCursorToLocation(indexToFindResultText, line.Length);
                             RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
                             RtbPage.Modified = true;
-                            MessageBox.Show("Text Replaced", "Replace Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(Strings.textReplaced, Strings.replaceText, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     lineCount++;
