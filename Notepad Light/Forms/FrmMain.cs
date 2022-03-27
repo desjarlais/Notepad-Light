@@ -878,7 +878,8 @@ namespace Notepad_Light
             int lineCount;
             foreach (string line in RtbPage.Lines)
             {
-                char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', };
+                char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', '=', '|', 
+                    '&', '@', '#', '*', '%', '~', '(', ')', '/', '+', '[', ']', '{', '}', '<', '>', '$', '^' };
                 lineCount = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
                 totalWordCount += lineCount;
             }
