@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-
-namespace Notepad_Light.Helpers
+﻿namespace Notepad_Light.Helpers
 {
     public static class Strings
     {
@@ -40,9 +38,10 @@ namespace Notepad_Light.Helpers
         public const string githubDiscussion = "https://github.com/desjarlais/Notepad-Light/discussions";
 
         // file paths
-        public static string appFolderDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light";
-        public static string appFolderDirectoryUrl = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\NLErrors.txt";
-        public static string appFolderTemplateDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\BrandeSoft\\Notepad Light\\Templates";
+        public static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static string appFolderDirectory = localAppData + "\\BrandeSoft\\Notepad Light";
+        public static string appFolderDirectoryUrl = localAppData + "\\BrandeSoft\\NLErrors.txt";
+        public static string appFolderTemplateDir = localAppData + "\\BrandeSoft\\Notepad Light\\Templates";
         public static string appFolderTemplatesFullPath = appFolderTemplateDir + pathDivider;
         public static string appFolderFullPath = appFolderDirectory + pathDivider;
 

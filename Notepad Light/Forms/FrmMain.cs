@@ -650,6 +650,7 @@ namespace Notepad_Light
 
                 // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
+                WriteErrorLogContent("File MRU Path Removed -> " + path);
                 MessageBox.Show("File No Longer Exists, Removing From Recent Files", "Invalid File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 

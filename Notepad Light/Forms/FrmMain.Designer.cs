@@ -192,7 +192,7 @@
             this.appVersionToolStripStatusLabel,
             this.toolStripStatusLabelSeparator3,
             this.EncodingToolStripStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 475);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 529);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 8, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1135, 22);
@@ -327,7 +327,7 @@
             this.RtbPage.Name = "RtbPage";
             this.RtbPage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.RtbPage.ShowSelectionMargin = true;
-            this.RtbPage.Size = new System.Drawing.Size(1135, 426);
+            this.RtbPage.Size = new System.Drawing.Size(1135, 480);
             this.RtbPage.TabIndex = 1;
             this.RtbPage.Text = "";
             this.RtbPage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbPage_LinkClicked);
@@ -1200,6 +1200,7 @@
             // 
             // FindTextBox
             // 
+            this.FindTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FindTextBox.Name = "FindTextBox";
             this.FindTextBox.Size = new System.Drawing.Size(150, 25);
             // 
@@ -1298,7 +1299,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1135, 497);
+            this.ClientSize = new System.Drawing.Size(1135, 551);
             this.Controls.Add(this.RtbPage);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
