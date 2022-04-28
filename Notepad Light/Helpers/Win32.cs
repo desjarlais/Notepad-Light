@@ -44,16 +44,16 @@ namespace Notepad_Light.Helpers
         public const int MM_ANISOTROPIC = 8;
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);                
+        internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);                
         [DllImport("gdiplus.dll")]
-        public static extern uint GdipEmfToWmfBits(IntPtr HEmf, uint bufferSize, byte[] buffer, int mappingMode, EmfToWmfBitsFlags flags);
+        internal static extern uint GdipEmfToWmfBits(IntPtr HEmf, uint bufferSize, byte[] buffer, int mappingMode, EmfToWmfBitsFlags flags);
         [DllImport("gdi32.dll")]
-        public static extern IntPtr SetMetaFileBitsEx(uint bufferSize, byte[] buffer);
+        internal static extern IntPtr SetMetaFileBitsEx(uint bufferSize, byte[] buffer);
         [DllImport("gdi32.dll")]
-        public static extern IntPtr CopyMetaFile(IntPtr hWmf, string filename);
+        internal static extern IntPtr CopyMetaFile(IntPtr hWmf, string filename);
         [DllImport("gdi32.dll")]
-        public static extern bool DeleteMetaFile(IntPtr hWmf);
+        internal static extern bool DeleteMetaFile(IntPtr hWmf);
         [DllImport("gdi32.dll")]
-        public static extern bool DeleteEnhMetaFile(IntPtr hEmf);
+        internal static extern bool DeleteEnhMetaFile(IntPtr hEmf);
     }
 }
