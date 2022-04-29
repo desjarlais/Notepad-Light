@@ -5,10 +5,18 @@ namespace Notepad_Light.Helpers
 {
     class RtfPrint
     {
+        /// <summary>
+        /// Prints text in <box>, starting at <charFrom>
+        /// </summary>
+        /// <param name="box"></param>
+        /// <param name="charFrom"></param>
+        /// <param name="e"></param>
+        /// <returns>True if more pages needed</returns>
+        /// <exception cref="ApplicationException"></exception>
         public static bool Print(RichTextBox box, ref int charFrom, PrintPageEventArgs e)
         {
-            // Prints text in <box>, starting at <charFrom>.  Returns <true> if more pages are needed
             Win32.FORMATRANGE fmtRange;
+            
             // Allocate device context for output device
             IntPtr hdc = e.Graphics!.GetHdc();
             fmtRange.hdc = hdc;

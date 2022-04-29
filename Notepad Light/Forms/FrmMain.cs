@@ -275,7 +275,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// there is no file->close, file->new handles unsaved doc situations
+        /// there is no file->close so file->new handles unsaved doc situations
         /// </summary>
         public void FileNew()
         {
@@ -555,9 +555,11 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        ///  if there are unsaved changes, prompt the user before opening
+        /// </summary>
         public void SaveChanges()
         {
-            // if there are unsaved changes, prompt the user before opening
             if (RtbPage.Modified)
             {
                 DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -568,9 +570,12 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// if the path is valid, open it or remove it
+        /// </summary>
+        /// <param name="filePath"></param>
         public void OpenRecentFile(string filePath)
         {
-            // do nothing if there is no file
             if (filePath == string.Empty)
             {
                 return;
@@ -579,14 +584,12 @@ namespace Notepad_Light
             // if there are unsaved changes, prompt the user before opening
             SaveChanges();
 
-            // if there is a file/path, open it
             if (File.Exists(filePath))
             {
                 FileOpen(filePath);
             }
             else
             {
-                // if the file no longer exists, remove from mru
                 RemoveFileFromMRU(filePath);
             }
 
@@ -650,7 +653,7 @@ namespace Notepad_Light
 
                 // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
-                WriteErrorLogContent("File MRU Path Removed -> " + path);
+                WriteErrorLogContent("File MRU Path Removed : " + path);
                 MessageBox.Show("File No Longer Exists, Removing From Recent Files", "Invalid File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
@@ -676,11 +679,21 @@ namespace Notepad_Light
 
             if (Properties.Settings.Default.UsePasteUI == false)
             {
-                RtbPage.Paste();
+                // when the clipboard has text and the user doesn't want to use the UI, use that by default
+                // otherwise use whatever Paste() selects by default
+                DataFormats.Format df = DataFormats.GetFormat(DataFormats.UnicodeText);
+                if (RtbPage.CanPaste(df))
+                {
+                    RtbPage.Paste(df);
+                }
+                else
+                {
+                    RtbPage.Paste();
+                }
             }
             else
             {
-                // show the form so the user can decide what to paste
+                // show the form so the user can decide what format to paste
                 FrmPasteUI pFrm = new FrmPasteUI()
                 {
                     Owner = this
@@ -715,7 +728,7 @@ namespace Notepad_Light
         /// <summary>
         /// if there are unsaved changes, we need to ask the user what to do
         /// </summary>
-        /// <param name="fromFormClosingEvent"></param>
+        /// <param name="fromFormClosingEvent">tells the function we came from the FormClosing event</param>
         public void ExitAppWork(bool fromFormClosingEvent)
         {
             Properties.Settings.Default.Save();
@@ -871,7 +884,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// gather details for word, char and line counts
+        /// gather details for number of word, char and lines
         /// </summary>
         public void UpdateDocStats()
         {

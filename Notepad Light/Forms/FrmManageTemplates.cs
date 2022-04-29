@@ -42,6 +42,17 @@ namespace Notepad_Light.Forms
 
         private void BtnSaveTemplates_Click(object sender, EventArgs e)
         {
+            // don't allow empty template names
+            if (tbxTemplate1.Text.Trim() == string.Empty ||
+                tbxTemplate2.Text.Trim() == string.Empty ||
+                tbxTemplate3.Text.Trim() == string.Empty ||
+                tbxTemplate4.Text.Trim() == string.Empty ||
+                tbxTemplate5.Text.Trim() == string.Empty)
+            {
+                MessageBox.Show("Template Name Can't Be Empty", "Invalid Template Name", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // save any renamed templates
             Properties.Settings.Default.Template1 = tbxTemplate1.Text;
             Properties.Settings.Default.Template2 = tbxTemplate2.Text;
@@ -49,8 +60,7 @@ namespace Notepad_Light.Forms
             Properties.Settings.Default.Template4 = tbxTemplate4.Text;
             Properties.Settings.Default.Template5 = tbxTemplate5.Text;
 
-            // update the backup text file with these names
-            // first clear the file
+            // update the backup text file with these names, first clear the file
             File.WriteAllText(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + Strings.txtExt, string.Empty);
             
             // get the current list of names

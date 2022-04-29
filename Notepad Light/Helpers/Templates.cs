@@ -2,6 +2,10 @@
 
 namespace Notepad_Light.Helpers
 {
+    /// <summary>
+    /// the purpose of the class is to have an in memory representation of the template files
+    /// then, when it comes time to add or edit the template text, we can avoid file i/o
+    /// </summary>
     public static class Templates
     {
         static StringBuilder sbTemplate1 = new StringBuilder();

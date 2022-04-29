@@ -17,6 +17,12 @@
             textToSearch = lines;
         }
 
+        /// <summary>
+        /// loop each line and see if any text matches
+        /// prevLineIndex is used outside this form in the main form for replace feature
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnFindNext_Click(object sender, EventArgs e)
         {
             searchCount = 0;
