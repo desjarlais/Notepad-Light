@@ -168,7 +168,7 @@
             "Rtf"});
             this.cbxNewFileFormat.Location = new System.Drawing.Point(113, 23);
             this.cbxNewFileFormat.Name = "cbxNewFileFormat";
-            this.cbxNewFileFormat.Size = new System.Drawing.Size(134, 23);
+            this.cbxNewFileFormat.Size = new System.Drawing.Size(105, 23);
             this.cbxNewFileFormat.TabIndex = 11;
             // 
             // label1

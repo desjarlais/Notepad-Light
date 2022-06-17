@@ -80,11 +80,41 @@ namespace Notepad_Light.Helpers
 
         public static void UpdateTemplatesFromFiles()
         {
-            sbTemplate1.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt));
-            sbTemplate2.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt));
-            sbTemplate3.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt));
-            sbTemplate4.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt));
-            sbTemplate5.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt));
+            int templateNum = 0;
+
+            try
+            {
+                sbTemplate1.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt));
+                templateNum++;
+                sbTemplate2.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt));
+                templateNum++;
+                sbTemplate3.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt));
+                templateNum++;
+                sbTemplate4.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt));
+                templateNum++;
+                sbTemplate5.Append(File.ReadAllText(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt));
+            }
+            catch (FileNotFoundException)
+            {
+                switch (templateNum)
+                {
+                    case 0:
+                        File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template1 + Strings.txtExt);
+                        break;
+                    case 1:
+                        File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template2 + Strings.txtExt);
+                        break;
+                    case 2:
+                        File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template3 + Strings.txtExt);
+                        break;
+                    case 3:
+                        File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template4 + Strings.txtExt);
+                        break;
+                    case 4:
+                        File.Create(Strings.appFolderTemplatesFullPath + Properties.Settings.Default.Template5 + Strings.txtExt);
+                        break;
+                }
+            }
         }
     }
 }

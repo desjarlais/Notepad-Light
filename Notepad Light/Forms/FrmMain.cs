@@ -177,7 +177,7 @@ namespace Notepad_Light
             if (!Directory.Exists(Strings.appFolderTemplateDir))
             {
                 Directory.CreateDirectory(Strings.appFolderTemplateDir);
-            }         
+            }
 
             // check the previous templates file
             if (File.Exists(Strings.appFolderDirectory + Strings.pathDivider + Strings.backupTemplateFileName + Strings.txtExt))
@@ -1892,7 +1892,7 @@ namespace Notepad_Light
             };
             fOptions.ShowDialog();
 
-            // also need to update the file mru in case it was cleared
+            // update the file mru
             if (Properties.Settings.Default.FileMRU.Count == 0)
             {
                 ClearRecentMenuItems();
@@ -2019,7 +2019,7 @@ namespace Notepad_Light
             };
             fEditedTimer.ShowDialog(this);
             
-            // if the time was adjusted, reset the timer and update with the new time
+            // if the time was adjusted, reset the timer and update the display
             if (fEditedTimer._isAdjustedTime)
             {
                 ResetTimerToolStripButton.PerformClick();
@@ -2094,7 +2094,7 @@ namespace Notepad_Light
                 RtbPage.Modified = true;
             }
 
-            // now update the prevPageLength
+            // update the prevPageLength
             gPrevPageLength = RtbPage.TextLength;
             UpdateDocStats();
             UpdateToolbarIcons();
