@@ -693,6 +693,12 @@ namespace Notepad_Light
             }
             else
             {
+                // if the clipboard is empty, do nothing
+                if (Clipboard.GetDataObject().GetFormats().Length == 0)
+                {
+                    return;
+                }
+
                 // show the form so the user can decide what format to paste
                 FrmPasteUI pFrm = new FrmPasteUI()
                 {
@@ -705,7 +711,14 @@ namespace Notepad_Light
                 {
                     case Strings.plainText: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
                     case Strings.pasteHtml: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
-                    case Strings.rtf: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Rtf); break;
+                    case Strings.rtf:
+                        byte[] rtfByteArray = Encoding.UTF8.GetBytes(Clipboard.GetText(TextDataFormat.Rtf));
+                        MemoryStream rtfStream = new MemoryStream(rtfByteArray);
+                        RichTextBox tempRtb = new RichTextBox();
+                        tempRtb.LoadFile(rtfStream, RichTextBoxStreamType.RichText);
+                        tempRtb.Copy();
+                        RtbPage.Paste();
+                        break;
                     case Strings.pasteUnicode: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
                     case Strings.pasteImage: RtbPage.Paste(); break;
                     default: RtbPage.Modified = false; break;

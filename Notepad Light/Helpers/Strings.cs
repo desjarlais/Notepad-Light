@@ -12,6 +12,7 @@
         public const string pasteHtml = "Html";
         public const string pasteUnicode = "UnicodeText";
         public const string pasteImage = "Image";
+        public const string pasteCsv = "CSV";
         public const string startTimeText = "Start";
         public const string stopTimeText = "Stop";
         public const string zeroTimer = "00:00:00";

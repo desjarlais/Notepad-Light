@@ -1,4 +1,5 @@
 ﻿using Notepad_Light.Helpers;
+using System.Text;
 
 namespace Notepad_Light.Forms
 {
@@ -34,6 +35,11 @@ namespace Notepad_Light.Forms
             if (Clipboard.ContainsImage())
             {
                 cboClipFormats.Items.Add(Strings.pasteImage);
+            }
+
+            if (Clipboard.ContainsText(TextDataFormat.CommaSeparatedValue))
+            {
+                cboClipFormats.Items.Add(Strings.pasteCsv);
             }
 
             cboClipFormats.SelectedIndex = 0;
