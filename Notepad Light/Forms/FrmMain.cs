@@ -712,6 +712,7 @@ namespace Notepad_Light
                     case Strings.plainText: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
                     case Strings.pasteHtml: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
                     case Strings.rtf:
+                        // todo: still need to see if there is a better way to handle this
                         byte[] rtfByteArray = Encoding.UTF8.GetBytes(Clipboard.GetText(TextDataFormat.Rtf));
                         MemoryStream rtfStream = new MemoryStream(rtfByteArray);
                         RichTextBox tempRtb = new RichTextBox();
@@ -1066,6 +1067,14 @@ namespace Notepad_Light
                 }
                 index++;
             }
+        }
+
+        /// <summary>
+        /// update the font into in the toolbar
+        /// </summary>
+        public void UpdateFontInformation()
+        {
+            fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
         }
 
         /// <summary>
@@ -1493,6 +1502,7 @@ namespace Notepad_Light
         {
             UpdateLnColValues();
             UpdateToolbarIcons();
+            UpdateFontInformation();
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
