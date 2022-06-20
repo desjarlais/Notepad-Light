@@ -43,16 +43,16 @@
             this.LinesToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelLines = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelSeparator1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.fontToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelSeparator3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelFType = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelFileType = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelFileEncoding = new System.Windows.Forms.ToolStripStatusLabel();
             this.EncodingToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelSeparator4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelAppVer = new System.Windows.Forms.ToolStripStatusLabel();
             this.appVersionToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelSeparator3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.fontToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.RtbPage = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CutContextMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -193,7 +193,7 @@
             this.toolStripStatusLabelFType,
             this.toolStripStatusLabelFileType,
             this.toolStripStatusLabel4,
-            this.toolStripStatusLabel3,
+            this.toolStripStatusLabelFileEncoding,
             this.EncodingToolStripStatusLabel,
             this.toolStripStatusLabelSeparator4,
             this.toolStripStatusLabelAppVer,
@@ -278,6 +278,18 @@
             this.toolStripStatusLabelSeparator1.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusLabelSeparator1.Text = " | ";
             // 
+            // fontToolStripStatusLabel
+            // 
+            this.fontToolStripStatusLabel.Name = "fontToolStripStatusLabel";
+            this.fontToolStripStatusLabel.Size = new System.Drawing.Size(37, 17);
+            this.fontToolStripStatusLabel.Text = "Font: ";
+            // 
+            // toolStripStatusLabelSeparator3
+            // 
+            this.toolStripStatusLabelSeparator3.Name = "toolStripStatusLabelSeparator3";
+            this.toolStripStatusLabelSeparator3.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabelSeparator3.Text = "|";
+            // 
             // toolStripStatusLabelFType
             // 
             this.toolStripStatusLabelFType.Name = "toolStripStatusLabelFType";
@@ -296,11 +308,11 @@
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(10, 17);
             this.toolStripStatusLabel4.Text = "|";
             // 
-            // toolStripStatusLabel3
+            // toolStripStatusLabelFileEncoding
             // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(81, 17);
-            this.toolStripStatusLabel3.Text = "File Encoding:";
+            this.toolStripStatusLabelFileEncoding.Name = "toolStripStatusLabelFileEncoding";
+            this.toolStripStatusLabelFileEncoding.Size = new System.Drawing.Size(81, 17);
+            this.toolStripStatusLabelFileEncoding.Text = "File Encoding:";
             // 
             // EncodingToolStripStatusLabel
             // 
@@ -325,18 +337,6 @@
             this.appVersionToolStripStatusLabel.Name = "appVersionToolStripStatusLabel";
             this.appVersionToolStripStatusLabel.Size = new System.Drawing.Size(40, 17);
             this.appVersionToolStripStatusLabel.Text = "1.0.0.0";
-            // 
-            // toolStripStatusLabelSeparator3
-            // 
-            this.toolStripStatusLabelSeparator3.Name = "toolStripStatusLabelSeparator3";
-            this.toolStripStatusLabelSeparator3.Size = new System.Drawing.Size(10, 17);
-            this.toolStripStatusLabelSeparator3.Text = "|";
-            // 
-            // fontToolStripStatusLabel
-            // 
-            this.fontToolStripStatusLabel.Name = "fontToolStripStatusLabel";
-            this.fontToolStripStatusLabel.Size = new System.Drawing.Size(37, 17);
-            this.fontToolStripStatusLabel.Text = "Font: ";
             // 
             // RtbPage
             // 
@@ -1482,7 +1482,7 @@
         private ToolStripMenuItem dateTimeToolStripMenuItem;
         private ToolStripTextBox FindTextBox;
         private ToolStripMenuItem ReplaceToolStripMenuItem;
-        private ToolStripStatusLabel toolStripStatusLabel3;
+        private ToolStripStatusLabel toolStripStatusLabelFileEncoding;
         private ToolStripStatusLabel toolStripStatusLabel4;
         private ToolStripStatusLabel fontToolStripStatusLabel;
     }

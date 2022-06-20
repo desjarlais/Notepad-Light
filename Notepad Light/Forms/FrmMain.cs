@@ -1193,6 +1193,8 @@ namespace Notepad_Light
             toolStripStatusLabelChar.ForeColor = clr;
             toolStripStatusLabelWords.ForeColor = clr;
             toolStripStatusLabelLines.ForeColor = clr;
+            toolStripStatusLabelFileEncoding.ForeColor = clr;
+            fontToolStripStatusLabel.ForeColor = clr;
 
             // update File menu
             FileToolStripMenuItem.ForeColor = clr;
