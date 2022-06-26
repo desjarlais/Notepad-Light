@@ -14,12 +14,12 @@ namespace Notepad_Light.Helpers
         /// <returns></returns>
         public static string GetFileEncoding(string filePath)
         {
-            // rtf is most likely going to be ascii
-            // todo, add a better check for ascii keywords in rtf
-            // for right now, .rtf = ascii
+            // rtf is most likely going to be ansi
+            // todo, add a better check for keywords in rtf
             if (filePath.EndsWith(Strings.rtfExt))
             {
-                return Encoding.ASCII.EncodingName;
+                // until I get the parser going, just pass 0 and return ansi
+                return GetCodePage(0);
             }
 
             // read the BOM
@@ -156,6 +156,127 @@ namespace Notepad_Light.Helpers
             sb.Append('}');
 
             return sb.ToString();
+        }
+
+        public static string GetCharacterSet(string rtfCharSet)
+        {
+            switch (rtfCharSet)
+            {
+                case "mac":
+                    return "Apple Macintosh";
+                case "pc":
+                    return "IBM PC code page 437";
+                case "pca":
+                    return "IBM PC code page 850";
+                case "ansicpgN":
+                    return "Unicode -> ANSI converstion";
+                case "fbidis":
+                    return "Active single font";
+                default:
+                    return "ANSI";
+            }
+        }
+
+        public static string GetCodePage(int codepage)
+        {
+            switch (codepage)
+            {
+                case 437:
+                    return "United States IBM";
+                case 708:
+                    return "Arabic (ASMO 708)";
+                case 709:
+                    return "Arabic (ASMO 449+, BCON V4)";
+                case 710:
+                    return "Arabic (transparent Arabic)";
+                case 711:
+                    return "Arabic (Nafitha Enhanced)";
+                case 720:
+                    return "Arabic (transparent ASMO)";
+                case 819:
+                    return "Windows 3.1 (United States and Western Europe)";
+                case 850:
+                    return "IBM multilingual";
+                case 852:
+                case 1250:
+                    return "Eastern European";
+                case 860:
+                    return "Portuguese";
+                case 862:
+                case 1255:
+                    return "Hebrew";
+                case 863:
+                    return "French Canadian";
+                case 864:
+                case 1256:
+                    return "Arabic";
+                case 865:
+                    return "Norwegian";
+                case 866:
+                    return "Soviet Union";
+                case 874:
+                    return "Thai";
+                case 932:
+                    return "Japanese";
+                case 936:
+                    return "Simplified Chinese";
+                case 949:
+                    return "Korean";
+                case 950:
+                    return "Traditional Chinese";
+                case 1251:
+                    return "Cyrillic";
+                case 1252:
+                    return "Western European";
+                case 1253:
+                    return "Greek";
+                case 1254:
+                    return "Turkish";
+                case 1257:
+                    return "Baltic";
+                case 1258:
+                    return "Vietnamese";
+                case 1361:
+                    return "Johab";
+                case 10000:
+                    return "MAC Roman";
+                case 10001:
+                    return "MAC Japan";
+                case 10004:
+                    return "MAC Arabic";
+                case 10005:
+                    return "MAC Hebrew";
+                case 10006:
+                    return "MAC Greek";
+                case 10007:
+                    return "MAC Cyrillic";
+                case 10029:
+                    return "MAC Latin2";
+                case 10081:
+                    return "MAC Turkish";
+                case 57002:
+                    return "Devanagari";
+                case 57003:
+                    return "Bengali";
+                case 57004:
+                    return "Tamil";
+                case 57005:
+                    return "Telugu";
+                case 57006:
+                    return "Assamese";
+                case 57007:
+                    return "Oriya";
+                case 57008:
+                    return "Kannada";
+                case 57009:
+                    return "Malayalam";
+                case 57010:
+                    return "Gujarati";
+                case 57011:
+                    return "Punjabi";
+                default:
+                    return "ANSI";
+            }
         }
     }
 }
