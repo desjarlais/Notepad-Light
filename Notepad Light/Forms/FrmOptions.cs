@@ -65,6 +65,16 @@ namespace Notepad_Light.Forms
             {
                 cbxInsertPictureWithTransparency.Checked = false;
             }
+
+            // update date/time insert for templates
+            if (Properties.Settings.Default.IncludeDateTimeWithTemplates)
+            {
+                cbxIncludeDateTimeWithTemplates.Checked = true;
+            }
+            else
+            {
+                cbxIncludeDateTimeWithTemplates.Checked = false;
+            }
         }
 
         public void UpdateMRUListbox()
@@ -147,6 +157,15 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.UseImageTransparency= false;
+            }
+
+            if (cbxIncludeDateTimeWithTemplates.Checked == true)
+            {
+                Properties.Settings.Default.IncludeDateTimeWithTemplates = true;
+            }
+            else
+            {
+                Properties.Settings.Default.IncludeDateTimeWithTemplates = false;
             }
 
             Close();

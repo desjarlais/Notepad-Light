@@ -1092,6 +1092,11 @@ namespace Notepad_Light
             toolStripStatusLabelColumn.Text = column.ToString();
         }
 
+        public void InsertDateTime()
+        {
+            RtbPage.SelectedText = DateTime.Now.ToString() + "\r\n";
+        }
+
         /// <summary>
         /// reset the timespan variables
         /// </summary>
@@ -1450,6 +1455,11 @@ namespace Notepad_Light
 
         public void InsertTemplate(int templateNumber)
         {
+            if (Properties.Settings.Default.IncludeDateTimeWithTemplates)
+            {
+                InsertDateTime();
+            }
+
             switch (templateNumber)
             {
                 case 1: RtbPage.SelectedText = Templates.GetTemplate1().ToString(); break;
@@ -2240,7 +2250,7 @@ namespace Notepad_Light
 
         private void DateTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RtbPage.SelectedText = DateTime.Now.ToString();
+            InsertDateTime();
         }
 
         private void ReplaceToolStripMenuItem_Click(object sender, EventArgs e)

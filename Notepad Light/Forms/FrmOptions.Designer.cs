@@ -50,6 +50,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
+            this.cbxIncludeDateTimeWithTemplates = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
@@ -115,6 +116,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cbxIncludeDateTimeWithTemplates);
             this.groupBox3.Controls.Add(this.cbxInsertPictureWithTransparency);
             this.groupBox3.Controls.Add(this.cbxCleanupTempAppFilesOnExit);
             this.groupBox3.Controls.Add(this.label2);
@@ -174,7 +176,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 138);
+            this.label1.Location = new System.Drawing.Point(17, 161);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -182,7 +184,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 136);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 159);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -303,6 +305,16 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
+            // cbxIncludeDateTimeWithTemplates
+            // 
+            this.cbxIncludeDateTimeWithTemplates.AutoSize = true;
+            this.cbxIncludeDateTimeWithTemplates.Location = new System.Drawing.Point(17, 129);
+            this.cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
+            this.cbxIncludeDateTimeWithTemplates.Size = new System.Drawing.Size(262, 19);
+            this.cbxIncludeDateTimeWithTemplates.TabIndex = 15;
+            this.cbxIncludeDateTimeWithTemplates.Text = "Include Date\\Time When Inserting Templates";
+            this.cbxIncludeDateTimeWithTemplates.UseVisualStyleBackColor = true;
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -359,5 +371,6 @@
         private ComboBox cbxNewFileFormat;
         private CheckBox cbxCleanupTempAppFilesOnExit;
         private CheckBox cbxInsertPictureWithTransparency;
+        private CheckBox cbxIncludeDateTimeWithTemplates;
     }
 }
