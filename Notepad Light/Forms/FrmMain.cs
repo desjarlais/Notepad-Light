@@ -434,6 +434,14 @@ namespace Notepad_Light
                     if (!isFileInMru)
                     {
                         Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
+
+                        // if the file count is bigger than 5, add, then remove the first item to keep the list "current"
+                        if (Properties.Settings.Default.FileMRU.Count > 5)
+                        {
+                            Properties.Settings.Default.FileMRU.RemoveAt(0);
+                        }
+                        
+                        // now that the mru is updated, update the display
                         UpdateMRU();
                     }
 
