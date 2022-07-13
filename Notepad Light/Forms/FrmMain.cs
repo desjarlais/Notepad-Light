@@ -36,31 +36,11 @@ namespace Notepad_Light
             // initialize dark mode colors
             clrDarkModeBackground = Color.FromArgb(32, 32, 32);
             clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
-            
-            // init file MRU
-            if (Properties.Settings.Default.FileMRU.Count > 0)
-            {
-                // loop each value and add to recent menu
-                int mruCount = 1;
-                foreach (var f in Properties.Settings.Default.FileMRU)
-                {
-                    if (f is not null)
-                    {
-                        switch (mruCount)
-                        {
-                            case 1: RecentToolStripMenuItem1.Text = f.ToString(); break;
-                            case 2: RecentToolStripMenuItem2.Text = f.ToString(); break;
-                            case 3: RecentToolStripMenuItem3.Text = f.ToString(); break;
-                            case 4: RecentToolStripMenuItem4.Text = f.ToString(); break;
-                            case 5: RecentToolStripMenuItem5.Text = f.ToString(); break;
-                        }
-                    }
-                    
-                    mruCount++;
-                }
-            }
 
-            // update status bar with app version                
+            // init file MRU
+            UpdateMRU();
+
+            // update status bar with app version
             appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
 
             // set initial zoom to 100 and update menu
@@ -393,7 +373,7 @@ namespace Notepad_Light
                 // prompt for changes
                 SaveChanges();
 
-                // now start the file open process
+                // start the file open process
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Open",
@@ -434,14 +414,10 @@ namespace Notepad_Light
                     if (!isFileInMru)
                     {
                         Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
-
-                        // if the file count is bigger than 5, add, then remove the first item to keep the list "current"
                         if (Properties.Settings.Default.FileMRU.Count > 5)
                         {
                             Properties.Settings.Default.FileMRU.RemoveAt(0);
                         }
-                        
-                        // now that the mru is updated, update the display
                         UpdateMRU();
                     }
 
@@ -1062,18 +1038,26 @@ namespace Notepad_Light
         /// </summary>
         public void UpdateMRU()
         {
-            int index = 1;
-            foreach (var f in Properties.Settings.Default.FileMRU)
+            try
             {
-                switch (index)
+                int index = 1;
+                foreach (var f in Properties.Settings.Default.FileMRU)
                 {
-                    case 1: RecentToolStripMenuItem1.Text = f?.ToString(); break;
-                    case 2: RecentToolStripMenuItem2.Text = f?.ToString(); break;
-                    case 3: RecentToolStripMenuItem3.Text = f?.ToString(); break;
-                    case 4: RecentToolStripMenuItem4.Text = f?.ToString(); break;
-                    case 5: RecentToolStripMenuItem5.Text = f?.ToString(); break;
+                    switch (index)
+                    {
+                        case 1: RecentToolStripMenuItem1.Text = f?.ToString(); break;
+                        case 2: RecentToolStripMenuItem2.Text = f?.ToString(); break;
+                        case 3: RecentToolStripMenuItem3.Text = f?.ToString(); break;
+                        case 4: RecentToolStripMenuItem4.Text = f?.ToString(); break;
+                        case 5: RecentToolStripMenuItem5.Text = f?.ToString(); break;
+                    }
+                    index++;
                 }
-                index++;
+            }
+            catch (Exception ex)
+            {
+                // log the error and do not update mru
+                WriteErrorLogContent("UpdateMRU Error: " + ex.Message);
             }
         }
 
