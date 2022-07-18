@@ -228,7 +228,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// mostly just UI setup work, it doesn't really create a new file/document
+        /// mostly UI setup work, it doesn't really create a new file/document
         /// </summary>
         public void CreateNewDocument()
         {
@@ -1066,11 +1066,18 @@ namespace Notepad_Light
         /// </summary>
         public void UpdateFontInformation()
         {
-            fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
+            try
+            {
+                fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
+            }
+            catch (Exception ex)
+            {
+                WriteErrorLogContent("UpdateFontInformation Error: " + ex.Message);
+            }
         }
 
         /// <summary>
-        /// get the current cursor position and update the taskbar with the location
+        /// get the current cursor position and update the statusbar with the location
         /// </summary>
         public void UpdateLnColValues()
         {
@@ -1253,7 +1260,7 @@ namespace Notepad_Light
             ZoomToolStripMenuItem250.ForeColor = clr;
             ZoomToolStripMenuItem300.ForeColor = clr;
 
-            // update help menu
+            // update Help menu
             HelpToolStripMenuItem.ForeColor = clr;
             AboutToolStripMenuItem.ForeColor = clr;
             SubmitFeedbackToolStripMenuItem.ForeColor = clr;
@@ -1336,6 +1343,12 @@ namespace Notepad_Light
             ReportBugToolStripMenuItem.BackColor = clr;
         }
 
+        /// <summary>
+        /// change the image transparency to the color passed into background
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="background"></param>
+        /// <returns></returns>
         private static Image ReplaceTransparency(Image image, Color background)
         {
             Bitmap bitmap = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
@@ -1402,7 +1415,7 @@ namespace Notepad_Light
         /// <summary>
         /// check the image for any transparent pixels
         /// looping all pixels can be slow on large images
-        /// using every 5 pixels to balance out that perf hit
+        /// using every 5 pixels to balance out the perf hit
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
@@ -1722,21 +1735,26 @@ namespace Notepad_Light
 
         private void BulletToolStripButton_Click(object sender, EventArgs e)
         {
-            // toggle the bullet and set the indent value
             if (RtbPage.SelectionBullet == true)
             {
+                // this is the toggling off scenario, set bullet to false and move everything back to the beginning of the line
                 RtbPage.SelectionBullet = false;
                 RtbPage.SelectionIndent = 0;
             }
             else if (RtbPage.SelectionBullet == false && Properties.Settings.Default.BulletFirstIndent == true)
             {
+                // this is a toggle on scenario to use an indented bullet
                 RtbPage.SelectionBullet = true;
                 RtbPage.SelectionIndent = 30;
             }
             else
             {
+                // this is a toggle on sceanrio to add the bullet with no indent
                 RtbPage.SelectionBullet = true;
                 RtbPage.SelectionIndent = 0;
+
+                // todo: find a way to account for existing indents and move the bullet accordingly
+                // see https://github.com/desjarlais/Notepad-Light/issues/10
             }
 
             EndOfButtonFormatWork();
