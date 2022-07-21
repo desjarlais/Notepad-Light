@@ -2097,7 +2097,7 @@ namespace Notepad_Light
             PaintToolStripSeparator(sender, e);
         }
 
-        private void toolStripSeparator14_Paint(object sender, PaintEventArgs e)
+        private void ToolStripSeparator14_Paint(object sender, PaintEventArgs e)
         {
             PaintToolStripSeparator(sender, e);
         }
@@ -2131,7 +2131,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void rtbPage_TextChanged(object sender, EventArgs e)
+        private void RtbPage_TextChanged(object sender, EventArgs e)
         {
             // check if content was added
             if (gPrevPageLength != RtbPage.TextLength)
@@ -2145,7 +2145,7 @@ namespace Notepad_Light
             UpdateToolbarIcons();
         }
 
-        private void rtbPage_LinkClicked(object sender, LinkClickedEventArgs e)
+        private void RtbPage_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             if (e.LinkText is not null)
             {
@@ -2237,7 +2237,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void rtbPage_MouseMove(object sender, MouseEventArgs e)
+        private void RtbPage_MouseMove(object sender, MouseEventArgs e)
         {
             RtbPage.Focus();
         }
@@ -2336,7 +2336,7 @@ namespace Notepad_Light
             }
         }
 
-        private void printDocument1_BeginPrint(object sender, PrintEventArgs e)
+        private void PrintDocument1_BeginPrint(object sender, PrintEventArgs e)
         {
             if (gRtf)
             {

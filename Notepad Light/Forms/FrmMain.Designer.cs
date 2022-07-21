@@ -354,11 +354,11 @@
             this.RtbPage.Size = new System.Drawing.Size(1135, 480);
             this.RtbPage.TabIndex = 1;
             this.RtbPage.Text = "";
-            this.RtbPage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbPage_LinkClicked);
+            this.RtbPage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.RtbPage_LinkClicked);
             this.RtbPage.SelectionChanged += new System.EventHandler(this.RtbPage_SelectionChanged);
-            this.RtbPage.TextChanged += new System.EventHandler(this.rtbPage_TextChanged);
+            this.RtbPage.TextChanged += new System.EventHandler(this.RtbPage_TextChanged);
             this.RtbPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RtbPage_KeyDown);
-            this.RtbPage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.rtbPage_MouseMove);
+            this.RtbPage.MouseMove += new System.Windows.Forms.MouseEventHandler(this.RtbPage_MouseMove);
             // 
             // contextMenuStrip1
             // 
@@ -541,7 +541,7 @@
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
             this.toolStripSeparator14.Size = new System.Drawing.Size(143, 6);
-            this.toolStripSeparator14.Paint += new System.Windows.Forms.PaintEventHandler(this.toolStripSeparator14_Paint);
+            this.toolStripSeparator14.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator14_Paint);
             // 
             // PrintToolStripMenuItem
             // 
@@ -960,16 +960,16 @@
             this.BulletToolStripButton,
             this.DecreaseIndentToolStripButton,
             this.IncreaseIndentToolStripButton,
-            this.ToolStripSeparator9,
-            this.FindTextBox,
-            this.FindToolStripButton,
             this.ToolStripSeparator2,
             this.TimerToolStripLabelOnly,
             this.StartStopTimerToolStripButton,
             this.TimerToolStripLabel,
             this.ResetTimerToolStripButton,
             this.EditTimerToolStripButton,
-            this.ToolStripSeparator5});
+            this.ToolStripSeparator5,
+            this.FindTextBox,
+            this.FindToolStripButton,
+            this.ToolStripSeparator9});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1135, 25);
@@ -1301,7 +1301,7 @@
             // 
             // printDocument1
             // 
-            this.printDocument1.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.printDocument1_BeginPrint);
+            this.printDocument1.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.PrintDocument1_BeginPrint);
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.PrintDocument1_PrintPage);
             // 
             // printPreviewDialog1
