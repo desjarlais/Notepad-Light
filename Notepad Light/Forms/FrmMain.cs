@@ -352,7 +352,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileOpen Error = " + ex.Message);
+                WriteErrorLogContent("FileMRUOpen Error = " + ex.Message);
             }
             finally
             {
@@ -659,6 +659,12 @@ namespace Notepad_Light
 
         public void Paste()
         {
+            // if the clipboard is empty, do nothing
+            if (Clipboard.GetDataObject().GetFormats().Length == 0)
+            {
+                return;
+            }
+
             RtbPage.Modified = true;
 
             if (Properties.Settings.Default.UsePasteUI == false)
@@ -677,12 +683,6 @@ namespace Notepad_Light
             }
             else
             {
-                // if the clipboard is empty, do nothing
-                if (Clipboard.GetDataObject().GetFormats().Length == 0)
-                {
-                    return;
-                }
-
                 // show the form so the user can decide what format to paste
                 FrmPasteUI pFrm = new FrmPasteUI()
                 {
@@ -739,7 +739,7 @@ namespace Notepad_Light
                 Application.Exit();
             }
 
-            // if enabled, remove all non-app related files or no longer used templates
+            // remove all non-app related files or no longer used templates
             if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
             {
                 CleanupTemplateFiles();
@@ -896,12 +896,15 @@ namespace Notepad_Light
                 totalWordCount += lineCount;
             }
             
-            // update the ui
+            // update the statusbar
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
             CharacterCountToolStripStatusLabel.Text = RtbPage.Text.Length.ToString();
             LinesToolStripStatusLabel.Text = RtbPage.Lines.Length.ToString();
         }
 
+        /// <summary>
+        /// set font to the default values
+        /// </summary>
         public void ClearFormatting()
         {
             RtbPage.SelectionBullet = false;
@@ -1263,8 +1266,7 @@ namespace Notepad_Light
             // update Help menu
             HelpToolStripMenuItem.ForeColor = clr;
             AboutToolStripMenuItem.ForeColor = clr;
-            SubmitFeedbackToolStripMenuItem.ForeColor = clr;
-            ReportBugToolStripMenuItem.ForeColor = clr;            
+            ReportBugToolStripMenuItem.ForeColor = clr;
         }
 
         public void ChangeMenuItemBackColor(Color clr)
@@ -1339,7 +1341,6 @@ namespace Notepad_Light
 
             // update Help menu
             AboutToolStripMenuItem.BackColor = clr;
-            SubmitFeedbackToolStripMenuItem.BackColor = clr;
             ReportBugToolStripMenuItem.BackColor = clr;
         }
 
@@ -1455,7 +1456,7 @@ namespace Notepad_Light
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, sep.Width, sep.Height);
                 e.Graphics.DrawLine(new Pen(clrDarkModeBackground), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
-            }            
+            }
         }
 
         public void InsertTemplate(int templateNumber)
@@ -1505,6 +1506,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 WriteErrorLogContent("WriteFileContents Error: " + ex.Message);
+                WriteErrorLogContent("Stack: " + ex.StackTrace);
             }
         }
 
@@ -1794,7 +1796,7 @@ namespace Notepad_Light
             }
 
             // if the user deletes the bullet, we need to remove bullet formatting
-            // backspace causes selectionchange so the ui/stats update there
+            // backspace causes selectionchange so the statusbar updates there
             if (e.KeyCode == Keys.Back)
             {
                 if (RtbPage.SelectionStart == RtbPage.GetFirstCharIndexOfCurrentLine() && RtbPage.SelectionBullet == true)
@@ -1958,11 +1960,6 @@ namespace Notepad_Light
             Properties.Settings.Default.Save();
         }
 
-        private void SubmitFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            App.PlatformSpecificProcessStart(Strings.githubDiscussion);
-        }
-
         private void ReportBugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             App.PlatformSpecificProcessStart(Strings.githubIssues);
@@ -2016,6 +2013,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 WriteErrorLogContent("PrintPage Error: " + ex.Message);
+                WriteErrorLogContent("Stack: " + ex.StackTrace);
             }
             finally
             {

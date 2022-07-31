@@ -117,7 +117,6 @@
             this.ZoomToolStripMenuItem250 = new System.Windows.Forms.ToolStripMenuItem();
             this.ZoomToolStripMenuItem300 = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SubmitFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -148,9 +147,6 @@
             this.BulletToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.DecreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.IncreaseIndentToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.ToolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.FindTextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.FindToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.TimerToolStripLabelOnly = new System.Windows.Forms.ToolStripLabel();
             this.StartStopTimerToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -158,6 +154,10 @@
             this.ResetTimerToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.EditTimerToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.SearchToolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.FindTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.FindToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.ToolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
@@ -895,26 +895,17 @@
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SubmitFeedbackToolStripMenuItem,
             this.ReportBugToolStripMenuItem,
             this.AboutToolStripMenuItem});
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
             this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
             this.HelpToolStripMenuItem.Text = "&Help";
             // 
-            // SubmitFeedbackToolStripMenuItem
-            // 
-            this.SubmitFeedbackToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Report_16x;
-            this.SubmitFeedbackToolStripMenuItem.Name = "SubmitFeedbackToolStripMenuItem";
-            this.SubmitFeedbackToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.SubmitFeedbackToolStripMenuItem.Text = "Submit Feedback";
-            this.SubmitFeedbackToolStripMenuItem.Click += new System.EventHandler(this.SubmitFeedbackToolStripMenuItem_Click);
-            // 
             // ReportBugToolStripMenuItem
             // 
             this.ReportBugToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Bug_16x;
             this.ReportBugToolStripMenuItem.Name = "ReportBugToolStripMenuItem";
-            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ReportBugToolStripMenuItem.Text = "Report Bug";
             this.ReportBugToolStripMenuItem.Click += new System.EventHandler(this.ReportBugToolStripMenuItem_Click);
             // 
@@ -922,7 +913,7 @@
             // 
             this.AboutToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Dialog_16x;
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AboutToolStripMenuItem.Text = "&About...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -967,6 +958,7 @@
             this.ResetTimerToolStripButton,
             this.EditTimerToolStripButton,
             this.ToolStripSeparator5,
+            this.SearchToolStripLabel,
             this.FindTextBox,
             this.FindToolStripButton,
             this.ToolStripSeparator9});
@@ -1217,27 +1209,6 @@
             this.IncreaseIndentToolStripButton.Text = "Increase Indent";
             this.IncreaseIndentToolStripButton.Click += new System.EventHandler(this.IncreaseIndentToolStripButton_Click);
             // 
-            // ToolStripSeparator9
-            // 
-            this.ToolStripSeparator9.Name = "ToolStripSeparator9";
-            this.ToolStripSeparator9.Size = new System.Drawing.Size(6, 25);
-            // 
-            // FindTextBox
-            // 
-            this.FindTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FindTextBox.Name = "FindTextBox";
-            this.FindTextBox.Size = new System.Drawing.Size(150, 25);
-            // 
-            // FindToolStripButton
-            // 
-            this.FindToolStripButton.Image = global::Notepad_Light.Properties.Resources.FindNext_16x;
-            this.FindToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FindToolStripButton.Name = "FindToolStripButton";
-            this.FindToolStripButton.Size = new System.Drawing.Size(50, 22);
-            this.FindToolStripButton.Text = "Find";
-            this.FindToolStripButton.ToolTipText = "Find Next Search Result";
-            this.FindToolStripButton.Click += new System.EventHandler(this.FindToolStripButton_Click);
-            // 
             // ToolStripSeparator2
             // 
             this.ToolStripSeparator2.Name = "ToolStripSeparator2";
@@ -1290,6 +1261,33 @@
             // 
             this.ToolStripSeparator5.Name = "ToolStripSeparator5";
             this.ToolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // SearchToolStripLabel
+            // 
+            this.SearchToolStripLabel.Name = "SearchToolStripLabel";
+            this.SearchToolStripLabel.Size = new System.Drawing.Size(42, 22);
+            this.SearchToolStripLabel.Text = "Search";
+            // 
+            // FindTextBox
+            // 
+            this.FindTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FindTextBox.Name = "FindTextBox";
+            this.FindTextBox.Size = new System.Drawing.Size(150, 25);
+            // 
+            // FindToolStripButton
+            // 
+            this.FindToolStripButton.Image = global::Notepad_Light.Properties.Resources.FindNext_16x;
+            this.FindToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FindToolStripButton.Name = "FindToolStripButton";
+            this.FindToolStripButton.Size = new System.Drawing.Size(50, 22);
+            this.FindToolStripButton.Text = "Find";
+            this.FindToolStripButton.ToolTipText = "Find Next Search Result";
+            this.FindToolStripButton.Click += new System.EventHandler(this.FindToolStripButton_Click);
+            // 
+            // ToolStripSeparator9
+            // 
+            this.ToolStripSeparator9.Name = "ToolStripSeparator9";
+            this.ToolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
             // timer1
             // 
@@ -1430,7 +1428,6 @@
         private ToolStripStatusLabel toolStripStatusLabelAppVer;
         private ToolStripStatusLabel appVersionToolStripStatusLabel;
         private ToolStripMenuItem OptionsToolStripMenuItem;
-        private ToolStripMenuItem SubmitFeedbackToolStripMenuItem;
         private ToolStripMenuItem ReportBugToolStripMenuItem;
         private ToolStripMenuItem PrintToolStripMenuItem;
         private ToolStripMenuItem PrintPreviewToolStripMenuItem;
@@ -1485,5 +1482,6 @@
         private ToolStripStatusLabel toolStripStatusLabelFileEncoding;
         private ToolStripStatusLabel toolStripStatusLabel4;
         private ToolStripStatusLabel fontToolStripStatusLabel;
+        private ToolStripLabel SearchToolStripLabel;
     }
 }
