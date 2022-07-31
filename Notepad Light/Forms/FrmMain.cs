@@ -14,7 +14,7 @@ namespace Notepad_Light
     {
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
-        public string gErrorLog = string.Empty;
+        public static string gErrorLog = string.Empty;
         public string gPrintString = string.Empty;
         public bool gRtf = false;
         public int gPrevPageLength = 0;
@@ -315,7 +315,7 @@ namespace Notepad_Light
         /// write exception details to error log file
         /// </summary>
         /// <param name="output"></param>
-        public void WriteErrorLogContent(string output)
+        public static void WriteErrorLogContent(string output)
         {
             using (StreamWriter sw = new StreamWriter(gErrorLog, true))
             {
@@ -1391,10 +1391,11 @@ namespace Notepad_Light
             IntPtr _hEmf = metafile.GetHenhmetafile();
             uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null!, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             byte[] _buffer = new byte[_bufferSize];
-            Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            uint hresult = Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
+            WriteErrorLogContent("GdipEmfToWmfBits hr = " + hresult.ToString());
             IntPtr hmf = Win32.SetMetaFileBitsEx(_bufferSize, _buffer);
             string tempfile = Path.GetTempFileName();
-            
+
             Win32.CopyMetaFile(hmf, tempfile);
             Win32.DeleteMetaFile(hmf);
             Win32.DeleteEnhMetaFile(_hEmf);
@@ -1405,11 +1406,11 @@ namespace Notepad_Light
             stream.Write(data, 0, count);
 
             string rtfImage = @"{\rtf1{\pict\wmetafile8\picw" + (int)((image.Width / dpiX) * 2540)
-                              + @"\pich" + (int)((image.Height / dpiY) * 2540)
-                              + @"\picwgoal" + (int)((image.Width / dpiX) * 1440)
-                              + @"\pichgoal" + (int)((image.Height / dpiY) * 1440)
-                              + " " + BitConverter.ToString(stream.ToArray()).Replace("-", "")
-                              + "}}";
+                                + @"\pich" + (int)((image.Height / dpiY) * 2540)
+                                + @"\picwgoal" + (int)((image.Width / dpiX) * 1440)
+                                + @"\pichgoal" + (int)((image.Height / dpiY) * 1440)
+                                + " " + BitConverter.ToString(stream.ToArray()).Replace("-", "")
+                                + "}}";
             return rtfImage;
         }
 

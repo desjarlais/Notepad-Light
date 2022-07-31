@@ -8,6 +8,16 @@ namespace Notepad_Light.Helpers
     public class App
     {
         /// <summary>
+        /// helper to get descriptive hresult info
+        /// </summary>
+        /// <param name="hr">hresult to be converted</param>
+        /// <returns></returns>
+        public static string MessageFromHResult(int hr)
+        {
+            return Marshal.GetExceptionForHR(hr)!.Message;
+        }
+
+        /// <summary>
         /// given a file, return the encoding
         /// </summary>
         /// <param name="filePath">file to check encoding</param>
@@ -128,7 +138,7 @@ namespace Notepad_Light.Helpers
         /// <param name="cols"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public static String InsertTable(int rows, int cols, int width)
+        public static string InsertTable(int rows, int cols, int width)
         {
             StringBuilder sb = new StringBuilder();
 
