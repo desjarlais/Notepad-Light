@@ -9,6 +9,7 @@ namespace Notepad_Light.Helpers
     {
         /// <summary>
         /// helper to get descriptive hresult info
+        /// https://devblogs.microsoft.com/oldnewthing/20210826-00/?p=105609
         /// </summary>
         /// <param name="hr">hresult to be converted</param>
         /// <returns></returns>

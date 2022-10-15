@@ -89,6 +89,7 @@ namespace Notepad_Light
         }
 
         #region Class Properties
+        
         /// <summary>
         /// used for the adjust labor dialog return value
         /// </summary>
@@ -610,6 +611,10 @@ namespace Notepad_Light
             RecentToolStripMenuItem3.Text = Strings.empty;
             RecentToolStripMenuItem4.Text = Strings.empty;
             RecentToolStripMenuItem5.Text = Strings.empty;
+            RecentToolStripMenuItem6.Text = Strings.empty;
+            RecentToolStripMenuItem7.Text = Strings.empty;
+            RecentToolStripMenuItem8.Text = Strings.empty;
+            RecentToolStripMenuItem9.Text = Strings.empty;
         }
 
         /// <summary>
@@ -1053,6 +1058,10 @@ namespace Notepad_Light
                         case 3: RecentToolStripMenuItem3.Text = f?.ToString(); break;
                         case 4: RecentToolStripMenuItem4.Text = f?.ToString(); break;
                         case 5: RecentToolStripMenuItem5.Text = f?.ToString(); break;
+                        case 6: RecentToolStripMenuItem6.Text = f?.ToString(); break;
+                        case 7: RecentToolStripMenuItem7.Text = f?.ToString(); break;
+                        case 8: RecentToolStripMenuItem8.Text = f?.ToString(); break;
+                        case 9: RecentToolStripMenuItem9.Text = f?.ToString(); break;
                     }
                     index++;
                 }
@@ -1213,6 +1222,10 @@ namespace Notepad_Light
             RecentToolStripMenuItem3.ForeColor = clr;
             RecentToolStripMenuItem4.ForeColor = clr;
             RecentToolStripMenuItem5.ForeColor = clr;
+            RecentToolStripMenuItem6.ForeColor = clr;
+            RecentToolStripMenuItem7.ForeColor = clr;
+            RecentToolStripMenuItem8.ForeColor = clr;
+            RecentToolStripMenuItem9.ForeColor = clr;
             PrintToolStripMenuItem.ForeColor = clr;
             PrintPreviewToolStripMenuItem.ForeColor = clr;
             PageSetupToolStripMenuItem.ForeColor = clr;
@@ -1294,6 +1307,10 @@ namespace Notepad_Light
             RecentToolStripMenuItem3.BackColor = clr;
             RecentToolStripMenuItem4.BackColor = clr;
             RecentToolStripMenuItem5.BackColor = clr;
+            RecentToolStripMenuItem6.BackColor = clr;
+            RecentToolStripMenuItem7.BackColor = clr;
+            RecentToolStripMenuItem8.BackColor = clr;
+            RecentToolStripMenuItem9.BackColor = clr;
             PrintToolStripMenuItem.BackColor = clr;
             PrintPreviewToolStripMenuItem.BackColor = clr;
             PageSetupToolStripMenuItem.BackColor = clr;
@@ -1819,42 +1836,27 @@ namespace Notepad_Light
 
         private void RecentToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (sender is not null)
-            {
-                OpenRecentFile(sender.ToString()!);
-            }
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void RecentToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            if (sender is not null)
-            {
-                OpenRecentFile(sender.ToString()!);
-            }
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void RecentToolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            if (sender is not null)
-            {
-                OpenRecentFile(sender.ToString()!);
-            }
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void RecentToolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            if (sender is not null)
-            {
-                OpenRecentFile(sender.ToString()!);
-            }
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void RecentToolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            if (sender is not null)
-            {
-                OpenRecentFile(sender.ToString()!);
-            }
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -2307,6 +2309,26 @@ namespace Notepad_Light
                     lineCount++;
                 }
             }
+        }
+
+        private void RecentToolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
+
+        private void RecentToolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
+
+        private void RecentToolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
+
+        private void RecentToolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void SelectAllContextMenu_Click(object sender, EventArgs e)

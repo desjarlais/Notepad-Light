@@ -7,10 +7,10 @@ namespace Notepad_Light.Helpers
         // P/Invoke declarations
         public enum EmfToWmfBitsFlags
         {
-            EmfToWmfBitsFlagsDefault = 0x00000000,
-            EmfToWmfBitsFlagsEmbedEmf = 0x00000001,
-            EmfToWmfBitsFlagsIncludePlaceable = 0x00000002,
-            EmfToWmfBitsFlagsNoXORClip = 0x00000004
+            EmfToWmfBitsFlagsDefault = 0x00000000, // Specifies the default conversion.
+            EmfToWmfBitsFlagsEmbedEmf = 0x00000001, // Specifies that the source EMF metafile is embedded as a comment in the resulting WMF metafile.
+            EmfToWmfBitsFlagsIncludePlaceable = 0x00000002, // Specifies that the resulting WMF metafile is in the placeable metafile format; that is, it has the additional 22-byte header required by a placeable metafile.
+            EmfToWmfBitsFlagsNoXORClip = 0x00000004 // Specifies that the clipping region is stored in the metafile in the traditional way. If you do not set this flag, the Metafile::EmfToWmfBits method applies an optimization that stores the clipping region as a path and simulates clipping by using the XOR operator.
         };
 
         [StructLayout(LayoutKind.Sequential)]
@@ -36,6 +36,7 @@ namespace Notepad_Light.Helpers
             internal RECT rcPage;
             internal CHARRANGE chrg;
         }
+
         public const int WM_USER = 0x0400;
         public const int EM_FORMATRANGE = WM_USER + 57;
         public const int Hundredth2Twips = 20 * 72 / 100;
