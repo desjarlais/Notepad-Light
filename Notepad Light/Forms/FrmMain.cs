@@ -1192,6 +1192,7 @@ namespace Notepad_Light
             ResetTimerToolStripButton.ForeColor = clr;
             EditTimerToolStripButton.ForeColor = clr;
             FindToolStripButton.ForeColor = clr;
+            SearchToolStripLabel.ForeColor = clr;
             
             // update status bar labels
             toolStripStatusLabelCol.ForeColor = clr;
