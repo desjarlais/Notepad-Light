@@ -415,7 +415,7 @@ namespace Notepad_Light
                     if (!isFileInMru)
                     {
                         Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
-                        if (Properties.Settings.Default.FileMRU.Count > 5)
+                        if (Properties.Settings.Default.FileMRU.Count > 9)
                         {
                             Properties.Settings.Default.FileMRU.RemoveAt(0);
                         }
