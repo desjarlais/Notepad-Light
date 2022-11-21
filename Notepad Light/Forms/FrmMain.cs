@@ -242,7 +242,7 @@ namespace Notepad_Light
             {
                 gRtf = true;
                 EnableToolbarFormattingIcons();
-                EncodingToolStripStatusLabel.Text = App.GetFileEncoding("Untitled.rtf");
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding("untitled.rtf");
             }
             else
             {
@@ -1031,7 +1031,7 @@ namespace Notepad_Light
         }
         
         /// <summary>
-        /// given a position, move the cursor to that location in the richtextbox
+        /// move the cursor to specified location in the richtextbox
         /// </summary>
         /// <param name="startLocation"></param>
         /// <param name="length"></param>
@@ -1859,6 +1859,26 @@ namespace Notepad_Light
         {
             if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
+        
+        private void RecentToolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
+
+        private void RecentToolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
+
+        private void RecentToolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
+
+        private void RecentToolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
+        }
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
@@ -2310,26 +2330,6 @@ namespace Notepad_Light
                     lineCount++;
                 }
             }
-        }
-
-        private void RecentToolStripMenuItem6_Click(object sender, EventArgs e)
-        {
-            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
-        }
-
-        private void RecentToolStripMenuItem7_Click(object sender, EventArgs e)
-        {
-            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
-        }
-
-        private void RecentToolStripMenuItem8_Click(object sender, EventArgs e)
-        {
-            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
-        }
-
-        private void RecentToolStripMenuItem9_Click(object sender, EventArgs e)
-        {
-            if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
 
         private void SelectAllContextMenu_Click(object sender, EventArgs e)

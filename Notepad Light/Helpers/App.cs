@@ -25,15 +25,31 @@ namespace Notepad_Light.Helpers
         /// <returns></returns>
         public static string GetFileEncoding(string filePath)
         {
-            // rtf is most likely going to be ansi
-            // todo, add a better check for keywords in rtf
+            // check rtf keywords at beginning for encoding
             if (filePath.EndsWith(Strings.rtfExt))
             {
                 // until I get the parser going, just pass 0 and return ansi
-                return GetCodePage(0);
+                var rtfBom = new byte[11];
+                using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    file.Read(rtfBom);
+                }
+
+                if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
+                    && rtfBom[6] == 0x5c && rtfBom[7] == 0x6d && rtfBom[8] == 0x61 && rtfBom[9] == 0x63) return "Apple Macintosh"; // mac
+                if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
+                    && rtfBom[6] == 0x5c && rtfBom[7] == 0x70 && rtfBom[8] == 0x63) return GetCodePage(437); // IBM PC 437
+                if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
+                    && rtfBom[6] == 0x5c && rtfBom[7] == 0x70 && rtfBom[8] == 0x63 && rtfBom[9] == 0x61) return GetCodePage(850); // IBM PC 850
+                if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
+                    && rtfBom[6] == 0x5c && rtfBom[7] == 0x6d && rtfBom[8] == 0x61 && rtfBom[9] == 0x63) return "ANSI"; // ansicpgN
+                if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
+                    && rtfBom[6] == 0x5c && rtfBom[7] == 0x66 && rtfBom[8] == 0x62 && rtfBom[9] == 0x69) return "fbidis"; // fbidis
+                if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
+                    && rtfBom[6] == 0x5c && rtfBom[7] == 0x61 && rtfBom[8] == 0x6e && rtfBom[9] == 0x73) return "ANSI"; // ansi
             }
 
-            // read the BOM
+            // read the BOM for non-rtf
             var bom = new byte[4];
             using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {

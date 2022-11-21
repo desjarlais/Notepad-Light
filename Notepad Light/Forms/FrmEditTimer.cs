@@ -24,8 +24,7 @@ namespace Notepad_Light.Forms
             // invalid text warning should only be displayed if the user pressed adjust AND the text box text is not valid
             if (e.IsValidInput || !_isAdjustedTime) return;
 
-            MessageBox.Show("Time must be in the format HH:MM.", "Invalid input",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("Time must be in the format HH:MM.", "Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             // reset the time value to 0, otherwise the value will stay with the invalid input
             mskTxtBxNewTime.Text = Strings.zeroHRMIN;
