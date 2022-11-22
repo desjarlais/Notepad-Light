@@ -23,8 +23,21 @@ namespace Notepad_Light.Helpers
         /// </summary>
         /// <param name="filePath">file to check encoding</param>
         /// <returns></returns>
-        public static string GetFileEncoding(string filePath)
+        public static string GetFileEncoding(string filePath, bool newDocument)
         {
+            // ignore checking new doc scenarios
+            if (newDocument) 
+            {
+                if (Properties.Settings.Default.NewFileFormat == Strings.txtExt)
+                {
+                    return Encoding.UTF8.EncodingName;
+                }
+                else
+                {
+                    return "ANSI";
+                }
+            }
+
             // check rtf keywords at beginning for encoding
             if (filePath.EndsWith(Strings.rtfExt))
             {
@@ -148,43 +161,6 @@ namespace Notepad_Light.Helpers
             return returnImage!;
         }
 
-        /// <summary>
-        /// create an rtf table
-        /// </summary>
-        /// <param name="rows"></param>
-        /// <param name="cols"></param>
-        /// <param name="width"></param>
-        /// <returns></returns>
-        public static string InsertTable(int rows, int cols, int width)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            // rtf start
-            sb.Append(@"{\rtf1 ");
-
-            int cellWidth;
-
-            // start row
-            sb.Append(@"\trowd");
-
-            for (int i = 0; i < rows; i++)
-            {
-                sb.Append(@"\trowd");
-                for (int j = 0; j < cols; j++)
-                {
-                    cellWidth = (j + 1) * width;
-                    sb.Append(@"\cellx" + cellWidth.ToString());
-                }
-
-                sb.Append(@"\intbl \cell \row");
-            }
-
-            sb.Append(@"\pard");
-            sb.Append('}');
-
-            return sb.ToString();
-        }
-
         public static string GetCharacterSet(string rtfCharSet)
         {
             switch (rtfCharSet)
@@ -196,7 +172,7 @@ namespace Notepad_Light.Helpers
                 case "pca":
                     return "IBM PC code page 850";
                 case "ansicpgN":
-                    return "Unicode -> ANSI converstion";
+                    return "Unicode -> ANSI conversion";
                 case "fbidis":
                     return "Active single font";
                 default:

@@ -242,7 +242,7 @@ namespace Notepad_Light
             {
                 gRtf = true;
                 EnableToolbarFormattingIcons();
-                EncodingToolStripStatusLabel.Text = App.GetFileEncoding("untitled.rtf");
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbPage.Rtf, true);
             }
             else
             {
@@ -342,7 +342,7 @@ namespace Notepad_Light
                     LoadRtfFile(filePath);
                 }
 
-                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath);
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = RtbPage.TextLength;
@@ -397,7 +397,7 @@ namespace Notepad_Light
                     }
 
                     UpdateFormTitle(ofdFileOpen.FileName);
-                    EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName);
+                    EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName, false);
 
                     // if the file was opened and is in the mru, we don't want to add it
                     // this will check if it exists and if it does, don't update the mru
@@ -2013,7 +2013,7 @@ namespace Notepad_Light
                 // print rtf
                 if (gRtf)
                 {
-                    e.HasMorePages = RtfPrint.Print(RtbPage, ref charFrom, e);
+                    e.HasMorePages = Win32.Print(RtbPage, ref charFrom, e);
                     return;
                 }
 
@@ -2276,7 +2276,7 @@ namespace Notepad_Light
             // otherwise, the value will be between 1 and 10, so call inserttable
             if (fTable.fRows > 0 && fTable.fCols > 0)
             {
-                RtbPage.SelectedRtf = App.InsertTable(fTable.fRows, fTable.fCols, 2500);
+                RtbPage.SelectedRtf = Rtf.InsertTable(fTable.fRows, fTable.fCols, 2500);
             }
         }
 
