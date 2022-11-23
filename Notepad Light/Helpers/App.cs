@@ -80,6 +80,18 @@ namespace Notepad_Light.Helpers
             return Encoding.UTF8.EncodingName;
         }
 
+        /// <summary>
+        /// write exception details to error log file
+        /// </summary>
+        /// <param name="output"></param>
+        public static void WriteErrorLogContent(string output, string errorFilePath)
+        {
+            using (StreamWriter sw = new StreamWriter(errorFilePath, true))
+            {
+                sw.WriteLine(DateTime.Now + Strings.semiColon + output);
+            }
+        }
+
         public static void PlatformSpecificProcessStart(string url)
         {
             // known issue in .NET Core https://github.com/dotnet/corefx/issues/10361

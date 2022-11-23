@@ -313,18 +313,6 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// write exception details to error log file
-        /// </summary>
-        /// <param name="output"></param>
-        public static void WriteErrorLogContent(string output)
-        {
-            using (StreamWriter sw = new StreamWriter(gErrorLog, true))
-            {
-                sw.WriteLine(DateTime.Now + Strings.semiColon + output);
-            }
-        }
-
-        /// <summary>
         /// file opened from the MRU menu button
         /// </summary>
         /// <param name="filePath"></param>
@@ -353,7 +341,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileMRUOpen Error = " + ex.Message);
+                App.WriteErrorLogContent("FileMRUOpen Error = " + ex.Message, gErrorLog);
             }
             finally
             {
@@ -431,7 +419,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileOpen Error = " + ex.Message);
+                App.WriteErrorLogContent("FileOpen Error = " + ex.Message, gErrorLog);
             }
             finally
             {
@@ -477,7 +465,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileSave Error : " + ex.Message);
+                App.WriteErrorLogContent("FileSave Error : " + ex.Message, gErrorLog);
             }
             finally
             {
@@ -530,7 +518,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("FileSaveAs Error :" + ex.Message);
+                App.WriteErrorLogContent("FileSaveAs Error :" + ex.Message, gErrorLog);
             }
             finally
             {
@@ -642,7 +630,7 @@ namespace Notepad_Light
 
                 // now that we know where the file is, remove it
                 Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
-                WriteErrorLogContent("File MRU Path Removed : " + path);
+                App.WriteErrorLogContent("File MRU Path Removed : " + path, gErrorLog);
                 MessageBox.Show("File No Longer Exists, Removing From Recent Files", "Invalid File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
@@ -779,8 +767,8 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("CleanupTempFiles Error: " + ex.Message);
-                WriteErrorLogContent("Stack Trace: " + ex.StackTrace);
+                App.WriteErrorLogContent("CleanupTempFiles Error: " + ex.Message, gErrorLog);
+                App.WriteErrorLogContent("Stack Trace: " + ex.StackTrace, gErrorLog);
             }
         }
 
@@ -882,7 +870,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("UpdateToolbarIcons Error" + ex.Message);
+                App.WriteErrorLogContent("UpdateToolbarIcons Error" + ex.Message, gErrorLog);
             }
         }
 
@@ -1069,7 +1057,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 // log the error and do not update mru
-                WriteErrorLogContent("UpdateMRU Error: " + ex.Message);
+                App.WriteErrorLogContent("UpdateMRU Error: " + ex.Message, gErrorLog);
             }
         }
 
@@ -1084,7 +1072,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("UpdateFontInformation Error: " + ex.Message);
+                App.WriteErrorLogContent("UpdateFontInformation Error: " + ex.Message, gErrorLog);
             }
         }
 
@@ -1383,56 +1371,6 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// convert an image to rtf
-        /// </summary>
-        /// <param name="image"></param>
-        /// <returns></returns>
-        public static string GetEmbedImageString(Image image)
-        {
-            Metafile metafile;
-            float dpiX; float dpiY;
-
-            using (Graphics g = Graphics.FromImage(image))
-            {
-                IntPtr hDC = g.GetHdc();
-                metafile = new Metafile(hDC, EmfType.EmfOnly);
-                g.ReleaseHdc(hDC);
-            }
-
-            using (Graphics g = Graphics.FromImage(metafile))
-            {
-                g.DrawImage(image, 0, 0);
-                dpiX = g.DpiX;
-                dpiY = g.DpiY;
-            }
-
-            IntPtr _hEmf = metafile.GetHenhmetafile();
-            uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null!, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
-            byte[] _buffer = new byte[_bufferSize];
-            uint hresult = Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
-            WriteErrorLogContent("GdipEmfToWmfBits hr = " + hresult.ToString());
-            IntPtr hmf = Win32.SetMetaFileBitsEx(_bufferSize, _buffer);
-            string tempfile = Path.GetTempFileName();
-
-            Win32.CopyMetaFile(hmf, tempfile);
-            Win32.DeleteMetaFile(hmf);
-            Win32.DeleteEnhMetaFile(_hEmf);
-
-            var stream = new MemoryStream();
-            byte[] data = File.ReadAllBytes(tempfile);
-            int count = data.Length;
-            stream.Write(data, 0, count);
-
-            string rtfImage = @"{\rtf1{\pict\wmetafile8\picw" + (int)((image.Width / dpiX) * 2540)
-                                + @"\pich" + (int)((image.Height / dpiY) * 2540)
-                                + @"\picwgoal" + (int)((image.Width / dpiX) * 1440)
-                                + @"\pichgoal" + (int)((image.Height / dpiY) * 1440)
-                                + " " + BitConverter.ToString(stream.ToArray()).Replace("-", "")
-                                + "}}";
-            return rtfImage;
-        }
-
-        /// <summary>
         /// check the image for any transparent pixels
         /// looping all pixels can be slow on large images
         /// using every 5 pixels to balance out the perf hit
@@ -1524,8 +1462,8 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("WriteFileContents Error: " + ex.Message);
-                WriteErrorLogContent("Stack: " + ex.StackTrace);
+                App.WriteErrorLogContent("WriteFileContents Error: " + ex.Message, gErrorLog);
+                App.WriteErrorLogContent("Stack: " + ex.StackTrace, gErrorLog);
             }
         }
 
@@ -2036,8 +1974,8 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                WriteErrorLogContent("PrintPage Error: " + ex.Message);
-                WriteErrorLogContent("Stack: " + ex.StackTrace);
+                App.WriteErrorLogContent("PrintPage Error: " + ex.Message, gErrorLog);
+                App.WriteErrorLogContent("Stack: " + ex.StackTrace, gErrorLog);
             }
             finally
             {
@@ -2206,7 +2144,7 @@ namespace Notepad_Light
                     }
 
                     // convert the image to rtf so it can be displayed in the rtb
-                    RtbPage.SelectedRtf = GetEmbedImageString(img);
+                    RtbPage.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
                     RtbPage.Focus();
                 }
             }
