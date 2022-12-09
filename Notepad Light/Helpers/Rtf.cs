@@ -5,8 +5,13 @@ namespace Notepad_Light.Helpers
 {
     public class Rtf
     {
+        #region Parser
+
+        #endregion
+
+        #region CreateRtfContentFunctions
         /// <summary>
-        /// create an rtf table
+        /// create an rtf table based on the args
         /// </summary>
         /// <param name="rows"></param>
         /// <param name="cols"></param>
@@ -17,33 +22,33 @@ namespace Notepad_Light.Helpers
             StringBuilder sb = new StringBuilder();
 
             // rtf start
-            sb.Append(@"{\rtf1 ");
+            sb.Append(Strings.rtfStart);
 
             int cellWidth;
 
             // start row
-            sb.Append(@"\trowd");
+            sb.Append(Strings.rtfTableRowStart);
 
             for (int i = 0; i < rows; i++)
             {
-                sb.Append(@"\trowd");
+                sb.Append(Strings.rtfTableRowStart);
                 for (int j = 0; j < cols; j++)
                 {
                     cellWidth = (j + 1) * width;
                     sb.Append(@"\cellx" + cellWidth.ToString());
                 }
 
-                sb.Append(@"\intbl \cell \row");
+                sb.Append(@"\intbl\cell\row");
             }
 
-            sb.Append(@"\pard");
-            sb.Append('}');
+            sb.Append(Strings.rtfParagraph);
+            sb.Append(Strings.rtfEnd);
 
             return sb.ToString();
         }
 
         /// <summary>
-        /// convert an image to rtf
+        /// convert an image to rtf from passed in Image
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
@@ -91,5 +96,7 @@ namespace Notepad_Light.Helpers
                                 + "}}";
             return rtfImage;
         }
+
+        #endregion
     }
 }

@@ -48,7 +48,7 @@
 
         // rtf tags
         public const string rtfStart = @"{\rtf1";
-        public const string paragraph = @"\pard";
+        public const string rtfParagraph = @"\pard";
         public const string rtfTableRowStart = @"\trowd";
         public const string rtfTableCell = @"\cellx";
         public const string rtfEnd = "}";
