@@ -92,6 +92,22 @@ namespace Notepad_Light.Helpers
             internal CHARRANGE chrg;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct SYSTEM_INFO
+        {
+            internal ushort wProcessorArchitecture;
+            internal ushort wReserved;
+            internal uint dwPageSize;
+            internal IntPtr lpMinimumApplicationAddress;
+            internal IntPtr lpMaximumApplicationAddress;
+            internal IntPtr dwActiveProcessorMask;
+            internal uint dwNumberOfProcessors;
+            internal uint dwProcessorType;
+            internal uint dwAllocationGranularity;
+            internal ushort wProcessorLevel;
+            internal ushort wProcessorRevision;
+        }
+
         public const int WM_USER = 0x0400;
         public const int EM_FORMATRANGE = WM_USER + 57;
         public const int Hundredth2Twips = 20 * 72 / 100;
@@ -99,6 +115,8 @@ namespace Notepad_Light.Helpers
         public const int MM_ISOTROPIC = 7;
         public const int MM_ANISOTROPIC = 8;
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern void GetSystemInfo(ref SYSTEM_INFO Info);
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);                
         [DllImport("gdiplus.dll")]

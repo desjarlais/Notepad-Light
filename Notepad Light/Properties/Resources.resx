@@ -118,119 +118,59 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Bold_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Bold_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="brandesoftlogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\brandesoftlogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Bug_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Bug_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BulletList_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BulletList_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ClearCollection_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ClearCollection_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ClearCollection_ActionGray_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ClearCollection_ActionGray_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DateTimeAxis_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DateTimeAxis_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Dialog_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Dialog_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Document_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Document_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ErrorSquiggleCriticalInactive_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ErrorSquiggleCriticalInactive_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ErrorSummary_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ErrorSummary_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Exit_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Exit_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FindNext_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FindNext_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FontColor_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FontColor_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Font_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Font_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HighlightText_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HighlightText_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Image_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Image_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Italic_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Italic_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PageGuide_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PageGuide_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PrintPreview_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PrintPreview_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PrintStatusBar1_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PrintStatusBar1_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Redo_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Redo_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ReplaceAll_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ReplaceAll_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Report_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Report_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Restart_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Restart_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveAs_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveAs_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SelectAll_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SelectAll_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Settings_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Settings_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="StatusRun_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\StatusRun_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Stop_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Stop_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="StrikeThrough_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\StrikeThrough_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Table_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Table_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TextCenter_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TextCenter_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TextIndent_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TextIndent_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TextIndent_exp_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TextIndent_exp_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TextLeftJustify_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TextLeftJustify_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TextOutdent_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TextOutdent_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TextRightJustify_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TextRightJustify_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Dialog_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Dialog_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FontColor_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FontColor_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Redo_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Redo_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintStatusBar1_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PrintStatusBar1_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bug_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bug_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorSquiggleCriticalInactive_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ErrorSquiggleCriticalInactive_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SelectAll_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SelectAll_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClearCollection_ActionGray_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClearCollection_ActionGray_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ClearCollection_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClearCollection_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HighlightText_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HighlightText_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bold_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bold_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Italic_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Italic_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Stop_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Stop_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Underline_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Underline_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Settings_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextLeftJustify_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextLeftJustify_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TimePicker_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TimePicker_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,13 +178,76 @@
   <data name="Time_color_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Time_color_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Underline_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Underline_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Image_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Zoom_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Zoom_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Font_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Font_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextRightJustify_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextRightJustify_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Document_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Document_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorSummary_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ErrorSummary_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="brandesoftlogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\brandesoftlogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintPreview_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PrintPreview_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextIndent_exp_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextIndent_exp_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PageGuide_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PageGuide_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Table_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Table_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Exit_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Exit_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SaveAs_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveAs_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TextIndent_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextIndent_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StrikeThrough_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StrikeThrough_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StatusRun_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StatusRun_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ReplaceAll_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ReplaceAll_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FindNext_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FindNext_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Undo_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Undo_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Zoom_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zoom_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TextCenter_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextCenter_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Report_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Report_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DateTimeAxis_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DateTimeAxis_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Restart_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Restart_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MarkdownFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MarkdownFile1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

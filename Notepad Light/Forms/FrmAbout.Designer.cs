@@ -36,6 +36,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.BtnOpenErrorLog = new System.Windows.Forms.Button();
+            this.BtnViewSysInfo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -113,11 +114,22 @@
             this.BtnOpenErrorLog.UseVisualStyleBackColor = true;
             this.BtnOpenErrorLog.Click += new System.EventHandler(this.BtnOpenErrorLog_Click);
             // 
+            // BtnViewSysInfo
+            // 
+            this.BtnViewSysInfo.Location = new System.Drawing.Point(126, 156);
+            this.BtnViewSysInfo.Name = "BtnViewSysInfo";
+            this.BtnViewSysInfo.Size = new System.Drawing.Size(153, 23);
+            this.BtnViewSysInfo.TabIndex = 3;
+            this.BtnViewSysInfo.Text = "View System Information";
+            this.BtnViewSysInfo.UseVisualStyleBackColor = true;
+            this.BtnViewSysInfo.Click += new System.EventHandler(this.BtnViewSysInfo_Click);
+            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(411, 187);
+            this.Controls.Add(this.BtnViewSysInfo);
             this.Controls.Add(this.BtnOpenErrorLog);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.groupBox1);
@@ -146,5 +158,6 @@
         private PictureBox pictureBox1;
         private Label lblVersion;
         private Button BtnOpenErrorLog;
+        private Button BtnViewSysInfo;
     }
 }

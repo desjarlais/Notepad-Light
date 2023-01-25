@@ -243,6 +243,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap MarkdownFile {
+            get {
+                object obj = ResourceManager.GetObject("MarkdownFile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PageGuide_16x {
             get {
                 object obj = ResourceManager.GetObject("PageGuide_16x", resourceCulture);

@@ -74,7 +74,7 @@ namespace Notepad_Light
 
             // setup log file
             gErrorLog = Strings.appFolderDirectoryUrl + Strings.errorLogFile;
-            
+
             // setup templates
             UpdateTemplateMenu();
             Templates.UpdateTemplatesFromFiles();
@@ -321,7 +321,7 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
-                if (filePath.EndsWith(Strings.txtExt))
+                if (filePath.EndsWith(Strings.txtExt) || filePath.EndsWith(Strings.mdExt))
                 {
                     LoadPlainTextFile(filePath);
                 }
@@ -366,7 +366,9 @@ namespace Notepad_Light
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Open",
-                    Filter = "Text Documents | *.txt; *.rtf; ",
+                    Filter = "Text Documents | *.txt;|" +
+                             "RTF Documents | *.rtf; |" +
+                             "Markdown Documents | *.md;",
                     AutoUpgradeEnabled = true,
                     RestoreDirectory = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -375,7 +377,7 @@ namespace Notepad_Light
                 // add the contents to the textbox
                 if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                 {
-                    if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
+                    if (ofdFileOpen.FileName.EndsWith(Strings.txtExt) || ofdFileOpen.FileName.EndsWith(Strings.mdExt))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
                     }
@@ -450,7 +452,7 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    if (gCurrentFileName.EndsWith(Strings.txtExt))
+                    if (gCurrentFileName.EndsWith(Strings.txtExt) || gCurrentFileName.EndsWith(Strings.mdExt))
                     {
                         RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
                     }
@@ -484,7 +486,7 @@ namespace Notepad_Light
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
                     sfdSaveAs.Title = "Save As";
-                    sfdSaveAs.Filter = "Text Document (*.txt)|*.txt |Rich Text Format (RTF) (*.rtf)|*.rtf";
+                    sfdSaveAs.Filter = "Text Document (*.txt)|*.txt |Markdown Document (*.md)|*.md |Rich Text Format (RTF) (*.rtf)|*.rtf";
                     sfdSaveAs.AddExtension = true;
                     sfdSaveAs.AutoUpgradeEnabled = true;
 
@@ -502,7 +504,7 @@ namespace Notepad_Light
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
                         Cursor = Cursors.WaitCursor;
-                        if (sfdSaveAs.FilterIndex == 1)
+                        if (sfdSaveAs.FilterIndex == 1 || sfdSaveAs.FilterIndex == 3)
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
                         }
@@ -2268,6 +2270,12 @@ namespace Notepad_Light
                     lineCount++;
                 }
             }
+        }
+
+        private void MarkdownViewToolStripButton_Click(object sender, EventArgs e)
+        {
+            FrmMarkdownViewer fmv = new FrmMarkdownViewer(RtbPage.Text);
+            fmv.ShowDialog();
         }
 
         private void SelectAllContextMenu_Click(object sender, EventArgs e)

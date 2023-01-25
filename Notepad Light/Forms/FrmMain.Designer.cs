@@ -170,6 +170,7 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.autosaveTimer = new System.Windows.Forms.Timer(this.components);
+            this.MarkdownViewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -881,7 +882,7 @@
             // WordWrapToolStripMenuItem
             // 
             this.WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.WordWrapToolStripMenuItem.Text = "Word Wrap";
             this.WordWrapToolStripMenuItem.Click += new System.EventHandler(this.WordWrapToolStripMenuItem_Click);
             // 
@@ -894,7 +895,7 @@
             this.ZoomToolStripMenuItem250,
             this.ZoomToolStripMenuItem300});
             this.ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
@@ -1001,7 +1002,8 @@
             this.SearchToolStripLabel,
             this.FindTextBox,
             this.FindToolStripButton,
-            this.ToolStripSeparator9});
+            this.ToolStripSeparator9,
+            this.MarkdownViewToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1135, 25);
@@ -1358,6 +1360,17 @@
             this.autosaveTimer.Interval = 1000;
             this.autosaveTimer.Tick += new System.EventHandler(this.AutosaveTimer_Tick);
             // 
+            // MarkdownViewToolStripButton
+            // 
+            this.MarkdownViewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MarkdownViewToolStripButton.Image = global::Notepad_Light.Properties.Resources.MarkdownFile;
+            this.MarkdownViewToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MarkdownViewToolStripButton.Name = "MarkdownViewToolStripButton";
+            this.MarkdownViewToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.MarkdownViewToolStripButton.Text = "Markdown View";
+            this.MarkdownViewToolStripButton.ToolTipText = "Toggle Markdown View";
+            this.MarkdownViewToolStripButton.Click += new System.EventHandler(this.MarkdownViewToolStripButton_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1528,5 +1541,6 @@
         private ToolStripMenuItem RecentToolStripMenuItem7;
         private ToolStripMenuItem RecentToolStripMenuItem8;
         private ToolStripMenuItem RecentToolStripMenuItem9;
+        private ToolStripButton MarkdownViewToolStripButton;
     }
 }
