@@ -349,6 +349,7 @@ namespace Notepad_Light
                 else if (filePath.EndsWith(Strings.mdExt))
                 {
                     LoadMarkdownFile(filePath);
+                    LoadMarkdownInWebView2();
                 }
 
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
@@ -379,7 +380,6 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
-
                 CollapsePanel2();
 
                 // prompt for changes
@@ -388,7 +388,7 @@ namespace Notepad_Light
                 // start the file open process
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
-                    Title = "Open",
+                    Title = "Open Document",
                     Filter = "Text Documents | *.txt;|" +
                              "RTF Documents | *.rtf; |" +
                              "Markdown Documents | *.md;",

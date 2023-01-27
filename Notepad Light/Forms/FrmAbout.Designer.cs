@@ -31,19 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAbout));
             this.BtnOK = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.TxbSysInfo = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.BtnOpenErrorLog = new System.Windows.Forms.Button();
-            this.BtnViewSysInfo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(343, 156);
+            this.BtnOK.Location = new System.Drawing.Point(410, 232);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(56, 23);
             this.BtnOK.TabIndex = 1;
@@ -53,15 +53,25 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.TxbSysInfo);
             this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.lblVersion);
             this.groupBox1.Location = new System.Drawing.Point(12, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(387, 147);
+            this.groupBox1.Size = new System.Drawing.Size(454, 223);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // TxbSysInfo
+            // 
+            this.TxbSysInfo.Location = new System.Drawing.Point(140, 16);
+            this.TxbSysInfo.Multiline = true;
+            this.TxbSysInfo.Name = "TxbSysInfo";
+            this.TxbSysInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.TxbSysInfo.Size = new System.Drawing.Size(308, 201);
+            this.TxbSysInfo.TabIndex = 4;
             // 
             // linkLabel1
             // 
@@ -87,9 +97,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Notepad_Light.Properties.Resources.brandesoftlogo;
-            this.pictureBox1.Location = new System.Drawing.Point(213, 19);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 96);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(168, 121);
+            this.pictureBox1.Size = new System.Drawing.Size(128, 121);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -106,7 +116,7 @@
             // 
             // BtnOpenErrorLog
             // 
-            this.BtnOpenErrorLog.Location = new System.Drawing.Point(12, 156);
+            this.BtnOpenErrorLog.Location = new System.Drawing.Point(12, 232);
             this.BtnOpenErrorLog.Name = "BtnOpenErrorLog";
             this.BtnOpenErrorLog.Size = new System.Drawing.Size(108, 23);
             this.BtnOpenErrorLog.TabIndex = 2;
@@ -114,22 +124,11 @@
             this.BtnOpenErrorLog.UseVisualStyleBackColor = true;
             this.BtnOpenErrorLog.Click += new System.EventHandler(this.BtnOpenErrorLog_Click);
             // 
-            // BtnViewSysInfo
-            // 
-            this.BtnViewSysInfo.Location = new System.Drawing.Point(126, 156);
-            this.BtnViewSysInfo.Name = "BtnViewSysInfo";
-            this.BtnViewSysInfo.Size = new System.Drawing.Size(153, 23);
-            this.BtnViewSysInfo.TabIndex = 3;
-            this.BtnViewSysInfo.Text = "View System Information";
-            this.BtnViewSysInfo.UseVisualStyleBackColor = true;
-            this.BtnViewSysInfo.Click += new System.EventHandler(this.BtnViewSysInfo_Click);
-            // 
             // FrmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 187);
-            this.Controls.Add(this.BtnViewSysInfo);
+            this.ClientSize = new System.Drawing.Size(478, 267);
             this.Controls.Add(this.BtnOpenErrorLog);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.groupBox1);
@@ -158,6 +157,6 @@
         private PictureBox pictureBox1;
         private Label lblVersion;
         private Button BtnOpenErrorLog;
-        private Button BtnViewSysInfo;
+        private TextBox TxbSysInfo;
     }
 }
