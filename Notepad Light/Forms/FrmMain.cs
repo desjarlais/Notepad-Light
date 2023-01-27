@@ -7,6 +7,7 @@ using System.Drawing.Printing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Text;
+using Markdig;
 
 namespace Notepad_Light
 {
@@ -29,6 +30,9 @@ namespace Notepad_Light
         public FrmMain()
         {
             InitializeComponent();
+
+            // collapse panel 2 by default, currently only used for markdown files
+            splitContainer1.Panel2Collapsed = true;
 
             // initialize stopwatch for timer
             gStopwatch = new Stopwatch();
@@ -234,6 +238,7 @@ namespace Notepad_Light
         public void CreateNewDocument()
         {
             RtbPage.Clear();
+            CollapsePanel2();
             ClearFormatting();
             UpdateFormTitle(Strings.defaultFileName);
 
@@ -312,6 +317,17 @@ namespace Notepad_Light
             toolStripStatusLabelFileType.Text = Strings.rtf;
         }
 
+        public void LoadMarkdownFile(string filePath)
+        {
+            RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            splitContainer1.Panel2Collapsed = false;
+            gRtf = false;
+            toolStripStatusLabelFileType.Text = "Markdown";
+
+            var mdResult = Markdown.ToHtml(RtbPage.Text);
+            
+        }
+
         /// <summary>
         /// file opened from the MRU menu button
         /// </summary>
@@ -321,13 +337,18 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
-                if (filePath.EndsWith(Strings.txtExt) || filePath.EndsWith(Strings.mdExt))
+                CollapsePanel2();
+                if (filePath.EndsWith(Strings.txtExt))
                 {
                     LoadPlainTextFile(filePath);
                 }
-                else
+                else if (filePath.EndsWith(Strings.rtfExt))
                 {
                     LoadRtfFile(filePath);
+                }
+                else if (filePath.EndsWith(Strings.mdExt))
+                {
+                    LoadMarkdownFile(filePath);
                 }
 
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
@@ -358,7 +379,9 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
-                
+
+                CollapsePanel2();
+
                 // prompt for changes
                 SaveChanges();
 
@@ -377,13 +400,18 @@ namespace Notepad_Light
                 // add the contents to the textbox
                 if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                 {
-                    if (ofdFileOpen.FileName.EndsWith(Strings.txtExt) || ofdFileOpen.FileName.EndsWith(Strings.mdExt))
+                    if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
                     }
-                    else
+                    else if (ofdFileOpen.FileName.EndsWith(Strings.rtfExt))
                     {
                         LoadRtfFile(ofdFileOpen.FileName);
+                    }
+                    else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt))
+                    {
+                        LoadMarkdownFile(ofdFileOpen.FileName);
+                        LoadMarkdownInWebView2();
                     }
 
                     UpdateFormTitle(ofdFileOpen.FileName);
@@ -2105,6 +2133,32 @@ namespace Notepad_Light
             gPrevPageLength = RtbPage.TextLength;
             UpdateDocStats();
             UpdateToolbarIcons();
+
+            // for markdown files, update the panel
+            if (splitContainer1.Panel2Collapsed == false)
+            {
+                LoadMarkdownInWebView2();
+            }
+        }
+
+        public void CollapsePanel2()
+        {
+            if (splitContainer1.Panel2Collapsed == false)
+            {
+                splitContainer1.Panel2Collapsed = true;
+            }
+        }
+
+        /// <summary>
+        /// initialize the webview2 control and load the html
+        /// </summary>
+        /// <param name="html"></param>
+        private async void LoadMarkdownInWebView2()
+        {
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            var html = Markdown.ToHtml(RtbPage.Text, pipeline);
+            await webView2Md.EnsureCoreWebView2Async();
+            webView2Md.NavigateToString(html);
         }
 
         private void RtbPage_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -2271,13 +2325,6 @@ namespace Notepad_Light
                 }
             }
         }
-
-        private void MarkdownViewToolStripButton_Click(object sender, EventArgs e)
-        {
-            FrmMarkdownViewer fmv = new FrmMarkdownViewer(RtbPage.Text);
-            fmv.ShowDialog();
-        }
-
         private void SelectAllContextMenu_Click(object sender, EventArgs e)
         {
             RtbPage.SelectAll();

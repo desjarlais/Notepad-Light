@@ -162,6 +162,7 @@
             this.FindTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.FindToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.ToolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.MarkdownViewToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
@@ -170,11 +171,17 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.autosaveTimer = new System.Windows.Forms.Timer(this.components);
-            this.MarkdownViewToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webView2Md)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -351,12 +358,12 @@
             this.RtbPage.CausesValidation = false;
             this.RtbPage.ContextMenuStrip = this.contextMenuStrip1;
             this.RtbPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RtbPage.Location = new System.Drawing.Point(0, 49);
+            this.RtbPage.Location = new System.Drawing.Point(0, 0);
             this.RtbPage.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.RtbPage.Name = "RtbPage";
             this.RtbPage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.RtbPage.ShowSelectionMargin = true;
-            this.RtbPage.Size = new System.Drawing.Size(1135, 480);
+            this.RtbPage.Size = new System.Drawing.Size(550, 480);
             this.RtbPage.TabIndex = 1;
             this.RtbPage.Text = "";
             this.RtbPage.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.RtbPage_LinkClicked);
@@ -882,7 +889,7 @@
             // WordWrapToolStripMenuItem
             // 
             this.WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.WordWrapToolStripMenuItem.Text = "Word Wrap";
             this.WordWrapToolStripMenuItem.Click += new System.EventHandler(this.WordWrapToolStripMenuItem_Click);
             // 
@@ -895,7 +902,7 @@
             this.ZoomToolStripMenuItem250,
             this.ZoomToolStripMenuItem300});
             this.ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
@@ -1331,6 +1338,11 @@
             this.ToolStripSeparator9.Name = "ToolStripSeparator9";
             this.ToolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
+            // MarkdownViewToolStripButton
+            // 
+            this.MarkdownViewToolStripButton.Name = "MarkdownViewToolStripButton";
+            this.MarkdownViewToolStripButton.Size = new System.Drawing.Size(23, 22);
+            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
@@ -1360,23 +1372,41 @@
             this.autosaveTimer.Interval = 1000;
             this.autosaveTimer.Tick += new System.EventHandler(this.AutosaveTimer_Tick);
             // 
-            // MarkdownViewToolStripButton
+            // splitContainer1
             // 
-            this.MarkdownViewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MarkdownViewToolStripButton.Image = global::Notepad_Light.Properties.Resources.MarkdownFile;
-            this.MarkdownViewToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MarkdownViewToolStripButton.Name = "MarkdownViewToolStripButton";
-            this.MarkdownViewToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.MarkdownViewToolStripButton.Text = "Markdown View";
-            this.MarkdownViewToolStripButton.ToolTipText = "Toggle Markdown View";
-            this.MarkdownViewToolStripButton.Click += new System.EventHandler(this.MarkdownViewToolStripButton_Click);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.RtbPage);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.webView2Md);
+            this.splitContainer1.Size = new System.Drawing.Size(1135, 480);
+            this.splitContainer1.SplitterDistance = 550;
+            this.splitContainer1.TabIndex = 5;
+            // 
+            // webView2Md
+            // 
+            this.webView2Md.AllowExternalDrop = true;
+            this.webView2Md.CreationProperties = null;
+            this.webView2Md.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView2Md.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webView2Md.Location = new System.Drawing.Point(0, 0);
+            this.webView2Md.Name = "webView2Md";
+            this.webView2Md.Size = new System.Drawing.Size(581, 480);
+            this.webView2Md.TabIndex = 0;
+            this.webView2Md.ZoomFactor = 1D;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 551);
-            this.Controls.Add(this.RtbPage);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1394,6 +1424,11 @@
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webView2Md)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1542,5 +1577,7 @@
         private ToolStripMenuItem RecentToolStripMenuItem8;
         private ToolStripMenuItem RecentToolStripMenuItem9;
         private ToolStripButton MarkdownViewToolStripButton;
+        private SplitContainer splitContainer1;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView2Md;
     }
 }
