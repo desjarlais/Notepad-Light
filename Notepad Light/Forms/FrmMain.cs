@@ -1294,6 +1294,7 @@ namespace Notepad_Light
             ZoomToolStripMenuItem200.ForeColor = clr;
             ZoomToolStripMenuItem250.ForeColor = clr;
             ZoomToolStripMenuItem300.ForeColor = clr;
+            TaskPaneToolStripMenuItem.ForeColor = clr;
 
             // update Help menu
             HelpToolStripMenuItem.ForeColor = clr;
@@ -1374,6 +1375,7 @@ namespace Notepad_Light
             ZoomToolStripMenuItem200.BackColor = clr;
             ZoomToolStripMenuItem250.BackColor = clr;
             ZoomToolStripMenuItem300.BackColor = clr;
+            TaskPaneToolStripMenuItem.BackColor = clr;
 
             // update Help menu
             AboutToolStripMenuItem.BackColor = clr;
@@ -1420,6 +1422,16 @@ namespace Notepad_Light
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// search bing for the selected text and display it in the panel
+        /// </summary>
+        private async void WebView2Navigate()
+        {
+            await webView2Md.EnsureCoreWebView2Async();
+            string searchUrl = "https://www.bing.com/search?q=" + RtbPage.SelectedText;
+            webView2Md.Source = new Uri(searchUrl);
         }
 
         /// <summary>
@@ -2135,7 +2147,7 @@ namespace Notepad_Light
             UpdateToolbarIcons();
 
             // for markdown files, update the panel
-            if (splitContainer1.Panel2Collapsed == false)
+            if (splitContainer1.Panel2Collapsed == false && toolStripStatusLabelFileType.Text == "Markdown")
             {
                 LoadMarkdownInWebView2();
             }
@@ -2325,6 +2337,25 @@ namespace Notepad_Light
                 }
             }
         }
+
+        private void SearchContextMenu_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = false;
+            WebView2Navigate();
+        }
+
+        private void BtnClosePanel2_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = true;
+            TaskPaneToolStripMenuItem.Checked = false;
+        }
+
+        private void TaskPaneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            TaskPaneToolStripMenuItem.Checked = !TaskPaneToolStripMenuItem.Checked;
+        }
+
         private void SelectAllContextMenu_Click(object sender, EventArgs e)
         {
             RtbPage.SelectAll();
