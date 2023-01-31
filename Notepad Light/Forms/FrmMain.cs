@@ -346,7 +346,7 @@ namespace Notepad_Light
                 {
                     LoadRtfFile(filePath);
                 }
-                else if (filePath.EndsWith(Strings.mdExt))
+                else if (filePath.EndsWith(Strings.mdExt) || filePath.EndsWith(Strings.md2Ext))
                 {
                     LoadMarkdownFile(filePath);
                     LoadMarkdownInWebView2();
@@ -391,7 +391,7 @@ namespace Notepad_Light
                     Title = "Open Document",
                     Filter = "Text Documents | *.txt;|" +
                              "RTF Documents | *.rtf; |" +
-                             "Markdown Documents | *.md;",
+                             "Markdown Documents | *.md; *.markdown",
                     AutoUpgradeEnabled = true,
                     RestoreDirectory = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -408,7 +408,7 @@ namespace Notepad_Light
                     {
                         LoadRtfFile(ofdFileOpen.FileName);
                     }
-                    else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt))
+                    else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt) || ofdFileOpen.FileName.EndsWith(Strings.md2Ext))
                     {
                         LoadMarkdownFile(ofdFileOpen.FileName);
                         LoadMarkdownInWebView2();
@@ -480,7 +480,7 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    if (gCurrentFileName.EndsWith(Strings.txtExt) || gCurrentFileName.EndsWith(Strings.mdExt))
+                    if (gCurrentFileName.EndsWith(Strings.txtExt) || gCurrentFileName.EndsWith(Strings.mdExt) || gCurrentFileName.EndsWith(Strings.md2Ext))
                     {
                         RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
                     }

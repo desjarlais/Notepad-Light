@@ -22,6 +22,7 @@
         public const string rtfExt = ".rtf";
         public const string txtExt = ".txt";
         public const string mdExt = ".md";
+        public const string md2Ext = ".markdown";
         public const string saveChangePrompt = "Do you want to save your changes?";
         public const string saveChangesTitle = "Save Changes";
         public const string replaceText = "Replace Text";
