@@ -11,7 +11,7 @@ OneNote style apps are also close, but they are too open on a per page basis...I
 
 # Features
 
-* Supports plain text and rtf file formats
+* Supports plain text, rtf and markdown file formats
 * Users can create, open and save new files
 * Users can open and save existing files
 * AutoSave every 10 minutes (choose between 1-10 minute increments)
@@ -41,3 +41,4 @@ OneNote style apps are also close, but they are too open on a per page basis...I
 * Insert Table
 * Insert Date/Time
 * Create and Insert Template / boilerplate text
+* Search Bing for selected text
