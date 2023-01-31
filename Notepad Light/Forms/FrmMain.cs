@@ -2153,6 +2153,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// function to collapse panel 2 when not needed
+        /// </summary>
         public void CollapsePanel2()
         {
             if (splitContainer1.Panel2Collapsed == false)
@@ -2167,9 +2170,12 @@ namespace Notepad_Light
         /// <param name="html"></param>
         private async void LoadMarkdownInWebView2()
         {
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            var html = Markdown.ToHtml(RtbPage.Text, pipeline);
+            // initialize the webview
             await webView2Md.EnsureCoreWebView2Async();
+
+            // render the html content of the markdown text
+            MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            string? html = Markdown.ToHtml(RtbPage.Text, pipeline);
             webView2Md.NavigateToString(html);
         }
 

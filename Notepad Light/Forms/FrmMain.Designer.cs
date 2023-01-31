@@ -907,7 +907,7 @@
             // WordWrapToolStripMenuItem
             // 
             this.WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.WordWrapToolStripMenuItem.Text = "Word Wrap";
             this.WordWrapToolStripMenuItem.Click += new System.EventHandler(this.WordWrapToolStripMenuItem_Click);
             // 
@@ -920,48 +920,48 @@
             this.ZoomToolStripMenuItem250,
             this.ZoomToolStripMenuItem300});
             this.ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
             // 
             this.ZoomToolStripMenuItem100.Name = "ZoomToolStripMenuItem100";
-            this.ZoomToolStripMenuItem100.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem100.Size = new System.Drawing.Size(102, 22);
             this.ZoomToolStripMenuItem100.Text = "100%";
             this.ZoomToolStripMenuItem100.Click += new System.EventHandler(this.ZoomToolStripMenuItem100_Click);
             // 
             // ZoomToolStripMenuItem150
             // 
             this.ZoomToolStripMenuItem150.Name = "ZoomToolStripMenuItem150";
-            this.ZoomToolStripMenuItem150.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem150.Size = new System.Drawing.Size(102, 22);
             this.ZoomToolStripMenuItem150.Text = "150%";
             this.ZoomToolStripMenuItem150.Click += new System.EventHandler(this.ZoomToolStripMenuItem150_Click);
             // 
             // ZoomToolStripMenuItem200
             // 
             this.ZoomToolStripMenuItem200.Name = "ZoomToolStripMenuItem200";
-            this.ZoomToolStripMenuItem200.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem200.Size = new System.Drawing.Size(102, 22);
             this.ZoomToolStripMenuItem200.Text = "200%";
             this.ZoomToolStripMenuItem200.Click += new System.EventHandler(this.ZoomToolStripMenuItem200_Click);
             // 
             // ZoomToolStripMenuItem250
             // 
             this.ZoomToolStripMenuItem250.Name = "ZoomToolStripMenuItem250";
-            this.ZoomToolStripMenuItem250.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem250.Size = new System.Drawing.Size(102, 22);
             this.ZoomToolStripMenuItem250.Text = "250%";
             this.ZoomToolStripMenuItem250.Click += new System.EventHandler(this.ZoomToolStripMenuItem250_Click);
             // 
             // ZoomToolStripMenuItem300
             // 
             this.ZoomToolStripMenuItem300.Name = "ZoomToolStripMenuItem300";
-            this.ZoomToolStripMenuItem300.Size = new System.Drawing.Size(180, 22);
+            this.ZoomToolStripMenuItem300.Size = new System.Drawing.Size(102, 22);
             this.ZoomToolStripMenuItem300.Text = "300%";
             this.ZoomToolStripMenuItem300.Click += new System.EventHandler(this.ZoomToolStripMenuItem300_Click);
             // 
             // TaskPaneToolStripMenuItem
             // 
             this.TaskPaneToolStripMenuItem.Name = "TaskPaneToolStripMenuItem";
-            this.TaskPaneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.TaskPaneToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.TaskPaneToolStripMenuItem.Text = "TaskPane";
             this.TaskPaneToolStripMenuItem.Click += new System.EventHandler(this.TaskPaneToolStripMenuItem_Click);
             // 
@@ -1431,9 +1431,11 @@
             // webView2Md
             // 
             this.webView2Md.AllowExternalDrop = true;
+            this.webView2Md.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.webView2Md.CreationProperties = null;
             this.webView2Md.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView2Md.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.webView2Md.Location = new System.Drawing.Point(0, 28);
             this.webView2Md.Name = "webView2Md";
             this.webView2Md.Size = new System.Drawing.Size(585, 452);
