@@ -321,11 +321,9 @@ namespace Notepad_Light
         {
             RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             splitContainer1.Panel2Collapsed = false;
+            TaskPaneToolStripMenuItem.Checked = true;
             gRtf = false;
             toolStripStatusLabelFileType.Text = "Markdown";
-
-            var mdResult = Markdown.ToHtml(RtbPage.Text);
-            
         }
 
         /// <summary>
@@ -341,10 +339,12 @@ namespace Notepad_Light
                 if (filePath.EndsWith(Strings.txtExt))
                 {
                     LoadPlainTextFile(filePath);
+                    UnloadMarkdown();
                 }
                 else if (filePath.EndsWith(Strings.rtfExt))
                 {
                     LoadRtfFile(filePath);
+                    UnloadMarkdown();
                 }
                 else if (filePath.EndsWith(Strings.mdExt) || filePath.EndsWith(Strings.md2Ext))
                 {
@@ -403,10 +403,12 @@ namespace Notepad_Light
                     if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
+                        UnloadMarkdown();
                     }
                     else if (ofdFileOpen.FileName.EndsWith(Strings.rtfExt))
                     {
                         LoadRtfFile(ofdFileOpen.FileName);
+                        UnloadMarkdown();
                     }
                     else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt) || ofdFileOpen.FileName.EndsWith(Strings.md2Ext))
                     {
@@ -2161,7 +2163,25 @@ namespace Notepad_Light
             if (splitContainer1.Panel2Collapsed == false)
             {
                 splitContainer1.Panel2Collapsed = true;
+                TaskPaneToolStripMenuItem.Checked = false;
             }
+        }
+
+        public void DisplayPanel2()
+        {
+            if (splitContainer1.Panel2Collapsed == true)
+            {
+                splitContainer1.Panel2Collapsed = false;
+                TaskPaneToolStripMenuItem.Checked = true;
+            }
+        }
+
+        private async void UnloadMarkdown()
+        {
+            // initialize the webview
+            await webView2Md.EnsureCoreWebView2Async();
+            string? html = Markdown.ToHtml(string.Empty);
+            webView2Md.NavigateToString(html);
         }
 
         /// <summary>
