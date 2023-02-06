@@ -53,6 +53,8 @@
             this.toolStripStatusLabelSeparator4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelAppVer = new System.Windows.Forms.ToolStripStatusLabel();
             this.appVersionToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.readOnlyToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.RtbPage = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CutContextMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -176,6 +178,7 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.BtnClosePanel2 = new System.Windows.Forms.ToolStripButton();
             this.webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.appStateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -213,7 +216,10 @@
             this.EncodingToolStripStatusLabel,
             this.toolStripStatusLabelSeparator4,
             this.toolStripStatusLabelAppVer,
-            this.appVersionToolStripStatusLabel});
+            this.appVersionToolStripStatusLabel,
+            this.toolStripStatusLabel2,
+            this.appStateToolStripStatusLabel,
+            this.readOnlyToolStripStatusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 529);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 8, 0);
@@ -354,11 +360,23 @@
             this.appVersionToolStripStatusLabel.Size = new System.Drawing.Size(40, 17);
             this.appVersionToolStripStatusLabel.Text = "1.0.0.0";
             // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusLabel2.Text = "|";
+            // 
+            // readOnlyToolStripStatusLabel
+            // 
+            this.readOnlyToolStripStatusLabel.Name = "readOnlyToolStripStatusLabel";
+            this.readOnlyToolStripStatusLabel.Size = new System.Drawing.Size(44, 17);
+            this.readOnlyToolStripStatusLabel.Text = "Editing";
+            // 
             // RtbPage
             // 
             this.RtbPage.AcceptsTab = true;
             this.RtbPage.AutoWordSelection = true;
-            this.RtbPage.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RtbPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RtbPage.CausesValidation = false;
             this.RtbPage.ContextMenuStrip = this.contextMenuStrip1;
             this.RtbPage.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1442,6 +1460,12 @@
             this.webView2Md.TabIndex = 0;
             this.webView2Md.ZoomFactor = 1D;
             // 
+            // appStateToolStripStatusLabel
+            // 
+            this.appStateToolStripStatusLabel.Name = "appStateToolStripStatusLabel";
+            this.appStateToolStripStatusLabel.Size = new System.Drawing.Size(61, 17);
+            this.appStateToolStripStatusLabel.Text = "App State:";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1626,5 +1650,8 @@
         private ToolStrip toolStrip2;
         private ToolStripButton BtnClosePanel2;
         private ToolStripMenuItem TaskPaneToolStripMenuItem;
+        private ToolStripStatusLabel toolStripStatusLabel2;
+        private ToolStripStatusLabel readOnlyToolStripStatusLabel;
+        private ToolStripStatusLabel appStateToolStripStatusLabel;
     }
 }

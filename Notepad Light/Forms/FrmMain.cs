@@ -240,6 +240,8 @@ namespace Notepad_Light
             RtbPage.Clear();
             CollapsePanel2();
             ClearFormatting();
+            RtbPage.ReadOnly = false;
+            readOnlyToolStripStatusLabel.Text = "Editing";
             UpdateFormTitle(Strings.defaultFileName);
 
             // check for file type and update UI accordingly
@@ -317,9 +319,14 @@ namespace Notepad_Light
             toolStripStatusLabelFileType.Text = Strings.rtf;
         }
 
+        /// <summary>
+        /// load the markdown file and update UI
+        /// </summary>
+        /// <param name="filePath"></param>
         public void LoadMarkdownFile(string filePath)
         {
             RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            DisableToolbarFormattingIcons();
             splitContainer1.Panel2Collapsed = false;
             TaskPaneToolStripMenuItem.Checked = true;
             gRtf = false;
@@ -336,6 +343,7 @@ namespace Notepad_Light
             {
                 Cursor = Cursors.WaitCursor;
                 CollapsePanel2();
+                CheckForReadOnly(filePath);
                 if (filePath.EndsWith(Strings.txtExt))
                 {
                     LoadPlainTextFile(filePath);
@@ -369,6 +377,19 @@ namespace Notepad_Light
             {
                 UpdateToolbarIcons();
                 Cursor = Cursors.Default;
+            }
+        }
+
+        public void CheckForReadOnly(string filePath)
+        {
+            FileInfo fi = new FileInfo(filePath);
+            if (fi.IsReadOnly)
+            {
+                readOnlyToolStripStatusLabel.Text = "Read-Only";
+            }
+            else
+            {
+                readOnlyToolStripStatusLabel.Text = "Editing";
             }
         }
 
@@ -446,6 +467,7 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                     gPrevPageLength = RtbPage.TextLength;
                     UpdateDocStats();
+                    CheckForReadOnly(ofdFileOpen.FileName);
                     RtbPage.Modified = false;
                 }
             }
@@ -476,7 +498,8 @@ namespace Notepad_Light
                 }
 
                 // if modified untitled = saveas, existing files only need save
-                if (gCurrentFileName.ToString() == Strings.defaultFileName && RtbPage.Modified == true)
+                // if the file is readonly, any changes need to be a new file
+                if ((gCurrentFileName.ToString() == Strings.defaultFileName && RtbPage.Modified == true) || readOnlyToolStripStatusLabel.Text == "Read-Only")
                 {
                     FileSaveAs();
                 }
@@ -954,6 +977,11 @@ namespace Notepad_Light
             HighlightTextToolStripButton.Enabled = true;
             PictureToolStripMenuItem.Enabled = true;
             TableToolStripMenuItem.Enabled = true;
+            RightJustifiedToolStripButton.Enabled = true;
+            CenterJustifiedToolStripButton.Enabled = true;
+            LeftJustifiedToolStripButton.Enabled = true;
+            DecreaseIndentToolStripButton.Enabled = true;
+            IncreaseIndentToolStripButton.Enabled = true;
         }
 
         /// <summary>
@@ -970,6 +998,11 @@ namespace Notepad_Light
             HighlightTextToolStripButton.Enabled = false;
             PictureToolStripMenuItem.Enabled = false;
             TableToolStripMenuItem.Enabled = false;
+            RightJustifiedToolStripButton.Enabled = false;
+            CenterJustifiedToolStripButton.Enabled = false;
+            LeftJustifiedToolStripButton.Enabled = false;
+            DecreaseIndentToolStripButton.Enabled = false;
+            IncreaseIndentToolStripButton.Enabled = false;
         }
 
         /// <summary>
@@ -982,6 +1015,9 @@ namespace Notepad_Light
             UnderlineToolStripButton.Checked = false;
             StrikethroughToolStripButton.Checked = false;
             BulletToolStripButton.Checked = false;
+            RightJustifiedToolStripButton.Checked = false;
+            CenterJustifiedToolStripButton.Checked = false;
+            LeftJustifiedToolStripButton.Checked = false;
         }
 
         /// <summary>
@@ -1755,10 +1791,10 @@ namespace Notepad_Light
                 // this is a toggle on sceanrio to add the bullet with no indent
                 RtbPage.SelectionBullet = true;
                 RtbPage.SelectionIndent = 0;
-
-                // todo: find a way to account for existing indents and move the bullet accordingly
-                // see https://github.com/desjarlais/Notepad-Light/issues/10
             }
+
+            // todo: find a way to account for existing indents and move the bullet accordingly
+            // see https://github.com/desjarlais/Notepad-Light/issues/10
 
             EndOfButtonFormatWork();
         }
@@ -2164,15 +2200,6 @@ namespace Notepad_Light
             {
                 splitContainer1.Panel2Collapsed = true;
                 TaskPaneToolStripMenuItem.Checked = false;
-            }
-        }
-
-        public void DisplayPanel2()
-        {
-            if (splitContainer1.Panel2Collapsed == true)
-            {
-                splitContainer1.Panel2Collapsed = false;
-                TaskPaneToolStripMenuItem.Checked = true;
             }
         }
 
