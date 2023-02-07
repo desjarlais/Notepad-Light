@@ -15,6 +15,8 @@ namespace Notepad_Light.Forms
             Win32.GetSystemInfo(ref info);
 
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine("CPU Details:");
+            sb.AppendLine("-----------");
             sb.AppendLine("Processor Architecture = " + ConvertProcArchitecture(info.wProcessorArchitecture));
             sb.AppendLine("Number of processors = " + info.dwNumberOfProcessors);
             sb.AppendLine("Page Size = " + info.dwPageSize);
@@ -22,17 +24,11 @@ namespace Notepad_Light.Forms
             sb.AppendLine("OS Details:");
             sb.AppendLine("-----------");
             OperatingSystem os = Environment.OSVersion;
-
             sb.AppendLine("OS Version = " + os.Version);
             sb.AppendLine("OS Platform = " + ConvertPlatform((int)os.Platform));
             sb.AppendLine("OS Service Pack = " + os.ServicePack);
             sb.AppendLine("OS Version String = " + os.VersionString);
-
             Version ver = os.Version;
-            sb.AppendLine("Major Version = " + ver.Major);
-            sb.AppendLine("Major Revision = " + ver.MajorRevision);
-            sb.AppendLine("Minor Version = " + ver.Minor);
-            sb.AppendLine("Minor Revision = " + ver.MinorRevision);
             sb.AppendLine("Build = " + ver.Build);
 
             TxbSysInfo.Text = sb.ToString();

@@ -183,6 +183,26 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DocumentCollection {
+            get {
+                object obj = ResourceManager.GetObject("DocumentCollection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DocumentGroup {
+            get {
+                object obj = ResourceManager.GetObject("DocumentGroup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ErrorSquiggleCriticalInactive_16x {
             get {
                 object obj = ResourceManager.GetObject("ErrorSquiggleCriticalInactive_16x", resourceCulture);
@@ -266,6 +286,16 @@ namespace Notepad_Light.Properties {
         internal static System.Drawing.Bitmap Italic_16x {
             get {
                 object obj = ResourceManager.GetObject("Italic_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ListView {
+            get {
+                object obj = ResourceManager.GetObject("ListView", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -473,6 +503,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TextFile {
+            get {
+                object obj = ResourceManager.GetObject("TextFile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TextIndent_16x {
             get {
                 object obj = ResourceManager.GetObject("TextIndent_16x", resourceCulture);
@@ -566,6 +606,16 @@ namespace Notepad_Light.Properties {
         internal static System.Drawing.Bitmap Zoom_16x {
             get {
                 object obj = ResourceManager.GetObject("Zoom_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ZoomToggle {
+            get {
+                object obj = ResourceManager.GetObject("ZoomToggle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

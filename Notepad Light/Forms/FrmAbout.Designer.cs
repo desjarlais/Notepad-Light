@@ -43,9 +43,9 @@
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(410, 232);
+            this.BtnOK.Location = new System.Drawing.Point(400, 232);
             this.BtnOK.Name = "BtnOK";
-            this.BtnOK.Size = new System.Drawing.Size(56, 23);
+            this.BtnOK.Size = new System.Drawing.Size(66, 23);
             this.BtnOK.TabIndex = 1;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;

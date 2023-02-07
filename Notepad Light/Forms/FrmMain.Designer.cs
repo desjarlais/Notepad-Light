@@ -54,6 +54,7 @@
             this.toolStripStatusLabelAppVer = new System.Windows.Forms.ToolStripStatusLabel();
             this.appVersionToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.appStateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.readOnlyToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.RtbPage = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -178,7 +179,6 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.BtnClosePanel2 = new System.Windows.Forms.ToolStripButton();
             this.webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.appStateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -366,6 +366,12 @@
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(10, 17);
             this.toolStripStatusLabel2.Text = "|";
             // 
+            // appStateToolStripStatusLabel
+            // 
+            this.appStateToolStripStatusLabel.Name = "appStateToolStripStatusLabel";
+            this.appStateToolStripStatusLabel.Size = new System.Drawing.Size(61, 17);
+            this.appStateToolStripStatusLabel.Text = "App State:";
+            // 
             // readOnlyToolStripStatusLabel
             // 
             this.readOnlyToolStripStatusLabel.Name = "readOnlyToolStripStatusLabel";
@@ -494,7 +500,7 @@
             this.NewToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             this.NewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.NewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.NewToolStripMenuItem.Text = "&New";
             this.NewToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
@@ -504,7 +510,7 @@
             this.OpenToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
             this.OpenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.OpenToolStripMenuItem.Text = "&Open";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
@@ -520,15 +526,16 @@
             this.RecentToolStripMenuItem7,
             this.RecentToolStripMenuItem8,
             this.RecentToolStripMenuItem9});
+            this.RecentToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.DocumentCollection;
             this.RecentToolStripMenuItem.Name = "RecentToolStripMenuItem";
-            this.RecentToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.RecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem.Text = "Recent Files";
             // 
             // RecentToolStripMenuItem1
             // 
             this.RecentToolStripMenuItem1.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem1.Name = "RecentToolStripMenuItem1";
-            this.RecentToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem1.Text = "empty";
             this.RecentToolStripMenuItem1.Click += new System.EventHandler(this.RecentToolStripMenuItem1_Click);
             // 
@@ -536,7 +543,7 @@
             // 
             this.RecentToolStripMenuItem2.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem2.Name = "RecentToolStripMenuItem2";
-            this.RecentToolStripMenuItem2.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem2.Text = "empty";
             this.RecentToolStripMenuItem2.Click += new System.EventHandler(this.RecentToolStripMenuItem2_Click);
             // 
@@ -544,7 +551,7 @@
             // 
             this.RecentToolStripMenuItem3.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem3.Name = "RecentToolStripMenuItem3";
-            this.RecentToolStripMenuItem3.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem3.Text = "empty";
             this.RecentToolStripMenuItem3.Click += new System.EventHandler(this.RecentToolStripMenuItem3_Click);
             // 
@@ -552,7 +559,7 @@
             // 
             this.RecentToolStripMenuItem4.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem4.Name = "RecentToolStripMenuItem4";
-            this.RecentToolStripMenuItem4.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem4.Text = "empty";
             this.RecentToolStripMenuItem4.Click += new System.EventHandler(this.RecentToolStripMenuItem4_Click);
             // 
@@ -560,7 +567,7 @@
             // 
             this.RecentToolStripMenuItem5.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem5.Name = "RecentToolStripMenuItem5";
-            this.RecentToolStripMenuItem5.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem5.Text = "empty";
             this.RecentToolStripMenuItem5.Click += new System.EventHandler(this.RecentToolStripMenuItem5_Click);
             // 
@@ -568,7 +575,7 @@
             // 
             this.RecentToolStripMenuItem6.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem6.Name = "RecentToolStripMenuItem6";
-            this.RecentToolStripMenuItem6.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem6.Text = "empty";
             this.RecentToolStripMenuItem6.Click += new System.EventHandler(this.RecentToolStripMenuItem6_Click);
             // 
@@ -576,7 +583,7 @@
             // 
             this.RecentToolStripMenuItem7.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem7.Name = "RecentToolStripMenuItem7";
-            this.RecentToolStripMenuItem7.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem7.Text = "empty";
             this.RecentToolStripMenuItem7.Click += new System.EventHandler(this.RecentToolStripMenuItem7_Click);
             // 
@@ -584,7 +591,7 @@
             // 
             this.RecentToolStripMenuItem8.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem8.Name = "RecentToolStripMenuItem8";
-            this.RecentToolStripMenuItem8.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem8.Text = "empty";
             this.RecentToolStripMenuItem8.Click += new System.EventHandler(this.RecentToolStripMenuItem8_Click);
             // 
@@ -592,14 +599,14 @@
             // 
             this.RecentToolStripMenuItem9.Image = global::Notepad_Light.Properties.Resources.Document_16x;
             this.RecentToolStripMenuItem9.Name = "RecentToolStripMenuItem9";
-            this.RecentToolStripMenuItem9.Size = new System.Drawing.Size(108, 22);
+            this.RecentToolStripMenuItem9.Size = new System.Drawing.Size(180, 22);
             this.RecentToolStripMenuItem9.Text = "empty";
             this.RecentToolStripMenuItem9.Click += new System.EventHandler(this.RecentToolStripMenuItem9_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(177, 6);
             this.toolStripSeparator12.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator12_Paint);
             // 
             // SaveToolStripMenuItem
@@ -608,7 +615,7 @@
             this.SaveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             this.SaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SaveToolStripMenuItem.Text = "&Save";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
@@ -616,21 +623,21 @@
             // 
             this.SaveAsToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.SaveAs_16x;
             this.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SaveAsToolStripMenuItem.Text = "Save &As";
             this.SaveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(177, 6);
             this.toolStripSeparator14.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator14_Paint);
             // 
             // PrintToolStripMenuItem
             // 
             this.PrintToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.PrintStatusBar1_16x;
             this.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
-            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.PrintToolStripMenuItem.Text = "Print";
             this.PrintToolStripMenuItem.Click += new System.EventHandler(this.PrintToolStripMenuItem_Click);
             // 
@@ -638,7 +645,7 @@
             // 
             this.PrintPreviewToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.PrintPreview_16x;
             this.PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem";
-            this.PrintPreviewToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.PrintPreviewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.PrintPreviewToolStripMenuItem.Text = "Print Preview";
             this.PrintPreviewToolStripMenuItem.Click += new System.EventHandler(this.PrintPreviewToolStripMenuItem_Click);
             // 
@@ -646,21 +653,21 @@
             // 
             this.PageSetupToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.PageGuide_16x;
             this.PageSetupToolStripMenuItem.Name = "PageSetupToolStripMenuItem";
-            this.PageSetupToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.PageSetupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.PageSetupToolStripMenuItem.Text = "Page Setup";
             this.PageSetupToolStripMenuItem.Click += new System.EventHandler(this.PageSetupToolStripMenuItem_Click);
             // 
             // ToolStripSeparator1
             // 
             this.ToolStripSeparator1.Name = "ToolStripSeparator1";
-            this.ToolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.ToolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             this.ToolStripSeparator1.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator1_Paint);
             // 
             // OptionsToolStripMenuItem
             // 
             this.OptionsToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Settings_16x;
             this.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
-            this.OptionsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.OptionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.OptionsToolStripMenuItem.Text = "Options";
             this.OptionsToolStripMenuItem.Click += new System.EventHandler(this.FileOptionsToolStripMenuItem_Click);
             // 
@@ -668,7 +675,7 @@
             // 
             this.ExitToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Exit_16x;
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ExitToolStripMenuItem.Text = "E&xit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -696,7 +703,7 @@
             this.UndoToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Undo_16x;
             this.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem";
             this.UndoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.UndoToolStripMenuItem.Text = "&Undo";
             this.UndoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItem_Click);
             // 
@@ -705,14 +712,14 @@
             this.RedoToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Redo_16x;
             this.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem";
             this.RedoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.RedoToolStripMenuItem.Text = "&Redo";
             this.RedoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItem_Click);
             // 
             // ToolStripSeparator3
             // 
             this.ToolStripSeparator3.Name = "ToolStripSeparator3";
-            this.ToolStripSeparator3.Size = new System.Drawing.Size(161, 6);
+            this.ToolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             this.ToolStripSeparator3.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator3_Paint);
             // 
             // CutToolStripMenuItem
@@ -721,7 +728,7 @@
             this.CutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CutToolStripMenuItem.Name = "CutToolStripMenuItem";
             this.CutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.CutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.CutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CutToolStripMenuItem.Text = "Cu&t";
             this.CutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItem_Click);
             // 
@@ -731,7 +738,7 @@
             this.CopyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
             this.CopyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CopyToolStripMenuItem.Text = "&Copy";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
@@ -741,14 +748,14 @@
             this.PasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem";
             this.PasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.PasteToolStripMenuItem.Text = "&Paste";
             this.PasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
             // 
             // ToolStripSeparator4
             // 
             this.ToolStripSeparator4.Name = "ToolStripSeparator4";
-            this.ToolStripSeparator4.Size = new System.Drawing.Size(161, 6);
+            this.ToolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             this.ToolStripSeparator4.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator4_Paint);
             // 
             // SelectAllToolStripMenuItem
@@ -756,7 +763,7 @@
             this.SelectAllToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.SelectAll_16x;
             this.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem";
             this.SelectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.SelectAllToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.SelectAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SelectAllToolStripMenuItem.Text = "Select &All";
             this.SelectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllToolStripMenuItem_Click);
             // 
@@ -764,14 +771,14 @@
             // 
             this.ClearAllTextToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ClearCollection_ActionGray_16x;
             this.ClearAllTextToolStripMenuItem.Name = "ClearAllTextToolStripMenuItem";
-            this.ClearAllTextToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.ClearAllTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ClearAllTextToolStripMenuItem.Text = "Clear All Text";
             this.ClearAllTextToolStripMenuItem.Click += new System.EventHandler(this.ClearAllTextToolStripMenuItem_Click);
             // 
             // ToolStripSeparator13
             // 
             this.ToolStripSeparator13.Name = "ToolStripSeparator13";
-            this.ToolStripSeparator13.Size = new System.Drawing.Size(161, 6);
+            this.ToolStripSeparator13.Size = new System.Drawing.Size(177, 6);
             this.ToolStripSeparator13.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator13_Paint);
             // 
             // FindToolStripMenuItem
@@ -779,7 +786,7 @@
             this.FindToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.FindNext_16x;
             this.FindToolStripMenuItem.Name = "FindToolStripMenuItem";
             this.FindToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.FindToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.FindToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.FindToolStripMenuItem.Text = "Find";
             this.FindToolStripMenuItem.Click += new System.EventHandler(this.FindToolStripMenuItem_Click);
             // 
@@ -787,7 +794,7 @@
             // 
             this.ReplaceToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ReplaceAll_16x;
             this.ReplaceToolStripMenuItem.Name = "ReplaceToolStripMenuItem";
-            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ReplaceToolStripMenuItem.Text = "Replace";
             this.ReplaceToolStripMenuItem.Click += new System.EventHandler(this.ReplaceToolStripMenuItem_Click);
             // 
@@ -805,7 +812,7 @@
             // 
             this.PictureToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Image_16x;
             this.PictureToolStripMenuItem.Name = "PictureToolStripMenuItem";
-            this.PictureToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.PictureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.PictureToolStripMenuItem.Text = "Picture";
             this.PictureToolStripMenuItem.Click += new System.EventHandler(this.PictureToolStripMenuItem_Click);
             // 
@@ -813,7 +820,7 @@
             // 
             this.TableToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Table_16x;
             this.TableToolStripMenuItem.Name = "TableToolStripMenuItem";
-            this.TableToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.TableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.TableToolStripMenuItem.Text = "Table";
             this.TableToolStripMenuItem.Click += new System.EventHandler(this.TableToolStripMenuItem_Click);
             // 
@@ -821,7 +828,7 @@
             // 
             this.dateTimeToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.DateTimeAxis_16x;
             this.dateTimeToolStripMenuItem.Name = "dateTimeToolStripMenuItem";
-            this.dateTimeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.dateTimeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.dateTimeToolStripMenuItem.Text = "Date / Time";
             this.dateTimeToolStripMenuItem.Click += new System.EventHandler(this.DateTimeToolStripMenuItem_Click);
             // 
@@ -838,7 +845,7 @@
             // 
             this.EditFontToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Font_16x;
             this.EditFontToolStripMenuItem.Name = "EditFontToolStripMenuItem";
-            this.EditFontToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.EditFontToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.EditFontToolStripMenuItem.Text = "Edit Font";
             this.EditFontToolStripMenuItem.Click += new System.EventHandler(this.EditFontToolStripMenuItem_Click);
             // 
@@ -846,7 +853,7 @@
             // 
             this.ClearFormattingToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ClearCollection_16x;
             this.ClearFormattingToolStripMenuItem.Name = "ClearFormattingToolStripMenuItem";
-            this.ClearFormattingToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.ClearFormattingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ClearFormattingToolStripMenuItem.Text = "Clear Formatting";
             this.ClearFormattingToolStripMenuItem.Click += new System.EventHandler(this.ClearFormattingToolStripMenuItem_Click);
             // 
@@ -866,49 +873,54 @@
             // 
             // Template1ToolStripMenuItem
             // 
+            this.Template1ToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.TextFile;
             this.Template1ToolStripMenuItem.Name = "Template1ToolStripMenuItem";
-            this.Template1ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.Template1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Template1ToolStripMenuItem.Text = "Template 1";
             this.Template1ToolStripMenuItem.Click += new System.EventHandler(this.Template1ToolStripMenuItem_Click);
             // 
             // Template2ToolStripMenuItem
             // 
+            this.Template2ToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.TextFile;
             this.Template2ToolStripMenuItem.Name = "Template2ToolStripMenuItem";
-            this.Template2ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.Template2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Template2ToolStripMenuItem.Text = "Template 2";
             this.Template2ToolStripMenuItem.Click += new System.EventHandler(this.Template2ToolStripMenuItem_Click);
             // 
             // Template3ToolStripMenuItem
             // 
+            this.Template3ToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.TextFile;
             this.Template3ToolStripMenuItem.Name = "Template3ToolStripMenuItem";
-            this.Template3ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.Template3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Template3ToolStripMenuItem.Text = "Template 3";
             this.Template3ToolStripMenuItem.Click += new System.EventHandler(this.Template3ToolStripMenuItem_Click);
             // 
             // Template4ToolStripMenuItem
             // 
+            this.Template4ToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.TextFile;
             this.Template4ToolStripMenuItem.Name = "Template4ToolStripMenuItem";
-            this.Template4ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.Template4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Template4ToolStripMenuItem.Text = "Template 4";
             this.Template4ToolStripMenuItem.Click += new System.EventHandler(this.Template4ToolStripMenuItem_Click);
             // 
             // Template5ToolStripMenuItem
             // 
+            this.Template5ToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.TextFile;
             this.Template5ToolStripMenuItem.Name = "Template5ToolStripMenuItem";
-            this.Template5ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.Template5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Template5ToolStripMenuItem.Text = "Template 5";
             this.Template5ToolStripMenuItem.Click += new System.EventHandler(this.Template5ToolStripMenuItem_Click);
             // 
             // ToolStripSeparator18
             // 
             this.ToolStripSeparator18.Name = "ToolStripSeparator18";
-            this.ToolStripSeparator18.Size = new System.Drawing.Size(170, 6);
+            this.ToolStripSeparator18.Size = new System.Drawing.Size(177, 6);
             this.ToolStripSeparator18.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolStripSeparator18_Paint);
             // 
             // ManageTemplatesToolStripMenuItem
             // 
             this.ManageTemplatesToolStripMenuItem.Name = "ManageTemplatesToolStripMenuItem";
-            this.ManageTemplatesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.ManageTemplatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ManageTemplatesToolStripMenuItem.Text = "Manage Templates";
             this.ManageTemplatesToolStripMenuItem.Click += new System.EventHandler(this.ManageTemplatesToolStripMenuItem_Click);
             // 
@@ -925,7 +937,7 @@
             // WordWrapToolStripMenuItem
             // 
             this.WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.WordWrapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.WordWrapToolStripMenuItem.Text = "Word Wrap";
             this.WordWrapToolStripMenuItem.Click += new System.EventHandler(this.WordWrapToolStripMenuItem_Click);
             // 
@@ -937,49 +949,50 @@
             this.ZoomToolStripMenuItem200,
             this.ZoomToolStripMenuItem250,
             this.ZoomToolStripMenuItem300});
+            this.ZoomToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.ZoomToggle;
             this.ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.ZoomToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
             // 
             this.ZoomToolStripMenuItem100.Name = "ZoomToolStripMenuItem100";
-            this.ZoomToolStripMenuItem100.Size = new System.Drawing.Size(102, 22);
+            this.ZoomToolStripMenuItem100.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem100.Text = "100%";
             this.ZoomToolStripMenuItem100.Click += new System.EventHandler(this.ZoomToolStripMenuItem100_Click);
             // 
             // ZoomToolStripMenuItem150
             // 
             this.ZoomToolStripMenuItem150.Name = "ZoomToolStripMenuItem150";
-            this.ZoomToolStripMenuItem150.Size = new System.Drawing.Size(102, 22);
+            this.ZoomToolStripMenuItem150.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem150.Text = "150%";
             this.ZoomToolStripMenuItem150.Click += new System.EventHandler(this.ZoomToolStripMenuItem150_Click);
             // 
             // ZoomToolStripMenuItem200
             // 
             this.ZoomToolStripMenuItem200.Name = "ZoomToolStripMenuItem200";
-            this.ZoomToolStripMenuItem200.Size = new System.Drawing.Size(102, 22);
+            this.ZoomToolStripMenuItem200.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem200.Text = "200%";
             this.ZoomToolStripMenuItem200.Click += new System.EventHandler(this.ZoomToolStripMenuItem200_Click);
             // 
             // ZoomToolStripMenuItem250
             // 
             this.ZoomToolStripMenuItem250.Name = "ZoomToolStripMenuItem250";
-            this.ZoomToolStripMenuItem250.Size = new System.Drawing.Size(102, 22);
+            this.ZoomToolStripMenuItem250.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem250.Text = "250%";
             this.ZoomToolStripMenuItem250.Click += new System.EventHandler(this.ZoomToolStripMenuItem250_Click);
             // 
             // ZoomToolStripMenuItem300
             // 
             this.ZoomToolStripMenuItem300.Name = "ZoomToolStripMenuItem300";
-            this.ZoomToolStripMenuItem300.Size = new System.Drawing.Size(102, 22);
+            this.ZoomToolStripMenuItem300.Size = new System.Drawing.Size(180, 22);
             this.ZoomToolStripMenuItem300.Text = "300%";
             this.ZoomToolStripMenuItem300.Click += new System.EventHandler(this.ZoomToolStripMenuItem300_Click);
             // 
             // TaskPaneToolStripMenuItem
             // 
             this.TaskPaneToolStripMenuItem.Name = "TaskPaneToolStripMenuItem";
-            this.TaskPaneToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.TaskPaneToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.TaskPaneToolStripMenuItem.Text = "TaskPane";
             this.TaskPaneToolStripMenuItem.Click += new System.EventHandler(this.TaskPaneToolStripMenuItem_Click);
             // 
@@ -996,7 +1009,7 @@
             // 
             this.ReportBugToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Bug_16x;
             this.ReportBugToolStripMenuItem.Name = "ReportBugToolStripMenuItem";
-            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.ReportBugToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ReportBugToolStripMenuItem.Text = "Report Bug";
             this.ReportBugToolStripMenuItem.Click += new System.EventHandler(this.ReportBugToolStripMenuItem_Click);
             // 
@@ -1004,7 +1017,7 @@
             // 
             this.AboutToolStripMenuItem.Image = global::Notepad_Light.Properties.Resources.Dialog_16x;
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AboutToolStripMenuItem.Text = "&About...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -1459,12 +1472,6 @@
             this.webView2Md.Size = new System.Drawing.Size(585, 452);
             this.webView2Md.TabIndex = 0;
             this.webView2Md.ZoomFactor = 1D;
-            // 
-            // appStateToolStripStatusLabel
-            // 
-            this.appStateToolStripStatusLabel.Name = "appStateToolStripStatusLabel";
-            this.appStateToolStripStatusLabel.Size = new System.Drawing.Size(61, 17);
-            this.appStateToolStripStatusLabel.Text = "App State:";
             // 
             // FrmMain
             // 
