@@ -35,6 +35,7 @@
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbxIncludeDateTimeWithTemplates = new System.Windows.Forms.CheckBox();
             this.cbxInsertPictureWithTransparency = new System.Windows.Forms.CheckBox();
             this.cbxCleanupTempAppFilesOnExit = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -50,12 +51,14 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoLightMode = new System.Windows.Forms.RadioButton();
             this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.cbxIncludeDateTimeWithTemplates = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ckbPasteRtfUnformatted = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -123,20 +126,29 @@
             this.groupBox3.Controls.Add(this.cbxNewFileFormat);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.nudAutoSaveInterval);
-            this.groupBox3.Controls.Add(this.ckbUsePasteUI);
             this.groupBox3.Location = new System.Drawing.Point(6, 192);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Size = new System.Drawing.Size(442, 192);
+            this.groupBox3.Size = new System.Drawing.Size(277, 166);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "App Options";
             // 
+            // cbxIncludeDateTimeWithTemplates
+            // 
+            this.cbxIncludeDateTimeWithTemplates.AutoSize = true;
+            this.cbxIncludeDateTimeWithTemplates.Location = new System.Drawing.Point(14, 102);
+            this.cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
+            this.cbxIncludeDateTimeWithTemplates.Size = new System.Drawing.Size(257, 19);
+            this.cbxIncludeDateTimeWithTemplates.TabIndex = 15;
+            this.cbxIncludeDateTimeWithTemplates.Text = "Include Date\\Time When Inserting Template";
+            this.cbxIncludeDateTimeWithTemplates.UseVisualStyleBackColor = true;
+            // 
             // cbxInsertPictureWithTransparency
             // 
             this.cbxInsertPictureWithTransparency.AutoSize = true;
-            this.cbxInsertPictureWithTransparency.Location = new System.Drawing.Point(17, 104);
+            this.cbxInsertPictureWithTransparency.Location = new System.Drawing.Point(14, 77);
             this.cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
             this.cbxInsertPictureWithTransparency.Size = new System.Drawing.Size(200, 19);
             this.cbxInsertPictureWithTransparency.TabIndex = 14;
@@ -146,7 +158,7 @@
             // cbxCleanupTempAppFilesOnExit
             // 
             this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
-            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(17, 79);
+            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(14, 52);
             this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
             this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(220, 19);
             this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
@@ -176,7 +188,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 161);
+            this.label1.Location = new System.Drawing.Point(14, 134);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 15);
             this.label1.TabIndex = 10;
@@ -184,7 +196,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(176, 159);
+            this.nudAutoSaveInterval.Location = new System.Drawing.Point(173, 132);
             this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
             10,
             0,
@@ -207,7 +219,7 @@
             // ckbUsePasteUI
             // 
             this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(17, 56);
+            this.ckbUsePasteUI.Location = new System.Drawing.Point(5, 20);
             this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ckbUsePasteUI.Name = "ckbUsePasteUI";
             this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
@@ -305,21 +317,33 @@
             this.rdoDarkMode.Text = "Dark Mode";
             this.rdoDarkMode.UseVisualStyleBackColor = true;
             // 
-            // cbxIncludeDateTimeWithTemplates
+            // groupBox4
             // 
-            this.cbxIncludeDateTimeWithTemplates.AutoSize = true;
-            this.cbxIncludeDateTimeWithTemplates.Location = new System.Drawing.Point(17, 129);
-            this.cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
-            this.cbxIncludeDateTimeWithTemplates.Size = new System.Drawing.Size(262, 19);
-            this.cbxIncludeDateTimeWithTemplates.TabIndex = 15;
-            this.cbxIncludeDateTimeWithTemplates.Text = "Include Date\\Time When Inserting Templates";
-            this.cbxIncludeDateTimeWithTemplates.UseVisualStyleBackColor = true;
+            this.groupBox4.Controls.Add(this.ckbPasteRtfUnformatted);
+            this.groupBox4.Controls.Add(this.ckbUsePasteUI);
+            this.groupBox4.Location = new System.Drawing.Point(288, 192);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(159, 166);
+            this.groupBox4.TabIndex = 16;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Paste Options";
+            // 
+            // ckbPasteRtfUnformatted
+            // 
+            this.ckbPasteRtfUnformatted.AutoSize = true;
+            this.ckbPasteRtfUnformatted.Location = new System.Drawing.Point(5, 43);
+            this.ckbPasteRtfUnformatted.Name = "ckbPasteRtfUnformatted";
+            this.ckbPasteRtfUnformatted.Size = new System.Drawing.Size(146, 19);
+            this.ckbPasteRtfUnformatted.TabIndex = 2;
+            this.ckbPasteRtfUnformatted.Text = "Paste RTF Unformatted";
+            this.ckbPasteRtfUnformatted.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(654, 394);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
@@ -344,6 +368,8 @@
             this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -372,5 +398,7 @@
         private CheckBox cbxCleanupTempAppFilesOnExit;
         private CheckBox cbxInsertPictureWithTransparency;
         private CheckBox cbxIncludeDateTimeWithTemplates;
+        private GroupBox groupBox4;
+        private CheckBox ckbPasteRtfUnformatted;
     }
 }

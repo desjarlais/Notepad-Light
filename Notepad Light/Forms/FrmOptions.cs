@@ -75,6 +75,16 @@ namespace Notepad_Light.Forms
             {
                 cbxIncludeDateTimeWithTemplates.Checked = false;
             }
+
+            // update rtt paste option
+            if (Properties.Settings.Default.PasteRtfUnformatted)
+            {
+                ckbPasteRtfUnformatted.Checked = true;
+            }
+            else
+            {
+                ckbPasteRtfUnformatted.Checked = false;
+            }
         }
 
         public void UpdateMRUListbox()
@@ -166,6 +176,15 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.IncludeDateTimeWithTemplates = false;
+            }
+
+            if (ckbPasteRtfUnformatted.Checked == true)
+            {
+                Properties.Settings.Default.PasteRtfUnformatted = true;
+            }
+            else
+            {
+                Properties.Settings.Default.PasteRtfUnformatted = false;
             }
 
             Close();

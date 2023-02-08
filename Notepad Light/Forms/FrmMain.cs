@@ -410,9 +410,9 @@ namespace Notepad_Light
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Open Document",
-                    Filter = "Text Documents | *.txt;|" +
-                             "RTF Documents | *.rtf; |" +
-                             "Markdown Documents | *.md; *.markdown",
+                    Filter = "Plaint Text Format | *.txt;|" +
+                             "Rich Text Format | *.rtf; |" +
+                             "Markdown Format | *.md; *.markdown",
                     AutoUpgradeEnabled = true,
                     RestoreDirectory = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -539,9 +539,7 @@ namespace Notepad_Light
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
                     sfdSaveAs.Title = "Save As";
-                    sfdSaveAs.Filter = "Text Document (*.txt)|*.txt |Markdown Document (*.md)|*.md |Rich Text Format (RTF) (*.rtf)|*.rtf";
-                    sfdSaveAs.AddExtension = true;
-                    sfdSaveAs.AutoUpgradeEnabled = true;
+                    sfdSaveAs.Filter = "Plain Text Format (*.txt)|*.txt |Markdown Format (*.md)|*.md |Rich Text Format (*.rtf)|*.rtf";
 
                     // change the file type dropdown based on the selected file format
                     if (gRtf)
@@ -741,20 +739,32 @@ namespace Notepad_Light
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
                 {
+                    case Strings.pasteCsv: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.CommaSeparatedValue); break;
                     case Strings.plainText: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
                     case Strings.pasteHtml: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
                     case Strings.rtf:
-                        // todo: still need to see if there is a better way to handle this
-                        byte[] rtfByteArray = Encoding.UTF8.GetBytes(Clipboard.GetText(TextDataFormat.Rtf));
-                        MemoryStream rtfStream = new MemoryStream(rtfByteArray);
-                        RichTextBox tempRtb = new RichTextBox();
-                        tempRtb.LoadFile(rtfStream, RichTextBoxStreamType.RichText);
-                        tempRtb.Copy();
-                        RtbPage.Paste();
+                        if (Properties.Settings.Default.PasteRtfUnformatted)
+                        {
+                            // paste as unformatted rtf
+                            RtbPage.SelectedText = Clipboard.GetData(DataFormats.Rtf).ToString();
+                        }
+                        else
+                        {
+                            // todo: still need to see if there is a better way to handle this
+                            byte[] rtfByteArray = Encoding.UTF8.GetBytes(Clipboard.GetText(TextDataFormat.Rtf));
+                            MemoryStream rtfStream = new MemoryStream(rtfByteArray);
+                            RichTextBox tempRtb = new RichTextBox();
+                            tempRtb.LoadFile(rtfStream, RichTextBoxStreamType.RichText);
+                            tempRtb.Copy();
+                            RtbPage.Paste();
+                        }
                         break;
                     case Strings.pasteUnicode: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
                     case Strings.pasteImage: RtbPage.Paste(); break;
-                    default: RtbPage.Modified = false; break;
+                    default:
+                        RtbPage.Paste();
+                        RtbPage.Modified = false;
+                        break;
                 }
             }
         }
