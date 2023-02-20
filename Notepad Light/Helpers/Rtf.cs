@@ -5,7 +5,7 @@ namespace Notepad_Light.Helpers
 {
     public class Rtf
     {
-        #region Parser
+        #region RtfSamples
 
         #endregion
 

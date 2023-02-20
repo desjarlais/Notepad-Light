@@ -544,7 +544,7 @@ namespace Notepad_Light
                     // change the file type dropdown based on the selected file format
                     if (gRtf)
                     {
-                        sfdSaveAs.FilterIndex = 2;
+                        sfdSaveAs.FilterIndex = 3;
                     }
                     else
                     {
@@ -555,7 +555,7 @@ namespace Notepad_Light
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
                         Cursor = Cursors.WaitCursor;
-                        if (sfdSaveAs.FilterIndex == 1 || sfdSaveAs.FilterIndex == 3)
+                        if (sfdSaveAs.FilterIndex == 1 || sfdSaveAs.FilterIndex == 2)
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
                         }
@@ -750,7 +750,7 @@ namespace Notepad_Light
                         }
                         else
                         {
-                            // todo: still need to see if there is a better way to handle this
+                            // paste as formatted rtf
                             byte[] rtfByteArray = Encoding.UTF8.GetBytes(Clipboard.GetText(TextDataFormat.Rtf));
                             MemoryStream rtfStream = new MemoryStream(rtfByteArray);
                             RichTextBox tempRtb = new RichTextBox();
@@ -2202,7 +2202,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// function to collapse panel 2 when not needed
+        /// collapse panel 2 when not needed
         /// </summary>
         public void CollapsePanel2()
         {
