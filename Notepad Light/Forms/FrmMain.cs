@@ -1482,8 +1482,16 @@ namespace Notepad_Light
             webView2Md.Source = new Uri(searchUrl);
         }
 
+        /// <summary>
+        /// function to replace text, Find button needs to be clicked before this will work
+        /// </summary>
         public void ReplaceText()
         {
+            if (RtbPage.SelectedText == string.Empty)
+            {
+                return;
+            }
+
             FrmReplace fReplace = new FrmReplace(ActiveForm)
             {
                 Owner = this
@@ -1491,14 +1499,18 @@ namespace Notepad_Light
             fReplace.ShowDialog(this);
 
             // user cancelled the dialog scenario or no matches were found
-            if (fReplace.formExited || RtbPage.SelectedText == string.Empty)
+            if (fReplace.formExited)
             {
                 return;
             }
 
+            // single replace
             RtbPage.SelectedText = RtbPage.SelectedText.Replace(RtbPage.SelectedText, fReplace.replaceText);
         }
 
+        /// <summary>
+        /// handle the user clicking the Find button
+        /// </summary>
         public void FindText()
         {
             if (FindTextBox.Text == string.Empty)
@@ -1548,37 +1560,9 @@ namespace Notepad_Light
                     if (RtbPage.SelectionStart != 0)
                     {
                         MoveCursorToLocation(0, 0);
-                        FindToolStripButton.PerformClick();
+                        FindText();
                     }
                 }
-            }
-        }
-
-        #region Events
-
-        #endregion
-
-        /// <summary>
-        /// known issue in toolstripseparator not using back/fore colors
-        /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
-        /// this is for MenuStrip toolstrip separators, but not needed for ToolStrip separators
-        /// </summary>
-        /// <param name="sender">object param from the paint event</param>
-        /// <param name="e">eventarg from paint event</param>
-        /// <param name="cFill">backcolor for the separator</param>
-        /// <param name="cLine">forecolor for the separator</param>
-        public void PaintToolStripSeparator(object sender, PaintEventArgs e)
-        {
-            ToolStripSeparator sep = (ToolStripSeparator)sender;
-            if (Properties.Settings.Default.DarkMode)
-            {
-                e.Graphics.FillRectangle(new SolidBrush(clrDarkModeBackground), 0, 0, sep.Width, sep.Height);
-                e.Graphics.DrawLine(new Pen(Color.White), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
-            }
-            else
-            {
-                e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, sep.Width, sep.Height);
-                e.Graphics.DrawLine(new Pen(clrDarkModeBackground), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
             }
         }
 
@@ -1633,7 +1617,68 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// collapse panel 2 when not needed
+        /// </summary>
+        public void CollapsePanel2()
+        {
+            if (splitContainer1.Panel2Collapsed == false)
+            {
+                splitContainer1.Panel2Collapsed = true;
+                TaskPaneToolStripMenuItem.Checked = false;
+            }
+        }
+
+        private async void UnloadMarkdown()
+        {
+            // initialize the webview
+            await webView2Md.EnsureCoreWebView2Async();
+            string? html = Markdown.ToHtml(string.Empty);
+            webView2Md.NavigateToString(html);
+        }
+
+        /// <summary>
+        /// initialize the webview2 control and load the html
+        /// </summary>
+        /// <param name="html"></param>
+        private async void LoadMarkdownInWebView2()
+        {
+            // initialize the webview
+            await webView2Md.EnsureCoreWebView2Async();
+
+            // render the html content of the markdown text
+            MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            string? html = Markdown.ToHtml(RtbPage.Text, pipeline);
+            webView2Md.NavigateToString(html);
+        }
+
         #endregion
+
+        #region Events
+
+        /// <summary>
+        /// known issue in toolstripseparator not using back/fore colors
+        /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
+        /// this is for MenuStrip toolstrip separators, but not needed for ToolStrip separators
+        /// </summary>
+        /// <param name="sender">object param from the paint event</param>
+        /// <param name="e">eventarg from paint event</param>
+        /// <param name="cFill">backcolor for the separator</param>
+        /// <param name="cLine">forecolor for the separator</param>
+        public void PaintToolStripSeparator(object sender, PaintEventArgs e)
+        {
+            ToolStripSeparator sep = (ToolStripSeparator)sender;
+            if (Properties.Settings.Default.DarkMode)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(clrDarkModeBackground), 0, 0, sep.Width, sep.Height);
+                e.Graphics.DrawLine(new Pen(Color.White), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, sep.Width, sep.Height);
+                e.Graphics.DrawLine(new Pen(clrDarkModeBackground), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
+            }
+        }
 
         /// <summary>
         /// update line/column and toolbars
@@ -2227,41 +2272,6 @@ namespace Notepad_Light
             }
         }
 
-        /// <summary>
-        /// collapse panel 2 when not needed
-        /// </summary>
-        public void CollapsePanel2()
-        {
-            if (splitContainer1.Panel2Collapsed == false)
-            {
-                splitContainer1.Panel2Collapsed = true;
-                TaskPaneToolStripMenuItem.Checked = false;
-            }
-        }
-
-        private async void UnloadMarkdown()
-        {
-            // initialize the webview
-            await webView2Md.EnsureCoreWebView2Async();
-            string? html = Markdown.ToHtml(string.Empty);
-            webView2Md.NavigateToString(html);
-        }
-
-        /// <summary>
-        /// initialize the webview2 control and load the html
-        /// </summary>
-        /// <param name="html"></param>
-        private async void LoadMarkdownInWebView2()
-        {
-            // initialize the webview
-            await webView2Md.EnsureCoreWebView2Async();
-
-            // render the html content of the markdown text
-            MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            string? html = Markdown.ToHtml(RtbPage.Text, pipeline);
-            webView2Md.NavigateToString(html);
-        }
-
         private void RtbPage_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             if (e.LinkText is not null)
@@ -2477,5 +2487,7 @@ namespace Notepad_Light
         {
             ReplaceText();
         }
+
+        #endregion
     }
 }
