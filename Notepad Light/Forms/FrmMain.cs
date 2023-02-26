@@ -60,7 +60,7 @@ namespace Notepad_Light
             UpdateLnColValues();
             UpdateDocStats();
             UpdateAutoSaveInterval();
-            
+
             // update theme
             if (Properties.Settings.Default.DarkMode)
             {
@@ -93,7 +93,7 @@ namespace Notepad_Light
         }
 
         #region Class Properties
-        
+
         /// <summary>
         /// used for the adjust labor dialog return value
         /// </summary>
@@ -173,15 +173,15 @@ namespace Notepad_Light
                     // update the settings and template menu
                     switch (count)
                     {
-                        case 1: 
+                        case 1:
                             Properties.Settings.Default.Template1 = line;
                             Template1ToolStripMenuItem.Text = line;
                             break;
-                        case 2: 
+                        case 2:
                             Properties.Settings.Default.Template2 = line;
                             Template2ToolStripMenuItem.Text = line;
                             break;
-                        case 3: 
+                        case 3:
                             Properties.Settings.Default.Template3 = line;
                             Template3ToolStripMenuItem.Text = line;
                             break;
@@ -189,7 +189,7 @@ namespace Notepad_Light
                             Properties.Settings.Default.Template4 = line;
                             Template4ToolStripMenuItem.Text = line;
                             break;
-                        case 5: 
+                        case 5:
                             Properties.Settings.Default.Template5 = line;
                             Template5ToolStripMenuItem.Text = line;
                             break;
@@ -257,7 +257,7 @@ namespace Notepad_Light
                 ClearToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
             }
-            
+
             UpdateStatusBar();
             RtbPage.Modified = false;
         }
@@ -330,7 +330,7 @@ namespace Notepad_Light
             splitContainer1.Panel2Collapsed = false;
             TaskPaneToolStripMenuItem.Checked = true;
             gRtf = false;
-            toolStripStatusLabelFileType.Text = "Markdown";
+            toolStripStatusLabelFileType.Text = Strings.markdown;
         }
 
         /// <summary>
@@ -371,6 +371,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Unable to open file - " + ex.Message, "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 App.WriteErrorLogContent("FileMRUOpen Error = " + ex.Message, gErrorLog);
             }
             finally
@@ -473,6 +474,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Unable to open file - " + ex.Message, "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 App.WriteErrorLogContent("FileOpen Error = " + ex.Message, gErrorLog);
             }
             finally
@@ -509,7 +511,7 @@ namespace Notepad_Light
                     {
                         RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
                     }
-                    
+
                     if (gCurrentFileName.EndsWith(Strings.rtfExt))
                     {
                         RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.RichText);
@@ -520,6 +522,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Unable to save file - " + ex.Message, "File Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 App.WriteErrorLogContent("FileSave Error : " + ex.Message, gErrorLog);
             }
             finally
@@ -571,6 +574,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Unable to save file - " + ex.Message, "File Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 App.WriteErrorLogContent("FileSaveAs Error :" + ex.Message, gErrorLog);
             }
             finally
@@ -948,12 +952,12 @@ namespace Notepad_Light
             int lineCount;
             foreach (string line in RtbPage.Lines)
             {
-                char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', '=', '|', 
+                char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', '=', '|',
                     '&', '@', '#', '*', '%', '~', '(', ')', '/', '+', '[', ']', '{', '}', '<', '>', '$', '^' };
                 lineCount = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
                 totalWordCount += lineCount;
             }
-            
+
             // update the statusbar
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
             CharacterCountToolStripStatusLabel.Text = RtbPage.Text.Length.ToString();
@@ -1092,10 +1096,10 @@ namespace Notepad_Light
             {
                 RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Strikeout);
             }
-            
+
             EndOfButtonFormatWork();
         }
-        
+
         /// <summary>
         /// move the cursor to specified location in the richtextbox
         /// </summary>
@@ -1185,18 +1189,6 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// clear any check marks for zoom menu items
-        /// </summary>
-        public void ResetZoomMenu()
-        {
-            ZoomToolStripMenuItem100.Checked = false;
-            ZoomToolStripMenuItem150.Checked = false;
-            ZoomToolStripMenuItem200.Checked = false;
-            ZoomToolStripMenuItem250.Checked = false;
-            ZoomToolStripMenuItem300.Checked = false;
-        }
-
-        /// <summary>
         /// given a float percentage value, clear the menu
         /// and light up the new value then apply the zoom value
         /// </summary>
@@ -1204,7 +1196,15 @@ namespace Notepad_Light
         public void ApplyZoom(float zoomPercentage)
         {
             RtbPage.ZoomFactor = zoomPercentage;
-            ResetZoomMenu();
+
+            // reset the check marks
+            ZoomToolStripMenuItem100.Checked = false;
+            ZoomToolStripMenuItem150.Checked = false;
+            ZoomToolStripMenuItem200.Checked = false;
+            ZoomToolStripMenuItem250.Checked = false;
+            ZoomToolStripMenuItem300.Checked = false;
+
+            // mark the menu item based on the zoom %
             switch (zoomPercentage)
             {
                 case 1.0f: ZoomToolStripMenuItem100.Checked = true; break;
@@ -1259,7 +1259,7 @@ namespace Notepad_Light
             EditTimerToolStripButton.ForeColor = clr;
             FindToolStripButton.ForeColor = clr;
             SearchToolStripLabel.ForeColor = clr;
-            
+
             // update status bar labels
             toolStripStatusLabelCol.ForeColor = clr;
             toolStripStatusLabelColumn.ForeColor = clr;
@@ -1482,6 +1482,82 @@ namespace Notepad_Light
             webView2Md.Source = new Uri(searchUrl);
         }
 
+        public void ReplaceText()
+        {
+            FrmReplace fReplace = new FrmReplace(ActiveForm)
+            {
+                Owner = this
+            };
+            fReplace.ShowDialog(this);
+
+            // user cancelled the dialog scenario or no matches were found
+            if (fReplace.formExited || RtbPage.SelectedText == string.Empty)
+            {
+                return;
+            }
+
+            RtbPage.SelectedText = RtbPage.SelectedText.Replace(RtbPage.SelectedText, fReplace.replaceText);
+        }
+
+        public void FindText()
+        {
+            if (FindTextBox.Text == string.Empty)
+            {
+                return;
+            }
+            else
+            {
+                // if the cursor is at the end of the textbox, change start position to 0
+                if (RtbPage.SelectionStart == RtbPage.Text.Length)
+                {
+                    MoveCursorToLocation(0, 0);
+                }
+
+                int indexToText;
+                if (Properties.Settings.Default.SearchOption == Strings.findUp)
+                {
+                    // search up the file and find any word match
+                    indexToText = RtbPage.Find(FindTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
+                }
+                else if (Properties.Settings.Default.SearchOption == Strings.findDown)
+                {
+                    // search from the top down and find any word match
+                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                }
+                else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
+                {
+                    // only find words that match the case exactly
+                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
+                }
+                else
+                {
+                    // only find words that have the entire word in the search textbox
+                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
+                }
+
+                // move to the location of the find result
+                if (indexToText >= 0)
+                {
+                    MoveCursorToLocation(indexToText, FindTextBox.Text.Length);
+                }
+
+                // end of the document, restart at the beginning
+                if (indexToText == -1)
+                {
+                    // only move if something was found
+                    if (RtbPage.SelectionStart != 0)
+                    {
+                        MoveCursorToLocation(0, 0);
+                        FindToolStripButton.PerformClick();
+                    }
+                }
+            }
+        }
+
+        #region Events
+
+        #endregion
+
         /// <summary>
         /// known issue in toolstripseparator not using back/fore colors
         /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
@@ -1541,7 +1617,7 @@ namespace Notepad_Light
             try
             {
                 // if the doc is not modified, nothing to do
-                RtbPage.Invoke((MethodInvoker)delegate { if (RtbPage.Modified == false ) { return; }});
+                RtbPage.Invoke((MethodInvoker)delegate { if (RtbPage.Modified == false) { return; } });
 
                 // save the existing changes to the file
                 if (gCurrentFileName != Strings.defaultFileName)
@@ -1683,7 +1759,7 @@ namespace Notepad_Light
                 fontDialog1.ShowColor = false;
                 fontDialog1.ShowEffects = false;
             }
-            
+
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
                 // rtf will allow font and color changes
@@ -1815,7 +1891,7 @@ namespace Notepad_Light
             {
                 RtbPage.SelectionIndent -= 30;
             }
-            
+
             EndOfButtonFormatWork();
         }
 
@@ -1887,7 +1963,7 @@ namespace Notepad_Light
         {
             if (sender is not null) { OpenRecentFile(sender.ToString()!); }
         }
-        
+
         private void RecentToolStripMenuItem6_Click(object sender, EventArgs e)
         {
             if (sender is not null) { OpenRecentFile(sender.ToString()!); }
@@ -1930,57 +2006,7 @@ namespace Notepad_Light
 
         private void FindToolStripButton_Click(object sender, EventArgs e)
         {
-            if (FindTextBox.Text == string.Empty)
-            {
-                return;
-            }
-            else
-            {
-                // if the cursor is at the end of the textbox, change start position to 0
-                if (RtbPage.SelectionStart == RtbPage.Text.Length)
-                {
-                    MoveCursorToLocation(0, 0);
-                }
-
-                int indexToText;
-                if (Properties.Settings.Default.SearchOption == Strings.findUp)
-                {
-                    // search up the file and find any word match
-                    indexToText = RtbPage.Find(FindTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
-                }
-                else if (Properties.Settings.Default.SearchOption == Strings.findDown)
-                {
-                    // search from the top down and find any word match
-                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
-                }
-                else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
-                {
-                    // only find words that match the case exactly
-                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
-                }
-                else
-                {
-                    // only find words that have the entire word in the search textbox
-                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
-                }
-
-                // move to the location of the find result
-                if (indexToText >= 0)
-                {
-                    MoveCursorToLocation(indexToText, FindTextBox.Text.Length);
-                }
-
-                // end of the document, restart at the beginning
-                if (indexToText == -1)
-                {
-                    // only move if something was found
-                    if (RtbPage.SelectionStart != 0)
-                    {
-                        MoveCursorToLocation(0, 0);
-                        FindToolStripButton.PerformClick();
-                    }
-                }
-            }
+            FindText();
         }
 
         private void FileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2103,7 +2129,7 @@ namespace Notepad_Light
         private void FindToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RtbPage.Focus();
-            FindToolStripButton.PerformClick();
+            FindText();
         }
 
         private void EditTimerToolStripButton_Click(object sender, EventArgs e)
@@ -2113,7 +2139,7 @@ namespace Notepad_Light
                 Owner = this
             };
             fEditedTimer.ShowDialog(this);
-            
+
             // if the time was adjusted, reset the timer and update the display
             if (fEditedTimer._isAdjustedTime)
             {
@@ -2356,49 +2382,7 @@ namespace Notepad_Light
 
         private void ReplaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmReplace fReplace = new FrmReplace(RtbPage.Lines.ToList())
-            {
-                Owner = this
-            };
-            fReplace.ShowDialog(this);
-
-            // user cancelled the dialog scenario or no matches were found
-            if (fReplace.formExited)
-            {
-                return;
-            }
-
-            // now replace the value(s) from the dialog
-            if (fReplace.replaceAll)
-            {
-                RtbPage.Text = RtbPage.Text.Replace(fReplace.findText, fReplace.replaceText);
-                RtbPage.Modified = true;
-                MessageBox.Show(Strings.textReplaced, Strings.replaceText, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                int lineCount = 0;
-                foreach (var line in RtbPage.Lines)
-                {
-                    if (lineCount == fReplace.prevLineIndex)
-                    {
-                        int indexToFindResultText = RtbPage.Find(line);
-                        if (indexToFindResultText == -1)
-                        {
-                            MessageBox.Show("No Matches To Replace", Strings.replaceText, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
-                        else
-                        {
-                            MoveCursorToLocation(indexToFindResultText, line.Length);
-                            RtbPage.SelectedText = RtbPage.SelectedText.Replace(fReplace.findText, fReplace.replaceText);
-                            RtbPage.Modified = true;
-                            MessageBox.Show(Strings.textReplaced, Strings.replaceText, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    lineCount++;
-                }
-            }
+            ReplaceText();
         }
 
         private void SearchContextMenu_Click(object sender, EventArgs e)
@@ -2487,6 +2471,11 @@ namespace Notepad_Light
             StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
             StartStopTimerToolStripButton.Text = Strings.startTimeText;
             ClearTimeSpanVariables();
+        }
+
+        private void ReplaceToolStripButton_Click(object sender, EventArgs e)
+        {
+            ReplaceText();
         }
     }
 }

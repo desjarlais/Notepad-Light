@@ -29,133 +29,74 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmReplace));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbxFind = new System.Windows.Forms.TextBox();
-            this.tbxReplace = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.BtnFindNext = new System.Windows.Forms.Button();
-            this.BtnReplace = new System.Windows.Forms.Button();
-            this.cbxReplaceAll = new System.Windows.Forms.CheckBox();
-            this.RtbSearchResults = new System.Windows.Forms.RichTextBox();
-            this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Find what:";
+            label2 = new Label();
+            tbxReplace = new TextBox();
+            BtnReplace = new Button();
+            cbxReplaceAll = new CheckBox();
+            SuspendLayout();
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 139);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Replace with:";
-            // 
-            // tbxFind
-            // 
-            this.tbxFind.Location = new System.Drawing.Point(95, 9);
-            this.tbxFind.Name = "tbxFind";
-            this.tbxFind.Size = new System.Drawing.Size(478, 23);
-            this.tbxFind.TabIndex = 2;
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 9);
+            label2.Name = "label2";
+            label2.Size = new Size(77, 15);
+            label2.TabIndex = 1;
+            label2.Text = "Replace with:";
             // 
             // tbxReplace
             // 
-            this.tbxReplace.Location = new System.Drawing.Point(95, 136);
-            this.tbxReplace.Name = "tbxReplace";
-            this.tbxReplace.Size = new System.Drawing.Size(478, 23);
-            this.tbxReplace.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 71);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Found:";
-            // 
-            // BtnFindNext
-            // 
-            this.BtnFindNext.Location = new System.Drawing.Point(498, 38);
-            this.BtnFindNext.Name = "BtnFindNext";
-            this.BtnFindNext.Size = new System.Drawing.Size(75, 23);
-            this.BtnFindNext.TabIndex = 6;
-            this.BtnFindNext.Text = "Find Next";
-            this.BtnFindNext.UseVisualStyleBackColor = true;
-            this.BtnFindNext.Click += new System.EventHandler(this.BtnFindNext_Click);
+            tbxReplace.Location = new Point(95, 6);
+            tbxReplace.Name = "tbxReplace";
+            tbxReplace.Size = new Size(478, 23);
+            tbxReplace.TabIndex = 3;
             // 
             // BtnReplace
             // 
-            this.BtnReplace.Enabled = false;
-            this.BtnReplace.Location = new System.Drawing.Point(498, 166);
-            this.BtnReplace.Name = "BtnReplace";
-            this.BtnReplace.Size = new System.Drawing.Size(75, 23);
-            this.BtnReplace.TabIndex = 7;
-            this.BtnReplace.Text = "Replace";
-            this.BtnReplace.UseVisualStyleBackColor = true;
-            this.BtnReplace.Click += new System.EventHandler(this.BtnReplace_Click);
+            BtnReplace.Location = new Point(488, 36);
+            BtnReplace.Name = "BtnReplace";
+            BtnReplace.Size = new Size(85, 23);
+            BtnReplace.TabIndex = 7;
+            BtnReplace.Text = "Replace";
+            BtnReplace.UseVisualStyleBackColor = true;
+            BtnReplace.Click += BtnReplace_Click;
             // 
             // cbxReplaceAll
             // 
-            this.cbxReplaceAll.AutoSize = true;
-            this.cbxReplaceAll.Location = new System.Drawing.Point(95, 169);
-            this.cbxReplaceAll.Name = "cbxReplaceAll";
-            this.cbxReplaceAll.Size = new System.Drawing.Size(153, 19);
-            this.cbxReplaceAll.TabIndex = 8;
-            this.cbxReplaceAll.Text = "Replace All Occurrences";
-            this.cbxReplaceAll.UseVisualStyleBackColor = true;
-            // 
-            // RtbSearchResults
-            // 
-            this.RtbSearchResults.Enabled = false;
-            this.RtbSearchResults.Location = new System.Drawing.Point(95, 71);
-            this.RtbSearchResults.Name = "RtbSearchResults";
-            this.RtbSearchResults.Size = new System.Drawing.Size(478, 59);
-            this.RtbSearchResults.TabIndex = 9;
-            this.RtbSearchResults.Text = "";
+            cbxReplaceAll.AutoSize = true;
+            cbxReplaceAll.Enabled = false;
+            cbxReplaceAll.Location = new Point(95, 39);
+            cbxReplaceAll.Name = "cbxReplaceAll";
+            cbxReplaceAll.Size = new Size(153, 19);
+            cbxReplaceAll.TabIndex = 8;
+            cbxReplaceAll.Text = "Replace All Occurrences";
+            cbxReplaceAll.UseVisualStyleBackColor = true;
             // 
             // FrmReplace
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 207);
-            this.Controls.Add(this.RtbSearchResults);
-            this.Controls.Add(this.cbxReplaceAll);
-            this.Controls.Add(this.BtnReplace);
-            this.Controls.Add(this.BtnFindNext);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbxReplace);
-            this.Controls.Add(this.tbxFind);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.Name = "FrmReplace";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Replace Text";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmReplace_KeyDown);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(582, 72);
+            Controls.Add(cbxReplaceAll);
+            Controls.Add(BtnReplace);
+            Controls.Add(tbxReplace);
+            Controls.Add(label2);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FrmReplace";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Replace Text";
+            KeyDown += FrmReplace_KeyDown;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
         private Label label2;
-        private TextBox tbxFind;
         private TextBox tbxReplace;
-        private Label label3;
-        private Button BtnFindNext;
         private Button BtnReplace;
         private CheckBox cbxReplaceAll;
-        private RichTextBox RtbSearchResults;
     }
 }

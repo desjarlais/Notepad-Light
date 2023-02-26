@@ -7,6 +7,7 @@
         public const string semiColonNoSpaces = ":";
         public const string defaultFileName = "Untitled";
         public const string backupTemplateFileName = "TemplateBackup";
+        public const string markdown = "Markdown";
         public const string rtf = "Rtf";
         public const string plainText = "Text";
         public const string pasteHtml = "Html";
