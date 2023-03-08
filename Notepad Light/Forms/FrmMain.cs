@@ -1259,6 +1259,7 @@ namespace Notepad_Light
             EditTimerToolStripButton.ForeColor = clr;
             FindToolStripButton.ForeColor = clr;
             SearchToolStripLabel.ForeColor = clr;
+            ReplaceToolStripButton.ForeColor = clr;
 
             // update status bar labels
             toolStripStatusLabelCol.ForeColor = clr;
@@ -1278,6 +1279,8 @@ namespace Notepad_Light
             toolStripStatusLabelLines.ForeColor = clr;
             toolStripStatusLabelFileEncoding.ForeColor = clr;
             fontToolStripStatusLabel.ForeColor = clr;
+            appStateToolStripStatusLabel.ForeColor = clr;
+            readOnlyToolStripStatusLabel.ForeColor = clr;
 
             // update File menu
             FileToolStripMenuItem.ForeColor = clr;
