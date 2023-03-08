@@ -2054,7 +2054,10 @@ namespace Notepad_Light
 
         private void FindToolStripButton_Click(object sender, EventArgs e)
         {
-            FindText();
+            if (RtbPage.Text.Length > 0)
+            {
+                FindText();
+            }
         }
 
         private void FileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2489,6 +2492,19 @@ namespace Notepad_Light
         private void ReplaceToolStripButton_Click(object sender, EventArgs e)
         {
             ReplaceText();
+        }
+
+        private void FindTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // only show the replace button when there is text in the find textbox
+            if (FindTextBox.Text.Length > 0)
+            {
+                ReplaceToolStripButton.Enabled = true;
+            }
+            else
+            {
+                ReplaceToolStripButton.Enabled = false;
+            }
         }
 
         #endregion

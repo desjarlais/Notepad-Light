@@ -1247,6 +1247,7 @@
             FindTextBox.BorderStyle = BorderStyle.FixedSingle;
             FindTextBox.Name = "FindTextBox";
             FindTextBox.Size = new Size(150, 25);
+            FindTextBox.TextChanged += FindTextBox_TextChanged;
             // 
             // FindToolStripButton
             // 
@@ -1260,6 +1261,7 @@
             // 
             // ReplaceToolStripButton
             // 
+            ReplaceToolStripButton.Enabled = false;
             ReplaceToolStripButton.Image = Properties.Resources.ReplaceAll_16x;
             ReplaceToolStripButton.ImageTransparentColor = Color.Magenta;
             ReplaceToolStripButton.Name = "ReplaceToolStripButton";
