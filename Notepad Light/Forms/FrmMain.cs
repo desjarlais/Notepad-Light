@@ -77,7 +77,7 @@ namespace Notepad_Light
             autosaveTimer.Start();
 
             // setup log file
-            gErrorLog = Strings.appFolderDirectoryUrl + Strings.errorLogFile;
+            gErrorLog = Strings.appFolderDirectoryUrl;
 
             // setup templates
             UpdateTemplateMenu();
@@ -1528,43 +1528,54 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                 }
 
-                int indexToText;
-                if (Properties.Settings.Default.SearchOption == Strings.findUp)
+                try
                 {
-                    // search up the file and find any word match
-                    indexToText = RtbPage.Find(FindTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
-                }
-                else if (Properties.Settings.Default.SearchOption == Strings.findDown)
-                {
-                    // search from the top down and find any word match
-                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
-                }
-                else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
-                {
-                    // only find words that match the case exactly
-                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
-                }
-                else
-                {
-                    // only find words that have the entire word in the search textbox
-                    indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
-                }
-
-                // move to the location of the find result
-                if (indexToText >= 0)
-                {
-                    MoveCursorToLocation(indexToText, FindTextBox.Text.Length);
-                }
-
-                // end of the document, restart at the beginning
-                if (indexToText == -1)
-                {
-                    // only move if something was found
-                    if (RtbPage.SelectionStart != 0)
+                    int indexToText;
+                    if (Properties.Settings.Default.SearchOption == Strings.findUp)
                     {
-                        MoveCursorToLocation(0, 0);
-                        FindText();
+                        // search up the file and find any word match
+                        indexToText = RtbPage.Find(FindTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
                     }
+                    else if (Properties.Settings.Default.SearchOption == Strings.findDown)
+                    {
+                        // search from the top down and find any word match
+                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                    }
+                    else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
+                    {
+                        // only find words that match the case exactly
+                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
+                    }
+                    else
+                    {
+                        // only find words that have the entire word in the search textbox
+                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
+                    }
+
+                    // move to the location of the find result
+                    if (indexToText >= 0)
+                    {
+                        MoveCursorToLocation(indexToText, FindTextBox.Text.Length);
+                    }
+
+                    // end of the document, restart at the beginning
+                    if (indexToText == -1)
+                    {
+                        // only move if something was found
+                        if (RtbPage.SelectionStart != 0)
+                        {
+                            MoveCursorToLocation(0, 0);
+                            FindText();
+                        }
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    // ignore the exception and write out the selection details
+                    App.WriteErrorLogContent("FindText Error: " + ex.Message, gErrorLog);
+                    App.WriteErrorLogContent("Stack: " + ex.StackTrace, gErrorLog);
+                    App.WriteErrorLogContent("SelectionStart: " + RtbPage.SelectionStart, gErrorLog);
+                    App.WriteErrorLogContent("RtbPage Text Lengh:" + RtbPage.Text.Length, gErrorLog);
                 }
             }
         }
@@ -2500,10 +2511,12 @@ namespace Notepad_Light
             if (FindTextBox.Text.Length > 0)
             {
                 ReplaceToolStripButton.Enabled = true;
+                ReplaceToolStripMenuItem.Enabled = true;
             }
             else
             {
                 ReplaceToolStripButton.Enabled = false;
+                ReplaceToolStripMenuItem.Enabled = false;
             }
         }
 
