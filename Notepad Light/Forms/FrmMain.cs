@@ -411,7 +411,8 @@ namespace Notepad_Light
                 OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Open Document",
-                    Filter = "Plaint Text Format | *.txt;|" +
+                    Filter = "All Supported Formats | *.txt; *.rtf; *.md; *.markdown |" +
+                             "Plain Text Format | *.txt;|" +
                              "Rich Text Format | *.rtf; |" +
                              "Markdown Format | *.md; *.markdown",
                     AutoUpgradeEnabled = true,
