@@ -301,7 +301,16 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadPlainTextFile(string filePath)
         {
-            RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            if (EncodingToolStripStatusLabel.Text.Contains("Unicode"))
+            {
+                string text = File.ReadAllText(filePath, Encoding.UTF8);
+                RtbPage.Text = text;
+            }
+            else
+            {
+                RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            }
+            
             DisableToolbarFormattingIcons();
             gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.plainText;
@@ -325,7 +334,16 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadMarkdownFile(string filePath)
         {
-            RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            if (EncodingToolStripStatusLabel.Text.Contains("Unicode"))
+            {
+                string text = File.ReadAllText(filePath, Encoding.UTF8);
+                RtbPage.Text = text;
+            }
+            else
+            {
+                RtbPage.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
+            }
+
             DisableToolbarFormattingIcons();
             splitContainer1.Panel2Collapsed = false;
             TaskPaneToolStripMenuItem.Checked = true;
@@ -344,6 +362,7 @@ namespace Notepad_Light
                 Cursor = Cursors.WaitCursor;
                 CollapsePanel2();
                 CheckForReadOnly(filePath);
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
                 if (filePath.EndsWith(Strings.txtExt))
                 {
                     LoadPlainTextFile(filePath);
@@ -360,7 +379,6 @@ namespace Notepad_Light
                     LoadMarkdownInWebView2();
                 }
 
-                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = RtbPage.TextLength;
@@ -381,6 +399,10 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// if a file is read only, update the UI so the user knows the app state
+        /// </summary>
+        /// <param name="filePath"></param>
         public void CheckForReadOnly(string filePath)
         {
             FileInfo fi = new FileInfo(filePath);
@@ -423,6 +445,8 @@ namespace Notepad_Light
                 // add the contents to the textbox
                 if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                 {
+                    // populate the file encoding first, it gets used in the loadfile
+                    EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName, false);
                     if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
@@ -440,7 +464,6 @@ namespace Notepad_Light
                     }
 
                     UpdateFormTitle(ofdFileOpen.FileName);
-                    EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName, false);
 
                     // if the file was opened and is in the mru, we don't want to add it
                     // this will check if it exists and if it does, don't update the mru
