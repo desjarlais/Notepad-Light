@@ -108,7 +108,66 @@ namespace Notepad_Light.Helpers
             internal ushort wProcessorRevision;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+
+            public POINT(int x, int y)
+            {
+                this.X = x;
+                this.Y = y;
+            }
+
+            public static implicit operator System.Drawing.Point(POINT p)
+            {
+                return new System.Drawing.Point(p.X, p.Y);
+            }
+
+            public static implicit operator POINT(System.Drawing.Point p)
+            {
+                return new POINT(p.X, p.Y);
+            }
+
+            public override string ToString()
+            {
+                return $"X: {X}, Y: {Y}";
+            }
+        }
+
+        [Serializable, StructLayout(LayoutKind.Sequential)]
+        public struct SCROLLINFO
+        {
+            public uint cbSize;
+            public uint fMask;
+            public int nMin;
+            public int nMax;
+            public uint nPage;
+            public int nPos;
+            public int nTrackPos;
+        }
+
+        public enum ScrollInfoMask : uint
+        {
+            SIF_RANGE = 0x1,
+            SIF_PAGE = 0x2,
+            SIF_POS = 0x4,
+            SIF_DISABLENOSCROLL = 0x8,
+            SIF_TRACKPOS = 0x10,
+            SIF_ALL = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS),
+        }
+        public enum SBOrientation : int
+        {
+            SB_HORZ = 0x0,
+            SB_VERT = 0x1,
+            SB_CTL = 0x2,
+            SB_BOTH = 0x3
+        }
+
         public const int WM_USER = 0x0400;
+        public const int EM_GETSCROLLPOS = WM_USER + 221;
+        public const int EM_SETSCROLLPOS = WM_USER + 222;
         public const int EM_FORMATRANGE = WM_USER + 57;
         public const int Hundredth2Twips = 20 * 72 / 100;
         
@@ -118,7 +177,7 @@ namespace Notepad_Light.Helpers
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern void GetSystemInfo(ref SYSTEM_INFO Info);
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);                
+        internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
         [DllImport("gdiplus.dll")]
         internal static extern uint GdipEmfToWmfBits(IntPtr HEmf, uint bufferSize, byte[] buffer, int mappingMode, EmfToWmfBitsFlags flags);
         [DllImport("gdi32.dll")]
@@ -129,5 +188,8 @@ namespace Notepad_Light.Helpers
         internal static extern bool DeleteMetaFile(IntPtr hWmf);
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteEnhMetaFile(IntPtr hEmf);
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
     }
 }

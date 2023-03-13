@@ -8,6 +8,11 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Text;
 using Markdig;
+using Microsoft.Web.WebView2.WinForms;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using static Notepad_Light.Helpers.Win32;
+using System.Windows.Forms;
 
 namespace Notepad_Light
 {
@@ -310,7 +315,7 @@ namespace Notepad_Light
             {
                 RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
-            
+
             DisableToolbarFormattingIcons();
             gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.plainText;
@@ -1593,7 +1598,7 @@ namespace Notepad_Light
                         }
                     }
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     // ignore the exception and write out the selection details
                     App.WriteErrorLogContent("FindText Error: " + ex.Message, gErrorLog);
@@ -1688,6 +1693,16 @@ namespace Notepad_Light
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
             string? html = Markdown.ToHtml(RtbPage.Text, pipeline);
             webView2Md.NavigateToString(html);
+        }
+
+        public POINT GetVScrollPos(RichTextBox box)
+        {
+            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(POINT)));
+            Marshal.StructureToPtr(new POINT(), ptr, false);
+            SendMessage(box.Handle, EM_GETSCROLLPOS, IntPtr.Zero, ptr);
+            POINT point = (POINT)Marshal.PtrToStructure(ptr, typeof(POINT))!;
+            Marshal.FreeHGlobal(ptr);
+            return point;
         }
 
         #endregion
@@ -2542,6 +2557,13 @@ namespace Notepad_Light
                 ReplaceToolStripButton.Enabled = false;
                 ReplaceToolStripMenuItem.Enabled = false;
             }
+        }
+
+        private void RtbPage_VScroll(object sender, EventArgs e)
+        {
+            POINT p = GetVScrollPos(RtbPage);
+            webView2Md.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
+            RtbPage.Refresh();
         }
 
         #endregion
