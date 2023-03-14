@@ -293,6 +293,16 @@ namespace Notepad_Light.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LinkButton {
+            get {
+                object obj = ResourceManager.GetObject("LinkButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ListView {
             get {
                 object obj = ResourceManager.GetObject("ListView", resourceCulture);
@@ -306,6 +316,26 @@ namespace Notepad_Light.Properties {
         internal static System.Drawing.Bitmap MarkdownFile {
             get {
                 object obj = ResourceManager.GetObject("MarkdownFile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MediaZoom {
+            get {
+                object obj = ResourceManager.GetObject("MediaZoom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MoveToFolder {
+            get {
+                object obj = ResourceManager.GetObject("MoveToFolder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -606,6 +636,16 @@ namespace Notepad_Light.Properties {
         internal static System.Drawing.Bitmap Zoom_16x {
             get {
                 object obj = ResourceManager.GetObject("Zoom_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ZoomIn {
+            get {
+                object obj = ResourceManager.GetObject("ZoomIn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

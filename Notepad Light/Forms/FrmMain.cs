@@ -432,6 +432,7 @@ namespace Notepad_Light
                 gPrevPageLength = RtbPage.TextLength;
                 UpdateMRU();
                 UpdateFormTitle(filePath);
+                UpdateCurrentFileType(filePath);
                 UpdateDocStats();
                 RtbPage.Modified = false;
             }
@@ -512,6 +513,7 @@ namespace Notepad_Light
                     }
 
                     UpdateFormTitle(ofdFileOpen.FileName);
+                    UpdateCurrentFileType(ofdFileOpen.FileName);
 
                     // if the file was opened and is in the mru, we don't want to add it
                     // this will check if it exists and if it does, don't update the mru
@@ -2615,7 +2617,7 @@ namespace Notepad_Light
         private void RtbPage_VScroll(object sender, EventArgs e)
         {
             // if the file is markdown, use synchronized scrolling
-            if (cFileType == CurrentFileType.Markdown) 
+            if (cFileType == CurrentFileType.Markdown)
             {
                 POINT p = GetVScrollPos(RtbPage);
                 webView2Md.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
