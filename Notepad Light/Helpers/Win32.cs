@@ -136,35 +136,6 @@ namespace Notepad_Light.Helpers
             }
         }
 
-        [Serializable, StructLayout(LayoutKind.Sequential)]
-        public struct SCROLLINFO
-        {
-            public uint cbSize;
-            public uint fMask;
-            public int nMin;
-            public int nMax;
-            public uint nPage;
-            public int nPos;
-            public int nTrackPos;
-        }
-
-        public enum ScrollInfoMask : uint
-        {
-            SIF_RANGE = 0x1,
-            SIF_PAGE = 0x2,
-            SIF_POS = 0x4,
-            SIF_DISABLENOSCROLL = 0x8,
-            SIF_TRACKPOS = 0x10,
-            SIF_ALL = (SIF_RANGE | SIF_PAGE | SIF_POS | SIF_TRACKPOS),
-        }
-        public enum SBOrientation : int
-        {
-            SB_HORZ = 0x0,
-            SB_VERT = 0x1,
-            SB_CTL = 0x2,
-            SB_BOTH = 0x3
-        }
-
         public const int WM_USER = 0x0400;
         public const int EM_GETSCROLLPOS = WM_USER + 221;
         public const int EM_SETSCROLLPOS = WM_USER + 222;
@@ -188,8 +159,5 @@ namespace Notepad_Light.Helpers
         internal static extern bool DeleteMetaFile(IntPtr hWmf);
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteEnhMetaFile(IntPtr hEmf);
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
     }
 }

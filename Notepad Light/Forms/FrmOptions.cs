@@ -10,11 +10,11 @@ namespace Notepad_Light.Forms
 
             // update options
             ckbUsePasteUI.Checked = Properties.Settings.Default.UsePasteUI;
-                        
+
             // check the file MRU and populate the list
             if (Properties.Settings.Default.FileMRU.Count > 0)
             {
-                UpdateMRUListbox();   
+                UpdateMRUListbox();
             }
 
             // update the find direction
@@ -41,9 +41,13 @@ namespace Notepad_Light.Forms
             {
                 cbxNewFileFormat.SelectedIndex = 0;
             }
-            else
+            else if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
             {
                 cbxNewFileFormat.SelectedIndex = 1;
+            }
+            else
+            {
+                cbxNewFileFormat.SelectedIndex = 2;
             }
 
             // update remove temp files
@@ -146,9 +150,13 @@ namespace Notepad_Light.Forms
             {
                 Properties.Settings.Default.NewFileFormat = Strings.plainText;
             }
-            else
+            else if (cbxNewFileFormat.SelectedIndex == 1)
             {
                 Properties.Settings.Default.NewFileFormat = Strings.rtf;
+            }
+            else
+            {
+                Properties.Settings.Default.NewFileFormat = Strings.markdown;
             }
 
             if (cbxCleanupTempAppFilesOnExit.Checked == true)
@@ -166,7 +174,7 @@ namespace Notepad_Light.Forms
             }
             else
             {
-                Properties.Settings.Default.UseImageTransparency= false;
+                Properties.Settings.Default.UseImageTransparency = false;
             }
 
             if (cbxIncludeDateTimeWithTemplates.Checked == true)

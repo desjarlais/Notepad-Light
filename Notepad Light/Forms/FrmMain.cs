@@ -8,11 +8,8 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Text;
 using Markdig;
-using Microsoft.Web.WebView2.WinForms;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using static Notepad_Light.Helpers.Win32;
-using System.Windows.Forms;
 
 namespace Notepad_Light
 {
@@ -22,7 +19,6 @@ namespace Notepad_Light
         public string gCurrentFileName = Strings.defaultFileName;
         public static string gErrorLog = string.Empty;
         public string gPrintString = string.Empty;
-        public bool gRtf = false;
         public int gPrevPageLength = 0;
         public int autoSaveInterval, autoSaveTicks;
         private string _EditedTime = string.Empty;
@@ -31,6 +27,14 @@ namespace Notepad_Light
         private TimeSpan tSpan;
         public Color clrDarkModeBackground, clrDarkModeTextBackground;
         private const char _semiColonDelim = ':';
+        public CurrentFileType cFileType;
+
+        public enum CurrentFileType
+        {
+            RTF,
+            Text,
+            Markdown
+        }
 
         public FrmMain()
         {
@@ -61,6 +65,7 @@ namespace Notepad_Light
 
             // update title, status, toolbars and autosave intervals
             UpdateFormTitle(gCurrentFileName);
+            UpdateCurrentFileType(gCurrentFileName);
             UpdateStatusBar();
             UpdateLnColValues();
             UpdateDocStats();
@@ -120,6 +125,36 @@ namespace Notepad_Light
             SetupAppFiles();
         }
 
+        /// <summary>
+        /// Populate a global variable with the current file type, which is used by other functions
+        /// </summary>
+        /// <param name="fName"></param>
+        /// <returns></returns>
+        public CurrentFileType UpdateCurrentFileType(string fName)
+        {
+            // when the file is the unsaved Untitled doc, set the name to the newfileformat in settings
+            if (gCurrentFileName == Strings.defaultFileName)
+            {
+                fName = Properties.Settings.Default.NewFileFormat;
+            }
+
+            // check the file based on the end or the newfileformat setting
+            if (fName.EndsWith(".rtf") || fName == Strings.rtf)
+            {
+                cFileType = CurrentFileType.RTF;
+            }
+            else if (fName.EndsWith(".md") || fName.EndsWith(".markdown") || fName == Strings.markdown)
+            {
+                cFileType = CurrentFileType.Markdown;
+            }
+            else if (fName.EndsWith(".txt") || fName == Strings.plainText)
+            {
+                cFileType = CurrentFileType.Text;
+            }
+
+            return cFileType;
+        }
+
         public void UpdateAutoSaveInterval()
         {
             autoSaveInterval = Properties.Settings.Default.AutoSaveInterval;
@@ -128,15 +163,20 @@ namespace Notepad_Light
 
         public void UpdateStatusBar()
         {
-            if (gRtf || gCurrentFileName.EndsWith(Strings.rtfExt))
+            if (cFileType == CurrentFileType.RTF)
             {
                 EnableToolbarFormattingIcons();
                 toolStripStatusLabelFileType.Text = Strings.rtf;
             }
-            else
+            else if (cFileType == CurrentFileType.Text)
             {
                 DisableToolbarFormattingIcons();
                 toolStripStatusLabelFileType.Text = Strings.plainText;
+            }
+            else
+            {
+                DisableToolbarFormattingIcons();
+                toolStripStatusLabelFileType.Text = Strings.markdown;
             }
         }
 
@@ -147,7 +187,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// function to make sure files that are used in the app exist
+        /// make sure files that are used in the app exist
         /// </summary>
         public void SetupAppFiles()
         {
@@ -248,22 +288,28 @@ namespace Notepad_Light
             RtbPage.ReadOnly = false;
             readOnlyToolStripStatusLabel.Text = "Editing";
             UpdateFormTitle(Strings.defaultFileName);
+            UpdateCurrentFileType(gCurrentFileName);
 
             // check for file type and update UI accordingly
-            if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
+            if (cFileType == CurrentFileType.RTF)
             {
-                gRtf = true;
                 EnableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbPage.Rtf, true);
+                toolStripStatusLabelFileType.Text = Strings.rtf;
+            }
+            else if (cFileType == CurrentFileType.Text)
+            {
+                ClearToolbarFormattingIcons();
+                EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
+                toolStripStatusLabelFileType.Text = Strings.plainText;
             }
             else
             {
-                gRtf = false;
                 ClearToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
+                toolStripStatusLabelFileType.Text = Strings.markdown;
             }
 
-            UpdateStatusBar();
             RtbPage.Modified = false;
         }
 
@@ -317,7 +363,6 @@ namespace Notepad_Light
             }
 
             DisableToolbarFormattingIcons();
-            gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.plainText;
         }
 
@@ -329,7 +374,6 @@ namespace Notepad_Light
         {
             RtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
             EnableToolbarFormattingIcons();
-            gRtf = true;
             toolStripStatusLabelFileType.Text = Strings.rtf;
         }
 
@@ -352,7 +396,6 @@ namespace Notepad_Light
             DisableToolbarFormattingIcons();
             splitContainer1.Panel2Collapsed = false;
             TaskPaneToolStripMenuItem.Checked = true;
-            gRtf = false;
             toolStripStatusLabelFileType.Text = Strings.markdown;
         }
 
@@ -574,13 +617,17 @@ namespace Notepad_Light
                     sfdSaveAs.Filter = "Plain Text Format (*.txt)|*.txt |Markdown Format (*.md)|*.md |Rich Text Format (*.rtf)|*.rtf";
 
                     // change the file type dropdown based on the selected file format
-                    if (gRtf)
+                    if (cFileType == CurrentFileType.RTF)
                     {
                         sfdSaveAs.FilterIndex = 3;
                     }
-                    else
+                    else if (cFileType == CurrentFileType.Text)
                     {
                         sfdSaveAs.FilterIndex = 1;
+                    }
+                    else
+                    {
+                        sfdSaveAs.FilterIndex = 2;
                     }
 
                     // save out the file based on the user selections
@@ -1847,7 +1894,7 @@ namespace Notepad_Light
         private void EditFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // setup the initial dialog values from settings
-            if (gRtf)
+            if (cFileType == CurrentFileType.RTF)
             {
                 fontDialog1.ShowColor = true;
                 fontDialog1.ShowEffects = true;
@@ -1861,7 +1908,7 @@ namespace Notepad_Light
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
                 // rtf will allow font and color changes
-                if (gRtf)
+                if (cFileType == CurrentFileType.RTF)
                 {
                     RtbPage.SelectionFont = fontDialog1.Font;
                     RtbPage.SelectionColor = fontDialog1.Color;
@@ -2166,7 +2213,7 @@ namespace Notepad_Light
                 Cursor = Cursors.WaitCursor;
 
                 // print rtf
-                if (gRtf)
+                if (cFileType == CurrentFileType.RTF)
                 {
                     e.HasMorePages = Win32.Print(RtbPage, ref charFrom, e);
                     return;
@@ -2322,7 +2369,7 @@ namespace Notepad_Light
             UpdateToolbarIcons();
 
             // for markdown files, update the panel
-            if (splitContainer1.Panel2Collapsed == false && toolStripStatusLabelFileType.Text == "Markdown")
+            if (splitContainer1.Panel2Collapsed == false && cFileType == CurrentFileType.Markdown)
             {
                 LoadMarkdownInWebView2();
             }
@@ -2497,7 +2544,7 @@ namespace Notepad_Light
 
         private void PrintDocument1_BeginPrint(object sender, PrintEventArgs e)
         {
-            if (gRtf)
+            if (cFileType == CurrentFileType.RTF)
             {
                 charFrom = 0;
             }
@@ -2559,11 +2606,21 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// used for synchronized scroll between rtb and the webview taskpane
+        /// not as accurate as I'd like but its a start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RtbPage_VScroll(object sender, EventArgs e)
         {
-            POINT p = GetVScrollPos(RtbPage);
-            webView2Md.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
-            RtbPage.Refresh();
+            // if the file is markdown, use synchronized scrolling
+            if (cFileType == CurrentFileType.Markdown) 
+            {
+                POINT p = GetVScrollPos(RtbPage);
+                webView2Md.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
+                RtbPage.Refresh();
+            }
         }
 
         #endregion

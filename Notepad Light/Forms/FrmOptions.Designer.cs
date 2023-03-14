@@ -29,349 +29,334 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOptions));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.LstMRU = new System.Windows.Forms.ListBox();
-            this.BtnClearMRU = new System.Windows.Forms.Button();
-            this.BtnOK = new System.Windows.Forms.Button();
-            this.BtnCancel = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cbxIncludeDateTimeWithTemplates = new System.Windows.Forms.CheckBox();
-            this.cbxInsertPictureWithTransparency = new System.Windows.Forms.CheckBox();
-            this.cbxCleanupTempAppFilesOnExit = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbxNewFileFormat = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.nudAutoSaveInterval = new System.Windows.Forms.NumericUpDown();
-            this.ckbUsePasteUI = new System.Windows.Forms.CheckBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.rdoWholeWord = new System.Windows.Forms.RadioButton();
-            this.rdoMatchCase = new System.Windows.Forms.RadioButton();
-            this.rdoFindDirectionDown = new System.Windows.Forms.RadioButton();
-            this.rdoFindDirectionUp = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rdoLightMode = new System.Windows.Forms.RadioButton();
-            this.rdoDarkMode = new System.Windows.Forms.RadioButton();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.ckbPasteRtfUnformatted = new System.Windows.Forms.CheckBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).BeginInit();
-            this.groupBox5.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.SuspendLayout();
+            groupBox1 = new GroupBox();
+            LstMRU = new ListBox();
+            BtnClearMRU = new Button();
+            BtnOK = new Button();
+            BtnCancel = new Button();
+            groupBox3 = new GroupBox();
+            cbxIncludeDateTimeWithTemplates = new CheckBox();
+            cbxInsertPictureWithTransparency = new CheckBox();
+            cbxCleanupTempAppFilesOnExit = new CheckBox();
+            label2 = new Label();
+            cbxNewFileFormat = new ComboBox();
+            label1 = new Label();
+            nudAutoSaveInterval = new NumericUpDown();
+            ckbUsePasteUI = new CheckBox();
+            groupBox5 = new GroupBox();
+            rdoWholeWord = new RadioButton();
+            rdoMatchCase = new RadioButton();
+            rdoFindDirectionDown = new RadioButton();
+            rdoFindDirectionUp = new RadioButton();
+            groupBox2 = new GroupBox();
+            rdoLightMode = new RadioButton();
+            rdoDarkMode = new RadioButton();
+            groupBox4 = new GroupBox();
+            ckbPasteRtfUnformatted = new CheckBox();
+            groupBox1.SuspendLayout();
+            groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudAutoSaveInterval).BeginInit();
+            groupBox5.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox4.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.LstMRU);
-            this.groupBox1.Controls.Add(this.BtnClearMRU);
-            this.groupBox1.Location = new System.Drawing.Point(6, 12);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox1.Size = new System.Drawing.Size(639, 178);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "File MRU";
+            groupBox1.Controls.Add(LstMRU);
+            groupBox1.Controls.Add(BtnClearMRU);
+            groupBox1.Location = new Point(6, 12);
+            groupBox1.Margin = new Padding(2, 1, 2, 1);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new Padding(2, 1, 2, 1);
+            groupBox1.Size = new Size(639, 178);
+            groupBox1.TabIndex = 0;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "File MRU";
             // 
             // LstMRU
             // 
-            this.LstMRU.FormattingEnabled = true;
-            this.LstMRU.ItemHeight = 15;
-            this.LstMRU.Location = new System.Drawing.Point(9, 18);
-            this.LstMRU.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.LstMRU.Name = "LstMRU";
-            this.LstMRU.Size = new System.Drawing.Size(614, 124);
-            this.LstMRU.TabIndex = 4;
+            LstMRU.FormattingEnabled = true;
+            LstMRU.ItemHeight = 15;
+            LstMRU.Location = new Point(9, 18);
+            LstMRU.Margin = new Padding(2, 1, 2, 1);
+            LstMRU.Name = "LstMRU";
+            LstMRU.Size = new Size(614, 124);
+            LstMRU.TabIndex = 4;
             // 
             // BtnClearMRU
             // 
-            this.BtnClearMRU.Location = new System.Drawing.Point(9, 149);
-            this.BtnClearMRU.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.BtnClearMRU.Name = "BtnClearMRU";
-            this.BtnClearMRU.Size = new System.Drawing.Size(81, 22);
-            this.BtnClearMRU.TabIndex = 3;
-            this.BtnClearMRU.Text = "Clear MRU";
-            this.BtnClearMRU.UseVisualStyleBackColor = true;
-            this.BtnClearMRU.Click += new System.EventHandler(this.BtnClearMRU_Click);
+            BtnClearMRU.Location = new Point(9, 149);
+            BtnClearMRU.Margin = new Padding(2, 1, 2, 1);
+            BtnClearMRU.Name = "BtnClearMRU";
+            BtnClearMRU.Size = new Size(81, 22);
+            BtnClearMRU.TabIndex = 3;
+            BtnClearMRU.Text = "Clear MRU";
+            BtnClearMRU.UseVisualStyleBackColor = true;
+            BtnClearMRU.Click += BtnClearMRU_Click;
             // 
             // BtnOK
             // 
-            this.BtnOK.Location = new System.Drawing.Point(479, 362);
-            this.BtnOK.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.BtnOK.Name = "BtnOK";
-            this.BtnOK.Size = new System.Drawing.Size(81, 22);
-            this.BtnOK.TabIndex = 0;
-            this.BtnOK.Text = "OK";
-            this.BtnOK.UseVisualStyleBackColor = true;
-            this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
+            BtnOK.Location = new Point(479, 362);
+            BtnOK.Margin = new Padding(2, 1, 2, 1);
+            BtnOK.Name = "BtnOK";
+            BtnOK.Size = new Size(81, 22);
+            BtnOK.TabIndex = 0;
+            BtnOK.Text = "OK";
+            BtnOK.UseVisualStyleBackColor = true;
+            BtnOK.Click += BtnOK_Click;
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(562, 362);
-            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(81, 22);
-            this.BtnCancel.TabIndex = 2;
-            this.BtnCancel.Text = "Cancel";
-            this.BtnCancel.UseVisualStyleBackColor = true;
-            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            BtnCancel.Location = new Point(562, 362);
+            BtnCancel.Margin = new Padding(2, 1, 2, 1);
+            BtnCancel.Name = "BtnCancel";
+            BtnCancel.Size = new Size(81, 22);
+            BtnCancel.TabIndex = 2;
+            BtnCancel.Text = "Cancel";
+            BtnCancel.UseVisualStyleBackColor = true;
+            BtnCancel.Click += BtnCancel_Click;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.cbxIncludeDateTimeWithTemplates);
-            this.groupBox3.Controls.Add(this.cbxInsertPictureWithTransparency);
-            this.groupBox3.Controls.Add(this.cbxCleanupTempAppFilesOnExit);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.cbxNewFileFormat);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.nudAutoSaveInterval);
-            this.groupBox3.Location = new System.Drawing.Point(6, 192);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.groupBox3.Size = new System.Drawing.Size(277, 166);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "App Options";
+            groupBox3.Controls.Add(cbxIncludeDateTimeWithTemplates);
+            groupBox3.Controls.Add(cbxInsertPictureWithTransparency);
+            groupBox3.Controls.Add(cbxCleanupTempAppFilesOnExit);
+            groupBox3.Controls.Add(label2);
+            groupBox3.Controls.Add(cbxNewFileFormat);
+            groupBox3.Controls.Add(label1);
+            groupBox3.Controls.Add(nudAutoSaveInterval);
+            groupBox3.Location = new Point(6, 192);
+            groupBox3.Margin = new Padding(2, 1, 2, 1);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Padding = new Padding(2, 1, 2, 1);
+            groupBox3.Size = new Size(277, 166);
+            groupBox3.TabIndex = 0;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "App Options";
             // 
             // cbxIncludeDateTimeWithTemplates
             // 
-            this.cbxIncludeDateTimeWithTemplates.AutoSize = true;
-            this.cbxIncludeDateTimeWithTemplates.Location = new System.Drawing.Point(14, 102);
-            this.cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
-            this.cbxIncludeDateTimeWithTemplates.Size = new System.Drawing.Size(257, 19);
-            this.cbxIncludeDateTimeWithTemplates.TabIndex = 15;
-            this.cbxIncludeDateTimeWithTemplates.Text = "Include Date\\Time When Inserting Template";
-            this.cbxIncludeDateTimeWithTemplates.UseVisualStyleBackColor = true;
+            cbxIncludeDateTimeWithTemplates.AutoSize = true;
+            cbxIncludeDateTimeWithTemplates.Location = new Point(14, 102);
+            cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
+            cbxIncludeDateTimeWithTemplates.Size = new Size(257, 19);
+            cbxIncludeDateTimeWithTemplates.TabIndex = 15;
+            cbxIncludeDateTimeWithTemplates.Text = "Include Date\\Time When Inserting Template";
+            cbxIncludeDateTimeWithTemplates.UseVisualStyleBackColor = true;
             // 
             // cbxInsertPictureWithTransparency
             // 
-            this.cbxInsertPictureWithTransparency.AutoSize = true;
-            this.cbxInsertPictureWithTransparency.Location = new System.Drawing.Point(14, 77);
-            this.cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
-            this.cbxInsertPictureWithTransparency.Size = new System.Drawing.Size(200, 19);
-            this.cbxInsertPictureWithTransparency.TabIndex = 14;
-            this.cbxInsertPictureWithTransparency.Text = "Insert Pictures With Transparency";
-            this.cbxInsertPictureWithTransparency.UseVisualStyleBackColor = true;
+            cbxInsertPictureWithTransparency.AutoSize = true;
+            cbxInsertPictureWithTransparency.Location = new Point(14, 77);
+            cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
+            cbxInsertPictureWithTransparency.Size = new Size(200, 19);
+            cbxInsertPictureWithTransparency.TabIndex = 14;
+            cbxInsertPictureWithTransparency.Text = "Insert Pictures With Transparency";
+            cbxInsertPictureWithTransparency.UseVisualStyleBackColor = true;
             // 
             // cbxCleanupTempAppFilesOnExit
             // 
-            this.cbxCleanupTempAppFilesOnExit.AutoSize = true;
-            this.cbxCleanupTempAppFilesOnExit.Location = new System.Drawing.Point(14, 52);
-            this.cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
-            this.cbxCleanupTempAppFilesOnExit.Size = new System.Drawing.Size(220, 19);
-            this.cbxCleanupTempAppFilesOnExit.TabIndex = 13;
-            this.cbxCleanupTempAppFilesOnExit.Text = "Delete Unused Template Files On Exit";
-            this.cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
+            cbxCleanupTempAppFilesOnExit.AutoSize = true;
+            cbxCleanupTempAppFilesOnExit.Location = new Point(14, 52);
+            cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
+            cbxCleanupTempAppFilesOnExit.Size = new Size(220, 19);
+            cbxCleanupTempAppFilesOnExit.TabIndex = 13;
+            cbxCleanupTempAppFilesOnExit.Text = "Delete Unused Template Files On Exit";
+            cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 27);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 15);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "New File Format";
+            label2.AutoSize = true;
+            label2.Location = new Point(14, 27);
+            label2.Name = "label2";
+            label2.Size = new Size(93, 15);
+            label2.TabIndex = 12;
+            label2.Text = "New File Format";
             // 
             // cbxNewFileFormat
             // 
-            this.cbxNewFileFormat.FormattingEnabled = true;
-            this.cbxNewFileFormat.Items.AddRange(new object[] {
-            "Plain Text",
-            "Rtf"});
-            this.cbxNewFileFormat.Location = new System.Drawing.Point(113, 23);
-            this.cbxNewFileFormat.Name = "cbxNewFileFormat";
-            this.cbxNewFileFormat.Size = new System.Drawing.Size(105, 23);
-            this.cbxNewFileFormat.TabIndex = 11;
+            cbxNewFileFormat.FormattingEnabled = true;
+            cbxNewFileFormat.Items.AddRange(new object[] { "Plain Text", "Rtf", "Markdown" });
+            cbxNewFileFormat.Location = new Point(113, 23);
+            cbxNewFileFormat.Name = "cbxNewFileFormat";
+            cbxNewFileFormat.Size = new Size(105, 23);
+            cbxNewFileFormat.TabIndex = 11;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 134);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(153, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "AutoSave Interval (minutes)";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 134);
+            label1.Name = "label1";
+            label1.Size = new Size(153, 15);
+            label1.TabIndex = 10;
+            label1.Text = "AutoSave Interval (minutes)";
             // 
             // nudAutoSaveInterval
             // 
-            this.nudAutoSaveInterval.Location = new System.Drawing.Point(173, 132);
-            this.nudAutoSaveInterval.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudAutoSaveInterval.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudAutoSaveInterval.Name = "nudAutoSaveInterval";
-            this.nudAutoSaveInterval.Size = new System.Drawing.Size(42, 23);
-            this.nudAutoSaveInterval.TabIndex = 9;
-            this.nudAutoSaveInterval.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+            nudAutoSaveInterval.Location = new Point(173, 132);
+            nudAutoSaveInterval.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            nudAutoSaveInterval.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudAutoSaveInterval.Name = "nudAutoSaveInterval";
+            nudAutoSaveInterval.Size = new Size(42, 23);
+            nudAutoSaveInterval.TabIndex = 9;
+            nudAutoSaveInterval.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // ckbUsePasteUI
             // 
-            this.ckbUsePasteUI.AutoSize = true;
-            this.ckbUsePasteUI.Location = new System.Drawing.Point(5, 20);
-            this.ckbUsePasteUI.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.ckbUsePasteUI.Name = "ckbUsePasteUI";
-            this.ckbUsePasteUI.Size = new System.Drawing.Size(90, 19);
-            this.ckbUsePasteUI.TabIndex = 1;
-            this.ckbUsePasteUI.Text = "Use Paste UI";
-            this.ckbUsePasteUI.UseVisualStyleBackColor = true;
+            ckbUsePasteUI.AutoSize = true;
+            ckbUsePasteUI.Location = new Point(5, 20);
+            ckbUsePasteUI.Margin = new Padding(2, 1, 2, 1);
+            ckbUsePasteUI.Name = "ckbUsePasteUI";
+            ckbUsePasteUI.Size = new Size(90, 19);
+            ckbUsePasteUI.TabIndex = 1;
+            ckbUsePasteUI.Text = "Use Paste UI";
+            ckbUsePasteUI.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.rdoWholeWord);
-            this.groupBox5.Controls.Add(this.rdoMatchCase);
-            this.groupBox5.Controls.Add(this.rdoFindDirectionDown);
-            this.groupBox5.Controls.Add(this.rdoFindDirectionUp);
-            this.groupBox5.Location = new System.Drawing.Point(453, 192);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(192, 92);
-            this.groupBox5.TabIndex = 0;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Find Options";
+            groupBox5.Controls.Add(rdoWholeWord);
+            groupBox5.Controls.Add(rdoMatchCase);
+            groupBox5.Controls.Add(rdoFindDirectionDown);
+            groupBox5.Controls.Add(rdoFindDirectionUp);
+            groupBox5.Location = new Point(453, 192);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(192, 92);
+            groupBox5.TabIndex = 0;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "Find Options";
             // 
             // rdoWholeWord
             // 
-            this.rdoWholeWord.AutoSize = true;
-            this.rdoWholeWord.Location = new System.Drawing.Point(94, 48);
-            this.rdoWholeWord.Name = "rdoWholeWord";
-            this.rdoWholeWord.Size = new System.Drawing.Size(91, 19);
-            this.rdoWholeWord.TabIndex = 3;
-            this.rdoWholeWord.TabStop = true;
-            this.rdoWholeWord.Text = "Whole Word";
-            this.rdoWholeWord.UseVisualStyleBackColor = true;
+            rdoWholeWord.AutoSize = true;
+            rdoWholeWord.Location = new Point(94, 48);
+            rdoWholeWord.Name = "rdoWholeWord";
+            rdoWholeWord.Size = new Size(91, 19);
+            rdoWholeWord.TabIndex = 3;
+            rdoWholeWord.TabStop = true;
+            rdoWholeWord.Text = "Whole Word";
+            rdoWholeWord.UseVisualStyleBackColor = true;
             // 
             // rdoMatchCase
             // 
-            this.rdoMatchCase.AutoSize = true;
-            this.rdoMatchCase.Location = new System.Drawing.Point(94, 23);
-            this.rdoMatchCase.Name = "rdoMatchCase";
-            this.rdoMatchCase.Size = new System.Drawing.Size(87, 19);
-            this.rdoMatchCase.TabIndex = 2;
-            this.rdoMatchCase.TabStop = true;
-            this.rdoMatchCase.Text = "Match Case";
-            this.rdoMatchCase.UseVisualStyleBackColor = true;
+            rdoMatchCase.AutoSize = true;
+            rdoMatchCase.Location = new Point(94, 23);
+            rdoMatchCase.Name = "rdoMatchCase";
+            rdoMatchCase.Size = new Size(87, 19);
+            rdoMatchCase.TabIndex = 2;
+            rdoMatchCase.TabStop = true;
+            rdoMatchCase.Text = "Match Case";
+            rdoMatchCase.UseVisualStyleBackColor = true;
             // 
             // rdoFindDirectionDown
             // 
-            this.rdoFindDirectionDown.AutoSize = true;
-            this.rdoFindDirectionDown.Location = new System.Drawing.Point(9, 48);
-            this.rdoFindDirectionDown.Name = "rdoFindDirectionDown";
-            this.rdoFindDirectionDown.Size = new System.Drawing.Size(56, 19);
-            this.rdoFindDirectionDown.TabIndex = 1;
-            this.rdoFindDirectionDown.TabStop = true;
-            this.rdoFindDirectionDown.Text = "Down";
-            this.rdoFindDirectionDown.UseVisualStyleBackColor = true;
+            rdoFindDirectionDown.AutoSize = true;
+            rdoFindDirectionDown.Location = new Point(9, 48);
+            rdoFindDirectionDown.Name = "rdoFindDirectionDown";
+            rdoFindDirectionDown.Size = new Size(56, 19);
+            rdoFindDirectionDown.TabIndex = 1;
+            rdoFindDirectionDown.TabStop = true;
+            rdoFindDirectionDown.Text = "Down";
+            rdoFindDirectionDown.UseVisualStyleBackColor = true;
             // 
             // rdoFindDirectionUp
             // 
-            this.rdoFindDirectionUp.AutoSize = true;
-            this.rdoFindDirectionUp.Location = new System.Drawing.Point(9, 23);
-            this.rdoFindDirectionUp.Name = "rdoFindDirectionUp";
-            this.rdoFindDirectionUp.Size = new System.Drawing.Size(40, 19);
-            this.rdoFindDirectionUp.TabIndex = 0;
-            this.rdoFindDirectionUp.TabStop = true;
-            this.rdoFindDirectionUp.Text = "Up";
-            this.rdoFindDirectionUp.UseVisualStyleBackColor = true;
+            rdoFindDirectionUp.AutoSize = true;
+            rdoFindDirectionUp.Location = new Point(9, 23);
+            rdoFindDirectionUp.Name = "rdoFindDirectionUp";
+            rdoFindDirectionUp.Size = new Size(40, 19);
+            rdoFindDirectionUp.TabIndex = 0;
+            rdoFindDirectionUp.TabStop = true;
+            rdoFindDirectionUp.Text = "Up";
+            rdoFindDirectionUp.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.rdoLightMode);
-            this.groupBox2.Controls.Add(this.rdoDarkMode);
-            this.groupBox2.Location = new System.Drawing.Point(453, 290);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(192, 68);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Theme";
+            groupBox2.Controls.Add(rdoLightMode);
+            groupBox2.Controls.Add(rdoDarkMode);
+            groupBox2.Location = new Point(453, 290);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(192, 68);
+            groupBox2.TabIndex = 7;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Theme";
             // 
             // rdoLightMode
             // 
-            this.rdoLightMode.AutoSize = true;
-            this.rdoLightMode.Location = new System.Drawing.Point(103, 19);
-            this.rdoLightMode.Name = "rdoLightMode";
-            this.rdoLightMode.Size = new System.Drawing.Size(86, 19);
-            this.rdoLightMode.TabIndex = 1;
-            this.rdoLightMode.TabStop = true;
-            this.rdoLightMode.Text = "Light Mode";
-            this.rdoLightMode.UseVisualStyleBackColor = true;
+            rdoLightMode.AutoSize = true;
+            rdoLightMode.Location = new Point(103, 19);
+            rdoLightMode.Name = "rdoLightMode";
+            rdoLightMode.Size = new Size(86, 19);
+            rdoLightMode.TabIndex = 1;
+            rdoLightMode.TabStop = true;
+            rdoLightMode.Text = "Light Mode";
+            rdoLightMode.UseVisualStyleBackColor = true;
             // 
             // rdoDarkMode
             // 
-            this.rdoDarkMode.AutoSize = true;
-            this.rdoDarkMode.Location = new System.Drawing.Point(3, 19);
-            this.rdoDarkMode.Name = "rdoDarkMode";
-            this.rdoDarkMode.Size = new System.Drawing.Size(83, 19);
-            this.rdoDarkMode.TabIndex = 0;
-            this.rdoDarkMode.TabStop = true;
-            this.rdoDarkMode.Text = "Dark Mode";
-            this.rdoDarkMode.UseVisualStyleBackColor = true;
+            rdoDarkMode.AutoSize = true;
+            rdoDarkMode.Location = new Point(3, 19);
+            rdoDarkMode.Name = "rdoDarkMode";
+            rdoDarkMode.Size = new Size(83, 19);
+            rdoDarkMode.TabIndex = 0;
+            rdoDarkMode.TabStop = true;
+            rdoDarkMode.Text = "Dark Mode";
+            rdoDarkMode.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.ckbPasteRtfUnformatted);
-            this.groupBox4.Controls.Add(this.ckbUsePasteUI);
-            this.groupBox4.Location = new System.Drawing.Point(288, 192);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(159, 166);
-            this.groupBox4.TabIndex = 16;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Paste Options";
+            groupBox4.Controls.Add(ckbPasteRtfUnformatted);
+            groupBox4.Controls.Add(ckbUsePasteUI);
+            groupBox4.Location = new Point(288, 192);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(159, 166);
+            groupBox4.TabIndex = 16;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Paste Options";
             // 
             // ckbPasteRtfUnformatted
             // 
-            this.ckbPasteRtfUnformatted.AutoSize = true;
-            this.ckbPasteRtfUnformatted.Location = new System.Drawing.Point(5, 43);
-            this.ckbPasteRtfUnformatted.Name = "ckbPasteRtfUnformatted";
-            this.ckbPasteRtfUnformatted.Size = new System.Drawing.Size(146, 19);
-            this.ckbPasteRtfUnformatted.TabIndex = 2;
-            this.ckbPasteRtfUnformatted.Text = "Paste RTF Unformatted";
-            this.ckbPasteRtfUnformatted.UseVisualStyleBackColor = true;
+            ckbPasteRtfUnformatted.AutoSize = true;
+            ckbPasteRtfUnformatted.Location = new Point(5, 43);
+            ckbPasteRtfUnformatted.Name = "ckbPasteRtfUnformatted";
+            ckbPasteRtfUnformatted.Size = new Size(146, 19);
+            ckbPasteRtfUnformatted.TabIndex = 2;
+            ckbPasteRtfUnformatted.Text = "Paste RTF Unformatted";
+            ckbPasteRtfUnformatted.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 394);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.BtnCancel);
-            this.Controls.Add(this.BtnOK);
-            this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FrmOptions";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Options";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmOptions_KeyDown);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudAutoSaveInterval)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(654, 394);
+            Controls.Add(groupBox4);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox5);
+            Controls.Add(groupBox3);
+            Controls.Add(BtnCancel);
+            Controls.Add(BtnOK);
+            Controls.Add(groupBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
+            Margin = new Padding(2, 1, 2, 1);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FrmOptions";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Options";
+            KeyDown += FrmOptions_KeyDown;
+            groupBox1.ResumeLayout(false);
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudAutoSaveInterval).EndInit();
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
