@@ -866,11 +866,12 @@ namespace Notepad_Light
         /// <summary>
         /// if there are unsaved changes, we need to ask the user what to do
         /// </summary>
-        /// <param name="fromFormClosingEvent">tells the function we came from the FormClosing event</param>
+        /// <param name="fromFormClosingEvent">flag if FormClosing event is the caller</param>
         public void ExitAppWork(bool fromFormClosingEvent)
         {
             Properties.Settings.Default.Save();
             SaveChanges();
+            RtbPage.Modified = false;
 
             // formclosingevent will fire twice if we call app exit anywhere from form closing
             // only call app.exit if we aren't coming from the event
