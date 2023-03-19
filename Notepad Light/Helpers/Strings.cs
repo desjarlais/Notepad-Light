@@ -1,4 +1,6 @@
-﻿namespace Notepad_Light.Helpers
+﻿using System.Configuration;
+
+namespace Notepad_Light.Helpers
 {
     public static class Strings
     {
@@ -35,6 +37,8 @@
         public const string findMatchCase = "MatchCase";
         public const string findWholeWord = "WholeWord";
         public const string errorLogFile = "NLErrors.txt";
+        public const string appEditingState = "Editing";
+        public const string appReadOnlyState = "Read-Only";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";

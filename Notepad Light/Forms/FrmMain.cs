@@ -286,7 +286,7 @@ namespace Notepad_Light
             CollapsePanel2();
             ClearFormatting();
             RtbPage.ReadOnly = false;
-            readOnlyToolStripStatusLabel.Text = "Editing";
+            readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
             UpdateFormTitle(Strings.defaultFileName);
             UpdateCurrentFileType(gCurrentFileName);
 
@@ -457,11 +457,11 @@ namespace Notepad_Light
             FileInfo fi = new FileInfo(filePath);
             if (fi.IsReadOnly)
             {
-                readOnlyToolStripStatusLabel.Text = "Read-Only";
+                readOnlyToolStripStatusLabel.Text = Strings.appReadOnlyState;
             }
             else
             {
-                readOnlyToolStripStatusLabel.Text = "Editing";
+                readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
             }
         }
 
@@ -647,6 +647,7 @@ namespace Notepad_Light
 
                         UpdateFormTitle(sfdSaveAs.FileName);
                         RtbPage.Modified = false;
+                        readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
                     }
                 }
             }
