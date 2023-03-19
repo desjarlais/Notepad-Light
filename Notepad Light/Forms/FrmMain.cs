@@ -139,15 +139,15 @@ namespace Notepad_Light
             }
 
             // check the file based on the end or the newfileformat setting
-            if (fName.EndsWith(".rtf") || fName == Strings.rtf)
+            if (fName.EndsWith(Strings.rtfExt) || fName == Strings.rtf)
             {
                 cFileType = CurrentFileType.RTF;
             }
-            else if (fName.EndsWith(".md") || fName.EndsWith(".markdown") || fName == Strings.markdown)
+            else if (fName.EndsWith(Strings.mdExt) || fName.EndsWith(Strings.md2Ext) || fName == Strings.markdown)
             {
                 cFileType = CurrentFileType.Markdown;
             }
-            else if (fName.EndsWith(".txt") || fName == Strings.plainText)
+            else if (fName.EndsWith(Strings.txtExt) || fName == Strings.plainText)
             {
                 cFileType = CurrentFileType.Text;
             }
@@ -1746,6 +1746,12 @@ namespace Notepad_Light
             webView2Md.NavigateToString(html);
         }
 
+        /// <summary>
+        /// get the current location of the scrollbar in the richtextbox
+        /// used to move the markdown webview to a similar scroll location
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
         public POINT GetVScrollPos(RichTextBox box)
         {
             IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(POINT)));
@@ -2612,7 +2618,7 @@ namespace Notepad_Light
 
         /// <summary>
         /// used for synchronized scroll between rtb and the webview taskpane
-        /// not as accurate as I'd like but its a start
+        /// TODO: not as accurate as I'd like but its a start
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
