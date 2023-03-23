@@ -794,7 +794,7 @@
             // 
             Template1ToolStripMenuItem.Image = Properties.Resources.LinkButton;
             Template1ToolStripMenuItem.Name = "Template1ToolStripMenuItem";
-            Template1ToolStripMenuItem.Size = new Size(180, 22);
+            Template1ToolStripMenuItem.Size = new Size(173, 22);
             Template1ToolStripMenuItem.Text = "Template 1";
             Template1ToolStripMenuItem.Click += Template1ToolStripMenuItem_Click;
             // 
@@ -802,7 +802,7 @@
             // 
             Template2ToolStripMenuItem.Image = Properties.Resources.LinkButton;
             Template2ToolStripMenuItem.Name = "Template2ToolStripMenuItem";
-            Template2ToolStripMenuItem.Size = new Size(180, 22);
+            Template2ToolStripMenuItem.Size = new Size(173, 22);
             Template2ToolStripMenuItem.Text = "Template 2";
             Template2ToolStripMenuItem.Click += Template2ToolStripMenuItem_Click;
             // 
@@ -810,7 +810,7 @@
             // 
             Template3ToolStripMenuItem.Image = Properties.Resources.LinkButton;
             Template3ToolStripMenuItem.Name = "Template3ToolStripMenuItem";
-            Template3ToolStripMenuItem.Size = new Size(180, 22);
+            Template3ToolStripMenuItem.Size = new Size(173, 22);
             Template3ToolStripMenuItem.Text = "Template 3";
             Template3ToolStripMenuItem.Click += Template3ToolStripMenuItem_Click;
             // 
@@ -818,7 +818,7 @@
             // 
             Template4ToolStripMenuItem.Image = Properties.Resources.LinkButton;
             Template4ToolStripMenuItem.Name = "Template4ToolStripMenuItem";
-            Template4ToolStripMenuItem.Size = new Size(180, 22);
+            Template4ToolStripMenuItem.Size = new Size(173, 22);
             Template4ToolStripMenuItem.Text = "Template 4";
             Template4ToolStripMenuItem.Click += Template4ToolStripMenuItem_Click;
             // 
@@ -826,20 +826,20 @@
             // 
             Template5ToolStripMenuItem.Image = Properties.Resources.LinkButton;
             Template5ToolStripMenuItem.Name = "Template5ToolStripMenuItem";
-            Template5ToolStripMenuItem.Size = new Size(180, 22);
+            Template5ToolStripMenuItem.Size = new Size(173, 22);
             Template5ToolStripMenuItem.Text = "Template 5";
             Template5ToolStripMenuItem.Click += Template5ToolStripMenuItem_Click;
             // 
             // ToolStripSeparator18
             // 
             ToolStripSeparator18.Name = "ToolStripSeparator18";
-            ToolStripSeparator18.Size = new Size(177, 6);
+            ToolStripSeparator18.Size = new Size(170, 6);
             ToolStripSeparator18.Paint += ToolStripSeparator18_Paint;
             // 
             // ManageTemplatesToolStripMenuItem
             // 
             ManageTemplatesToolStripMenuItem.Name = "ManageTemplatesToolStripMenuItem";
-            ManageTemplatesToolStripMenuItem.Size = new Size(180, 22);
+            ManageTemplatesToolStripMenuItem.Size = new Size(173, 22);
             ManageTemplatesToolStripMenuItem.Text = "Manage Templates";
             ManageTemplatesToolStripMenuItem.Click += ManageTemplatesToolStripMenuItem_Click;
             // 
@@ -853,14 +853,14 @@
             // WordWrapToolStripMenuItem
             // 
             WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            WordWrapToolStripMenuItem.Size = new Size(180, 22);
+            WordWrapToolStripMenuItem.Size = new Size(134, 22);
             WordWrapToolStripMenuItem.Text = "Word Wrap";
             WordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
             // 
             // TaskPaneToolStripMenuItem
             // 
             TaskPaneToolStripMenuItem.Name = "TaskPaneToolStripMenuItem";
-            TaskPaneToolStripMenuItem.Size = new Size(180, 22);
+            TaskPaneToolStripMenuItem.Size = new Size(134, 22);
             TaskPaneToolStripMenuItem.Text = "TaskPane";
             TaskPaneToolStripMenuItem.Click += TaskPaneToolStripMenuItem_Click;
             // 
@@ -869,7 +869,7 @@
             ZoomToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ZoomToolStripMenuItem100, ZoomToolStripMenuItem150, ZoomToolStripMenuItem200, ZoomToolStripMenuItem250, ZoomToolStripMenuItem300 });
             ZoomToolStripMenuItem.Image = Properties.Resources.MediaZoom;
             ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            ZoomToolStripMenuItem.Size = new Size(180, 22);
+            ZoomToolStripMenuItem.Size = new Size(134, 22);
             ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
