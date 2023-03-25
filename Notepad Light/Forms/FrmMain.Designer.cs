@@ -63,6 +63,7 @@
             PasteContextMenu = new ToolStripMenuItem();
             SearchContextMenu = new ToolStripMenuItem();
             toolStripSeparator15 = new ToolStripSeparator();
+            SaveAsPictureContextMenu = new ToolStripMenuItem();
             SelectAllContextMenu = new ToolStripMenuItem();
             menuStrip1 = new MenuStrip();
             FileToolStripMenuItem = new ToolStripMenuItem();
@@ -379,15 +380,16 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { CutContextMenu, CopyContextMenu, PasteContextMenu, SearchContextMenu, toolStripSeparator15, SelectAllContextMenu });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { CutContextMenu, CopyContextMenu, PasteContextMenu, SearchContextMenu, toolStripSeparator15, SaveAsPictureContextMenu, SelectAllContextMenu });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(137, 120);
+            contextMenuStrip1.Size = new Size(155, 142);
+            contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             // 
             // CutContextMenu
             // 
             CutContextMenu.Image = Properties.Resources.Cut;
             CutContextMenu.Name = "CutContextMenu";
-            CutContextMenu.Size = new Size(136, 22);
+            CutContextMenu.Size = new Size(154, 22);
             CutContextMenu.Text = "Cut";
             CutContextMenu.Click += CutContextMenu_Click;
             // 
@@ -395,7 +397,7 @@
             // 
             CopyContextMenu.Image = Properties.Resources.Copy;
             CopyContextMenu.Name = "CopyContextMenu";
-            CopyContextMenu.Size = new Size(136, 22);
+            CopyContextMenu.Size = new Size(154, 22);
             CopyContextMenu.Text = "Copy";
             CopyContextMenu.Click += CopyContextMenu_Click;
             // 
@@ -403,7 +405,7 @@
             // 
             PasteContextMenu.Image = Properties.Resources.Paste;
             PasteContextMenu.Name = "PasteContextMenu";
-            PasteContextMenu.Size = new Size(136, 22);
+            PasteContextMenu.Size = new Size(154, 22);
             PasteContextMenu.Text = "Paste";
             PasteContextMenu.Click += PasteContextMenu_Click;
             // 
@@ -411,20 +413,29 @@
             // 
             SearchContextMenu.Image = Properties.Resources.Search;
             SearchContextMenu.Name = "SearchContextMenu";
-            SearchContextMenu.Size = new Size(136, 22);
+            SearchContextMenu.Size = new Size(154, 22);
             SearchContextMenu.Text = "Search Web";
             SearchContextMenu.Click += SearchContextMenu_Click;
             // 
             // toolStripSeparator15
             // 
             toolStripSeparator15.Name = "toolStripSeparator15";
-            toolStripSeparator15.Size = new Size(133, 6);
+            toolStripSeparator15.Size = new Size(151, 6);
+            // 
+            // SaveAsPictureContextMenu
+            // 
+            SaveAsPictureContextMenu.Enabled = false;
+            SaveAsPictureContextMenu.Image = Properties.Resources.Image_16x;
+            SaveAsPictureContextMenu.Name = "SaveAsPictureContextMenu";
+            SaveAsPictureContextMenu.Size = new Size(154, 22);
+            SaveAsPictureContextMenu.Text = "Save As Picture";
+            SaveAsPictureContextMenu.Click += SaveAsPictureContextMenu_Click;
             // 
             // SelectAllContextMenu
             // 
             SelectAllContextMenu.Image = Properties.Resources.SelectAll;
             SelectAllContextMenu.Name = "SelectAllContextMenu";
-            SelectAllContextMenu.Size = new Size(136, 22);
+            SelectAllContextMenu.Size = new Size(154, 22);
             SelectAllContextMenu.Text = "Select All";
             SelectAllContextMenu.Click += SelectAllContextMenu_Click;
             // 
@@ -1540,5 +1551,6 @@
         private ToolStripStatusLabel readOnlyToolStripStatusLabel;
         private ToolStripStatusLabel appStateToolStripStatusLabel;
         private ToolStripButton ReplaceToolStripButton;
+        private ToolStripMenuItem SaveAsPictureContextMenu;
     }
 }

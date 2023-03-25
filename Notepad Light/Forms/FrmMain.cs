@@ -1762,6 +1762,52 @@ namespace Notepad_Light
             return point;
         }
 
+        public static string ExtractImgHex(string s)
+        {
+            int pictTagIdx = s.IndexOf("{\\pict{\\");
+            int startIndex = s.IndexOf(" ", pictTagIdx) + 1;
+            int endIndex = s.IndexOf("}", startIndex);
+            return s.Substring(startIndex, endIndex - startIndex);
+        }
+
+        /// <summary>
+        /// //this function taken entirely from: http://www.codeproject.com/Articles/27431/Writing-Your-Own-RTF-Converter
+        /// </summary>
+        /// <param name="imageDataHex"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static byte[] ToBinary(string imageDataHex)
+        {
+            if (imageDataHex == null)
+            {
+                throw new ArgumentNullException("imageDataHex");
+            }
+
+            int hexDigits = imageDataHex.Length;
+            int dataSize = hexDigits / 2;
+            byte[] imageDataBinary = new byte[dataSize];
+
+            StringBuilder hex = new StringBuilder(2);
+
+            int dataPos = 0;
+            for (int i = 0; i < hexDigits; i++)
+            {
+                char c = imageDataHex[i];
+                if (char.IsWhiteSpace(c))
+                {
+                    continue;
+                }
+                hex.Append(imageDataHex[i]);
+                if (hex.Length == 2)
+                {
+                    imageDataBinary[dataPos] = byte.Parse(hex.ToString(), System.Globalization.NumberStyles.HexNumber);
+                    dataPos++;
+                    hex.Remove(0, 2);
+                }
+            }
+            return imageDataBinary;
+        }
+
         #endregion
 
         #region Events
@@ -2633,6 +2679,54 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// pull the pict data from the selected rtf content and save to a file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveAsPictureContextMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (RtbPage.SelectionType == RichTextBoxSelectionTypes.Object)
+                {
+                    // display save as dialog
+                    SaveFileDialog dlgSave = new SaveFileDialog();
+                    dlgSave.Title = "Save Image";
+                    dlgSave.Filter = "Bitmap Images (*.bmp)|*.bmp|All Files (*.*)|*.*";
+
+                    if (dlgSave.ShowDialog(this) == DialogResult.OK)
+                    {
+                        // write out the stream to the new file location
+                        string imageDataHex = ExtractImgHex(RtbPage.SelectedRtf);
+                        byte[] imageBuffer = ToBinary(imageDataHex);
+                        using (MemoryStream stream = new MemoryStream(imageBuffer))
+                        {
+                            Image image = Image.FromStream(stream);
+                            image.Save(dlgSave.FileName);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                App.WriteErrorLogContent(ex.Message, gErrorLog);
+            }
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (RtbPage.SelectionType == RichTextBoxSelectionTypes.Object)
+            {
+                SaveAsPictureContextMenu.Enabled = true;
+            }
+            else
+            {
+                SaveAsPictureContextMenu.Enabled = false;
+            }
+        }
+
         #endregion
+
     }
 }
