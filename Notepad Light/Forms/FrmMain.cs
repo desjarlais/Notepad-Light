@@ -142,14 +142,17 @@ namespace Notepad_Light
             if (fName.EndsWith(Strings.rtfExt) || fName == Strings.rtf)
             {
                 gCurrentFileType = CurrentFileType.RTF;
+                SaveAsPictureContextMenu.Enabled = true;
             }
             else if (fName.EndsWith(Strings.mdExt) || fName.EndsWith(Strings.md2Ext) || fName == Strings.markdown)
             {
                 gCurrentFileType = CurrentFileType.Markdown;
+                SaveAsPictureContextMenu.Enabled = false;
             }
             else if (fName.EndsWith(Strings.txtExt) || fName == Strings.plainText)
             {
                 gCurrentFileType = CurrentFileType.Text;
+                SaveAsPictureContextMenu.Enabled = false;
             }
 
             return gCurrentFileType;
@@ -1762,6 +1765,11 @@ namespace Notepad_Light
             return point;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string ExtractImgHex(string s)
         {
             int pictTagIdx = s.IndexOf("{\\pict{\\");
@@ -2716,6 +2724,11 @@ namespace Notepad_Light
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (gCurrentFileType != CurrentFileType.RTF)
+            {
+                return;
+            }
+
             if (RtbPage.SelectionType == RichTextBoxSelectionTypes.Object)
             {
                 SaveAsPictureContextMenu.Enabled = true;
@@ -2726,7 +2739,16 @@ namespace Notepad_Light
             }
         }
 
+        private void RtbPage_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (RtbPage.SelectionType != RichTextBoxSelectionTypes.Object) 
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    MoveCursorToLocation(RtbPage.GetCharIndexFromPosition(e.Location), 0);
+                }
+            }
+        }
         #endregion
-
     }
 }

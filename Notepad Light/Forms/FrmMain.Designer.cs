@@ -376,6 +376,7 @@
             RtbPage.VScroll += RtbPage_VScroll;
             RtbPage.TextChanged += RtbPage_TextChanged;
             RtbPage.KeyDown += RtbPage_KeyDown;
+            RtbPage.MouseDown += RtbPage_MouseDown;
             RtbPage.MouseMove += RtbPage_MouseMove;
             // 
             // contextMenuStrip1
