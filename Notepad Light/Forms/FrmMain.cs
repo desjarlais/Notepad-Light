@@ -355,7 +355,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadPlainTextFile(string filePath)
         {
-            if (EncodingToolStripStatusLabel.Text.Contains("Unicode"))
+            if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
             {
                 string text = File.ReadAllText(filePath, Encoding.UTF8);
                 RtbPage.Text = text;
@@ -386,8 +386,15 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadMarkdownFile(string filePath)
         {
-            string text = File.ReadAllText(filePath, Encoding.UTF8);
-            RtbPage.Text = text;
+            if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
+            {
+                string text = File.ReadAllText(filePath, Encoding.UTF8);
+                RtbPage.Text = text;
+            }
+            else
+            {
+                RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+            }
 
             DisableToolbarFormattingIcons();
             splitContainer1.Panel2Collapsed = false;
