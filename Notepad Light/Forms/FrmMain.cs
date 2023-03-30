@@ -386,15 +386,8 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadMarkdownFile(string filePath)
         {
-            if (EncodingToolStripStatusLabel.Text.Contains("Unicode"))
-            {
-                string text = File.ReadAllText(filePath, Encoding.UTF8);
-                RtbPage.Text = text;
-            }
-            else
-            {
-                RtbPage.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
-            }
+            string text = File.ReadAllText(filePath, Encoding.UTF8);
+            RtbPage.Text = text;
 
             DisableToolbarFormattingIcons();
             splitContainer1.Panel2Collapsed = false;
@@ -920,7 +913,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 App.WriteErrorLogContent("CleanupTempFiles Error: " + ex.Message, gErrorLog);
-                App.WriteErrorLogContent("Stack Trace: " + ex.StackTrace, gErrorLog);
+                App.WriteErrorLogContent("  Stack Trace: " + ex.StackTrace, gErrorLog);
             }
         }
 
@@ -1656,9 +1649,9 @@ namespace Notepad_Light
                 {
                     // ignore the exception and write out the selection details
                     App.WriteErrorLogContent("FindText Error: " + ex.Message, gErrorLog);
-                    App.WriteErrorLogContent("Stack: " + ex.StackTrace, gErrorLog);
-                    App.WriteErrorLogContent("SelectionStart: " + RtbPage.SelectionStart, gErrorLog);
-                    App.WriteErrorLogContent("RtbPage Text Lengh:" + RtbPage.Text.Length, gErrorLog);
+                    App.WriteErrorLogContent("  Stack: " + ex.StackTrace, gErrorLog);
+                    App.WriteErrorLogContent("  SelectionStart: " + RtbPage.SelectionStart, gErrorLog);
+                    App.WriteErrorLogContent("  Text Lengh:" + RtbPage.Text.Length, gErrorLog);
                 }
             }
         }
@@ -1710,7 +1703,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 App.WriteErrorLogContent("WriteFileContents Error: " + ex.Message, gErrorLog);
-                App.WriteErrorLogContent("Stack: " + ex.StackTrace, gErrorLog);
+                App.WriteErrorLogContent("  Stack: " + ex.StackTrace, gErrorLog);
             }
         }
 
@@ -1726,6 +1719,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// used to clear the taskpane for non-markdown files
+        /// </summary>
         private async void UnloadMarkdown()
         {
             // initialize the webview
@@ -1766,10 +1762,10 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// 
+        /// parse out the rtf pict information for Save As Picture
         /// </summary>
         /// <param name="s"></param>
-        /// <returns></returns>
+        /// <returns>binary value of picture as a string</returns>
         public static string ExtractImgHex(string s)
         {
             int pictTagIdx = s.IndexOf("{\\pict{\\");
@@ -1779,10 +1775,12 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// //this function taken entirely from: http://www.codeproject.com/Articles/27431/Writing-Your-Own-RTF-Converter
+        /// this function taken entirely from: http://www.codeproject.com/Articles/27431/Writing-Your-Own-RTF-Converter
+        /// used to take in the binary only portion of the rtf picture and convert it to hex
+        /// this value will can then be used to save as an image file format
         /// </summary>
-        /// <param name="imageDataHex"></param>
-        /// <returns></returns>
+        /// <param name="imageDataHex">extracted rtf binary value</param>
+        /// <returns>hex converted value of the extracted picture</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static byte[] ToBinary(string imageDataHex)
         {
@@ -2705,7 +2703,7 @@ namespace Notepad_Light
 
                     if (dlgSave.ShowDialog(this) == DialogResult.OK)
                     {
-                        // write out the stream to the new file location
+                        // write out the picture stream to the new file location
                         string imageDataHex = ExtractImgHex(RtbPage.SelectedRtf);
                         byte[] imageBuffer = ToBinary(imageDataHex);
                         using (MemoryStream stream = new MemoryStream(imageBuffer))
@@ -2718,7 +2716,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                App.WriteErrorLogContent(ex.Message, gErrorLog);
+                App.WriteErrorLogContent("SaveAsPicture Error: " + ex.Message, gErrorLog);
             }
         }
 
@@ -2741,12 +2739,9 @@ namespace Notepad_Light
 
         private void RtbPage_MouseDown(object sender, MouseEventArgs e)
         {
-            if (RtbPage.SelectionType != RichTextBoxSelectionTypes.Object) 
+            if (RtbPage.SelectionType != RichTextBoxSelectionTypes.Object && e.Button == MouseButtons.Right)
             {
-                if (e.Button == MouseButtons.Right)
-                {
-                    MoveCursorToLocation(RtbPage.GetCharIndexFromPosition(e.Location), 0);
-                }
+                MoveCursorToLocation(RtbPage.GetCharIndexFromPosition(e.Location), 0);
             }
         }
         #endregion
