@@ -25,7 +25,8 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        public Color clrDarkModeBackground, clrDarkModeTextBackground;
+        public Color clrDarkModeBackground = Color.FromArgb(32, 32, 32);
+        public Color clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
         private const char _semiColonDelim = ':';
         public CurrentFileType gCurrentFileType;
 
@@ -45,10 +46,6 @@ namespace Notepad_Light
 
             // initialize stopwatch for timer
             gStopwatch = new Stopwatch();
-
-            // initialize dark mode colors
-            clrDarkModeBackground = Color.FromArgb(32, 32, 32);
-            clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
 
             // init file MRU
             UpdateMRU();
@@ -350,10 +347,11 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// load file and update UI
+        /// for unicode based markdown and text files, use ReadAllText to load the content
+        /// otherwise, the generic LoadFile is enough
         /// </summary>
         /// <param name="filePath"></param>
-        public void LoadPlainTextFile(string filePath)
+        public void LoadTextFile(string filePath)
         {
             if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
             {
@@ -364,7 +362,15 @@ namespace Notepad_Light
             {
                 RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
+        }
 
+        /// <summary>
+        /// load file and update UI
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void LoadPlainTextFile(string filePath)
+        {
+            LoadTextFile(filePath);
             DisableToolbarFormattingIcons();
             toolStripStatusLabelFileType.Text = Strings.plainText;
         }
@@ -386,16 +392,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadMarkdownFile(string filePath)
         {
-            if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
-            {
-                string text = File.ReadAllText(filePath, Encoding.UTF8);
-                RtbPage.Text = text;
-            }
-            else
-            {
-                RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
-            }
-
+            LoadTextFile(filePath);
             DisableToolbarFormattingIcons();
             splitContainer1.Panel2Collapsed = false;
             TaskPaneToolStripMenuItem.Checked = true;
@@ -522,7 +519,6 @@ namespace Notepad_Light
                     // this will check if it exists and if it does, don't update the mru
                     // otherwise, update mru so we can display it in the ui and add to the settings
                     bool isFileInMru = false;
-
                     foreach (var f in Properties.Settings.Default.FileMRU)
                     {
                         if (f == gCurrentFileName)
@@ -571,14 +567,14 @@ namespace Notepad_Light
                 Cursor = Cursors.WaitCursor;
 
                 // no changes to save
-                if (RtbPage.Modified == false)
+                if (!RtbPage.Modified)
                 {
                     return;
                 }
 
-                // if modified untitled = saveas, existing files only need save
-                // if the file is readonly, any changes need to be a new file
-                if ((gCurrentFileName.ToString() == Strings.defaultFileName && RtbPage.Modified == true) || readOnlyToolStripStatusLabel.Text == "Read-Only")
+                // for existing files, use filesave
+                // for new blank docs and readonly files, any change needs to be a new file save
+                if (gCurrentFileName.ToString() == Strings.defaultFileName || readOnlyToolStripStatusLabel.Text == "Read-Only")
                 {
                     FileSaveAs();
                 }
@@ -849,7 +845,6 @@ namespace Notepad_Light
                     case Strings.pasteImage: RtbPage.Paste(); break;
                     default:
                         RtbPage.Paste();
-                        RtbPage.Modified = false;
                         break;
                 }
             }
@@ -2729,11 +2724,6 @@ namespace Notepad_Light
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (gCurrentFileType != CurrentFileType.RTF)
-            {
-                return;
-            }
-
             if (RtbPage.SelectionType == RichTextBoxSelectionTypes.Object)
             {
                 SaveAsPictureContextMenu.Enabled = true;
