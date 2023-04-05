@@ -2456,7 +2456,7 @@ namespace Notepad_Light
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf)|*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf";
+                ofd.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf;)|*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf;";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     // get the image from the dialog
@@ -2701,7 +2701,15 @@ namespace Notepad_Light
                     // display save as dialog
                     SaveFileDialog dlgSave = new SaveFileDialog();
                     dlgSave.Title = "Save Image";
-                    dlgSave.Filter = "Bitmap Images (*.bmp)|*.bmp|All Files (*.*)|*.*";
+                    dlgSave.Filter = "Windows Bitmap (*.bmp)|*.bmp|"
+                        + "JPEG File Interchange Format (*.jpg)|*.jpg|"
+                        + "Graphics Interchange Format (*.gif)|*.gif|"
+                        + "Portable Network Graphics (*.png)|*.png|"
+                        + "Tag Image File Format (*.tif)|*.tif|"
+                        + "Exchangeable Image File Format (*.exif)|*.exif|"
+                        + "Enhanced MetaFile Format (*.emf)|*.emf|"
+                        + "Windows MetaFile Format (*.wmf)|*.wmf|"
+                        + "All files (*.*)|*.*";
 
                     if (dlgSave.ShowDialog(this) == DialogResult.OK)
                     {
@@ -2711,7 +2719,18 @@ namespace Notepad_Light
                         using (MemoryStream stream = new MemoryStream(imageBuffer))
                         {
                             Image image = Image.FromStream(stream);
-                            image.Save(dlgSave.FileName);
+                            switch (dlgSave.FilterIndex)
+                            {
+                                case 0: image.Save(dlgSave.FileName, ImageFormat.Bmp); break;
+                                case 1: image.Save(dlgSave.FileName, ImageFormat.Jpeg); break;
+                                case 2: image.Save(dlgSave.FileName, ImageFormat.Gif); break;
+                                case 3: image.Save(dlgSave.FileName, ImageFormat.Png); break;
+                                case 4: image.Save(dlgSave.FileName, ImageFormat.Tiff); break;
+                                case 5: image.Save(dlgSave.FileName, ImageFormat.Exif); break;
+                                case 6: image.Save(dlgSave.FileName, ImageFormat.Emf); break;
+                                case 7: image.Save(dlgSave.FileName, ImageFormat.Wmf); break;
+                                default: image.Save(dlgSave.FileName); break;
+                            }
                         }
                     }
                 }
