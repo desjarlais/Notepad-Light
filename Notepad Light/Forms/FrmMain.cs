@@ -788,7 +788,7 @@ namespace Notepad_Light
         public void Paste()
         {
             // if the clipboard is empty, do nothing
-            if (Clipboard.GetDataObject().GetFormats().Length == 0)
+            if (Clipboard.GetDataObject()?.GetFormats().Length == 0)
             {
                 return;
             }
@@ -828,7 +828,7 @@ namespace Notepad_Light
                         if (Properties.Settings.Default.PasteRtfUnformatted)
                         {
                             // paste as unformatted rtf
-                            RtbPage.SelectedText = Clipboard.GetData(DataFormats.Rtf).ToString();
+                            RtbPage.SelectedText = Clipboard.GetData(DataFormats.Rtf)?.ToString();
                         }
                         else
                         {
@@ -1573,7 +1573,7 @@ namespace Notepad_Light
                 return;
             }
 
-            FrmReplace fReplace = new FrmReplace(ActiveForm)
+            FrmReplace fReplace = new FrmReplace(this)
             {
                 Owner = this
             };
@@ -1753,7 +1753,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="box"></param>
         /// <returns></returns>
-        public POINT GetVScrollPos(RichTextBox box)
+        public static POINT GetVScrollPos(RichTextBox box)
         {
             IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(POINT)));
             Marshal.StructureToPtr(new POINT(), ptr, false);
@@ -2427,7 +2427,7 @@ namespace Notepad_Light
                 RtbPage.Modified = true;
             }
 
-            // update the prevPageLength
+            // update the prevPageLength and UI
             gPrevPageLength = RtbPage.TextLength;
             UpdateDocStats();
             UpdateToolbarIcons();
@@ -2477,7 +2477,7 @@ namespace Notepad_Light
                         }
                     }
 
-                    // convert the image to rtf so it can be displayed in the rtb
+                    // convert the image to rtf so it can be displayed
                     RtbPage.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
                     RtbPage.Focus();
                 }
