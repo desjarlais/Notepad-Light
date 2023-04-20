@@ -430,8 +430,9 @@ namespace Notepad_Light
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = RtbPage.TextLength;
-                UpdateMRU();
+                //UpdateMRU();
                 UpdateFormTitle(filePath);
+                AddFileToMRU(filePath);
                 UpdateCurrentFileType(filePath);
                 UpdateDocStats();
                 RtbPage.Modified = false;
@@ -518,24 +519,25 @@ namespace Notepad_Light
                     // if the file was opened and is in the mru, we don't want to add it
                     // this will check if it exists and if it does, don't update the mru
                     // otherwise, update mru so we can display it in the ui and add to the settings
-                    bool isFileInMru = false;
-                    foreach (var f in Properties.Settings.Default.FileMRU)
-                    {
-                        if (f == gCurrentFileName)
-                        {
-                            isFileInMru = true;
-                        }
-                    }
+                    AddFileToMRU(gCurrentFileName);
+                    //bool isFileInMru = false;
+                    //foreach (var f in Properties.Settings.Default.FileMRU)
+                    //{
+                    //    if (f == gCurrentFileName)
+                    //    {
+                    //        isFileInMru = true;
+                    //    }
+                    //}
 
-                    if (!isFileInMru)
-                    {
-                        Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
-                        if (Properties.Settings.Default.FileMRU.Count > 9)
-                        {
-                            Properties.Settings.Default.FileMRU.RemoveAt(0);
-                        }
-                        UpdateMRU();
-                    }
+                    //if (!isFileInMru)
+                    //{
+                    //    Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
+                    //    if (Properties.Settings.Default.FileMRU.Count > 9)
+                    //    {
+                    //        Properties.Settings.Default.FileMRU.RemoveAt(0);
+                    //    }
+                    //    UpdateMRU();
+                    //}
 
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
@@ -644,6 +646,7 @@ namespace Notepad_Light
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
                         }
 
+                        AddFileToMRU(sfdSaveAs.FileName);
                         UpdateFormTitle(sfdSaveAs.FileName);
                         RtbPage.Modified = false;
                         readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
@@ -1218,6 +1221,28 @@ namespace Notepad_Light
             {
                 // log the error and do not update mru
                 App.WriteErrorLogContent("UpdateMRU Error: " + ex.Message, gErrorLog);
+            }
+        }
+
+        public void AddFileToMRU(string filePath)
+        {
+            bool isFileInMru = false;
+            foreach (var f in Properties.Settings.Default.FileMRU)
+            {
+                if (f == gCurrentFileName)
+                {
+                    isFileInMru = true;
+                }
+            }
+
+            if (!isFileInMru)
+            {
+                Properties.Settings.Default.FileMRU.Add(filePath);
+                if (Properties.Settings.Default.FileMRU.Count > 9)
+                {
+                    Properties.Settings.Default.FileMRU.RemoveAt(0);
+                }
+                UpdateMRU();
             }
         }
 
@@ -2127,8 +2152,7 @@ namespace Notepad_Light
                 return;
             }
 
-            // if the user deletes the bullet, we need to remove bullet formatting
-            // backspace causes selectionchange so the statusbar updates there
+            // if the user deletes the bullet, remove bullet formatting
             if (e.KeyCode == Keys.Back)
             {
                 if (RtbPage.SelectionStart == RtbPage.GetFirstCharIndexOfCurrentLine() && RtbPage.SelectionBullet == true)
@@ -2286,8 +2310,7 @@ namespace Notepad_Light
                 // print plain text
                 int charactersOnPage = 0;
 
-                // Sets the value of charactersOnPage to the number of characters 
-                // of strToPrint that will fit within the bounds of the page.
+                // Set charactersOnPage to the number of chars that will fit within the bounds of the page.
                 e.Graphics?.MeasureString(gPrintString, RtbPage.SelectionFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
                     out charactersOnPage, out _);
 
@@ -2708,8 +2731,7 @@ namespace Notepad_Light
                         + "Tag Image File Format (*.tif)|*.tif|"
                         + "Exchangeable Image File Format (*.exif)|*.exif|"
                         + "Enhanced MetaFile Format (*.emf)|*.emf|"
-                        + "Windows MetaFile Format (*.wmf)|*.wmf|"
-                        + "All files (*.*)|*.*";
+                        + "Windows MetaFile Format (*.wmf)|*.wmf";
 
                     if (dlgSave.ShowDialog(this) == DialogResult.OK)
                     {
