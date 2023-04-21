@@ -355,7 +355,7 @@ namespace Notepad_Light
         {
             if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
             {
-                string text = File.ReadAllText(filePath, Encoding.UTF8);
+                string text = File.ReadAllText(filePath, Encoding.Unicode);
                 RtbPage.Text = text;
             }
             else
@@ -430,7 +430,6 @@ namespace Notepad_Light
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = RtbPage.TextLength;
-                //UpdateMRU();
                 UpdateFormTitle(filePath);
                 AddFileToMRU(filePath);
                 UpdateCurrentFileType(filePath);
@@ -515,35 +514,12 @@ namespace Notepad_Light
 
                     UpdateFormTitle(ofdFileOpen.FileName);
                     UpdateCurrentFileType(ofdFileOpen.FileName);
-
-                    // if the file was opened and is in the mru, we don't want to add it
-                    // this will check if it exists and if it does, don't update the mru
-                    // otherwise, update mru so we can display it in the ui and add to the settings
                     AddFileToMRU(gCurrentFileName);
-                    //bool isFileInMru = false;
-                    //foreach (var f in Properties.Settings.Default.FileMRU)
-                    //{
-                    //    if (f == gCurrentFileName)
-                    //    {
-                    //        isFileInMru = true;
-                    //    }
-                    //}
-
-                    //if (!isFileInMru)
-                    //{
-                    //    Properties.Settings.Default.FileMRU.Add(ofdFileOpen.FileName);
-                    //    if (Properties.Settings.Default.FileMRU.Count > 9)
-                    //    {
-                    //        Properties.Settings.Default.FileMRU.RemoveAt(0);
-                    //    }
-                    //    UpdateMRU();
-                    //}
-
                     ClearToolbarFormattingIcons();
                     MoveCursorToLocation(0, 0);
-                    gPrevPageLength = RtbPage.TextLength;
                     UpdateDocStats();
                     CheckForReadOnly(ofdFileOpen.FileName);
+                    gPrevPageLength = RtbPage.TextLength;
                     RtbPage.Modified = false;
                 }
             }
@@ -582,9 +558,14 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    if (gCurrentFileName.EndsWith(Strings.txtExt) || gCurrentFileName.EndsWith(Strings.mdExt) || gCurrentFileName.EndsWith(Strings.md2Ext))
+                    if (gCurrentFileName.EndsWith(Strings.txtExt))
                     {
                         RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
+                    }
+
+                    if (gCurrentFileName.EndsWith(Strings.mdExt) || gCurrentFileName.EndsWith(Strings.md2Ext))
+                    {
+                        RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.UnicodePlainText);
                     }
 
                     if (gCurrentFileName.EndsWith(Strings.rtfExt))
@@ -637,9 +618,13 @@ namespace Notepad_Light
                     if (sfdSaveAs.ShowDialog() == DialogResult.OK && sfdSaveAs.FileName.Length > 0)
                     {
                         Cursor = Cursors.WaitCursor;
-                        if (sfdSaveAs.FilterIndex == 1 || sfdSaveAs.FilterIndex == 2)
+                        if (sfdSaveAs.FilterIndex == 1)
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
+                        }
+                        else if (sfdSaveAs.FilterIndex == 2)
+                        {
+                            RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.UnicodePlainText);
                         }
                         else
                         {
@@ -1193,7 +1178,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// populate the recent menu with the file mru settings list
+        /// populate the MRU UI with the file mru settings list
         /// </summary>
         public void UpdateMRU()
         {
@@ -1224,6 +1209,10 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// add the passed in file to the MRU unless it already exists
+        /// </summary>
+        /// <param name="filePath">file path to check if it exists</param>
         public void AddFileToMRU(string filePath)
         {
             bool isFileInMru = false;
@@ -1253,7 +1242,10 @@ namespace Notepad_Light
         {
             try
             {
-                fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
+                if (RtbPage.SelectionFont != null) 
+                {
+                    fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
+                }
             }
             catch (Exception ex)
             {
