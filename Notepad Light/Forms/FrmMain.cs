@@ -357,12 +357,16 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadTextFile(string filePath)
         {
-            if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
+            if (EncodingToolStripStatusLabel.Text.Contains("UTF-8"))
             {
                 string text = File.ReadAllText(filePath);
                 RtbPage.Text = text;
             }
-            else
+            else if (EncodingToolStripStatusLabel.Text.Contains("UTF-16"))
+            {
+                RtbPage.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
+            }
+            else if (EncodingToolStripStatusLabel.Text.Contains("ASCII") || EncodingToolStripStatusLabel.Text.Contains("ANSI"))
             {
                 RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
@@ -554,7 +558,6 @@ namespace Notepad_Light
                     return;
                 }
 
-                // for existing files, use filesave
                 // for new blank docs and readonly files, any change needs to be a new file save
                 if (gCurrentFileName.ToString() == Strings.defaultFileName || readOnlyToolStripStatusLabel.Text == "Read-Only")
                 {
@@ -562,21 +565,16 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    if (gCurrentFileName.EndsWith(Strings.txtExt))
+                    // rtf files can use SaveFile, everything else should use WriteAllText to handle unicode variations
+                    if (gCurrentFileType == CurrentFileType.RTF)
                     {
-                        RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.PlainText);
+                        RtbPage.SaveFile(gCurrentFileName);
                     }
-
-                    if (gCurrentFileName.EndsWith(Strings.mdExt) || gCurrentFileName.EndsWith(Strings.md2Ext))
+                    else
                     {
-                        RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.UnicodePlainText);
+                        File.WriteAllText(gCurrentFileName, RtbPage.Text);
                     }
-
-                    if (gCurrentFileName.EndsWith(Strings.rtfExt))
-                    {
-                        RtbPage.SaveFile(gCurrentFileName, RichTextBoxStreamType.RichText);
-                    }
-
+                    
                     RtbPage.Modified = false;
                 }
             }
