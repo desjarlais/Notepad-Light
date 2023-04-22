@@ -1,15 +1,19 @@
-﻿using Notepad_Light.Forms;
+﻿// app related refs
+using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
+using static Notepad_Light.Helpers.Win32;
 
+// .net refs
 using System.Diagnostics;
 using System.Reflection;
 using System.Drawing.Printing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Text;
-using Markdig;
 using System.Runtime.InteropServices;
-using static Notepad_Light.Helpers.Win32;
+
+// external dll refs
+using Markdig;
 
 namespace Notepad_Light
 {
@@ -41,7 +45,7 @@ namespace Notepad_Light
         {
             InitializeComponent();
 
-            // collapse panel 2 by default, currently only used for markdown files
+            // collapse panel by default, currently only used for markdown files
             splitContainer1.Panel2Collapsed = true;
 
             // initialize stopwatch for timer
@@ -355,7 +359,7 @@ namespace Notepad_Light
         {
             if (EncodingToolStripStatusLabel.Text.Contains("Unicode") || EncodingToolStripStatusLabel.Text.Contains("UTF"))
             {
-                string text = File.ReadAllText(filePath, Encoding.Unicode);
+                string text = File.ReadAllText(filePath);
                 RtbPage.Text = text;
             }
             else
@@ -672,7 +676,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void OpenRecentFile(string filePath)
         {
-            if (filePath == string.Empty)
+            if (filePath == string.Empty || filePath == "empty")
             {
                 return;
             }
