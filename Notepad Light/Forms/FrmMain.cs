@@ -370,6 +370,10 @@ namespace Notepad_Light
             {
                 RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
+            else
+            {
+                RtbPage.LoadFile(filePath);
+            }
         }
 
         /// <summary>
@@ -2771,6 +2775,17 @@ namespace Notepad_Light
 
         private void RtbPage_MouseDown(object sender, MouseEventArgs e)
         {
+            // don't change cursor position for multi-selected text scenarios
+            if (RtbPage.SelectionLength > 0)
+            {
+                return;
+            }
+
+            if (RtbPage.SelectedRtf.Contains("\\pict") && RtbPage.SelectionLength == 0)
+            {
+                RtbPage.SelectionLength = 1;
+            }
+
             if (RtbPage.SelectionType != RichTextBoxSelectionTypes.Object && e.Button == MouseButtons.Right)
             {
                 MoveCursorToLocation(RtbPage.GetCharIndexFromPosition(e.Location), 0);
