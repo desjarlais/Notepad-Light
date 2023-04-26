@@ -1793,9 +1793,25 @@ namespace Notepad_Light
         /// <returns>binary value of picture as a string</returns>
         public static string ExtractImgHex(string s)
         {
-            int pictTagIdx = s.IndexOf("{\\pict{\\");
-            int startIndex = s.IndexOf(" ", pictTagIdx) + 1;
-            int endIndex = s.IndexOf("}", startIndex);
+            int pictTagIdx;
+            int startIndex;
+            int endIndex;
+
+            // if the picture is from the windows clipping it contains a different format
+            if (s.Contains("\\sn wzDescription"))
+            {
+                pictTagIdx = s.IndexOf("\\pngblip");
+                startIndex = s.IndexOf(" ", pictTagIdx) + 1;
+                endIndex = s.IndexOf("}", startIndex);
+            }
+            else
+            {
+                // this checks for rtf picture inserted by the app
+                pictTagIdx = s.IndexOf("{\\pict{\\");
+                startIndex = s.IndexOf(" ", pictTagIdx) + 1;
+                endIndex = s.IndexOf("}", startIndex);
+            }
+
             return s.Substring(startIndex, endIndex - startIndex);
         }
 
