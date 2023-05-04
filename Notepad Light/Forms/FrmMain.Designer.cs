@@ -109,6 +109,7 @@
             FormatToolStripMenuItem = new ToolStripMenuItem();
             EditFontToolStripMenuItem = new ToolStripMenuItem();
             ClearFormattingToolStripMenuItem = new ToolStripMenuItem();
+            decreaseIndentToolStripMenuItem = new ToolStripMenuItem();
             TemplatesToolStripMenuItem = new ToolStripMenuItem();
             Template1ToolStripMenuItem = new ToolStripMenuItem();
             Template2ToolStripMenuItem = new ToolStripMenuItem();
@@ -591,6 +592,7 @@
             // 
             PrintToolStripMenuItem.Image = Properties.Resources.PrintStatusBar1_16x;
             PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
+            PrintToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
             PrintToolStripMenuItem.Size = new Size(146, 22);
             PrintToolStripMenuItem.Text = "Print";
             PrintToolStripMenuItem.Click += PrintToolStripMenuItem_Click;
@@ -774,7 +776,7 @@
             // 
             // FormatToolStripMenuItem
             // 
-            FormatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EditFontToolStripMenuItem, ClearFormattingToolStripMenuItem });
+            FormatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EditFontToolStripMenuItem, ClearFormattingToolStripMenuItem, decreaseIndentToolStripMenuItem });
             FormatToolStripMenuItem.Name = "FormatToolStripMenuItem";
             FormatToolStripMenuItem.Size = new Size(78, 22);
             FormatToolStripMenuItem.Text = "Formatting";
@@ -783,7 +785,7 @@
             // 
             EditFontToolStripMenuItem.Image = Properties.Resources.Font_16x;
             EditFontToolStripMenuItem.Name = "EditFontToolStripMenuItem";
-            EditFontToolStripMenuItem.Size = new Size(163, 22);
+            EditFontToolStripMenuItem.Size = new Size(210, 22);
             EditFontToolStripMenuItem.Text = "Edit Font";
             EditFontToolStripMenuItem.Click += EditFontToolStripMenuItem_Click;
             // 
@@ -791,9 +793,17 @@
             // 
             ClearFormattingToolStripMenuItem.Image = Properties.Resources.ClearCollection_16x;
             ClearFormattingToolStripMenuItem.Name = "ClearFormattingToolStripMenuItem";
-            ClearFormattingToolStripMenuItem.Size = new Size(163, 22);
+            ClearFormattingToolStripMenuItem.Size = new Size(210, 22);
             ClearFormattingToolStripMenuItem.Text = "Clear Formatting";
             ClearFormattingToolStripMenuItem.Click += ClearFormattingToolStripMenuItem_Click;
+            // 
+            // decreaseIndentToolStripMenuItem
+            // 
+            decreaseIndentToolStripMenuItem.Name = "decreaseIndentToolStripMenuItem";
+            decreaseIndentToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Tab;
+            decreaseIndentToolStripMenuItem.Size = new Size(210, 22);
+            decreaseIndentToolStripMenuItem.Text = "Decrease Indent";
+            decreaseIndentToolStripMenuItem.Click += decreaseIndentToolStripMenuItem_Click;
             // 
             // TemplatesToolStripMenuItem
             // 
@@ -1553,5 +1563,6 @@
         private ToolStripStatusLabel appStateToolStripStatusLabel;
         private ToolStripButton ReplaceToolStripButton;
         private ToolStripMenuItem SaveAsPictureContextMenu;
+        private ToolStripMenuItem decreaseIndentToolStripMenuItem;
     }
 }

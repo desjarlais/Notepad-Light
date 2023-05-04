@@ -578,7 +578,7 @@ namespace Notepad_Light
                     {
                         File.WriteAllText(gCurrentFileName, RtbPage.Text);
                     }
-                    
+
                     RtbPage.Modified = false;
                 }
             }
@@ -1248,7 +1248,7 @@ namespace Notepad_Light
         {
             try
             {
-                if (RtbPage.SelectionFont != null) 
+                if (RtbPage.SelectionFont != null)
                 {
                     fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
                 }
@@ -2129,7 +2129,6 @@ namespace Notepad_Light
 
             // todo: find a way to account for existing indents and move the bullet accordingly
             // see https://github.com/desjarlais/Notepad-Light/issues/10
-
             EndOfButtonFormatWork();
         }
 
@@ -2139,7 +2138,6 @@ namespace Notepad_Light
             {
                 RtbPage.SelectionIndent -= 30;
             }
-
             EndOfButtonFormatWork();
         }
 
@@ -2149,7 +2147,6 @@ namespace Notepad_Light
             {
                 RtbPage.SelectionIndent += 30;
             }
-
             EndOfButtonFormatWork();
         }
 
@@ -2801,6 +2798,15 @@ namespace Notepad_Light
             {
                 MoveCursorToLocation(RtbPage.GetCharIndexFromPosition(e.Location), 0);
             }
+        }
+
+        private void decreaseIndentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (RtbPage.SelectionIndent > 0)
+            {
+                RtbPage.SelectionIndent -= 30;
+            }
+            EndOfButtonFormatWork();
         }
         #endregion
     }
