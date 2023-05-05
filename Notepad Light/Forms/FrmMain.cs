@@ -779,6 +779,10 @@ namespace Notepad_Light
             RtbPage.Copy();
         }
 
+        /// <summary>
+        /// because Ctrl+V is running through the menuitem
+        /// certain features like pasting into a toolbar textbox need to be handled specially
+        /// </summary>
         public void Paste()
         {
             // if the clipboard is empty, do nothing
@@ -787,6 +791,20 @@ namespace Notepad_Light
                 return;
             }
 
+            // if we are pasting in the toolbar textboxes, pull from clipboard
+            if (TimerDescriptionTextbox.Focused) 
+            {
+                TimerDescriptionTextbox.Text = Clipboard.GetText();
+                return;
+            }
+
+            if (FindTextBox.Focused)
+            {
+                FindTextBox.Text = Clipboard.GetText();
+                return;
+            }
+
+            // now handle paste into the richtextbox
             RtbPage.Modified = true;
 
             if (Properties.Settings.Default.UsePasteUI == false)
