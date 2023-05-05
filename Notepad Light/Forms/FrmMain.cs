@@ -792,7 +792,7 @@ namespace Notepad_Light
             }
 
             // if we are pasting in the toolbar textboxes, pull from clipboard
-            if (TimerDescriptionTextbox.Focused) 
+            if (TimerDescriptionTextbox.Focused)
             {
                 TimerDescriptionTextbox.Text = Clipboard.GetText();
                 return;
