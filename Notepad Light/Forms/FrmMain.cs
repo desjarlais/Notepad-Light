@@ -31,7 +31,6 @@ namespace Notepad_Light
         private TimeSpan tSpan;
         public Color clrDarkModeBackground = Color.FromArgb(32, 32, 32);
         public Color clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
-        private const char _semiColonDelim = ':';
         public CurrentFileType gCurrentFileType;
 
         public enum CurrentFileType
@@ -297,6 +296,7 @@ namespace Notepad_Light
             // check for file type and update UI accordingly
             if (gCurrentFileType == CurrentFileType.RTF)
             {
+                ClearToolbarFormattingIcons();
                 EnableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbPage.Rtf, true);
                 toolStripStatusLabelFileType.Text = Strings.rtf;
@@ -304,12 +304,14 @@ namespace Notepad_Light
             else if (gCurrentFileType == CurrentFileType.Text)
             {
                 ClearToolbarFormattingIcons();
+                DisableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
                 toolStripStatusLabelFileType.Text = Strings.plainText;
             }
             else
             {
                 ClearToolbarFormattingIcons();
+                DisableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
                 toolStripStatusLabelFileType.Text = Strings.markdown;
             }
@@ -1351,8 +1353,9 @@ namespace Notepad_Light
             RtbPage.BackColor = clrDarkModeTextBackground;
 
             ChangeControlTextColor(Color.White);
+            ChangeMenuTextForeColor(Color.White);
+            ChangeMenuTextBackColor(clrDarkModeBackground);
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
-            ChangeMenuItemBackColor(clrDarkModeBackground);
         }
 
         /// <summary>
@@ -1366,12 +1369,14 @@ namespace Notepad_Light
             RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
 
             ChangeControlTextColor(Color.Black);
+            ChangeMenuTextForeColor(Color.Black);
+            ChangeMenuTextBackColor(Color.FromKnownColor(KnownColor.Control));
             ChangeSubMenuItemBackColor(Color.White);
-            ChangeMenuItemBackColor(Color.FromKnownColor(KnownColor.Control));
         }
 
         /// <summary>
         /// change text color of controls and menu items
+        /// this includes menu item text itself, not just the menu items
         /// </summary>
         /// <param name="clr"></param>
         public void ChangeControlTextColor(Color clr)
@@ -1407,7 +1412,6 @@ namespace Notepad_Light
             readOnlyToolStripStatusLabel.ForeColor = clr;
 
             // update File menu
-            FileToolStripMenuItem.ForeColor = clr;
             NewToolStripMenuItem.ForeColor = clr;
             OpenToolStripMenuItem.ForeColor = clr;
             RecentToolStripMenuItem.ForeColor = clr;
@@ -1429,7 +1433,6 @@ namespace Notepad_Light
             ExitToolStripMenuItem.ForeColor = clr;
 
             // update Edit menu
-            EditToolStripMenuItem.ForeColor = clr;
             UndoToolStripMenuItem.ForeColor = clr;
             RedoToolStripMenuItem.ForeColor = clr;
             CutToolStripMenuItem.ForeColor = clr;
@@ -1441,19 +1444,16 @@ namespace Notepad_Light
             ReplaceToolStripMenuItem.ForeColor = clr;
 
             // update Insert menu
-            InsertToolStripMenuItem.ForeColor = clr;
             PictureToolStripMenuItem.ForeColor = clr;
             TableToolStripMenuItem.ForeColor = clr;
             dateTimeToolStripMenuItem.ForeColor = clr;
 
             // update Formatting menu
-            FormatToolStripMenuItem.ForeColor = clr;
             EditFontToolStripMenuItem.ForeColor = clr;
             ClearFormattingToolStripMenuItem.ForeColor = clr;
             decreaseIndentToolStripMenuItem.ForeColor = clr;
 
             // update Templates menu
-            TemplatesToolStripMenuItem.ForeColor = clr;
             Template1ToolStripMenuItem.ForeColor = clr;
             Template2ToolStripMenuItem.ForeColor = clr;
             Template3ToolStripMenuItem.ForeColor = clr;
@@ -1468,7 +1468,6 @@ namespace Notepad_Light
             ViewTimersToolStripMenuItem.ForeColor = clr;
 
             // update View menu
-            ViewToolStripMenuItem.ForeColor = clr;
             WordWrapToolStripMenuItem.ForeColor = clr;
             ZoomToolStripMenuItem.ForeColor = clr;
             ZoomToolStripMenuItem100.ForeColor = clr;
@@ -1478,20 +1477,12 @@ namespace Notepad_Light
             ZoomToolStripMenuItem300.ForeColor = clr;
             TaskPaneToolStripMenuItem.ForeColor = clr;
 
-            // update Timer menu
-            timerToolStripMenuItem.ForeColor = clr;
-            StartTimerToolStripMenuItem.ForeColor = clr;
-            EditTimerToolStripMenuItem.ForeColor = clr;
-            ResetTimerToolStripMenuItem.ForeColor = clr;
-            ViewTimersToolStripMenuItem.ForeColor = clr;
-
             // update Help menu
-            HelpToolStripMenuItem.ForeColor = clr;
             AboutToolStripMenuItem.ForeColor = clr;
             ReportBugToolStripMenuItem.ForeColor = clr;
         }
 
-        public void ChangeMenuItemBackColor(Color clr)
+        public void ChangeMenuTextBackColor(Color clr)
         {
             FileToolStripMenuItem.BackColor = clr;
             EditToolStripMenuItem.BackColor = clr;
@@ -1500,6 +1491,18 @@ namespace Notepad_Light
             timerToolStripMenuItem.BackColor = clr;
             ViewToolStripMenuItem.BackColor = clr;
             HelpToolStripMenuItem.BackColor = clr;
+        }
+
+        public void ChangeMenuTextForeColor(Color clr)
+        {
+            FileToolStripMenuItem.ForeColor = clr;
+            EditToolStripMenuItem.ForeColor = clr;
+            InsertToolStripMenuItem.ForeColor = clr;
+            FormatToolStripMenuItem.ForeColor = clr;
+            timerToolStripMenuItem.ForeColor = clr;
+            ViewToolStripMenuItem.ForeColor = clr;
+            HelpToolStripMenuItem.ForeColor = clr;
+            TemplatesToolStripMenuItem.ForeColor = clr;
         }
 
         /// <summary>
@@ -1945,7 +1948,7 @@ namespace Notepad_Light
             if (fEditedTimer._isAdjustedTime)
             {
                 ResetTimer();
-                string[] dataArray = _EditedTime.Split(_semiColonDelim);
+                string[] dataArray = _EditedTime.Split(Strings.semiColonNoSpaces);
                 editedHours = Convert.ToInt32(dataArray.ElementAt(0));
                 editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
                 editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));

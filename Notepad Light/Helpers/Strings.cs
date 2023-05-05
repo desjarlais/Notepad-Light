@@ -4,8 +4,6 @@
     {
         // general strings
         public const string semiColon = " : ";
-        public const string semiColonNoSpaces = ":";
-        public const string pipeDelim = "|";
         public const string defaultFileName = "Untitled";
         public const string backupTemplateFileName = "TemplateBackup";
         public const string markdown = "Markdown";
@@ -58,5 +56,10 @@
         public const string rtfTableRowStart = @"\trowd";
         public const string rtfTableCell = @"\cellx";
         public const string rtfEnd = "}";
+
+        // chars
+        public const char pipeDelim = '|';
+        public const char semiColonNoSpaces = ':';
+
     }
 }
