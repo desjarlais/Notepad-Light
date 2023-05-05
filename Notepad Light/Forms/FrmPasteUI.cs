@@ -1,5 +1,4 @@
 ﻿using Notepad_Light.Helpers;
-using System.Text;
 
 namespace Notepad_Light.Forms
 {
@@ -67,10 +66,7 @@ namespace Notepad_Light.Forms
 
         private void FrmPasteUI_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Close();
-            }
+            if (e.KeyCode == Keys.Escape) { Close(); }
         }
     }
 }

@@ -51,10 +51,7 @@ namespace Notepad_Light.Forms
 
         private void FrmAbout_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Close();
-            }
+            if (e.KeyCode == Keys.Escape) { Close(); }
         }
 
         public string ConvertPlatform(int val)

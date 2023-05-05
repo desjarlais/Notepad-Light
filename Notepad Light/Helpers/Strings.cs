@@ -5,6 +5,7 @@
         // general strings
         public const string semiColon = " : ";
         public const string semiColonNoSpaces = ":";
+        public const string pipeDelim = "|";
         public const string defaultFileName = "Untitled";
         public const string backupTemplateFileName = "TemplateBackup";
         public const string markdown = "Markdown";

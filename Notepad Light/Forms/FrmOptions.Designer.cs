@@ -53,6 +53,7 @@
             rdoDarkMode = new RadioButton();
             groupBox4 = new GroupBox();
             ckbPasteRtfUnformatted = new CheckBox();
+            ckbClearTimersOnExit = new CheckBox();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudAutoSaveInterval).BeginInit();
@@ -119,6 +120,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(ckbClearTimersOnExit);
             groupBox3.Controls.Add(cbxIncludeDateTimeWithTemplates);
             groupBox3.Controls.Add(cbxInsertPictureWithTransparency);
             groupBox3.Controls.Add(cbxCleanupTempAppFilesOnExit);
@@ -130,7 +132,7 @@
             groupBox3.Margin = new Padding(2, 1, 2, 1);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(2, 1, 2, 1);
-            groupBox3.Size = new Size(277, 166);
+            groupBox3.Size = new Size(277, 192);
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             groupBox3.Text = "App Options";
@@ -138,7 +140,7 @@
             // cbxIncludeDateTimeWithTemplates
             // 
             cbxIncludeDateTimeWithTemplates.AutoSize = true;
-            cbxIncludeDateTimeWithTemplates.Location = new Point(14, 102);
+            cbxIncludeDateTimeWithTemplates.Location = new Point(14, 139);
             cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
             cbxIncludeDateTimeWithTemplates.Size = new Size(257, 19);
             cbxIncludeDateTimeWithTemplates.TabIndex = 15;
@@ -148,7 +150,7 @@
             // cbxInsertPictureWithTransparency
             // 
             cbxInsertPictureWithTransparency.AutoSize = true;
-            cbxInsertPictureWithTransparency.Location = new Point(14, 77);
+            cbxInsertPictureWithTransparency.Location = new Point(14, 114);
             cbxInsertPictureWithTransparency.Name = "cbxInsertPictureWithTransparency";
             cbxInsertPictureWithTransparency.Size = new Size(200, 19);
             cbxInsertPictureWithTransparency.TabIndex = 14;
@@ -158,11 +160,11 @@
             // cbxCleanupTempAppFilesOnExit
             // 
             cbxCleanupTempAppFilesOnExit.AutoSize = true;
-            cbxCleanupTempAppFilesOnExit.Location = new Point(14, 52);
+            cbxCleanupTempAppFilesOnExit.Location = new Point(14, 89);
             cbxCleanupTempAppFilesOnExit.Name = "cbxCleanupTempAppFilesOnExit";
-            cbxCleanupTempAppFilesOnExit.Size = new Size(220, 19);
+            cbxCleanupTempAppFilesOnExit.Size = new Size(245, 19);
             cbxCleanupTempAppFilesOnExit.TabIndex = 13;
-            cbxCleanupTempAppFilesOnExit.Text = "Delete Unused Template Files On Exit";
+            cbxCleanupTempAppFilesOnExit.Text = "Delete Unused Template Files On App Exit";
             cbxCleanupTempAppFilesOnExit.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -178,7 +180,7 @@
             // 
             cbxNewFileFormat.FormattingEnabled = true;
             cbxNewFileFormat.Items.AddRange(new object[] { "Plain Text", "Rtf", "Markdown" });
-            cbxNewFileFormat.Location = new Point(113, 23);
+            cbxNewFileFormat.Location = new Point(109, 22);
             cbxNewFileFormat.Name = "cbxNewFileFormat";
             cbxNewFileFormat.Size = new Size(105, 23);
             cbxNewFileFormat.TabIndex = 11;
@@ -186,7 +188,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(14, 134);
+            label1.Location = new Point(14, 61);
             label1.Name = "label1";
             label1.Size = new Size(153, 15);
             label1.TabIndex = 10;
@@ -194,7 +196,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            nudAutoSaveInterval.Location = new Point(173, 132);
+            nudAutoSaveInterval.Location = new Point(173, 59);
             nudAutoSaveInterval.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             nudAutoSaveInterval.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudAutoSaveInterval.Name = "nudAutoSaveInterval";
@@ -309,7 +311,7 @@
             groupBox4.Controls.Add(ckbUsePasteUI);
             groupBox4.Location = new Point(288, 192);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(159, 166);
+            groupBox4.Size = new Size(159, 190);
             groupBox4.TabIndex = 16;
             groupBox4.TabStop = false;
             groupBox4.Text = "Paste Options";
@@ -323,6 +325,16 @@
             ckbPasteRtfUnformatted.TabIndex = 2;
             ckbPasteRtfUnformatted.Text = "Paste RTF Unformatted";
             ckbPasteRtfUnformatted.UseVisualStyleBackColor = true;
+            // 
+            // ckbClearTimersOnExit
+            // 
+            ckbClearTimersOnExit.AutoSize = true;
+            ckbClearTimersOnExit.Location = new Point(14, 164);
+            ckbClearTimersOnExit.Name = "ckbClearTimersOnExit";
+            ckbClearTimersOnExit.Size = new Size(157, 19);
+            ckbClearTimersOnExit.TabIndex = 16;
+            ckbClearTimersOnExit.Text = "Clear Timers On App Exit";
+            ckbClearTimersOnExit.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 
@@ -385,5 +397,6 @@
         private CheckBox cbxIncludeDateTimeWithTemplates;
         private GroupBox groupBox4;
         private CheckBox ckbPasteRtfUnformatted;
+        private CheckBox ckbClearTimersOnExit;
     }
 }

@@ -195,6 +195,15 @@ namespace Notepad_Light.Forms
                 Properties.Settings.Default.PasteRtfUnformatted = false;
             }
 
+            if (ckbClearTimersOnExit.Checked == true) 
+            {
+                Properties.Settings.Default.ClearTimersOnExit = true;
+            }
+            else
+            {
+                Properties.Settings.Default.ClearTimersOnExit = false;
+            }
+
             Close();
         }
 
@@ -205,10 +214,7 @@ namespace Notepad_Light.Forms
 
         private void FrmOptions_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Close();
-            }
+            if (e.KeyCode == Keys.Escape) { Close(); }
         }
     }
 }

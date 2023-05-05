@@ -866,6 +866,12 @@ namespace Notepad_Light
             SaveChanges();
             RtbPage.Modified = false;
 
+            // check if the timers need to be cleared out
+            if (Properties.Settings.Default.ClearTimersOnExit == true)
+            {
+                Properties.Settings.Default.TimersList.Clear();
+            }
+
             // formclosingevent will fire twice if we call app exit anywhere from form closing
             // only call app.exit if we aren't coming from the event
             if (!fromFormClosingEvent)
@@ -1356,11 +1362,10 @@ namespace Notepad_Light
             TimerToolStripLabel.ForeColor = clr;
             TimerToolStripLabelOnly.ForeColor = clr;
             StartStopTimerToolStripButton.ForeColor = clr;
-            ResetTimerToolStripButton.ForeColor = clr;
-            EditTimerToolStripButton.ForeColor = clr;
             FindToolStripButton.ForeColor = clr;
             SearchToolStripLabel.ForeColor = clr;
             ReplaceToolStripButton.ForeColor = clr;
+            TrackTimeToolStripButton.ForeColor = clr;
 
             // update status bar labels
             toolStripStatusLabelCol.ForeColor = clr;
@@ -1427,6 +1432,7 @@ namespace Notepad_Light
             FormatToolStripMenuItem.ForeColor = clr;
             EditFontToolStripMenuItem.ForeColor = clr;
             ClearFormattingToolStripMenuItem.ForeColor = clr;
+            decreaseIndentToolStripMenuItem.ForeColor = clr;
 
             // update Templates menu
             TemplatesToolStripMenuItem.ForeColor = clr;
@@ -1436,6 +1442,12 @@ namespace Notepad_Light
             Template4ToolStripMenuItem.ForeColor = clr;
             Template5ToolStripMenuItem.ForeColor = clr;
             ManageTemplatesToolStripMenuItem.ForeColor = clr;
+
+            // update Timer menu
+            StartTimerToolStripMenuItem.ForeColor = clr;
+            EditTimerToolStripMenuItem.ForeColor = clr;
+            ResetTimerToolStripMenuItem.ForeColor = clr;
+            ViewTimersToolStripMenuItem.ForeColor = clr;
 
             // update View menu
             ViewToolStripMenuItem.ForeColor = clr;
@@ -1447,6 +1459,13 @@ namespace Notepad_Light
             ZoomToolStripMenuItem250.ForeColor = clr;
             ZoomToolStripMenuItem300.ForeColor = clr;
             TaskPaneToolStripMenuItem.ForeColor = clr;
+
+            // update Timer menu
+            timerToolStripMenuItem.ForeColor = clr;
+            StartTimerToolStripMenuItem.ForeColor = clr;
+            EditTimerToolStripMenuItem.ForeColor = clr;
+            ResetTimerToolStripMenuItem.ForeColor = clr;
+            ViewTimersToolStripMenuItem.ForeColor = clr;
 
             // update Help menu
             HelpToolStripMenuItem.ForeColor = clr;
@@ -1460,6 +1479,7 @@ namespace Notepad_Light
             EditToolStripMenuItem.BackColor = clr;
             InsertToolStripMenuItem.BackColor = clr;
             FormatToolStripMenuItem.BackColor = clr;
+            timerToolStripMenuItem.BackColor = clr;
             ViewToolStripMenuItem.BackColor = clr;
             HelpToolStripMenuItem.BackColor = clr;
         }
@@ -1510,6 +1530,7 @@ namespace Notepad_Light
             // update Formatting menu
             EditFontToolStripMenuItem.BackColor = clr;
             ClearFormattingToolStripMenuItem.BackColor = clr;
+            decreaseIndentToolStripMenuItem.BackColor = clr;
 
             // update Templates menu
             Template1ToolStripMenuItem.BackColor = clr;
@@ -1528,6 +1549,12 @@ namespace Notepad_Light
             ZoomToolStripMenuItem250.BackColor = clr;
             ZoomToolStripMenuItem300.BackColor = clr;
             TaskPaneToolStripMenuItem.BackColor = clr;
+
+            // update Timer menu
+            StartTimerToolStripMenuItem.BackColor = clr;
+            EditTimerToolStripMenuItem.BackColor = clr;
+            ResetTimerToolStripMenuItem.BackColor = clr;
+            ViewTimersToolStripMenuItem.BackColor = clr;
 
             // update Help menu
             AboutToolStripMenuItem.BackColor = clr;
@@ -1853,6 +1880,59 @@ namespace Notepad_Light
                 }
             }
             return imageDataBinary;
+        }
+
+        public void StartTimer()
+        {
+            if (gStopwatch.IsRunning)
+            {
+                gStopwatch.Stop();
+                StartStopTimerToolStripButton.Text = Strings.startTimeText;
+                StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
+                StartTimerToolStripMenuItem.Text = Strings.startTimeText;
+                StartTimerToolStripMenuItem.Image = Properties.Resources.StatusRun_16x;
+            }
+            else
+            {
+                timer1.Enabled = true;
+                gStopwatch.Start();
+                StartStopTimerToolStripButton.Text = Strings.stopTimeText;
+                StartStopTimerToolStripButton.Image = Properties.Resources.Stop_16x;
+                StartTimerToolStripMenuItem.Text = Strings.stopTimeText;
+                StartTimerToolStripMenuItem.Image = Properties.Resources.Stop_16x;
+            }
+        }
+
+        /// <summary>
+        /// reset the timer and ui back to zero
+        /// </summary>
+        public void ResetTimer()
+        {
+            gStopwatch.Reset();
+            TimerToolStripLabel.Text = Strings.zeroTimer;
+            StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
+            StartStopTimerToolStripButton.Text = Strings.startTimeText;
+            ClearTimeSpanVariables();
+        }
+
+        public void EditTimer()
+        {
+            FrmEditTimer fEditedTimer = new FrmEditTimer(TimerToolStripLabel.Text)
+            {
+                Owner = this
+            };
+            fEditedTimer.ShowDialog(this);
+
+            // if the time was adjusted, reset the timer and update the display
+            if (fEditedTimer._isAdjustedTime)
+            {
+                ResetTimer();
+                string[] dataArray = _EditedTime.Split(_semiColonDelim);
+                editedHours = Convert.ToInt32(dataArray.ElementAt(0));
+                editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
+                editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
+                TimerToolStripLabel.Text = _EditedTime;
+            }
         }
 
         #endregion
@@ -2378,27 +2458,6 @@ namespace Notepad_Light
             FindText();
         }
 
-        private void EditTimerToolStripButton_Click(object sender, EventArgs e)
-        {
-            FrmEditTimer fEditedTimer = new FrmEditTimer(TimerToolStripLabel.Text)
-            {
-                Owner = this
-            };
-            fEditedTimer.ShowDialog(this);
-
-            // if the time was adjusted, reset the timer and update the display
-            if (fEditedTimer._isAdjustedTime)
-            {
-                ResetTimerToolStripButton.PerformClick();
-
-                string[] dataArray = _EditedTime.Split(_semiColonDelim);
-                editedHours = Convert.ToInt32(dataArray.ElementAt(0));
-                editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
-                editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
-                TimerToolStripLabel.Text = _EditedTime;
-            }
-        }
-
         private void ToolStripSeparator1_Paint(object sender, PaintEventArgs e)
         {
             PaintToolStripSeparator(sender, e);
@@ -2655,33 +2714,7 @@ namespace Notepad_Light
         /// <param name="e"></param>
         private void ToolStripButtonStartStopTimer_Click(object sender, EventArgs e)
         {
-            if (gStopwatch.IsRunning)
-            {
-                gStopwatch.Stop();
-                StartStopTimerToolStripButton.Text = Strings.startTimeText;
-                StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
-            }
-            else
-            {
-                timer1.Enabled = true;
-                gStopwatch.Start();
-                StartStopTimerToolStripButton.Text = Strings.stopTimeText;
-                StartStopTimerToolStripButton.Image = Properties.Resources.Stop_16x;
-            }
-        }
-
-        /// <summary>
-        /// reset the timer and ui back to zero
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ToolStripButtonResetTimer_Click(object sender, EventArgs e)
-        {
-            gStopwatch.Reset();
-            TimerToolStripLabel.Text = Strings.zeroTimer;
-            StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
-            StartStopTimerToolStripButton.Text = Strings.startTimeText;
-            ClearTimeSpanVariables();
+            StartTimer();
         }
 
         private void ReplaceToolStripButton_Click(object sender, EventArgs e)
@@ -2808,6 +2841,39 @@ namespace Notepad_Light
             }
             EndOfButtonFormatWork();
         }
+
+        private void TrackTimeToolStripButton_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TimersList.Add(TimerDescriptionTextbox.Text + "|" + DateTime.Now.ToShortDateString() + "|" + TimerToolStripLabel.Text);
+            ResetTimer();
+            TimerDescriptionTextbox.Clear();
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartTimer();
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResetTimer();
+        }
+
+        private void editToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            EditTimer();
+        }
+
+        private void viewTimersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // display tracked timer dialog
+            FrmTimers fTimers = new FrmTimers()
+            {
+                Owner = this
+            };
+            fTimers.ShowDialog();
+        }
+
         #endregion
     }
 }

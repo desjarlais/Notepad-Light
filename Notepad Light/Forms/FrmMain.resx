@@ -179,44 +179,6 @@
         YII=
 </value>
   </data>
-  <data name="CutToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKGSURBVFhHxZY9rhpBEIQ5go/gI/gIFjnSC8nJ0YuJnJBz
-        AAKnfhHiAMgpqX9eZuOcAIz4CdfzrbuWZpj9AyyXVNIy01U93TszS6cOh8Ph4/F4zCDPNlyKtvGV8Gbi
-        6XR6a9NXYC6Ov3kRQfiMwXq9zgaDQTafz2sNtWBi0aA1zbOFNEcQbhFPJpOs2+1m/X6/qCrVBV89sWjQ
-        8nu32/2ysGbwZr1eLzeDVV3w1SserXwsrDkk9Aso60Kq+rsXQNsQjsfjwhCmupCqHqJlvPUrAMH0A+Ll
-        cnlhGnehrHqIlnG8zLY5NpvNmyDON+JwOLww9l0oqx4N43jgZbbtEMzzo7harS7MfRfEuHo0jONhdreh
-        bi/AuPqbj18KoYInzLhUyk6Er54YdwE9mc192O/3nzGcTqdFIkjlcfXEEIvG5PcjmL1LVctz/FtxaEz+
-        GGi3LxaLImFM5ogh1mSPw39fQDDO7wS1/OXTS7bd/M7JM2PuFWxN9hjYpZTvbhKx05VcVBdsAe3vfo9w
-        vb4PJjOZiW0WEHGGp9lXIwRPIvEFdRfUvIIyTixNGgQomPPsjxh3+2g0Kn6XkRj/7WDBuhuM6UVY2/Og
-        +Nqto7pSRX2aYfJ1hIn8neu2w/Trl29Fm3lWIv9/D/LMWJ3OdWJmac+QmdruTbwZc+5TW1Btr9L5PWJp
-        z2BQuxzGJqKqkZFYp9O84i3tGQz+ywWos4rnn5Sl/gtNKPDnj9WVSaqVse71+2sjnaU9IwxebEI2lTfD
-        JLWZUjq/D8p0lvaMpsfQHyc+ubfokscQhMnSi4hnVwFfvOKfbhsdsSZLgwAXnKRPLoTxWl1gdXLB2nr1
-        MWKs6p9OlS7d9k7nDwUnZZzcM/MQAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="CopyToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADDSURBVFhH7dJBCsMgEIXhHqFncu/F0st14T1sN24tDxwo
-        wXRm4hPSEOGHgsz4QXqTU0qpO3rmnO9txdjpLLfGQcjCEIKpGGNNKfEQXgCiItaAV37/bFkeXIQXgKiI
-        PQC0gfBjZMgLQBSEDGgAuddyfxY2ALkQXkDvDsm9+w/KBuC3CzEDgMyIWQBkQswEoC1Ee34+AH0j5L32
-        PB+gdV6AlsxfgOMDtHrLLcn8cQFa5wVo5wKsAaP9L4BdW6+f3vB4pX4ACsoMV7oL4dsAAAAASUVORK5C
-        YII=
-</value>
-  </data>
-  <data name="PasteToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEzSURBVFhH7ZVNboMwEIU5So/QM3AK1s3FuuMM6YI992iz
-        YVES8bOkeWgetqxxNYG4Smmf9EnGM+P3jJDIrBrH8anv+9dhGNork9BiDzVpS6Ou654D45AWPdJ+X+F2
-        MIBRVVVTURRTnuczWGOPIZK8CXntsxGNQxgCvTJ2u+QWUXjzw8thOh7fZrDGHmrajI/YxKUNkaZpltvC
-        uP08z2DNfW3OR2ziYiMPjEFz8PF+Unt8kgYAWo/P6gChgW+qEZvbTwAr+wuwlv8ADxPg+n/YHuByviw3
-        uRdi68TCdwHwT6jrehObAuAA1teynwDst6DNia0TC2y0BLB8E9ocEFsnFthoCeA/x9DmgNg6scDGXxHA
-        SpIAWFspy3KZMwcI4WFa7RYeP8BPIbZOWlNKxPbPK8u+AHsaqtOIZ84mAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="fontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>492, 23</value>
   </metadata>
