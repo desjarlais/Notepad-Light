@@ -939,6 +939,58 @@ namespace Notepad_Light
             }
         }
 
+        public void ViewTimers()
+        {
+            FrmTimers fTimers = new FrmTimers()
+            {
+                Owner = this
+            };
+            fTimers.ShowDialog();
+
+            if (fTimers.isResumeTimer)
+            {
+                TimerDescriptionTextbox.Text = fTimers.resumeDescription;
+
+                ResetTimer();
+                TimerToolStripLabel.Text = fTimers.resumeTime;
+                string[] dataArray = fTimers.resumeTime.Split(Strings.semiColonNoSpaces);
+                editedHours = Convert.ToInt32(dataArray.ElementAt(0));
+                editedMinutes = Convert.ToInt32(dataArray.ElementAt(1));
+                editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
+                StartTimer();
+            }
+        }
+
+        public void AddTime(string descriptionToAdd, string timeToAdd)
+        {
+            bool isExistingTimer = false;
+            string editedTime = string.Empty;
+
+            if (Properties.Settings.Default.TimersList.Count > 0)
+            {
+                foreach (string ?s in Properties.Settings.Default.TimersList) 
+                {
+                    if (s!.Contains(descriptionToAdd)) 
+                    {
+                        string timeToUpdate = s;
+                        Properties.Settings.Default.TimersList.Remove(s);
+                        editedTime = descriptionToAdd + Strings.pipeDelim + DateTime.Now.ToShortDateString() + Strings.pipeDelim + timeToAdd;
+                        isExistingTimer = true;
+                        break;
+                    }
+                }
+            }
+
+            if (isExistingTimer)
+            {
+                Properties.Settings.Default.TimersList.Add(editedTime);
+            }
+            else
+            {
+                Properties.Settings.Default.TimersList.Add(descriptionToAdd + Strings.pipeDelim + DateTime.Now.ToShortDateString() + Strings.pipeDelim + timeToAdd);
+            }
+        }
+
         /// <summary>
         /// refresh the toolbar icons
         /// </summary>
@@ -2865,7 +2917,7 @@ namespace Notepad_Light
 
         private void TrackTimeToolStripButton_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.TimersList.Add(TimerDescriptionTextbox.Text + "|" + DateTime.Now.ToShortDateString() + "|" + TimerToolStripLabel.Text);
+            AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text);
             ResetTimer();
             TimerDescriptionTextbox.Clear();
         }
@@ -2887,12 +2939,12 @@ namespace Notepad_Light
 
         private void viewTimersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // display tracked timer dialog
-            FrmTimers fTimers = new FrmTimers()
-            {
-                Owner = this
-            };
-            fTimers.ShowDialog();
+            ViewTimers();
+        }
+
+        private void ViewTimersToolStripButton_Click(object sender, EventArgs e)
+        {
+            ViewTimers();
         }
 
         #endregion

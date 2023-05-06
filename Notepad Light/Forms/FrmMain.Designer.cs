@@ -160,17 +160,17 @@
             DecreaseIndentToolStripButton = new ToolStripButton();
             IncreaseIndentToolStripButton = new ToolStripButton();
             ToolStripSeparator2 = new ToolStripSeparator();
+            SearchToolStripLabel = new ToolStripLabel();
+            FindTextBox = new ToolStripTextBox();
+            FindToolStripButton = new ToolStripButton();
+            ReplaceToolStripButton = new ToolStripButton();
+            ToolStripSeparator9 = new ToolStripSeparator();
             TimerToolStripLabelOnly = new ToolStripLabel();
             TimerDescriptionTextbox = new ToolStripTextBox();
             StartStopTimerToolStripButton = new ToolStripButton();
             TimerToolStripLabel = new ToolStripLabel();
             TrackTimeToolStripButton = new ToolStripButton();
             ToolStripSeparator5 = new ToolStripSeparator();
-            SearchToolStripLabel = new ToolStripLabel();
-            FindTextBox = new ToolStripTextBox();
-            FindToolStripButton = new ToolStripButton();
-            ReplaceToolStripButton = new ToolStripButton();
-            ToolStripSeparator9 = new ToolStripSeparator();
             fontDialog1 = new FontDialog();
             timer1 = new System.Windows.Forms.Timer(components);
             printDialog1 = new PrintDialog();
@@ -183,6 +183,7 @@
             toolStrip2 = new ToolStrip();
             BtnClosePanel2 = new ToolStripButton();
             webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
+            ViewTimersToolStripButton = new ToolStripButton();
             statusStrip1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -878,7 +879,7 @@
             // 
             StartTimerToolStripMenuItem.Image = Properties.Resources.StatusRun_16x;
             StartTimerToolStripMenuItem.Name = "StartTimerToolStripMenuItem";
-            StartTimerToolStripMenuItem.Size = new Size(137, 22);
+            StartTimerToolStripMenuItem.Size = new Size(180, 22);
             StartTimerToolStripMenuItem.Text = "Start";
             StartTimerToolStripMenuItem.Click += startToolStripMenuItem_Click;
             // 
@@ -886,7 +887,7 @@
             // 
             ResetTimerToolStripMenuItem.Image = Properties.Resources.Restart_16x;
             ResetTimerToolStripMenuItem.Name = "ResetTimerToolStripMenuItem";
-            ResetTimerToolStripMenuItem.Size = new Size(137, 22);
+            ResetTimerToolStripMenuItem.Size = new Size(180, 22);
             ResetTimerToolStripMenuItem.Text = "Reset";
             ResetTimerToolStripMenuItem.Click += resetToolStripMenuItem_Click;
             // 
@@ -894,7 +895,7 @@
             // 
             EditTimerToolStripMenuItem.Image = Properties.Resources.TimePicker_16x;
             EditTimerToolStripMenuItem.Name = "EditTimerToolStripMenuItem";
-            EditTimerToolStripMenuItem.Size = new Size(137, 22);
+            EditTimerToolStripMenuItem.Size = new Size(180, 22);
             EditTimerToolStripMenuItem.Text = "Edit";
             EditTimerToolStripMenuItem.Click += editToolStripMenuItem1_Click;
             // 
@@ -902,7 +903,7 @@
             // 
             ViewTimersToolStripMenuItem.Image = Properties.Resources.Time_color_16x;
             ViewTimersToolStripMenuItem.Name = "ViewTimersToolStripMenuItem";
-            ViewTimersToolStripMenuItem.Size = new Size(137, 22);
+            ViewTimersToolStripMenuItem.Size = new Size(180, 22);
             ViewTimersToolStripMenuItem.Text = "View Timers";
             ViewTimersToolStripMenuItem.Click += viewTimersToolStripMenuItem_Click;
             // 
@@ -1000,7 +1001,7 @@
             // toolStrip1
             // 
             toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ToolStripSeparator5 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5 });
             toolStrip1.Location = new Point(0, 24);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1142, 25);
@@ -1218,51 +1219,6 @@
             ToolStripSeparator2.Name = "ToolStripSeparator2";
             ToolStripSeparator2.Size = new Size(6, 25);
             // 
-            // TimerToolStripLabelOnly
-            // 
-            TimerToolStripLabelOnly.Name = "TimerToolStripLabelOnly";
-            TimerToolStripLabelOnly.Size = new Size(40, 22);
-            TimerToolStripLabelOnly.Text = "Timer:";
-            // 
-            // TimerDescriptionTextbox
-            // 
-            TimerDescriptionTextbox.BorderStyle = BorderStyle.FixedSingle;
-            TimerDescriptionTextbox.Name = "TimerDescriptionTextbox";
-            TimerDescriptionTextbox.Size = new Size(125, 25);
-            // 
-            // StartStopTimerToolStripButton
-            // 
-            StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
-            StartStopTimerToolStripButton.ImageTransparentColor = Color.Magenta;
-            StartStopTimerToolStripButton.Name = "StartStopTimerToolStripButton";
-            StartStopTimerToolStripButton.Size = new Size(51, 22);
-            StartStopTimerToolStripButton.Text = "Start";
-            StartStopTimerToolStripButton.ToolTipText = "Start Timer";
-            StartStopTimerToolStripButton.Click += ToolStripButtonStartStopTimer_Click;
-            // 
-            // TimerToolStripLabel
-            // 
-            TimerToolStripLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            TimerToolStripLabel.Name = "TimerToolStripLabel";
-            TimerToolStripLabel.Size = new Size(55, 22);
-            TimerToolStripLabel.Text = "00:00:00";
-            // 
-            // TrackTimeToolStripButton
-            // 
-            TrackTimeToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            TrackTimeToolStripButton.Image = Properties.Resources.AddOnlineVersion;
-            TrackTimeToolStripButton.ImageTransparentColor = Color.Magenta;
-            TrackTimeToolStripButton.Name = "TrackTimeToolStripButton";
-            TrackTimeToolStripButton.Size = new Size(23, 22);
-            TrackTimeToolStripButton.Text = "Add";
-            TrackTimeToolStripButton.ToolTipText = "Add Time to Timer List";
-            TrackTimeToolStripButton.Click += TrackTimeToolStripButton_Click;
-            // 
-            // ToolStripSeparator5
-            // 
-            ToolStripSeparator5.Name = "ToolStripSeparator5";
-            ToolStripSeparator5.Size = new Size(6, 25);
-            // 
             // SearchToolStripLabel
             // 
             SearchToolStripLabel.Name = "SearchToolStripLabel";
@@ -1300,6 +1256,53 @@
             // 
             ToolStripSeparator9.Name = "ToolStripSeparator9";
             ToolStripSeparator9.Size = new Size(6, 25);
+            // 
+            // TimerToolStripLabelOnly
+            // 
+            TimerToolStripLabelOnly.Name = "TimerToolStripLabelOnly";
+            TimerToolStripLabelOnly.Size = new Size(40, 22);
+            TimerToolStripLabelOnly.Text = "Timer:";
+            // 
+            // TimerDescriptionTextbox
+            // 
+            TimerDescriptionTextbox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            TimerDescriptionTextbox.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            TimerDescriptionTextbox.BorderStyle = BorderStyle.FixedSingle;
+            TimerDescriptionTextbox.Name = "TimerDescriptionTextbox";
+            TimerDescriptionTextbox.Size = new Size(125, 25);
+            // 
+            // StartStopTimerToolStripButton
+            // 
+            StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
+            StartStopTimerToolStripButton.ImageTransparentColor = Color.Magenta;
+            StartStopTimerToolStripButton.Name = "StartStopTimerToolStripButton";
+            StartStopTimerToolStripButton.Size = new Size(51, 22);
+            StartStopTimerToolStripButton.Text = "Start";
+            StartStopTimerToolStripButton.ToolTipText = "Start Timer";
+            StartStopTimerToolStripButton.Click += ToolStripButtonStartStopTimer_Click;
+            // 
+            // TimerToolStripLabel
+            // 
+            TimerToolStripLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            TimerToolStripLabel.Name = "TimerToolStripLabel";
+            TimerToolStripLabel.Size = new Size(55, 22);
+            TimerToolStripLabel.Text = "00:00:00";
+            // 
+            // TrackTimeToolStripButton
+            // 
+            TrackTimeToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            TrackTimeToolStripButton.Image = Properties.Resources.AddOnlineVersion;
+            TrackTimeToolStripButton.ImageTransparentColor = Color.Magenta;
+            TrackTimeToolStripButton.Name = "TrackTimeToolStripButton";
+            TrackTimeToolStripButton.Size = new Size(23, 22);
+            TrackTimeToolStripButton.Text = "Add";
+            TrackTimeToolStripButton.ToolTipText = "Add Time to Timer List";
+            TrackTimeToolStripButton.Click += TrackTimeToolStripButton_Click;
+            // 
+            // ToolStripSeparator5
+            // 
+            ToolStripSeparator5.Name = "ToolStripSeparator5";
+            ToolStripSeparator5.Size = new Size(6, 25);
             // 
             // timer1
             // 
@@ -1377,6 +1380,16 @@
             webView2Md.Size = new Size(585, 449);
             webView2Md.TabIndex = 0;
             webView2Md.ZoomFactor = 1D;
+            // 
+            // ViewTimersToolStripButton
+            // 
+            ViewTimersToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ViewTimersToolStripButton.Image = Properties.Resources.Time_color_16x;
+            ViewTimersToolStripButton.ImageTransparentColor = Color.Magenta;
+            ViewTimersToolStripButton.Name = "ViewTimersToolStripButton";
+            ViewTimersToolStripButton.Size = new Size(23, 22);
+            ViewTimersToolStripButton.Text = "View Timers";
+            ViewTimersToolStripButton.Click += ViewTimersToolStripButton_Click;
             // 
             // FrmMain
             // 
@@ -1568,5 +1581,6 @@
         private ToolStripMenuItem ResetTimerToolStripMenuItem;
         private ToolStripMenuItem EditTimerToolStripMenuItem;
         private ToolStripMenuItem ViewTimersToolStripMenuItem;
+        private ToolStripButton ViewTimersToolStripButton;
     }
 }

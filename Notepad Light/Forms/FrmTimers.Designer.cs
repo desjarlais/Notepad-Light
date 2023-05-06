@@ -41,6 +41,7 @@
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             toolStripStatusLabel2 = new ToolStripStatusLabel();
+            BtnResumeTimer = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             gridViewContextMenuStrip.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -129,11 +130,22 @@
             toolStripStatusLabel2.Size = new Size(49, 17);
             toolStripStatusLabel2.Text = "00:00:00";
             // 
+            // BtnResumeTimer
+            // 
+            BtnResumeTimer.Location = new Point(209, 317);
+            BtnResumeTimer.Name = "BtnResumeTimer";
+            BtnResumeTimer.Size = new Size(103, 23);
+            BtnResumeTimer.TabIndex = 5;
+            BtnResumeTimer.Text = "Resume Timer";
+            BtnResumeTimer.UseVisualStyleBackColor = true;
+            BtnResumeTimer.Click += BtnResumeTimer_Click;
+            // 
             // FrmTimers
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(436, 368);
+            Controls.Add(BtnResumeTimer);
             Controls.Add(statusStrip1);
             Controls.Add(BtnClearTimers);
             Controls.Add(dataGridView1);
@@ -165,5 +177,6 @@
         private ContextMenuStrip gridViewContextMenuStrip;
         private ToolStripMenuItem CopyDescriptionContextMenu;
         private ToolStripMenuItem CopyTimeContextMenu;
+        private Button BtnResumeTimer;
     }
 }

@@ -4,9 +4,13 @@ namespace Notepad_Light.Forms
 {
     public partial class FrmTimers : Form
     {
-        int totalHours = 0;
-        int totalMinutes = 0;
-        int totalSeconds = 0;
+        public string resumeTime = string.Empty;
+        public string resumeDescription = string.Empty;
+        public bool isResumeTimer = false;
+
+        private int totalHours = 0;
+        private int totalMinutes = 0;
+        private int totalSeconds = 0;
 
         public FrmTimers()
         {
@@ -71,6 +75,17 @@ namespace Notepad_Light.Forms
         private void FrmTimers_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape) { Close(); }
+        }
+
+        private void BtnResumeTimer_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentCell.Value is not null)
+            {
+                resumeTime = dataGridView1.CurrentRow.Cells[2].Value.ToString()!;
+                resumeDescription = dataGridView1.CurrentRow.Cells[0].Value.ToString()!;
+                isResumeTimer = true;
+            }
+            Close();
         }
     }
 }
