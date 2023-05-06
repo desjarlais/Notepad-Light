@@ -2917,7 +2917,7 @@ namespace Notepad_Light
 
         private void TrackTimeToolStripButton_Click(object sender, EventArgs e)
         {
-            AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text);
+            AddTime(TimerDescriptionTextbox.Text.Trim(), TimerToolStripLabel.Text);
             ResetTimer();
             TimerDescriptionTextbox.Clear();
         }
