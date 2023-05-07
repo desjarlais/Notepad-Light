@@ -2701,6 +2701,11 @@ namespace Notepad_Light
         /// <param name="e"></param>
         private void RtbPage_MouseMove(object sender, MouseEventArgs e)
         {
+            // if the focus is in either toolbar textbox, don't change focus
+            if (TimerDescriptionTextbox.Focused || FindTextBox.Focused)
+            {
+                return;
+            }
             RtbPage.Focus();
         }
 
