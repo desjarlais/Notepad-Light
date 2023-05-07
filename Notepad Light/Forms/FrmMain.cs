@@ -968,9 +968,9 @@ namespace Notepad_Light
 
             if (Properties.Settings.Default.TimersList.Count > 0)
             {
-                foreach (string ?s in Properties.Settings.Default.TimersList) 
+                foreach (string? s in Properties.Settings.Default.TimersList)
                 {
-                    if (s!.Contains(descriptionToAdd)) 
+                    if (s!.Contains(descriptionToAdd))
                     {
                         string timeToUpdate = s;
                         Properties.Settings.Default.TimersList.Remove(s);
@@ -2945,6 +2945,11 @@ namespace Notepad_Light
         private void ViewTimersToolStripButton_Click(object sender, EventArgs e)
         {
             ViewTimers();
+        }
+
+        private void ClearTimersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TimersList.Clear();
         }
 
         #endregion

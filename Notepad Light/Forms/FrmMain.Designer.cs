@@ -170,6 +170,7 @@
             StartStopTimerToolStripButton = new ToolStripButton();
             TimerToolStripLabel = new ToolStripLabel();
             TrackTimeToolStripButton = new ToolStripButton();
+            ViewTimersToolStripButton = new ToolStripButton();
             ToolStripSeparator5 = new ToolStripSeparator();
             fontDialog1 = new FontDialog();
             timer1 = new System.Windows.Forms.Timer(components);
@@ -183,7 +184,7 @@
             toolStrip2 = new ToolStrip();
             BtnClosePanel2 = new ToolStripButton();
             webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
-            ViewTimersToolStripButton = new ToolStripButton();
+            ClearTimersToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -870,7 +871,7 @@
             // 
             // timerToolStripMenuItem
             // 
-            timerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { StartTimerToolStripMenuItem, ResetTimerToolStripMenuItem, EditTimerToolStripMenuItem, ViewTimersToolStripMenuItem });
+            timerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { StartTimerToolStripMenuItem, ResetTimerToolStripMenuItem, EditTimerToolStripMenuItem, ViewTimersToolStripMenuItem, ClearTimersToolStripMenuItem });
             timerToolStripMenuItem.Name = "timerToolStripMenuItem";
             timerToolStripMenuItem.Size = new Size(49, 22);
             timerToolStripMenuItem.Text = "Timer";
@@ -1299,6 +1300,16 @@
             TrackTimeToolStripButton.ToolTipText = "Add Time to Timer List";
             TrackTimeToolStripButton.Click += TrackTimeToolStripButton_Click;
             // 
+            // ViewTimersToolStripButton
+            // 
+            ViewTimersToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ViewTimersToolStripButton.Image = Properties.Resources.Time_color_16x;
+            ViewTimersToolStripButton.ImageTransparentColor = Color.Magenta;
+            ViewTimersToolStripButton.Name = "ViewTimersToolStripButton";
+            ViewTimersToolStripButton.Size = new Size(23, 22);
+            ViewTimersToolStripButton.Text = "View Timers";
+            ViewTimersToolStripButton.Click += ViewTimersToolStripButton_Click;
+            // 
             // ToolStripSeparator5
             // 
             ToolStripSeparator5.Name = "ToolStripSeparator5";
@@ -1381,15 +1392,13 @@
             webView2Md.TabIndex = 0;
             webView2Md.ZoomFactor = 1D;
             // 
-            // ViewTimersToolStripButton
+            // ClearTimersToolStripMenuItem
             // 
-            ViewTimersToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            ViewTimersToolStripButton.Image = Properties.Resources.Time_color_16x;
-            ViewTimersToolStripButton.ImageTransparentColor = Color.Magenta;
-            ViewTimersToolStripButton.Name = "ViewTimersToolStripButton";
-            ViewTimersToolStripButton.Size = new Size(23, 22);
-            ViewTimersToolStripButton.Text = "View Timers";
-            ViewTimersToolStripButton.Click += ViewTimersToolStripButton_Click;
+            ClearTimersToolStripMenuItem.Image = Properties.Resources.Timeout;
+            ClearTimersToolStripMenuItem.Name = "ClearTimersToolStripMenuItem";
+            ClearTimersToolStripMenuItem.Size = new Size(180, 22);
+            ClearTimersToolStripMenuItem.Text = "Clear Timers";
+            ClearTimersToolStripMenuItem.Click += ClearTimersToolStripMenuItem_Click;
             // 
             // FrmMain
             // 
@@ -1582,5 +1591,6 @@
         private ToolStripMenuItem EditTimerToolStripMenuItem;
         private ToolStripMenuItem ViewTimersToolStripMenuItem;
         private ToolStripButton ViewTimersToolStripButton;
+        private ToolStripMenuItem ClearTimersToolStripMenuItem;
     }
 }
