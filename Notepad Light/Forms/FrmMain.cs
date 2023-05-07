@@ -1518,6 +1518,7 @@ namespace Notepad_Light
             EditTimerToolStripMenuItem.ForeColor = clr;
             ResetTimerToolStripMenuItem.ForeColor = clr;
             ViewTimersToolStripMenuItem.ForeColor = clr;
+            ClearTimersToolStripMenuItem.ForeColor = clr;
 
             // update View menu
             WordWrapToolStripMenuItem.ForeColor = clr;
@@ -1628,6 +1629,7 @@ namespace Notepad_Light
             EditTimerToolStripMenuItem.BackColor = clr;
             ResetTimerToolStripMenuItem.BackColor = clr;
             ViewTimersToolStripMenuItem.BackColor = clr;
+            ClearTimersToolStripMenuItem.BackColor = clr;
 
             // update Help menu
             AboutToolStripMenuItem.BackColor = clr;
