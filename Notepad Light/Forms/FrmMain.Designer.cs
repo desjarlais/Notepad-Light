@@ -123,6 +123,7 @@
             ResetTimerToolStripMenuItem = new ToolStripMenuItem();
             EditTimerToolStripMenuItem = new ToolStripMenuItem();
             ViewTimersToolStripMenuItem = new ToolStripMenuItem();
+            ClearTimersToolStripMenuItem = new ToolStripMenuItem();
             ViewToolStripMenuItem = new ToolStripMenuItem();
             WordWrapToolStripMenuItem = new ToolStripMenuItem();
             TaskPaneToolStripMenuItem = new ToolStripMenuItem();
@@ -184,7 +185,6 @@
             toolStrip2 = new ToolStrip();
             BtnClosePanel2 = new ToolStripButton();
             webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
-            ClearTimersToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -880,7 +880,7 @@
             // 
             StartTimerToolStripMenuItem.Image = Properties.Resources.StatusRun_16x;
             StartTimerToolStripMenuItem.Name = "StartTimerToolStripMenuItem";
-            StartTimerToolStripMenuItem.Size = new Size(180, 22);
+            StartTimerToolStripMenuItem.Size = new Size(139, 22);
             StartTimerToolStripMenuItem.Text = "Start";
             StartTimerToolStripMenuItem.Click += startToolStripMenuItem_Click;
             // 
@@ -888,7 +888,7 @@
             // 
             ResetTimerToolStripMenuItem.Image = Properties.Resources.Restart_16x;
             ResetTimerToolStripMenuItem.Name = "ResetTimerToolStripMenuItem";
-            ResetTimerToolStripMenuItem.Size = new Size(180, 22);
+            ResetTimerToolStripMenuItem.Size = new Size(139, 22);
             ResetTimerToolStripMenuItem.Text = "Reset";
             ResetTimerToolStripMenuItem.Click += resetToolStripMenuItem_Click;
             // 
@@ -896,7 +896,7 @@
             // 
             EditTimerToolStripMenuItem.Image = Properties.Resources.TimePicker_16x;
             EditTimerToolStripMenuItem.Name = "EditTimerToolStripMenuItem";
-            EditTimerToolStripMenuItem.Size = new Size(180, 22);
+            EditTimerToolStripMenuItem.Size = new Size(139, 22);
             EditTimerToolStripMenuItem.Text = "Edit";
             EditTimerToolStripMenuItem.Click += editToolStripMenuItem1_Click;
             // 
@@ -904,9 +904,17 @@
             // 
             ViewTimersToolStripMenuItem.Image = Properties.Resources.Time_color_16x;
             ViewTimersToolStripMenuItem.Name = "ViewTimersToolStripMenuItem";
-            ViewTimersToolStripMenuItem.Size = new Size(180, 22);
+            ViewTimersToolStripMenuItem.Size = new Size(139, 22);
             ViewTimersToolStripMenuItem.Text = "View Timers";
             ViewTimersToolStripMenuItem.Click += viewTimersToolStripMenuItem_Click;
+            // 
+            // ClearTimersToolStripMenuItem
+            // 
+            ClearTimersToolStripMenuItem.Image = Properties.Resources.Timeout;
+            ClearTimersToolStripMenuItem.Name = "ClearTimersToolStripMenuItem";
+            ClearTimersToolStripMenuItem.Size = new Size(139, 22);
+            ClearTimersToolStripMenuItem.Text = "Clear Timers";
+            ClearTimersToolStripMenuItem.Click += ClearTimersToolStripMenuItem_Click;
             // 
             // ViewToolStripMenuItem
             // 
@@ -1267,7 +1275,6 @@
             // TimerDescriptionTextbox
             // 
             TimerDescriptionTextbox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            TimerDescriptionTextbox.AutoCompleteSource = AutoCompleteSource.CustomSource;
             TimerDescriptionTextbox.BorderStyle = BorderStyle.FixedSingle;
             TimerDescriptionTextbox.Name = "TimerDescriptionTextbox";
             TimerDescriptionTextbox.Size = new Size(125, 25);
@@ -1391,14 +1398,6 @@
             webView2Md.Size = new Size(585, 449);
             webView2Md.TabIndex = 0;
             webView2Md.ZoomFactor = 1D;
-            // 
-            // ClearTimersToolStripMenuItem
-            // 
-            ClearTimersToolStripMenuItem.Image = Properties.Resources.Timeout;
-            ClearTimersToolStripMenuItem.Name = "ClearTimersToolStripMenuItem";
-            ClearTimersToolStripMenuItem.Size = new Size(180, 22);
-            ClearTimersToolStripMenuItem.Text = "Clear Timers";
-            ClearTimersToolStripMenuItem.Click += ClearTimersToolStripMenuItem_Click;
             // 
             // FrmMain
             // 

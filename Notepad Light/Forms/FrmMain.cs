@@ -2917,6 +2917,13 @@ namespace Notepad_Light
 
         private void TrackTimeToolStripButton_Click(object sender, EventArgs e)
         {
+            // if the textbox is empty, skip adding time
+            if (TimerDescriptionTextbox.Text.Length == 0)
+            {
+                MessageBox.Show("Desription is empty, please add some text.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             AddTime(TimerDescriptionTextbox.Text.Trim(), TimerToolStripLabel.Text);
             ResetTimer();
             TimerDescriptionTextbox.Clear();
