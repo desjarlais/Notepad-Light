@@ -42,3 +42,4 @@ OneNote style apps are also close, but they are too open on a per page basis...I
 * Insert Date/Time
 * Create and Insert Template / boilerplate text
 * Search Bing for selected text
+* Track timers feature 
