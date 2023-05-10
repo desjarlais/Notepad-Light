@@ -44,6 +44,9 @@ namespace Notepad_Light
         {
             InitializeComponent();
 
+            // setup log file
+            gErrorLog = Strings.appFolderDirectoryUrl;
+
             // collapse panel by default, currently only used for markdown files
             splitContainer1.Panel2Collapsed = true;
 
@@ -85,9 +88,6 @@ namespace Notepad_Light
 
             // start the autosave timer
             autosaveTimer.Start();
-
-            // setup log file
-            gErrorLog = Strings.appFolderDirectoryUrl;
 
             // setup templates
             UpdateTemplateMenu();
@@ -200,10 +200,14 @@ namespace Notepad_Light
                 Directory.CreateDirectory(Strings.appFolderDirectory);
             }
 
-            // create the error temp file when it doesn't exist
+            // create the error temp file when it doesn't exist and add machine details
             if (!File.Exists(gErrorLog))
             {
-                File.Create(gErrorLog);
+                using (FileStream fs = File.Create(gErrorLog))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes(osDetails().ToString());
+                    fs.Write(info);
+                }
             }
 
             // check the backup templates folder
@@ -1715,7 +1719,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// handle the user clicking the Find button
+        /// generic Find/Search behavior
         /// </summary>
         public void FindText()
         {
@@ -1899,7 +1903,7 @@ namespace Notepad_Light
             int startIndex;
             int endIndex;
 
-            // if the picture is from the windows clipping it contains a different format
+            // the windows snipping tool adds different rtf which needs to be checked first
             if (s.Contains("\\sn wzDescription"))
             {
                 pictTagIdx = s.IndexOf("\\pngblip");
@@ -1918,7 +1922,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// this function taken entirely from: http://www.codeproject.com/Articles/27431/Writing-Your-Own-RTF-Converter
+        /// this function based on: http://www.codeproject.com/Articles/27431/Writing-Your-Own-RTF-Converter
         /// used to take in the binary only portion of the rtf picture and convert it to hex
         /// this value will can then be used to save as an image file format
         /// </summary>

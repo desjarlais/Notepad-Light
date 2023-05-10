@@ -1,10 +1,71 @@
 ﻿using System.Drawing.Printing;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Notepad_Light.Helpers
 {
     public static class Win32
     {
+        /// <summary>
+        /// used to get machine details
+        /// </summary>
+        /// <returns></returns>
+        public static StringBuilder osDetails()
+        {
+            SYSTEM_INFO info = new SYSTEM_INFO();
+            GetSystemInfo(ref info);
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("App Version: " + Assembly.GetExecutingAssembly().GetName().Version!.ToString());
+            sb.AppendLine();
+            sb.AppendLine("CPU Details:");
+            sb.AppendLine("-----------");
+            sb.AppendLine("Processor Architecture = " + ConvertProcArchitecture(info.wProcessorArchitecture));
+            sb.AppendLine("Number of processors = " + info.dwNumberOfProcessors);
+            sb.AppendLine("Page Size = " + info.dwPageSize);
+            sb.AppendLine();
+            sb.AppendLine("OS Details:");
+            sb.AppendLine("-----------");
+            OperatingSystem os = Environment.OSVersion;
+            sb.AppendLine("OS Version = " + os.Version);
+            sb.AppendLine("OS Platform = " + ConvertPlatform((int)os.Platform));
+            sb.AppendLine("OS Service Pack = " + os.ServicePack);
+            sb.AppendLine("OS Version String = " + os.VersionString);
+            Version ver = os.Version;
+            sb.AppendLine("Build = " + ver.Build);
+
+            return sb;
+        }
+
+        public static string ConvertPlatform(int val)
+        {
+            switch (val)
+            {
+                case 0: return "Windows S Win32";
+                case 1: return "Windows Win32";
+                case 2: return "Win32NT";
+                case 3: return "WinCE";
+                case 4: return "Unix";
+                case 5: return "Xbox";
+                case 6: return "MacOSX";
+                default: return "Other";
+            }
+        }
+
+        public static string ConvertProcArchitecture(int val)
+        {
+            switch (val)
+            {
+                case 0: return "Intel x86";
+                case 5: return "ARM";
+                case 6: return "Intel Itanium-based";
+                case 9: return "AMD/Intel x64";
+                case 12: return "ARM64";
+                default: return "unknown";
+            }
+        }
+
         /// <summary>
         /// Prints text in <box>, starting at <charFrom>
         /// </summary>
@@ -120,12 +181,12 @@ namespace Notepad_Light.Helpers
                 this.Y = y;
             }
 
-            public static implicit operator System.Drawing.Point(POINT p)
+            public static implicit operator Point(POINT p)
             {
-                return new System.Drawing.Point(p.X, p.Y);
+                return new Point(p.X, p.Y);
             }
 
-            public static implicit operator POINT(System.Drawing.Point p)
+            public static implicit operator POINT(Point p)
             {
                 return new POINT(p.X, p.Y);
             }

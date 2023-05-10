@@ -149,6 +149,7 @@
             Controls.Add(statusStrip1);
             Controls.Add(BtnClearTimers);
             Controls.Add(dataGridView1);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
