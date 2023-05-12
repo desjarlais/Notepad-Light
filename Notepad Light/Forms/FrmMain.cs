@@ -943,6 +943,9 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// form to allow the user to see each tracked timer and resume existing timers
+        /// </summary>
         public void ViewTimers()
         {
             FrmTimers fTimers = new FrmTimers()
@@ -953,8 +956,8 @@ namespace Notepad_Light
 
             if (fTimers.isResumeTimer)
             {
+                // update the main timer ui
                 TimerDescriptionTextbox.Text = fTimers.resumeDescription;
-
                 ResetTimer();
                 TimerToolStripLabel.Text = fTimers.resumeTime;
                 string[] dataArray = fTimers.resumeTime.Split(Strings.semiColonNoSpaces);
@@ -965,11 +968,18 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// log the existing timer to an app setting for the view timers feature
+        /// </summary>
+        /// <param name="descriptionToAdd"></param>
+        /// <param name="timeToAdd"></param>
         public void AddTime(string descriptionToAdd, string timeToAdd)
         {
             bool isExistingTimer = false;
             string editedTime = string.Empty;
 
+            // if we have any tracked timers, need to check for dupes first
+            // if there is a dupe, update that time value
             if (Properties.Settings.Default.TimersList.Count > 0)
             {
                 foreach (string? s in Properties.Settings.Default.TimersList)
@@ -985,6 +995,7 @@ namespace Notepad_Light
                 }
             }
 
+            // add the new or edited timer to the app setting list
             if (isExistingTimer)
             {
                 Properties.Settings.Default.TimersList.Add(editedTime);

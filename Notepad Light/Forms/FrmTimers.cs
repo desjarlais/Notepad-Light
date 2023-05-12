@@ -32,7 +32,7 @@ namespace Notepad_Light.Forms
                 dataGridView1.Rows[n].Cells[1].Value = timerData[1];
                 dataGridView1.Rows[n].Cells[2].Value = timerData[2];
 
-                // parse out the time to add to total time
+                // parse out the time to add to the total time
                 string[] totalTimerData = timerData[2].Split(Strings.semiColonNoSpaces);
                 totalHours = totalHours + Convert.ToInt32(totalTimerData[0]);
                 totalMinutes = totalMinutes + Convert.ToInt32(totalTimerData[1]);
