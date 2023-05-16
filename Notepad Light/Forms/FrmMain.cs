@@ -973,7 +973,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="descriptionToAdd"></param>
         /// <param name="timeToAdd"></param>
-        public void AddTime(string descriptionToAdd, string timeToAdd)
+        public static void AddTime(string descriptionToAdd, string timeToAdd)
         {
             bool isExistingTimer = false;
             string editedTime = string.Empty;
@@ -986,14 +986,17 @@ namespace Notepad_Light
                 {
                     if (s!.Contains(descriptionToAdd))
                     {
+                        // remove the previous time value
                         string timeToUpdate = s;
                         Properties.Settings.Default.TimersList.Remove(s);
-                        // parse out the previous time
+                        
+                        // parse out the previous time and add to the new value
                         string[] oldTimer = timeToUpdate.Split(Strings.pipeDelim);
                         TimeSpan t1 = TimeSpan.Parse(timeToAdd);
                         TimeSpan t2 = TimeSpan.Parse(oldTimer[2]);
                         TimeSpan t3 = t1 + t2;
 
+                        // update the new time
                         editedTime = descriptionToAdd + Strings.pipeDelim + DateTime.Now.ToShortDateString() + Strings.pipeDelim + t3.ToString();
                         isExistingTimer = true;
                         break;
