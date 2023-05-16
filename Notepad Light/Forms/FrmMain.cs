@@ -988,7 +988,13 @@ namespace Notepad_Light
                     {
                         string timeToUpdate = s;
                         Properties.Settings.Default.TimersList.Remove(s);
-                        editedTime = descriptionToAdd + Strings.pipeDelim + DateTime.Now.ToShortDateString() + Strings.pipeDelim + timeToAdd;
+                        // parse out the previous time
+                        string[] oldTimer = timeToUpdate.Split(Strings.pipeDelim);
+                        TimeSpan t1 = TimeSpan.Parse(timeToAdd);
+                        TimeSpan t2 = TimeSpan.Parse(oldTimer[2]);
+                        TimeSpan t3 = t1 + t2;
+
+                        editedTime = descriptionToAdd + Strings.pipeDelim + DateTime.Now.ToShortDateString() + Strings.pipeDelim + t3.ToString();
                         isExistingTimer = true;
                         break;
                     }
