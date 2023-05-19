@@ -194,7 +194,7 @@ namespace Notepad_Light
         /// </summary>
         public void SetupAppFiles()
         {
-            // create Notepad folder
+            // create app folder
             if (!Directory.Exists(Strings.appFolderDirectory))
             {
                 Directory.CreateDirectory(Strings.appFolderDirectory);
@@ -357,7 +357,7 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// for unicode based markdown and text files, use ReadAllText to load the content
+        /// utf8 needs to use readalltext
         /// otherwise, the generic LoadFile is enough
         /// </summary>
         /// <param name="filePath"></param>
@@ -782,7 +782,45 @@ namespace Notepad_Light
 
         public void Copy()
         {
-            RtbPage.Copy();
+            // if the cursor is in either textbox, set that text in the clipboard
+            // otherwise, use the rtbpage
+            // currently this only copies the entire textbox text even if part of the text is selected
+            // TODO: revisit if there is a need to copy partial selection in a textbox
+            try
+            {
+                if (TimerDescriptionTextbox.Focused)
+                {
+                    if (TimerDescriptionTextbox.SelectionLength == 0) 
+                    {
+                        return;
+                    }
+
+                    Clipboard.SetText(TimerDescriptionTextbox.Text);
+                }
+                else if (FindTextBox.Focused)
+                {
+                    if (FindTextBox.SelectionLength == 0)
+                    {
+                        return;
+                    }
+
+                    Clipboard.SetText(FindTextBox.Text);
+                }
+                else
+                {
+                    if (RtbPage.SelectionLength == 0)
+                    {
+                        return;
+                    }
+
+                    RtbPage.Copy();
+                }
+            }
+            catch (Exception ex) 
+            {
+                App.WriteErrorLogContent(ex.Message, Strings.errorLogFile);
+                RtbPage.Copy();
+            }
         }
 
         /// <summary>
