@@ -19,28 +19,33 @@ namespace Notepad_Light.Helpers
             GetSystemInfo(ref info);
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("App Version: Notepad Light v" + Assembly.GetExecutingAssembly().GetName().Version!.ToString());
+            sb.AppendLine("App Details:");
+            sb.AppendLine("-----------");
+            sb.AppendLine("Version: Notepad Light v" + Assembly.GetExecutingAssembly().GetName().Version!.ToString());
             sb.AppendLine("Runtime: " + Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName);
             sb.AppendLine();
-            sb.AppendLine("CPU Details:");
+            sb.AppendLine("Machine Details:");
             sb.AppendLine("-----------");
             sb.AppendLine("Processor Architecture = " + ConvertProcArchitecture(info.wProcessorArchitecture));
             sb.AppendLine("Number of processors = " + info.dwNumberOfProcessors);
             sb.AppendLine("Page Size = " + info.dwPageSize);
+
             if (GlobalMemoryStatusEx(mStatus))
             {
                 sb.AppendLine("Physical Memory = " + (mStatus.ullTotalPhys / 1024 / 1024 / 1024) + " GB");
+                sb.AppendLine("Working Set Memory = " + App.SizeSuffix(Environment.WorkingSet));
             }            
             sb.AppendLine();
             sb.AppendLine("OS Details:");
             sb.AppendLine("-----------");
             OperatingSystem os = Environment.OSVersion;
-            sb.AppendLine("OS Version = " + os.Version);
+            sb.AppendLine("OS Version = " + os.VersionString);
             sb.AppendLine("OS Platform = " + ConvertPlatform((int)os.Platform));
-            sb.AppendLine("OS Service Pack = " + os.ServicePack);
-            sb.AppendLine("OS Version String = " + os.VersionString);
-            Version ver = os.Version;
-            sb.AppendLine("OS Build = " + ver.Build);
+
+            if (os.ServicePack != string.Empty)
+            {
+                sb.AppendLine("OS Service Pack = " + os.ServicePack);
+            }
 
             return sb;
         }
