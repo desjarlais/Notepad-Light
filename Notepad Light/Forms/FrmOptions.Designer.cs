@@ -35,6 +35,7 @@
             BtnOK = new Button();
             BtnCancel = new Button();
             groupBox3 = new GroupBox();
+            ckbClearTimersOnExit = new CheckBox();
             cbxIncludeDateTimeWithTemplates = new CheckBox();
             cbxInsertPictureWithTransparency = new CheckBox();
             cbxCleanupTempAppFilesOnExit = new CheckBox();
@@ -53,7 +54,6 @@
             rdoDarkMode = new RadioButton();
             groupBox4 = new GroupBox();
             ckbPasteRtfUnformatted = new CheckBox();
-            ckbClearTimersOnExit = new CheckBox();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudAutoSaveInterval).BeginInit();
@@ -137,14 +137,24 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "App Options";
             // 
+            // ckbClearTimersOnExit
+            // 
+            ckbClearTimersOnExit.AutoSize = true;
+            ckbClearTimersOnExit.Location = new Point(14, 164);
+            ckbClearTimersOnExit.Name = "ckbClearTimersOnExit";
+            ckbClearTimersOnExit.Size = new Size(157, 19);
+            ckbClearTimersOnExit.TabIndex = 16;
+            ckbClearTimersOnExit.Text = "Clear Timers On App Exit";
+            ckbClearTimersOnExit.UseVisualStyleBackColor = true;
+            // 
             // cbxIncludeDateTimeWithTemplates
             // 
             cbxIncludeDateTimeWithTemplates.AutoSize = true;
             cbxIncludeDateTimeWithTemplates.Location = new Point(14, 139);
             cbxIncludeDateTimeWithTemplates.Name = "cbxIncludeDateTimeWithTemplates";
-            cbxIncludeDateTimeWithTemplates.Size = new Size(257, 19);
+            cbxIncludeDateTimeWithTemplates.Size = new Size(226, 19);
             cbxIncludeDateTimeWithTemplates.TabIndex = 15;
-            cbxIncludeDateTimeWithTemplates.Text = "Include Date\\Time When Inserting Template";
+            cbxIncludeDateTimeWithTemplates.Text = "Include Date When Inserting Template";
             cbxIncludeDateTimeWithTemplates.UseVisualStyleBackColor = true;
             // 
             // cbxInsertPictureWithTransparency
@@ -180,9 +190,9 @@
             // 
             cbxNewFileFormat.FormattingEnabled = true;
             cbxNewFileFormat.Items.AddRange(new object[] { "Plain Text", "Rtf", "Markdown" });
-            cbxNewFileFormat.Location = new Point(109, 22);
+            cbxNewFileFormat.Location = new Point(173, 23);
             cbxNewFileFormat.Name = "cbxNewFileFormat";
-            cbxNewFileFormat.Size = new Size(105, 23);
+            cbxNewFileFormat.Size = new Size(86, 23);
             cbxNewFileFormat.TabIndex = 11;
             // 
             // label1
@@ -196,7 +206,7 @@
             // 
             // nudAutoSaveInterval
             // 
-            nudAutoSaveInterval.Location = new Point(173, 59);
+            nudAutoSaveInterval.Location = new Point(217, 59);
             nudAutoSaveInterval.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             nudAutoSaveInterval.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudAutoSaveInterval.Name = "nudAutoSaveInterval";
@@ -221,9 +231,9 @@
             groupBox5.Controls.Add(rdoMatchCase);
             groupBox5.Controls.Add(rdoFindDirectionDown);
             groupBox5.Controls.Add(rdoFindDirectionUp);
-            groupBox5.Location = new Point(453, 192);
+            groupBox5.Location = new Point(288, 292);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(192, 92);
+            groupBox5.Size = new Size(186, 92);
             groupBox5.TabIndex = 0;
             groupBox5.TabStop = false;
             groupBox5.Text = "Find Options";
@@ -231,7 +241,7 @@
             // rdoWholeWord
             // 
             rdoWholeWord.AutoSize = true;
-            rdoWholeWord.Location = new Point(94, 48);
+            rdoWholeWord.Location = new Point(82, 48);
             rdoWholeWord.Name = "rdoWholeWord";
             rdoWholeWord.Size = new Size(91, 19);
             rdoWholeWord.TabIndex = 3;
@@ -242,7 +252,7 @@
             // rdoMatchCase
             // 
             rdoMatchCase.AutoSize = true;
-            rdoMatchCase.Location = new Point(94, 23);
+            rdoMatchCase.Location = new Point(82, 23);
             rdoMatchCase.Name = "rdoMatchCase";
             rdoMatchCase.Size = new Size(87, 19);
             rdoMatchCase.TabIndex = 2;
@@ -253,7 +263,7 @@
             // rdoFindDirectionDown
             // 
             rdoFindDirectionDown.AutoSize = true;
-            rdoFindDirectionDown.Location = new Point(9, 48);
+            rdoFindDirectionDown.Location = new Point(14, 48);
             rdoFindDirectionDown.Name = "rdoFindDirectionDown";
             rdoFindDirectionDown.Size = new Size(56, 19);
             rdoFindDirectionDown.TabIndex = 1;
@@ -264,7 +274,7 @@
             // rdoFindDirectionUp
             // 
             rdoFindDirectionUp.AutoSize = true;
-            rdoFindDirectionUp.Location = new Point(9, 23);
+            rdoFindDirectionUp.Location = new Point(14, 22);
             rdoFindDirectionUp.Name = "rdoFindDirectionUp";
             rdoFindDirectionUp.Size = new Size(40, 19);
             rdoFindDirectionUp.TabIndex = 0;
@@ -276,9 +286,9 @@
             // 
             groupBox2.Controls.Add(rdoLightMode);
             groupBox2.Controls.Add(rdoDarkMode);
-            groupBox2.Location = new Point(453, 290);
+            groupBox2.Location = new Point(479, 200);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(192, 68);
+            groupBox2.Size = new Size(166, 84);
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
             groupBox2.Text = "Theme";
@@ -286,7 +296,7 @@
             // rdoLightMode
             // 
             rdoLightMode.AutoSize = true;
-            rdoLightMode.Location = new Point(103, 19);
+            rdoLightMode.Location = new Point(10, 51);
             rdoLightMode.Name = "rdoLightMode";
             rdoLightMode.Size = new Size(86, 19);
             rdoLightMode.TabIndex = 1;
@@ -297,7 +307,7 @@
             // rdoDarkMode
             // 
             rdoDarkMode.AutoSize = true;
-            rdoDarkMode.Location = new Point(3, 19);
+            rdoDarkMode.Location = new Point(10, 22);
             rdoDarkMode.Name = "rdoDarkMode";
             rdoDarkMode.Size = new Size(83, 19);
             rdoDarkMode.TabIndex = 0;
@@ -311,7 +321,7 @@
             groupBox4.Controls.Add(ckbUsePasteUI);
             groupBox4.Location = new Point(288, 192);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(159, 190);
+            groupBox4.Size = new Size(185, 92);
             groupBox4.TabIndex = 16;
             groupBox4.TabStop = false;
             groupBox4.Text = "Paste Options";
@@ -325,16 +335,6 @@
             ckbPasteRtfUnformatted.TabIndex = 2;
             ckbPasteRtfUnformatted.Text = "Paste RTF Unformatted";
             ckbPasteRtfUnformatted.UseVisualStyleBackColor = true;
-            // 
-            // ckbClearTimersOnExit
-            // 
-            ckbClearTimersOnExit.AutoSize = true;
-            ckbClearTimersOnExit.Location = new Point(14, 164);
-            ckbClearTimersOnExit.Name = "ckbClearTimersOnExit";
-            ckbClearTimersOnExit.Size = new Size(157, 19);
-            ckbClearTimersOnExit.TabIndex = 16;
-            ckbClearTimersOnExit.Text = "Clear Timers On App Exit";
-            ckbClearTimersOnExit.UseVisualStyleBackColor = true;
             // 
             // FrmOptions
             // 

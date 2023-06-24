@@ -33,7 +33,7 @@ namespace Notepad_Light.Helpers
             if (GlobalMemoryStatusEx(mStatus))
             {
                 sb.AppendLine("Physical Memory = " + (mStatus.ullTotalPhys / 1024 / 1024 / 1024) + " GB");
-                sb.AppendLine("Working Set Memory = " + App.SizeSuffix(Environment.WorkingSet));
+                sb.AppendLine("Working Set Memory = " + App.ConvertBytesToReadableString(Environment.WorkingSet));
             }            
             sb.AppendLine();
             sb.AppendLine("OS Details:");

@@ -195,7 +195,7 @@ namespace Notepad_Light.Forms
                 Properties.Settings.Default.PasteRtfUnformatted = false;
             }
 
-            if (ckbClearTimersOnExit.Checked == true) 
+            if (ckbClearTimersOnExit.Checked == true)
             {
                 Properties.Settings.Default.ClearTimersOnExit = true;
             }

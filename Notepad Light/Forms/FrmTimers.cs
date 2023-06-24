@@ -77,7 +77,7 @@ namespace Notepad_Light.Forms
             if (e.KeyCode == Keys.Escape) { Close(); }
         }
 
-        private void BtnResumeTimer_Click(object sender, EventArgs e)
+        public void ResumeTimer()
         {
             if (dataGridView1.CurrentCell.Value is not null)
             {
@@ -86,6 +86,16 @@ namespace Notepad_Light.Forms
                 isResumeTimer = true;
             }
             Close();
+        }
+
+        private void BtnResumeTimer_Click(object sender, EventArgs e)
+        {
+            ResumeTimer();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ResumeTimer();
         }
     }
 }

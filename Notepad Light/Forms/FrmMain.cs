@@ -642,7 +642,7 @@ namespace Notepad_Light
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
                         }
-
+                        
                         AddFileToMRU(sfdSaveAs.FileName);
                         UpdateFormTitle(sfdSaveAs.FileName);
                         RtbPage.Modified = false;
