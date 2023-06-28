@@ -20,29 +20,37 @@ namespace Notepad_Light.Forms
 
         public void UpdateTimeDisplay()
         {
-            totalHours = 0;
-            totalMinutes = 0;
-            totalSeconds = 0;
-
-            foreach (string? s in Properties.Settings.Default.TimersList)
+            try
             {
-                string[] timerData = s!.Split(Strings.pipeDelim);
-                int n = dataGridView1.Rows.Add();
-                dataGridView1.Rows[n].Cells[0].Value = timerData[0];
-                dataGridView1.Rows[n].Cells[1].Value = timerData[1];
-                dataGridView1.Rows[n].Cells[2].Value = timerData[2];
+                totalHours = 0;
+                totalMinutes = 0;
+                totalSeconds = 0;
 
-                // parse out the time to add to the total time
-                string[] totalTimerData = timerData[2].Split(Strings.semiColonNoSpaces);
-                totalHours = totalHours + Convert.ToInt32(totalTimerData[0]);
-                totalMinutes = totalMinutes + Convert.ToInt32(totalTimerData[1]);
-                totalSeconds = totalSeconds + Convert.ToInt32(totalTimerData[2]);
+                foreach (string? s in Properties.Settings.Default.TimersList)
+                {
+                    string[] timerData = s!.Split(Strings.pipeDelim);
+                    int n = dataGridView1.Rows.Add();
+                    dataGridView1.Rows[n].Cells[0].Value = timerData[0];
+                    dataGridView1.Rows[n].Cells[1].Value = timerData[1];
+                    dataGridView1.Rows[n].Cells[2].Value = timerData[2];
+
+                    // parse out the time to add to the total time
+                    string[] totalTimerData = timerData[2].Split(Strings.semiColonNoSpaces);
+                    totalHours = totalHours + Convert.ToInt32(totalTimerData[0]);
+                    totalMinutes = totalMinutes + Convert.ToInt32(totalTimerData[1]);
+                    totalSeconds = totalSeconds + Convert.ToInt32(totalTimerData[2]);
+                }
+
+                // update the total time
+                TimeSpan ts = new TimeSpan();
+                ts = ts.Add(new TimeSpan(totalHours, totalMinutes, totalSeconds));
+                toolStripStatusLabel2.Text = ts.ToString();
             }
-
-            // update the total time
-            TimeSpan ts = new TimeSpan();
-            ts = ts.Add(new TimeSpan(totalHours, totalMinutes, totalSeconds));
-            toolStripStatusLabel2.Text = ts.ToString();
+            catch (Exception ex)
+            {
+                App.WriteErrorLogContent(ex.Message, Strings.errorLogFile);
+                ResetTimers();
+            }
         }
 
         private void BtnClearTimers_Click(object sender, EventArgs e)
@@ -96,6 +104,16 @@ namespace Notepad_Light.Forms
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             ResumeTimer();
+        }
+
+        /// <summary>
+        /// if the timer list gets corrupted somehow, clear timers so the app doesn't crash
+        /// </summary>
+        public void ResetTimers()
+        {
+            Properties.Settings.Default.TimersList.Clear();
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
         }
     }
 }

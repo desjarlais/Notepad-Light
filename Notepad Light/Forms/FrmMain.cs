@@ -986,6 +986,7 @@ namespace Notepad_Light
         /// </summary>
         public void ViewTimers()
         {
+            // TODO handle exception / error from the form
             FrmTimers fTimers = new FrmTimers()
             {
                 Owner = this
