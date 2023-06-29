@@ -633,14 +633,17 @@ namespace Notepad_Light
                         if (sfdSaveAs.FilterIndex == 1)
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
+                            gCurrentFileType = CurrentFileType.Text;
                         }
                         else if (sfdSaveAs.FilterIndex == 2)
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.UnicodePlainText);
+                            gCurrentFileType = CurrentFileType.Text;
                         }
                         else
                         {
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
+                            gCurrentFileType = CurrentFileType.RTF;
                         }
                         
                         AddFileToMRU(sfdSaveAs.FileName);
@@ -2214,7 +2217,7 @@ namespace Notepad_Light
         /// <param name="e"></param>
         private void EditFontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // setup the initial dialog values from settings
+            // only use color and effects for rtf
             if (gCurrentFileType == CurrentFileType.RTF)
             {
                 fontDialog1.ShowColor = true;
@@ -2226,9 +2229,10 @@ namespace Notepad_Light
                 fontDialog1.ShowEffects = false;
             }
 
+            // if the user selects a font, apply it to the entire document for plain text
+            // apply to just the selection for rtf
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
-                // rtf will allow font and color changes
                 if (gCurrentFileType == CurrentFileType.RTF)
                 {
                     RtbPage.SelectionFont = fontDialog1.Font;
@@ -2236,10 +2240,12 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    // for plain text, only change font
                     RtbPage.Font = fontDialog1.Font;
                 }
             }
+
+            // update the status bar
+            UpdateFontInformation();
         }
 
         private void ClearFormattingToolStripMenuItem_Click(object sender, EventArgs e)
