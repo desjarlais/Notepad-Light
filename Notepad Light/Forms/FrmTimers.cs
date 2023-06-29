@@ -15,7 +15,29 @@ namespace Notepad_Light.Forms
         public FrmTimers()
         {
             InitializeComponent();
-            UpdateTimeDisplay();
+            if (Properties.Settings.Default.TimersList.Count > 0)
+            {
+                UpdateTimeDisplay();
+            }
+        }
+
+        public void UpdateTotalTime()
+        {
+            totalHours = 0;
+            totalMinutes = 0;
+            totalSeconds = 0;
+
+            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            {
+                totalHours = totalHours + Convert.ToInt32(dgvr.Cells[0].Value);
+                totalMinutes = totalMinutes + Convert.ToInt32(dgvr.Cells[1].Value);
+                totalSeconds = totalSeconds + Convert.ToInt32(dgvr.Cells[2].Value);
+            }
+
+            // update the total time
+            TimeSpan ts = new TimeSpan();
+            ts = ts.Add(new TimeSpan(totalHours, totalMinutes, totalSeconds));
+            toolStripStatusLabel2.Text = ts.ToString();
         }
 
         public void UpdateTimeDisplay()
@@ -87,11 +109,33 @@ namespace Notepad_Light.Forms
 
         public void ResumeTimer()
         {
+            // check for no selection
+            if (dataGridView1.CurrentCell is null || dataGridView1.SelectedCells.Count == 0)
+            {
+                return;
+            }
+
             if (dataGridView1.CurrentCell.Value is not null)
             {
                 resumeTime = dataGridView1.CurrentRow.Cells[2].Value.ToString()!;
                 resumeDescription = dataGridView1.CurrentRow.Cells[0].Value.ToString()!;
                 isResumeTimer = true;
+                
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCellAddress.X);
+                Properties.Settings.Default.TimersList.Clear();
+
+                // update the timer list
+                foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+                {
+                    if (dgvr is null) { return; }
+
+                    // add the timer data to the app setting
+                    string[] timerData = new string[3];
+                    timerData[0] = dgvr.Cells[0].Value.ToString()!;
+                    timerData[1] = dgvr.Cells[1].Value.ToString()!;
+                    timerData[2] = dgvr.Cells[2].Value.ToString()!;
+                    Properties.Settings.Default.TimersList.Add(string.Join(Strings.pipeDelim, timerData));
+                }
             }
             Close();
         }
@@ -114,6 +158,46 @@ namespace Notepad_Light.Forms
             Properties.Settings.Default.TimersList.Clear();
             dataGridView1.Rows.Clear();
             dataGridView1.Refresh();
+        }
+
+        private void BtnDeleteSelectedTime_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int n = dataGridView1.CurrentCellAddress.X;
+
+                // check for no selection
+                if (dataGridView1.CurrentCell is null || dataGridView1.SelectedCells.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    // delete the selected row
+                    dataGridView1.Rows.RemoveAt(n);
+                    Properties.Settings.Default.TimersList.Clear();
+
+                    // update the timer list
+                    foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+                    {
+                        if (dgvr is null) { return; }
+
+                        // add the timer data to the app setting
+                        string[] timerData = new string[3];
+                        timerData[0] = dgvr.Cells[0].Value.ToString()!;
+                        timerData[1] = dgvr.Cells[1].Value.ToString()!;
+                        timerData[2] = dgvr.Cells[2].Value.ToString()!;
+                        Properties.Settings.Default.TimersList.Add(string.Join(Strings.pipeDelim, timerData));
+                    }
+
+                    // update the UI
+                    UpdateTotalTime();
+                }
+            }
+            catch (Exception ex)
+            {
+                App.WriteErrorLogContent(ex.Message, Strings.errorLogFile);
+            }
         }
     }
 }

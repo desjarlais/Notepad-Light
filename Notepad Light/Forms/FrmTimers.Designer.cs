@@ -42,6 +42,7 @@
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             toolStripStatusLabel2 = new ToolStripStatusLabel();
             BtnResumeTimer = new Button();
+            BtnDeleteSelectedTime = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             gridViewContextMenuStrip.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -49,10 +50,13 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { DescriptionCol, DateCol, TimeCol });
             dataGridView1.ContextMenuStrip = gridViewContextMenuStrip;
             dataGridView1.Location = new Point(10, 12);
+            dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(414, 299);
@@ -141,11 +145,22 @@
             BtnResumeTimer.UseVisualStyleBackColor = true;
             BtnResumeTimer.Click += BtnResumeTimer_Click;
             // 
+            // BtnDeleteSelectedTime
+            // 
+            BtnDeleteSelectedTime.Location = new Point(71, 317);
+            BtnDeleteSelectedTime.Name = "BtnDeleteSelectedTime";
+            BtnDeleteSelectedTime.Size = new Size(132, 23);
+            BtnDeleteSelectedTime.TabIndex = 6;
+            BtnDeleteSelectedTime.Text = "Delete Selected Time";
+            BtnDeleteSelectedTime.UseVisualStyleBackColor = true;
+            BtnDeleteSelectedTime.Click += BtnDeleteSelectedTime_Click;
+            // 
             // FrmTimers
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(436, 368);
+            Controls.Add(BtnDeleteSelectedTime);
             Controls.Add(BtnResumeTimer);
             Controls.Add(statusStrip1);
             Controls.Add(BtnClearTimers);
@@ -180,5 +195,6 @@
         private ToolStripMenuItem CopyDescriptionContextMenu;
         private ToolStripMenuItem CopyTimeContextMenu;
         private Button BtnResumeTimer;
+        private Button BtnDeleteSelectedTime;
     }
 }
