@@ -328,7 +328,7 @@ namespace Notepad_Light
         /// </summary>
         public void FileNew()
         {
-            // if there are no unsaved changes, we can just create a new blank document
+            // if there are no changes, create a new blank document
             if (RtbPage.Modified == false)
             {
                 CreateNewDocument();
@@ -336,6 +336,9 @@ namespace Notepad_Light
             else
             {
                 // if we have changes, prompt the user
+                // yes = save and create new doc
+                // no = create new doc
+                // cancel = do nothing
                 DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
@@ -612,7 +615,7 @@ namespace Notepad_Light
                     sfdSaveAs.Title = "Save As";
                     sfdSaveAs.Filter = "Plain Text Format (*.txt)|*.txt |Markdown Format (*.md)|*.md |Rich Text Format (*.rtf)|*.rtf";
 
-                    // change the file type dropdown based on the selected file format
+                    // change the file type dropdown based on the current file format
                     if (gCurrentFileType == CurrentFileType.RTF)
                     {
                         sfdSaveAs.FilterIndex = 3;
@@ -692,7 +695,7 @@ namespace Notepad_Light
                 return;
             }
 
-            // if there are unsaved changes, prompt the user before opening
+            // handle potential unsaved changes
             SaveChanges();
 
             if (File.Exists(filePath))
@@ -785,7 +788,7 @@ namespace Notepad_Light
 
         public void Copy()
         {
-            // if the cursor is in either textbox, set that text in the clipboard
+            // if the cursor is in either toolbar textbox, use that text in the clipboard
             // otherwise, use the rtbpage
             // currently this only copies the entire textbox text even if part of the text is selected
             // TODO: revisit if there is a need to copy partial selection in a textbox
@@ -1026,12 +1029,14 @@ namespace Notepad_Light
             {
                 foreach (string? s in Properties.Settings.Default.TimersList)
                 {
-                    if (s!.Contains(descriptionToAdd))
+                    // parse out the description and check for a match
+                    string[] existingDescription = s!.Split(Strings.pipeDelim);
+                    if (existingDescription[0].Equals(descriptionToAdd))
                     {
                         // remove the previous time value
                         string timeToUpdate = s;
                         Properties.Settings.Default.TimersList.Remove(s);
-                        
+
                         // parse out the previous time and add to the new value
                         string[] oldTimer = timeToUpdate.Split(Strings.pipeDelim);
                         TimeSpan t1 = TimeSpan.Parse(timeToAdd);

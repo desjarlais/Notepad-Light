@@ -107,7 +107,7 @@ namespace Notepad_Light.Forms
             if (e.KeyCode == Keys.Escape) { Close(); }
         }
 
-        public void ResumeTimer()
+        public void ResumeTimer(bool fromDoubleClick)
         {
             // check for no selection
             if (dataGridView1.CurrentCell is null || dataGridView1.SelectedCells.Count == 0)
@@ -121,7 +121,7 @@ namespace Notepad_Light.Forms
                 resumeDescription = dataGridView1.CurrentRow.Cells[0].Value.ToString()!;
                 isResumeTimer = true;
                 
-                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCellAddress.X);
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCellAddress.Y);
                 Properties.Settings.Default.TimersList.Clear();
 
                 // update the timer list
@@ -142,12 +142,12 @@ namespace Notepad_Light.Forms
 
         private void BtnResumeTimer_Click(object sender, EventArgs e)
         {
-            ResumeTimer();
+            ResumeTimer(false);
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            ResumeTimer();
+            ResumeTimer(true);
         }
 
         /// <summary>
