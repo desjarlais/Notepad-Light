@@ -164,7 +164,7 @@ namespace Notepad_Light.Forms
         {
             try
             {
-                int n = dataGridView1.CurrentCellAddress.X;
+                int n = dataGridView1.CurrentCellAddress.Y;
 
                 // check for no selection
                 if (dataGridView1.CurrentCell is null || dataGridView1.SelectedCells.Count == 0)
