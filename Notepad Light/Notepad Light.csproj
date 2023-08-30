@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.0.0.59</AssemblyVersion>
-    <FileVersion>1.0.0.59</FileVersion>
+    <AssemblyVersion>1.0.0.60</AssemblyVersion>
+    <FileVersion>1.0.0.60</FileVersion>
     <PackageIcon>TextFile_white_16x.png</PackageIcon>
     <StartupObject>Notepad_Light.Program</StartupObject>
     <ApplicationIcon>RichTextBox_16x.ico</ApplicationIcon>
@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.32.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1901.177" />
+    <PackageReference Include="Markdig" Version="0.33.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1938.49" />
   </ItemGroup>
 
   <ItemGroup>
