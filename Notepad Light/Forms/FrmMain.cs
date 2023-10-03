@@ -1001,6 +1001,9 @@ namespace Notepad_Light
 
             if (fTimers.isResumeTimer)
             {
+                // if there is an existing timer, add it before resuming
+                AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text);
+
                 // update the main timer ui
                 TimerDescriptionTextbox.Text = fTimers.resumeDescription;
                 ResetTimer();
