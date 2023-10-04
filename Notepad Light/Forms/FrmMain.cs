@@ -1002,7 +1002,10 @@ namespace Notepad_Light
             if (fTimers.isResumeTimer)
             {
                 // if there is an existing timer, add it before resuming
-                AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text);
+                if (IsTimerActive())
+                {
+                    AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text);
+                }
 
                 // update the main timer ui
                 TimerDescriptionTextbox.Text = fTimers.resumeDescription;
@@ -1014,6 +1017,31 @@ namespace Notepad_Light
                 editedSeconds = Convert.ToInt32(dataArray.ElementAt(2));
                 StartTimer();
             }
+        }
+
+        /// <summary>
+        /// check if the timer is active
+        /// active timer is any description text, stopwatch running or any non zero time value
+        /// </summary>
+        /// <returns></returns>
+        public bool IsTimerActive()
+        {
+            if (TimerDescriptionTextbox.Text.Length > 0)
+            {
+                return true;
+            }
+
+            if (gStopwatch.IsRunning)
+            {
+                return true;
+            }
+
+            if (TimerToolStripLabel.Text != "00:00:00")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
