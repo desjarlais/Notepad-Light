@@ -85,21 +85,35 @@ namespace Notepad_Light.Forms
 
         private void CopyDescriptionContextMenu_Click(object sender, EventArgs e)
         {
-            // don't do anything if the grid is empty
-            if (dataGridView1.Rows.Count == 0)
+            try
             {
-                return;
+                // don't do anything if the grid is empty
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    return;
+                }
+                Clipboard.SetText(dataGridView1.CurrentCell.Value.ToString());
             }
-            Clipboard.SetText(dataGridView1.CurrentCell.Value.ToString());
+            catch (Exception ex)
+            {
+                App.WriteErrorLogContent("CopyDescription Exception = " + ex.Message, Strings.errorLogFile);
+            }
         }
 
         private void CopyTimeContextMenu_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count == 0)
+            try
             {
-                return;
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    return;
+                }
+                Clipboard.SetText(dataGridView1.CurrentRow.Cells[2].Value.ToString());
             }
-            Clipboard.SetText(dataGridView1.CurrentRow.Cells[2].Value.ToString());
+            catch (Exception ex)
+            {
+                App.WriteErrorLogContent("CopyTime Exception = " + ex.Message, Strings.errorLogFile);
+            }
         }
 
         private void FrmTimers_KeyDown(object sender, KeyEventArgs e)
