@@ -1,5 +1,7 @@
 # Notepad-Light
 
+[![.Build validate](https://github.com/desjarlais/Notepad-Light/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/desjarlais/Notepad-Light/actions/workflows/dotnet-desktop.yml)
+
 There are plenty of notepad applications, so this is just another one in the mix.  The intent is not necessarily to make a word processor, there are plenty of those and they are much better than what I can do.  The idea really stems from me wanting a better note taking application.  Notepad is too limited and even though WordPad is close for an out of the box solution, at least in Windows, it still misses a few things I wanted in my day to day note taking workflow.  
 
 I probably should have called it WordPad light, but I still want the main theme to be for taking notes so I stayed with Notepad.
