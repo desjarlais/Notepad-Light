@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 
 // external dll refs
 using Markdig;
+using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
 namespace Notepad_Light
 {
@@ -87,7 +88,10 @@ namespace Notepad_Light
             RtbPage.Modified = false;
 
             // start the autosave timer
-            autosaveTimer.Start();
+            if (Properties.Settings.Default.AutoSaveInterval > 0)
+            {
+                autosaveTimer.Start();
+            }            
 
             // setup templates
             UpdateTemplateMenu();
@@ -160,6 +164,15 @@ namespace Notepad_Light
 
         public void UpdateAutoSaveInterval()
         {
+            if (Properties.Settings.Default.AutoSaveInterval == 0)
+            {
+                autosaveTimer.Stop();
+            }
+            else
+            {
+                autosaveTimer.Start();
+            }
+
             autoSaveInterval = Properties.Settings.Default.AutoSaveInterval;
             autoSaveTicks = autoSaveInterval * 60;
         }
@@ -1920,7 +1933,7 @@ namespace Notepad_Light
             try
             {
                 // if the doc is not modified, nothing to do
-                RtbPage.Invoke((MethodInvoker)delegate { if (RtbPage.Modified == false) { return; } });
+                RtbPage.Invoke((MethodInvoker)delegate { if (RtbPage.Modified == false) { return; }});
 
                 // save the existing changes to the file
                 if (gCurrentFileName != Strings.defaultFileName)

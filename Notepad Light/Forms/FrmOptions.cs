@@ -89,6 +89,9 @@ namespace Notepad_Light.Forms
             {
                 ckbPasteRtfUnformatted.Checked = false;
             }
+
+            // update autosave interval
+            nudAutoSaveInterval.Value = Properties.Settings.Default.AutoSaveInterval;
         }
 
         public void UpdateMRUListbox()
