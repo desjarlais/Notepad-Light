@@ -111,6 +111,7 @@ namespace Notepad_Light
         /// <summary>
         /// used for the adjust labor dialog return value
         /// </summary>
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public string EditedTime
         {
             set => _EditedTime = value;
@@ -2743,6 +2744,7 @@ namespace Notepad_Light
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf;)|*.jpg; *.jpeg; *.gif; *.png; *.bmp; *.wmf; *.emf;";
+
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     // get the image from the dialog
