@@ -11,10 +11,10 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Text;
 using System.Runtime.InteropServices;
+using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
 // external dll refs
 using Markdig;
-using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
 namespace Notepad_Light
 {
@@ -57,8 +57,8 @@ namespace Notepad_Light
             // init file MRU
             UpdateMRU();
 
-            // update status bar with app version
-            appVersionToolStripStatusLabel.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+            // update app version in titlebar
+            UpdateTitleBar(string.Empty);
 
             // set initial zoom to 100 and update menu
             ZoomToolStripMenuItem100.Checked = true;
@@ -68,7 +68,6 @@ namespace Notepad_Light
             WordWrapToolStripMenuItem.Checked = RtbPage.WordWrap;
 
             // update title, status, toolbars and autosave intervals
-            UpdateFormTitle(gCurrentFileName);
             UpdateCurrentFileType(gCurrentFileName);
             UpdateStatusBar();
             UpdateLnColValues();
@@ -128,6 +127,18 @@ namespace Notepad_Light
             Template4ToolStripMenuItem.Text = Properties.Settings.Default.Template4;
             Template5ToolStripMenuItem.Text = Properties.Settings.Default.Template5;
             SetupAppFiles();
+        }
+
+        public void UpdateTitleBar(string additionalInfo)
+        {
+            if (additionalInfo != string.Empty)
+            {
+                this.Text = additionalInfo + " - " + Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version + " | " + additionalInfo;
+            }
+            else
+            {
+                this.Text = Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+            }
         }
 
         /// <summary>
@@ -197,10 +208,9 @@ namespace Notepad_Light
             }
         }
 
-        public void UpdateFormTitle(string docName)
+        public void UpdateOpenFilePath(string docName)
         {
-            this.Text = Strings.AppTitle + docName;
-            gCurrentFileName = docName;
+            toolStripStatusLabelOpenFilePath.Text = docName;
         }
 
         /// <summary>
@@ -307,8 +317,7 @@ namespace Notepad_Light
             CollapsePanel2();
             ClearFormatting();
             RtbPage.ReadOnly = false;
-            readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
-            UpdateFormTitle(Strings.defaultFileName);
+            UpdateOpenFilePath(Strings.defaultFileName);
             UpdateCurrentFileType(gCurrentFileName);
 
             // check for file type and update UI accordingly
@@ -316,7 +325,7 @@ namespace Notepad_Light
             {
                 ClearToolbarFormattingIcons();
                 EnableToolbarFormattingIcons();
-                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbPage.Rtf, true);
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbPage.Rtf ?? string.Empty, true);
                 toolStripStatusLabelFileType.Text = Strings.rtf;
             }
             else if (gCurrentFileType == CurrentFileType.Text)
@@ -380,16 +389,18 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadTextFile(string filePath)
         {
-            if (EncodingToolStripStatusLabel.Text.Contains("UTF-8"))
+            // Fix CS8602: Ensure EncodingToolStripStatusLabel.Text is not null before using Contains
+            var encodingText = EncodingToolStripStatusLabel.Text;
+            if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains("UTF-8"))
             {
                 string text = File.ReadAllText(filePath);
                 RtbPage.Text = text;
             }
-            else if (EncodingToolStripStatusLabel.Text.Contains("UTF-16"))
+            else if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains("UTF-16"))
             {
                 RtbPage.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
             }
-            else if (EncodingToolStripStatusLabel.Text.Contains("ASCII") || EncodingToolStripStatusLabel.Text.Contains("ANSI"))
+            else if (!string.IsNullOrEmpty(encodingText) && (encodingText.Contains("ASCII") || encodingText.Contains("ANSI")))
             {
                 RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
@@ -465,7 +476,7 @@ namespace Notepad_Light
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = RtbPage.TextLength;
-                UpdateFormTitle(filePath);
+                UpdateOpenFilePath(filePath);
                 AddFileToMRU(filePath);
                 UpdateCurrentFileType(filePath);
                 UpdateDocStats();
@@ -492,11 +503,11 @@ namespace Notepad_Light
             FileInfo fi = new FileInfo(filePath);
             if (fi.IsReadOnly)
             {
-                readOnlyToolStripStatusLabel.Text = Strings.appReadOnlyState;
+                UpdateTitleBar(Strings.appReadOnlyState);
             }
             else
             {
-                readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
+                UpdateTitleBar(string.Empty);
             }
         }
 
@@ -547,7 +558,7 @@ namespace Notepad_Light
                         LoadMarkdownInWebView2();
                     }
 
-                    UpdateFormTitle(ofdFileOpen.FileName);
+                    UpdateOpenFilePath(ofdFileOpen.FileName);
                     UpdateCurrentFileType(ofdFileOpen.FileName);
                     AddFileToMRU(gCurrentFileName);
                     ClearToolbarFormattingIcons();
@@ -586,7 +597,7 @@ namespace Notepad_Light
                 }
 
                 // for new blank docs and readonly files, any change needs to be a new file save
-                if (gCurrentFileName.ToString() == Strings.defaultFileName || readOnlyToolStripStatusLabel.Text == "Read-Only")
+                if (gCurrentFileName.ToString() == Strings.defaultFileName || this.Text.Contains("Read-Only"))
                 {
                     FileSaveAs();
                 }
@@ -664,9 +675,8 @@ namespace Notepad_Light
                         }
                         
                         AddFileToMRU(sfdSaveAs.FileName);
-                        UpdateFormTitle(sfdSaveAs.FileName);
+                        UpdateOpenFilePath(sfdSaveAs.FileName);
                         RtbPage.Modified = false;
-                        readOnlyToolStripStatusLabel.Text = Strings.appEditingState;
                     }
                 }
             }
@@ -1312,6 +1322,7 @@ namespace Notepad_Light
 
         public void ApplyBold()
         {
+            if (RtbPage.SelectionFont == null) { return; }
             if (RtbPage.SelectionFont.Bold == true)
             {
                 RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Bold);
@@ -1326,6 +1337,7 @@ namespace Notepad_Light
 
         public void ApplyItalic()
         {
+            if (RtbPage.SelectionFont == null) { return; }
             if (RtbPage.SelectionFont.Italic == true)
             {
                 RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Italic);
@@ -1340,6 +1352,7 @@ namespace Notepad_Light
 
         public void ApplyUnderline()
         {
+            if (RtbPage.SelectionFont == null) { return; }
             if (RtbPage.SelectionFont.Underline == true)
             {
                 RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Underline);
@@ -1354,6 +1367,7 @@ namespace Notepad_Light
 
         public void ApplyStrikethrough()
         {
+            if (RtbPage.SelectionFont == null) { return; }
             if (RtbPage.SelectionFont.Strikeout == true)
             {
                 RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Strikeout);
@@ -1565,8 +1579,8 @@ namespace Notepad_Light
             toolStripStatusLabelLine.ForeColor = clr;
             toolStripStatusLabelFType.ForeColor = clr;
             toolStripStatusLabelFileType.ForeColor = clr;
-            toolStripStatusLabelAppVer.ForeColor = clr;
-            appVersionToolStripStatusLabel.ForeColor = clr;
+            toolStripStatusLabelOpenFilePath.ForeColor = clr;
+            toolStripStatusLabelFilePath.ForeColor = clr;
             EncodingToolStripStatusLabel.ForeColor = clr;
             WordCountToolStripStatusLabel.ForeColor = clr;
             LinesToolStripStatusLabel.ForeColor = clr;
@@ -1576,8 +1590,6 @@ namespace Notepad_Light
             toolStripStatusLabelLines.ForeColor = clr;
             toolStripStatusLabelFileEncoding.ForeColor = clr;
             fontToolStripStatusLabel.ForeColor = clr;
-            appStateToolStripStatusLabel.ForeColor = clr;
-            readOnlyToolStripStatusLabel.ForeColor = clr;
 
             // update File menu
             NewToolStripMenuItem.ForeColor = clr;
@@ -2279,6 +2291,18 @@ namespace Notepad_Light
                 fontDialog1.ShowEffects = false;
             }
 
+            // populate the font dialog with the current font
+            if (RtbPage.SelectionFont != null)
+            {
+                fontDialog1.Font = new Font(RtbPage.SelectionFont.FontFamily, RtbPage.SelectionFont.Size, RtbPage.SelectionFont.Style);
+            }
+            else
+            {
+                fontDialog1.Font = new Font(RtbPage.Font.FontFamily, RtbPage.Font.Size, RtbPage.Font.Style);
+            }
+
+            fontDialog1.Color = RtbPage.SelectionColor;
+
             // if the user selects a font, apply it to the entire document for plain text
             // apply to just the selection for rtf
             if (fontDialog1.ShowDialog() == DialogResult.OK)
@@ -2290,7 +2314,7 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    RtbPage.Font = fontDialog1.Font;
+                    RtbPage.SelectionFont = fontDialog1.Font;
                 }
             }
 
@@ -2595,12 +2619,15 @@ namespace Notepad_Light
                 // print plain text
                 int charactersOnPage = 0;
 
+                // Ensure font is not null to avoid CS8604
+                Font printFont = RtbPage.SelectionFont ?? RtbPage.Font ?? new Font("Segoe UI", 9);
+
                 // Set charactersOnPage to the number of chars that will fit within the bounds of the page.
-                e.Graphics?.MeasureString(gPrintString, RtbPage.SelectionFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
+                e.Graphics?.MeasureString(gPrintString, printFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
                     out charactersOnPage, out _);
 
                 // Draws the string within the bounds of the page
-                e.Graphics?.DrawString(gPrintString, RtbPage.SelectionFont, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
+                e.Graphics?.DrawString(gPrintString, printFont, Brushes.Black, e.MarginBounds, StringFormat.GenericTypographic);
 
                 // Remove the portion of the string that has been printed.
                 gPrintString = gPrintString.Substring(charactersOnPage);

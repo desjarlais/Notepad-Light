@@ -70,7 +70,7 @@
             groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(913, 297);
+            groupBox1.Size = new Size(953, 297);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "File MRU";
@@ -78,11 +78,10 @@
             // LstMRU
             // 
             LstMRU.FormattingEnabled = true;
-            LstMRU.ItemHeight = 25;
             LstMRU.Location = new Point(13, 30);
             LstMRU.Margin = new Padding(3, 2, 3, 2);
             LstMRU.Name = "LstMRU";
-            LstMRU.Size = new Size(875, 204);
+            LstMRU.Size = new Size(932, 204);
             LstMRU.TabIndex = 4;
             // 
             // BtnClearMRU
@@ -98,7 +97,7 @@
             // 
             // BtnOK
             // 
-            BtnOK.Location = new Point(684, 603);
+            BtnOK.Location = new Point(841, 552);
             BtnOK.Margin = new Padding(3, 2, 3, 2);
             BtnOK.Name = "BtnOK";
             BtnOK.Size = new Size(116, 37);
@@ -109,7 +108,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(803, 603);
+            BtnCancel.Location = new Point(841, 599);
             BtnCancel.Margin = new Padding(3, 2, 3, 2);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(116, 37);
@@ -132,7 +131,7 @@
             groupBox3.Margin = new Padding(3, 2, 3, 2);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(396, 320);
+            groupBox3.Size = new Size(445, 320);
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             groupBox3.Text = "App Options";
@@ -238,11 +237,11 @@
             groupBox5.Controls.Add(rdoMatchCase);
             groupBox5.Controls.Add(rdoFindDirectionDown);
             groupBox5.Controls.Add(rdoFindDirectionUp);
-            groupBox5.Location = new Point(411, 487);
+            groupBox5.Location = new Point(461, 324);
             groupBox5.Margin = new Padding(4, 5, 4, 5);
             groupBox5.Name = "groupBox5";
             groupBox5.Padding = new Padding(4, 5, 4, 5);
-            groupBox5.Size = new Size(266, 153);
+            groupBox5.Size = new Size(259, 153);
             groupBox5.TabIndex = 0;
             groupBox5.TabStop = false;
             groupBox5.Text = "Find Options";
@@ -299,11 +298,11 @@
             // 
             groupBox2.Controls.Add(rdoLightMode);
             groupBox2.Controls.Add(rdoDarkMode);
-            groupBox2.Location = new Point(684, 333);
+            groupBox2.Location = new Point(728, 328);
             groupBox2.Margin = new Padding(4, 5, 4, 5);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 5, 4, 5);
-            groupBox2.Size = new Size(237, 140);
+            groupBox2.Size = new Size(229, 149);
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
             groupBox2.Text = "Theme";
@@ -336,11 +335,11 @@
             // 
             groupBox4.Controls.Add(ckbPasteRtfUnformatted);
             groupBox4.Controls.Add(ckbUsePasteUI);
-            groupBox4.Location = new Point(411, 320);
+            groupBox4.Location = new Point(461, 487);
             groupBox4.Margin = new Padding(4, 5, 4, 5);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new Padding(4, 5, 4, 5);
-            groupBox4.Size = new Size(264, 153);
+            groupBox4.Size = new Size(259, 153);
             groupBox4.TabIndex = 16;
             groupBox4.TabStop = false;
             groupBox4.Text = "Paste Options";
@@ -360,7 +359,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(934, 657);
+            ClientSize = new Size(986, 652);
             Controls.Add(groupBox4);
             Controls.Add(groupBox2);
             Controls.Add(groupBox5);

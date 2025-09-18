@@ -34,8 +34,7 @@
         public const string findMatchCase = "MatchCase";
         public const string findWholeWord = "WholeWord";
         public const string errorLogFile = "NLErrors.txt";
-        public const string appEditingState = "Editing";
-        public const string appReadOnlyState = "Read-Only";
+        public const string appReadOnlyState = "(Read-Only)";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
