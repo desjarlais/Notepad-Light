@@ -23,6 +23,7 @@ namespace Notepad_Light
         // globals
         public string gCurrentFileName = Strings.defaultFileName;
         public static string gErrorLog = string.Empty;
+        public string gCurrentAppVersion = string.Empty;
         public string gPrintString = string.Empty;
         public int gPrevPageLength = 0;
         public int gPrevSearchIndex = 0;
@@ -68,7 +69,7 @@ namespace Notepad_Light
             // set word wrap
             WordWrapToolStripMenuItem.Checked = RtbPage.WordWrap;
 
-            // update title, status, toolbars and autosave intervals
+            // update status, toolbars and autosave intervals
             UpdateCurrentFileType(gCurrentFileName);
             UpdateStatusBar();
             UpdateLnColValues();
@@ -1237,7 +1238,7 @@ namespace Notepad_Light
 
             // update the statusbar
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
-            CharacterCountToolStripStatusLabel.Text = RtbPage.Text.Length.ToString();
+            CharacterCountToolStripStatusLabel.Text = RtbPage.TextLength.ToString();
             LinesToolStripStatusLabel.Text = RtbPage.Lines.Length.ToString();
         }
 
@@ -1247,7 +1248,7 @@ namespace Notepad_Light
         public void ClearFormatting()
         {
             RtbPage.SelectionBullet = false;
-            RtbPage.SelectionFont = new Font("Segoe UI", 9);
+            RtbPage.SelectionFont = new Font("Segoe UI", 10);
             RtbPage.SelectionColor = Color.Black;
             RtbPage.SelectionIndent = 0;
             RtbPage.SelectionAlignment = HorizontalAlignment.Left;
@@ -2231,7 +2232,7 @@ namespace Notepad_Light
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmAbout fAbout = new FrmAbout()
+            FrmAbout fAbout = new FrmAbout(gErrorLog)
             {
                 Owner = this
             };

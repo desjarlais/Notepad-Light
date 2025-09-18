@@ -5,10 +5,10 @@ namespace Notepad_Light.Forms
 {
     public partial class FrmAbout : Form
     {
-        public FrmAbout()
+        public FrmAbout(string logFilePath)
         {
             InitializeComponent();
-            lblVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+            lblVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             TxbSysInfo.Text = Win32.osDetails().ToString();
         }
 
