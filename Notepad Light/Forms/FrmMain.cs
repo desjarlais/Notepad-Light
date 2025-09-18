@@ -25,6 +25,7 @@ namespace Notepad_Light
         public static string gErrorLog = string.Empty;
         public string gPrintString = string.Empty;
         public int gPrevPageLength = 0;
+        public int gPrevSearchIndex = 0;
         public int autoSaveInterval, autoSaveTicks;
         private string _EditedTime = string.Empty;
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
@@ -1854,7 +1855,7 @@ namespace Notepad_Light
             else
             {
                 // if the cursor is at the end of the textbox, change start position to 0
-                if (RtbPage.SelectionStart == RtbPage.Text.Length)
+                if (RtbPage.SelectionStart == RtbPage.TextLength)
                 {
                     MoveCursorToLocation(0, 0);
                 }
@@ -1865,39 +1866,39 @@ namespace Notepad_Light
                     if (Properties.Settings.Default.SearchOption == Strings.findUp)
                     {
                         // search up the file and find any word match
-                        indexToText = RtbPage.Find(FindTextBox.Text, 0, RtbPage.SelectionStart, RichTextBoxFinds.Reverse);
+                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.TextLength, RichTextBoxFinds.Reverse);
+                        gPrevSearchIndex = RtbPage.SelectionStart;
                     }
                     else if (Properties.Settings.Default.SearchOption == Strings.findDown)
                     {
                         // search from the top down and find any word match
-                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.None);
+                        indexToText = RtbPage.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.None);
+                        gPrevSearchIndex = RtbPage.SelectionStart + FindTextBox.TextLength;
                     }
                     else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
                     {
                         // only find words that match the case exactly
-                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.MatchCase);
+                        indexToText = RtbPage.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.MatchCase);
+                        gPrevSearchIndex = RtbPage.SelectionStart + FindTextBox.TextLength;
                     }
                     else
                     {
                         // only find words that have the entire word in the search textbox
-                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.SelectionStart + 1, RichTextBoxFinds.WholeWord);
+                        indexToText = RtbPage.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.WholeWord);
+                        gPrevSearchIndex = RtbPage.SelectionStart + FindTextBox.TextLength;
                     }
 
                     // move to the location of the find result
                     if (indexToText >= 0)
                     {
-                        MoveCursorToLocation(indexToText, FindTextBox.Text.Length);
+                        MoveCursorToLocation(indexToText, FindTextBox.TextLength);
                     }
 
                     // end of the document, restart at the beginning
                     if (indexToText == -1)
                     {
-                        // only move if something was found
-                        if (RtbPage.SelectionStart != 0)
-                        {
-                            MoveCursorToLocation(0, 0);
-                            FindText();
-                        }
+                        MoveCursorToLocation(0, 0);
+                        FindText();
                     }
                 }
                 catch (Exception ex)
