@@ -213,6 +213,7 @@ namespace Notepad_Light
         public void UpdateOpenFilePath(string docName)
         {
             toolStripStatusLabelOpenFilePath.Text = docName;
+            gCurrentFileName = docName;
         }
 
         /// <summary>
@@ -479,9 +480,9 @@ namespace Notepad_Light
                 MoveCursorToLocation(0, 0);
                 gPrevPageLength = RtbPage.TextLength;
                 UpdateOpenFilePath(filePath);
-                AddFileToMRU(filePath);
                 UpdateCurrentFileType(filePath);
                 UpdateDocStats();
+                AddFileToMRU(filePath);
                 RtbPage.Modified = false;
             }
             catch (Exception ex)
@@ -675,9 +676,9 @@ namespace Notepad_Light
                             RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
                             gCurrentFileType = CurrentFileType.RTF;
                         }
-                        
-                        AddFileToMRU(sfdSaveAs.FileName);
+
                         UpdateOpenFilePath(sfdSaveAs.FileName);
+                        AddFileToMRU(sfdSaveAs.FileName);
                         RtbPage.Modified = false;
                     }
                 }
