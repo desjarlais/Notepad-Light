@@ -28,108 +28,117 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblOriginalTime = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.mskTxtBxNewTime = new System.Windows.Forms.MaskedTextBox();
-            this.BtnOk = new System.Windows.Forms.Button();
-            this.BtnCancel = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            label1 = new Label();
+            lblOriginalTime = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            mskTxtBxNewTime = new MaskedTextBox();
+            BtnOk = new Button();
+            BtnCancel = new Button();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Adjust Time Format = \"HR:MIN\"";
+            label1.AutoSize = true;
+            label1.ForeColor = Color.Red;
+            label1.Location = new Point(17, 15);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(266, 25);
+            label1.TabIndex = 0;
+            label1.Text = "Adjust Time Format = \"HR:MIN\"";
             // 
             // lblOriginalTime
             // 
-            this.lblOriginalTime.AutoSize = true;
-            this.lblOriginalTime.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblOriginalTime.Location = new System.Drawing.Point(102, 42);
-            this.lblOriginalTime.Name = "lblOriginalTime";
-            this.lblOriginalTime.Size = new System.Drawing.Size(55, 15);
-            this.lblOriginalTime.TabIndex = 1;
-            this.lblOriginalTime.Text = "00:00:00";
+            lblOriginalTime.AutoSize = true;
+            lblOriginalTime.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblOriginalTime.Location = new Point(162, 70);
+            lblOriginalTime.Margin = new Padding(4, 0, 4, 0);
+            lblOriginalTime.Name = "lblOriginalTime";
+            lblOriginalTime.Size = new Size(82, 25);
+            lblOriginalTime.TabIndex = 1;
+            lblOriginalTime.Text = "00:00:00";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(12, 42);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Original Time: ";
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label3.Location = new Point(17, 70);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(137, 25);
+            label3.TabIndex = 2;
+            label3.Text = "Original Time: ";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(32, 63);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 15);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "New Time:";
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label4.Location = new Point(46, 105);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(102, 25);
+            label4.TabIndex = 3;
+            label4.Text = "New Time:";
             // 
             // mskTxtBxNewTime
             // 
-            this.mskTxtBxNewTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.mskTxtBxNewTime.Location = new System.Drawing.Point(102, 60);
-            this.mskTxtBxNewTime.Mask = "90:00";
-            this.mskTxtBxNewTime.Name = "mskTxtBxNewTime";
-            this.mskTxtBxNewTime.Size = new System.Drawing.Size(49, 21);
-            this.mskTxtBxNewTime.TabIndex = 4;
-            this.mskTxtBxNewTime.Text = "0000";
-            this.mskTxtBxNewTime.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mskTxtBxNewTime_KeyUp);
+            mskTxtBxNewTime.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
+            mskTxtBxNewTime.Location = new Point(156, 100);
+            mskTxtBxNewTime.Margin = new Padding(4, 5, 4, 5);
+            mskTxtBxNewTime.Mask = "90:00";
+            mskTxtBxNewTime.Name = "mskTxtBxNewTime";
+            mskTxtBxNewTime.Size = new Size(93, 28);
+            mskTxtBxNewTime.TabIndex = 4;
+            mskTxtBxNewTime.Text = "0000";
+            mskTxtBxNewTime.TextAlign = HorizontalAlignment.Right;
+            mskTxtBxNewTime.KeyUp += mskTxtBxNewTime_KeyUp;
             // 
             // BtnOk
             // 
-            this.BtnOk.Location = new System.Drawing.Point(63, 98);
-            this.BtnOk.Name = "BtnOk";
-            this.BtnOk.Size = new System.Drawing.Size(48, 23);
-            this.BtnOk.TabIndex = 5;
-            this.BtnOk.Text = "OK";
-            this.BtnOk.UseVisualStyleBackColor = true;
-            this.BtnOk.Click += new System.EventHandler(this.BtnOk_Click);
+            BtnOk.Location = new Point(90, 163);
+            BtnOk.Margin = new Padding(4, 5, 4, 5);
+            BtnOk.Name = "BtnOk";
+            BtnOk.Size = new Size(69, 38);
+            BtnOk.TabIndex = 5;
+            BtnOk.Text = "OK";
+            BtnOk.UseVisualStyleBackColor = true;
+            BtnOk.Click += BtnOk_Click;
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(117, 98);
-            this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(60, 23);
-            this.BtnCancel.TabIndex = 6;
-            this.BtnCancel.Text = "Cancel";
-            this.BtnCancel.UseVisualStyleBackColor = true;
-            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            BtnCancel.Location = new Point(167, 163);
+            BtnCancel.Margin = new Padding(4, 5, 4, 5);
+            BtnCancel.Name = "BtnCancel";
+            BtnCancel.Size = new Size(86, 38);
+            BtnCancel.TabIndex = 6;
+            BtnCancel.Text = "Cancel";
+            BtnCancel.UseVisualStyleBackColor = true;
+            BtnCancel.Click += BtnCancel_Click;
             // 
             // FrmEditTimer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(198, 133);
-            this.Controls.Add(this.BtnCancel);
-            this.Controls.Add(this.BtnOk);
-            this.Controls.Add(this.mskTxtBxNewTime);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblOriginalTime);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.KeyPreview = true;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FrmEditTimer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Edit Timer";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmEditTimer_KeyDown);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(346, 222);
+            Controls.Add(BtnCancel);
+            Controls.Add(BtnOk);
+            Controls.Add(mskTxtBxNewTime);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(lblOriginalTime);
+            Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
+            Margin = new Padding(4, 5, 4, 5);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FrmEditTimer";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Edit Timer";
+            KeyDown += FrmEditTimer_KeyDown;
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
