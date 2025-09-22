@@ -4,6 +4,7 @@
     {
         // general strings
         public const string semiColon = " : ";
+        public const string space = " ";
         public const string defaultFileName = "Untitled";
         public const string backupTemplateFileName = "TemplateBackup";
         public const string markdown = "Markdown";

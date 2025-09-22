@@ -15,7 +15,6 @@ using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
 // external dll refs
 using Markdig;
-using Markdig.Extensions.PragmaLines;
 
 namespace Notepad_Light
 {
@@ -1032,7 +1031,7 @@ namespace Notepad_Light
                 // if there is an existing timer, add it before resuming
                 if (IsTimerActive())
                 {
-                    AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text);
+                    AddTime(TimerDescriptionTextbox.Text, TimerToolStripLabel.Text ?? string.Empty);
                 }
 
                 // update the main timer ui
@@ -1528,7 +1527,7 @@ namespace Notepad_Light
             }
         }
 
-        public bool IsWindows11()
+        public static bool IsWindows11()
         {
             Version version = Environment.OSVersion.Version;
             return version.Major == 10 && version.Build >= 22000;
@@ -1538,11 +1537,11 @@ namespace Notepad_Light
         /// <summary>
         /// change UI to have a black background and white text
         /// .net 9 has built in dark mode support for windows 11
-        /// dark/light mode .net 9 on Windows 11 does not work with high contrast, so fall back to custom colors
+        /// dark/light mode on Windows 11 does not work with high contrast, so fall back to custom colors
         /// </summary>
         public void ApplyDarkMode()
         {
-            if (IsWindows11() || (IsWindows11() && SystemInformation.HighContrast == false))
+            if (IsWindows11() && SystemInformation.HighContrast == false)
             {
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Dark);
@@ -1567,7 +1566,7 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
-            if (IsWindows11() || (IsWindows11() && SystemInformation.HighContrast == false))
+            if (IsWindows11() && SystemInformation.HighContrast == false)
             {
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Classic);
@@ -1801,7 +1800,7 @@ namespace Notepad_Light
         /// <param name="image"></param>
         /// <param name="background"></param>
         /// <returns></returns>
-        private static Image ReplaceTransparency(Image image, Color background)
+        private static Bitmap ReplaceTransparency(Image image, Color background)
         {
             Bitmap bitmap = new Bitmap(image.Width, image.Height, PixelFormat.Format24bppRgb);
 
@@ -2062,14 +2061,14 @@ namespace Notepad_Light
             if (s.Contains("\\sn wzDescription"))
             {
                 pictTagIdx = s.IndexOf("\\pngblip");
-                startIndex = s.IndexOf(" ", pictTagIdx) + 1;
+                startIndex = s.IndexOf(Strings.space, pictTagIdx) + 1;
                 endIndex = s.IndexOf("}", startIndex);
             }
             else
             {
                 // this checks for rtf picture inserted by the app
                 pictTagIdx = s.IndexOf("{\\pict{\\");
-                startIndex = s.IndexOf(" ", pictTagIdx) + 1;
+                startIndex = s.IndexOf(Strings.space, pictTagIdx) + 1;
                 endIndex = s.IndexOf("}", startIndex);
             }
 
@@ -2151,7 +2150,7 @@ namespace Notepad_Light
 
         public void EditTimer()
         {
-            FrmEditTimer fEditedTimer = new FrmEditTimer(TimerToolStripLabel.Text)
+            FrmEditTimer fEditedTimer = new FrmEditTimer(TimerToolStripLabel.Text ?? string.Empty)
             {
                 Owner = this
             };
@@ -3109,7 +3108,7 @@ namespace Notepad_Light
                 return;
             }
 
-            AddTime(TimerDescriptionTextbox.Text.Trim(), TimerToolStripLabel.Text);
+            AddTime(TimerDescriptionTextbox.Text.Trim(), TimerToolStripLabel.Text ?? string.Empty);
             ResetTimer();
             TimerDescriptionTextbox.Clear();
         }
