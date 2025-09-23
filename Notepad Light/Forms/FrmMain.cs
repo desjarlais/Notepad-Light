@@ -1533,17 +1533,22 @@ namespace Notepad_Light
             return version.Major == 10 && version.Build >= 22000;
         }
 
-
         /// <summary>
         /// change UI to have a black background and white text
         /// .net 9 has built in dark mode support for windows 11
         /// dark/light mode on Windows 11 does not work with high contrast, so fall back to custom colors
+        /// TODO: looks like a possible bug in .net 9 dark/light mode, needs further testing, not all controls are changing color
         /// </summary>
         public void ApplyDarkMode()
         {
-#pragma warning disable WFO5001
-            Application.SetColorMode(SystemColorMode.Dark);
-#pragma warning restore WFO5001
+            //            if (IsWindows11() && SystemInformation.HighContrast == false)
+            //            {
+            //#pragma warning disable WFO5001
+            //                Application.SetColorMode(SystemColorMode.Dark);
+            //#pragma warning restore WFO5001
+            //            }
+            //            else
+            //            {
             menuStrip1.BackColor = clrDarkModeBackground;
             toolStrip1.BackColor = clrDarkModeBackground;
             statusStrip1.BackColor = clrDarkModeBackground;
@@ -1553,24 +1558,6 @@ namespace Notepad_Light
             ChangeMenuTextForeColor(Color.White);
             ChangeMenuTextBackColor(clrDarkModeBackground);
             ChangeSubMenuItemBackColor(clrDarkModeBackground);
-
-            //            if (IsWindows11() && SystemInformation.HighContrast == false)
-            //            {
-            //#pragma warning disable WFO5001
-            //                Application.SetColorMode(SystemColorMode.Dark);
-            //#pragma warning restore WFO5001                
-            //            }
-            //            else
-            //            {
-            //                menuStrip1.BackColor = clrDarkModeBackground;
-            //                toolStrip1.BackColor = clrDarkModeBackground;
-            //                statusStrip1.BackColor = clrDarkModeBackground;
-            //                RtbPage.BackColor = clrDarkModeTextBackground;
-
-            //                ChangeControlTextColor(Color.White);
-            //                ChangeMenuTextForeColor(Color.White);
-            //                ChangeMenuTextBackColor(clrDarkModeBackground);
-            //                ChangeSubMenuItemBackColor(clrDarkModeBackground);
             //            }
         }
 
@@ -1579,9 +1566,14 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
-#pragma warning disable WFO5001
-            Application.SetColorMode(SystemColorMode.Classic);
-#pragma warning restore WFO5001
+            //            if (IsWindows11() && SystemInformation.HighContrast == false)
+            //            {
+            //#pragma warning disable WFO5001
+            //                Application.SetColorMode(SystemColorMode.Classic);
+            //#pragma warning restore WFO5001
+            //            }
+            //            else
+            //            {
             menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
@@ -1591,25 +1583,6 @@ namespace Notepad_Light
             ChangeMenuTextForeColor(Color.Black);
             ChangeMenuTextBackColor(Color.FromKnownColor(KnownColor.Control));
             ChangeSubMenuItemBackColor(Color.White);
-
-
-            //            if (IsWindows11() && SystemInformation.HighContrast == false)
-            //            {
-            //#pragma warning disable WFO5001
-            //                Application.SetColorMode(SystemColorMode.Classic);
-            //#pragma warning restore WFO5001
-            //            }
-            //            else
-            //            {
-            //                menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            //                toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            //                statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            //                RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
-
-            //                ChangeControlTextColor(Color.Black);
-            //                ChangeMenuTextForeColor(Color.Black);
-            //                ChangeMenuTextBackColor(Color.FromKnownColor(KnownColor.Control));
-            //                ChangeSubMenuItemBackColor(Color.White);
             //            }
         }
 

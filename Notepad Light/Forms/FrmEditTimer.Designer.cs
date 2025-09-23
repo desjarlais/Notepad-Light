@@ -91,7 +91,7 @@
             mskTxtBxNewTime.Size = new Size(93, 28);
             mskTxtBxNewTime.TabIndex = 4;
             mskTxtBxNewTime.Text = "0000";
-            mskTxtBxNewTime.TextAlign = HorizontalAlignment.Right;
+            mskTxtBxNewTime.TextAlign = HorizontalAlignment.Center;
             mskTxtBxNewTime.KeyUp += mskTxtBxNewTime_KeyUp;
             // 
             // BtnOk
