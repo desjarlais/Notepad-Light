@@ -1,20 +1,20 @@
 ﻿// app related refs
-using Notepad_Light.Forms;
-using Notepad_Light.Helpers;
-using static Notepad_Light.Helpers.Win32;
-
-// .net refs
-using System.Diagnostics;
-using System.Reflection;
-using System.Drawing.Printing;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Text;
-using System.Runtime.InteropServices;
-using MethodInvoker = System.Windows.Forms.MethodInvoker;
-
 // external dll refs
 using Markdig;
+using Microsoft.Web.WebView2.Core;
+using Notepad_Light.Forms;
+using Notepad_Light.Helpers;
+// .net refs
+using System.Diagnostics;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using static Notepad_Light.Helpers.Win32;
+using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
 namespace Notepad_Light
 {
@@ -105,6 +105,7 @@ namespace Notepad_Light
             }
 
             UpdateToolbarIcons();
+            SetupWebView();
         }
 
         #region Class Properties
@@ -120,6 +121,24 @@ namespace Notepad_Light
         #endregion
 
         #region Functions
+
+        /// <summary>
+        /// need to setup webview2 with a user data folder to avoid temp folder issues
+        /// </summary>
+        public async void SetupWebView() 
+        {
+            try
+            {
+                var userDataFolder = Path.Combine(Strings.appFolderDirectory, "WebView2UserData");
+                Directory.CreateDirectory(userDataFolder);
+                var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
+                await webView2Md.EnsureCoreWebView2Async(env);
+            }
+            catch (Exception ex) 
+            {
+                App.WriteErrorLogContent("WebView2 Error : " + ex.Message, gErrorLog);   
+            }
+        }
 
         public void UpdateTemplateMenu()
         {
@@ -311,6 +330,18 @@ namespace Notepad_Light
             }
         }
 
+        public void ApplyDefaultTextColor()
+        {
+            if (Properties.Settings.Default.DarkMode)
+            {
+                RtbPage.ForeColor = Color.White;
+            }
+            else
+            {
+                RtbPage.ForeColor = Color.Black;
+            }
+        }
+
         /// <summary>
         /// mostly UI setup work, it doesn't really create a new file/document
         /// </summary>
@@ -347,6 +378,7 @@ namespace Notepad_Light
             }
 
             RtbPage.Modified = false;
+            ApplyDefaultTextColor();
         }
 
         /// <summary>
@@ -1428,7 +1460,7 @@ namespace Notepad_Light
 
         /// <summary>
         /// add the passed in file to the MRU unless it already exists
-        /// </summary>
+        /// /// </summary>
         /// <param name="filePath">file path to check if it exists</param>
         public void AddFileToMRU(string filePath)
         {
@@ -1533,6 +1565,46 @@ namespace Notepad_Light
             return version.Major == 10 && version.Build >= 22000;
         }
 
+        public void SwapDefaultColor(RichTextBox rtb, Color oldColor, Color newColor)
+        {
+            string? rtf = rtb.Rtf;
+            Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
+            string oldFragmentPattern = @"\red" + oldColor.R + @"\green" + oldColor.G + @"\blue" + oldColor.B + @"\;";
+
+            if (colorTableMatch.Success)
+            {
+                string colorTable = colorTableMatch.Value;
+                bool hasColor = Regex.IsMatch(colorTable, oldFragmentPattern);
+                if (!hasColor)
+                {
+                    ApplyDefaultTextColor();
+                    return;
+                }
+            }
+            else
+            {
+                ApplyDefaultTextColor();
+                return;
+            }
+
+            // Build the RTF color fragment we expect (tolerate optional whitespace)
+            //string oldFragmentPattern = "\\\\red" + oldColor.R + "\\\\green" + oldColor.G + "\\\\blue" + oldColor.B + "\\\\;";
+            //if (!Regex.IsMatch(rtf, oldFragmentPattern))
+            //{
+            //    // if there is nothing, apply default text colors based on dark mode setting
+            //    ApplyDefaultTextColor();
+            //    return;
+            //}
+
+            string newFragment = "\\red" + newColor.R + "\\green" + newColor.G + "\\blue" + newColor.B + "\\;";
+
+            // Replace only first occurrence inside color table
+            rtf = Regex.Replace(rtf, oldFragmentPattern, newFragment, RegexOptions.IgnoreCase);
+
+            // Re-assign (this preserves all run-level \cfN)
+            rtb.Rtf = rtf;
+        }
+
         /// <summary>
         /// change UI to have a black background and white text
         /// .net 9 has built in dark mode support for windows 11
@@ -1552,7 +1624,9 @@ namespace Notepad_Light
             menuStrip1.BackColor = clrDarkModeBackground;
             toolStrip1.BackColor = clrDarkModeBackground;
             statusStrip1.BackColor = clrDarkModeBackground;
+            
             RtbPage.BackColor = clrDarkModeTextBackground;
+            SwapDefaultColor(RtbPage, Color.Black, Color.Gainsboro);
 
             ChangeControlTextColor(Color.White);
             ChangeMenuTextForeColor(Color.White);
@@ -1577,7 +1651,9 @@ namespace Notepad_Light
             menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
             statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+            
             RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
+            SwapDefaultColor(RtbPage, Color.Gainsboro, Color.Black);
 
             ChangeControlTextColor(Color.Black);
             ChangeMenuTextForeColor(Color.Black);
@@ -2015,10 +2091,18 @@ namespace Notepad_Light
         /// </summary>
         private async void UnloadMarkdown()
         {
-            // initialize the webview
-            await webView2Md.EnsureCoreWebView2Async();
-            string? html = Markdown.ToHtml(string.Empty);
-            webView2Md.NavigateToString(html);
+            try
+            {
+                // initialize the webview
+                await webView2Md.EnsureCoreWebView2Async();
+                string? html = Markdown.ToHtml(string.Empty);
+                webView2Md.NavigateToString(html);
+            }
+            catch (Exception ex)
+            {
+                App.WriteErrorLogContent("UnloadMarkdown Error: " + ex.Message, gErrorLog);
+                App.WriteErrorLogContent("  Stack: " + ex.StackTrace, gErrorLog);
+            }
         }
 
         /// <summary>

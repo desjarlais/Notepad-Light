@@ -51,6 +51,7 @@
             toolStripStatusLabelFileEncoding = new ToolStripStatusLabel();
             EncodingToolStripStatusLabel = new ToolStripStatusLabel();
             toolStripStatusLabelFilePath = new ToolStripStatusLabel();
+            toolStripStatusLabelOpenFilePath = new ToolStripStatusLabel();
             RtbPage = new RichTextBox();
             contextMenuStrip1 = new ContextMenuStrip(components);
             CutContextMenu = new ToolStripMenuItem();
@@ -180,7 +181,6 @@
             toolStrip2 = new ToolStrip();
             BtnClosePanel2 = new ToolStripButton();
             webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
-            toolStripStatusLabelOpenFilePath = new ToolStripStatusLabel();
             statusStrip1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -325,6 +325,12 @@
             toolStripStatusLabelFilePath.Size = new Size(95, 25);
             toolStripStatusLabelFilePath.Text = "| File Path: ";
             // 
+            // toolStripStatusLabelOpenFilePath
+            // 
+            toolStripStatusLabelOpenFilePath.Name = "toolStripStatusLabelOpenFilePath";
+            toolStripStatusLabelOpenFilePath.Size = new Size(105, 25);
+            toolStripStatusLabelOpenFilePath.Text = "Document1";
+            // 
             // RtbPage
             // 
             RtbPage.AcceptsTab = true;
@@ -383,6 +389,7 @@
             // 
             // SearchContextMenu
             // 
+            SearchContextMenu.Enabled = false;
             SearchContextMenu.Image = Properties.Resources.Search;
             SearchContextMenu.Name = "SearchContextMenu";
             SearchContextMenu.Size = new Size(212, 32);
@@ -435,7 +442,7 @@
             NewToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             NewToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-            NewToolStripMenuItem.Size = new Size(223, 34);
+            NewToolStripMenuItem.Size = new Size(270, 34);
             NewToolStripMenuItem.Text = "&New";
             NewToolStripMenuItem.Click += NewToolStripMenuItem_Click;
             // 
@@ -445,7 +452,7 @@
             OpenToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
             OpenToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            OpenToolStripMenuItem.Size = new Size(223, 34);
+            OpenToolStripMenuItem.Size = new Size(270, 34);
             OpenToolStripMenuItem.Text = "&Open";
             OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
@@ -454,7 +461,7 @@
             RecentToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { RecentToolStripMenuItem1, RecentToolStripMenuItem2, RecentToolStripMenuItem3, RecentToolStripMenuItem4, RecentToolStripMenuItem5, RecentToolStripMenuItem6, RecentToolStripMenuItem7, RecentToolStripMenuItem8, RecentToolStripMenuItem9 });
             RecentToolStripMenuItem.Image = Properties.Resources.MoveToFolder;
             RecentToolStripMenuItem.Name = "RecentToolStripMenuItem";
-            RecentToolStripMenuItem.Size = new Size(223, 34);
+            RecentToolStripMenuItem.Size = new Size(270, 34);
             RecentToolStripMenuItem.Text = "Recent Files";
             // 
             // RecentToolStripMenuItem1
@@ -532,7 +539,7 @@
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new Size(220, 6);
+            toolStripSeparator12.Size = new Size(267, 6);
             toolStripSeparator12.Paint += ToolStripSeparator12_Paint;
             // 
             // SaveToolStripMenuItem
@@ -541,7 +548,7 @@
             SaveToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             SaveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            SaveToolStripMenuItem.Size = new Size(223, 34);
+            SaveToolStripMenuItem.Size = new Size(270, 34);
             SaveToolStripMenuItem.Text = "&Save";
             SaveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             // 
@@ -549,14 +556,14 @@
             // 
             SaveAsToolStripMenuItem.Image = Properties.Resources.SaveAs_16x;
             SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            SaveAsToolStripMenuItem.Size = new Size(223, 34);
+            SaveAsToolStripMenuItem.Size = new Size(270, 34);
             SaveAsToolStripMenuItem.Text = "Save &As";
             SaveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
             // 
             // toolStripSeparator14
             // 
             toolStripSeparator14.Name = "toolStripSeparator14";
-            toolStripSeparator14.Size = new Size(220, 6);
+            toolStripSeparator14.Size = new Size(267, 6);
             toolStripSeparator14.Paint += ToolStripSeparator14_Paint;
             // 
             // PrintToolStripMenuItem
@@ -564,7 +571,7 @@
             PrintToolStripMenuItem.Image = Properties.Resources.PrintStatusBar1_16x;
             PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
             PrintToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
-            PrintToolStripMenuItem.Size = new Size(223, 34);
+            PrintToolStripMenuItem.Size = new Size(270, 34);
             PrintToolStripMenuItem.Text = "Print";
             PrintToolStripMenuItem.Click += PrintToolStripMenuItem_Click;
             // 
@@ -572,7 +579,7 @@
             // 
             PrintPreviewToolStripMenuItem.Image = Properties.Resources.PrintPreview_16x;
             PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem";
-            PrintPreviewToolStripMenuItem.Size = new Size(223, 34);
+            PrintPreviewToolStripMenuItem.Size = new Size(270, 34);
             PrintPreviewToolStripMenuItem.Text = "Print Preview";
             PrintPreviewToolStripMenuItem.Click += PrintPreviewToolStripMenuItem_Click;
             // 
@@ -580,21 +587,21 @@
             // 
             PageSetupToolStripMenuItem.Image = Properties.Resources.PageGuide_16x;
             PageSetupToolStripMenuItem.Name = "PageSetupToolStripMenuItem";
-            PageSetupToolStripMenuItem.Size = new Size(223, 34);
+            PageSetupToolStripMenuItem.Size = new Size(270, 34);
             PageSetupToolStripMenuItem.Text = "Page Setup";
             PageSetupToolStripMenuItem.Click += PageSetupToolStripMenuItem_Click;
             // 
             // ToolStripSeparator1
             // 
             ToolStripSeparator1.Name = "ToolStripSeparator1";
-            ToolStripSeparator1.Size = new Size(220, 6);
+            ToolStripSeparator1.Size = new Size(267, 6);
             ToolStripSeparator1.Paint += ToolStripSeparator1_Paint;
             // 
             // OptionsToolStripMenuItem
             // 
             OptionsToolStripMenuItem.Image = Properties.Resources.Settings_16x;
             OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
-            OptionsToolStripMenuItem.Size = new Size(223, 34);
+            OptionsToolStripMenuItem.Size = new Size(270, 34);
             OptionsToolStripMenuItem.Text = "Options";
             OptionsToolStripMenuItem.Click += FileOptionsToolStripMenuItem_Click;
             // 
@@ -602,7 +609,7 @@
             // 
             ExitToolStripMenuItem.Image = Properties.Resources.Exit_16x;
             ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            ExitToolStripMenuItem.Size = new Size(223, 34);
+            ExitToolStripMenuItem.Size = new Size(270, 34);
             ExitToolStripMenuItem.Text = "E&xit";
             ExitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -896,15 +903,16 @@
             // 
             WordWrapToolStripMenuItem.Image = (Image)resources.GetObject("WordWrapToolStripMenuItem.Image");
             WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            WordWrapToolStripMenuItem.Size = new Size(206, 34);
+            WordWrapToolStripMenuItem.Size = new Size(270, 34);
             WordWrapToolStripMenuItem.Text = "Word Wrap";
             WordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
             // 
             // TaskPaneToolStripMenuItem
             // 
+            TaskPaneToolStripMenuItem.Enabled = false;
             TaskPaneToolStripMenuItem.Image = (Image)resources.GetObject("TaskPaneToolStripMenuItem.Image");
             TaskPaneToolStripMenuItem.Name = "TaskPaneToolStripMenuItem";
-            TaskPaneToolStripMenuItem.Size = new Size(206, 34);
+            TaskPaneToolStripMenuItem.Size = new Size(270, 34);
             TaskPaneToolStripMenuItem.Text = "TaskPane";
             TaskPaneToolStripMenuItem.Click += TaskPaneToolStripMenuItem_Click;
             // 
@@ -913,7 +921,7 @@
             ZoomToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ZoomToolStripMenuItem100, ZoomToolStripMenuItem150, ZoomToolStripMenuItem200, ZoomToolStripMenuItem250, ZoomToolStripMenuItem300 });
             ZoomToolStripMenuItem.Image = Properties.Resources.MediaZoom;
             ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            ZoomToolStripMenuItem.Size = new Size(206, 34);
+            ZoomToolStripMenuItem.Size = new Size(270, 34);
             ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
@@ -1373,15 +1381,9 @@
             webView2Md.Location = new Point(0, 47);
             webView2Md.Margin = new Padding(4, 5, 4, 5);
             webView2Md.Name = "webView2Md";
-            webView2Md.Size = new Size(818, 767);
+            webView2Md.Size = new Size(816, 767);
             webView2Md.TabIndex = 0;
             webView2Md.ZoomFactor = 1D;
-            // 
-            // toolStripStatusLabelOpenFilePath
-            // 
-            toolStripStatusLabelOpenFilePath.Name = "toolStripStatusLabelOpenFilePath";
-            toolStripStatusLabelOpenFilePath.Size = new Size(105, 25);
-            toolStripStatusLabelOpenFilePath.Text = "Document1";
             // 
             // FrmMain
             // 
