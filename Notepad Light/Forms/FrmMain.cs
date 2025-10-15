@@ -14,7 +14,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using static Notepad_Light.Helpers.Win32;
 using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
@@ -35,8 +34,8 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        public Color clrDarkModeBackground = Color.FromArgb(32, 32, 32);
-        public Color clrDarkModeTextBackground = Color.FromArgb(96, 96, 96);
+        public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
+        public Color clrDarkModeForeColor = Color.FromArgb(96, 96, 96);
         public CurrentFileType gCurrentFileType;
 
         public enum CurrentFileType
@@ -54,7 +53,7 @@ namespace Notepad_Light
             gErrorLog = Strings.appFolderDirectoryUrl;
 
             // collapse panel by default, currently only used for markdown files
-            splitContainer1.Panel2Collapsed = true;
+            splitContainerMain.Panel2Collapsed = true;
 
             // initialize stopwatch for timer
             gStopwatch = new Stopwatch();
@@ -70,7 +69,7 @@ namespace Notepad_Light
             ApplyZoom(1.0f);
 
             // set word wrap
-            WordWrapToolStripMenuItem.Checked = RtbPage.WordWrap;
+            WordWrapToolStripMenuItem.Checked = RtbMain.WordWrap;
 
             // update status, toolbars and autosave intervals
             UpdateCurrentFileType(gCurrentFileName);
@@ -89,13 +88,13 @@ namespace Notepad_Light
                 ApplyLightMode();
             }
 
-            RtbPage.Modified = false;
+            RtbMain.Modified = false;
 
             // start the autosave timer
             if (Properties.Settings.Default.AutoSaveInterval > 0)
             {
                 autosaveTimer.Start();
-            }            
+            }
 
             // setup templates
             UpdateTemplateMenu();
@@ -128,18 +127,18 @@ namespace Notepad_Light
         /// <summary>
         /// need to setup webview2 with a user data folder to avoid temp folder issues
         /// </summary>
-        public async void SetupWebView() 
+        public async void SetupWebView()
         {
             try
             {
                 var userDataFolder = Path.Combine(Strings.appFolderDirectory, "WebView2UserData");
                 Directory.CreateDirectory(userDataFolder);
                 var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
-                await webView2Md.EnsureCoreWebView2Async(env);
+                await webViewMarkup.EnsureCoreWebView2Async(env);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                App.WriteErrorLogContent("WebView2 Error : " + ex.Message, gErrorLog);   
+                App.WriteErrorLogContent("WebView2 Error : " + ex.Message, gErrorLog);
             }
         }
 
@@ -335,26 +334,26 @@ namespace Notepad_Light
 
         public void ApplyNoColorDefaultColor()
         {
-            if (RtbPage.Rtf != null && gNoColorTable)
+            if (RtbMain.Rtf != null && gNoColorTable)
             {
-                string rtf = RtbPage.Rtf;
+                string rtf = RtbMain.Rtf;
                 string colorTableNoColor = "colortbl ;";
                 string colorTableDefaultBlack = "colortbl \\red0\\green0\\blue0;";
                 string colorTableDefaultWhite = "colortbl \\red255\\green255\\blue255;";
 
                 Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
-                
+
                 if (colorTableMatch.Value.Contains(colorTableDefaultWhite))
                 {
                     rtf = rtf.Replace(colorTableDefaultWhite, colorTableNoColor);
-                    RtbPage.Rtf = rtf;
+                    RtbMain.Rtf = rtf;
                     return;
                 }
 
                 if (colorTableMatch.Value.Contains(colorTableDefaultBlack))
                 {
                     rtf = rtf.Replace(colorTableDefaultBlack, colorTableNoColor);
-                    RtbPage.Rtf = rtf;
+                    RtbMain.Rtf = rtf;
                     return;
                 }
             }
@@ -362,9 +361,9 @@ namespace Notepad_Light
 
         public void ApplyDefaultTextColor()
         {
-            if (RtbPage.Rtf != null)
+            if (RtbMain.Rtf != null)
             {
-                string rtf = RtbPage.Rtf;
+                string rtf = RtbMain.Rtf;
                 string colorTableNoColor = "colortbl ;";
                 string colorTableDefaultBlack = "colortbl \\red0\\green0\\blue0;";
                 string colorTableDefaultWhite = "colortbl \\red255\\green255\\blue255;";
@@ -374,7 +373,7 @@ namespace Notepad_Light
                 if (Properties.Settings.Default.DarkMode == true && colorTableMatch.Value.Contains(colorTableNoColor))
                 {
                     rtf = rtf.Replace(colorTableNoColor, colorTableDefaultWhite);
-                    RtbPage.Rtf = rtf;
+                    RtbMain.Rtf = rtf;
                     gNoColorTable = true;
                     return;
                 }
@@ -382,7 +381,7 @@ namespace Notepad_Light
                 if (Properties.Settings.Default.DarkMode == false && colorTableMatch.Value.Contains(colorTableNoColor))
                 {
                     rtf = rtf.Replace(colorTableNoColor, colorTableDefaultBlack);
-                    RtbPage.Rtf = rtf;
+                    RtbMain.Rtf = rtf;
                     gNoColorTable = true;
                 }
                 else
@@ -393,7 +392,7 @@ namespace Notepad_Light
             }
             else
             {
-                ApplyNonRtfDefaultTextColor();   
+                ApplyNonRtfDefaultTextColor();
             }
         }
 
@@ -401,11 +400,11 @@ namespace Notepad_Light
         {
             if (Properties.Settings.Default.DarkMode == true)
             {
-                RtbPage.ForeColor = Color.White;
+                RtbMain.ForeColor = Color.White;
             }
             else
             {
-                RtbPage.ForeColor = Color.Black;
+                RtbMain.ForeColor = Color.Black;
             }
         }
 
@@ -414,10 +413,10 @@ namespace Notepad_Light
         /// </summary>
         public void CreateNewDocument()
         {
-            RtbPage.Clear();
+            RtbMain.Clear();
             CollapsePanel2();
             ClearFormatting();
-            RtbPage.ReadOnly = false;
+            RtbMain.ReadOnly = false;
             UpdateOpenFilePath(Strings.defaultFileName);
             UpdateCurrentFileType(gCurrentFileName);
 
@@ -426,7 +425,7 @@ namespace Notepad_Light
             {
                 ClearToolbarFormattingIcons();
                 EnableToolbarFormattingIcons();
-                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbPage.Rtf ?? string.Empty, true);
+                EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbMain.Rtf ?? string.Empty, true);
                 toolStripStatusLabelFileType.Text = Strings.rtf;
             }
             else if (gCurrentFileType == CurrentFileType.Text)
@@ -445,7 +444,7 @@ namespace Notepad_Light
             }
 
             //ApplyDefaultTextColor();
-            RtbPage.Modified = false;
+            RtbMain.Modified = false;
         }
 
         /// <summary>
@@ -454,7 +453,7 @@ namespace Notepad_Light
         public void FileNew()
         {
             // if there are no changes, create a new blank document
-            if (RtbPage.Modified == false)
+            if (RtbMain.Modified == false)
             {
                 CreateNewDocument();
             }
@@ -496,19 +495,19 @@ namespace Notepad_Light
             if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains("UTF-8"))
             {
                 string text = File.ReadAllText(filePath);
-                RtbPage.Text = text;
+                RtbMain.Text = text;
             }
             else if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains("UTF-16"))
             {
-                RtbPage.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
+                RtbMain.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
             }
             else if (!string.IsNullOrEmpty(encodingText) && (encodingText.Contains("ASCII") || encodingText.Contains("ANSI")))
             {
-                RtbPage.LoadFile(filePath, RichTextBoxStreamType.PlainText);
+                RtbMain.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
             else
             {
-                RtbPage.LoadFile(filePath);
+                RtbMain.LoadFile(filePath);
             }
         }
 
@@ -529,7 +528,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void LoadRtfFile(string filePath)
         {
-            RtbPage.LoadFile(filePath, RichTextBoxStreamType.RichText);
+            RtbMain.LoadFile(filePath, RichTextBoxStreamType.RichText);
             EnableToolbarFormattingIcons();
             toolStripStatusLabelFileType.Text = Strings.rtf;
         }
@@ -542,7 +541,7 @@ namespace Notepad_Light
         {
             LoadTextFile(filePath);
             DisableToolbarFormattingIcons();
-            splitContainer1.Panel2Collapsed = false;
+            splitContainerMain.Panel2Collapsed = false;
             TaskPaneToolStripMenuItem.Checked = true;
             toolStripStatusLabelFileType.Text = Strings.markdown;
         }
@@ -577,12 +576,12 @@ namespace Notepad_Light
 
                 ClearToolbarFormattingIcons();
                 MoveCursorToLocation(0, 0);
-                gPrevPageLength = RtbPage.TextLength;
+                gPrevPageLength = RtbMain.TextLength;
                 UpdateOpenFilePath(filePath);
                 UpdateCurrentFileType(filePath);
                 UpdateDocStats();
                 AddFileToMRU(filePath);
-                RtbPage.Modified = false;
+                RtbMain.Modified = false;
                 //ApplyDefaultTextColor();
             }
             catch (Exception ex)
@@ -668,9 +667,9 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                     UpdateDocStats();
                     CheckForReadOnly(ofdFileOpen.FileName);
-                    gPrevPageLength = RtbPage.TextLength;
+                    gPrevPageLength = RtbMain.TextLength;
                     //ApplyDefaultTextColor();
-                    RtbPage.Modified = false;
+                    RtbMain.Modified = false;
                 }
             }
             catch (Exception ex)
@@ -695,7 +694,7 @@ namespace Notepad_Light
                 Cursor = Cursors.WaitCursor;
 
                 // no changes to save
-                if (!RtbPage.Modified)
+                if (!RtbMain.Modified)
                 {
                     return;
                 }
@@ -711,14 +710,14 @@ namespace Notepad_Light
                     if (gCurrentFileType == CurrentFileType.RTF)
                     {
                         //ApplyNoColorDefaultColor();
-                        RtbPage.SaveFile(gCurrentFileName);
+                        RtbMain.SaveFile(gCurrentFileName);
                     }
                     else
                     {
-                        File.WriteAllText(gCurrentFileName, RtbPage.Text);
+                        File.WriteAllText(gCurrentFileName, RtbMain.Text);
                     }
 
-                    RtbPage.Modified = false;
+                    RtbMain.Modified = false;
                 }
             }
             catch (Exception ex)
@@ -765,23 +764,23 @@ namespace Notepad_Light
                         Cursor = Cursors.WaitCursor;
                         if (sfdSaveAs.FilterIndex == 1)
                         {
-                            RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
+                            RtbMain.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.PlainText);
                             gCurrentFileType = CurrentFileType.Text;
                         }
                         else if (sfdSaveAs.FilterIndex == 2)
                         {
-                            RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.UnicodePlainText);
+                            RtbMain.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.UnicodePlainText);
                             gCurrentFileType = CurrentFileType.Text;
                         }
                         else
                         {
-                            RtbPage.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
+                            RtbMain.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.RichText);
                             gCurrentFileType = CurrentFileType.RTF;
                         }
 
                         UpdateOpenFilePath(sfdSaveAs.FileName);
                         AddFileToMRU(sfdSaveAs.FileName);
-                        RtbPage.Modified = false;
+                        RtbMain.Modified = false;
                     }
                 }
             }
@@ -803,7 +802,7 @@ namespace Notepad_Light
         /// </summary>
         public void SaveChanges()
         {
-            if (RtbPage.Modified)
+            if (RtbMain.Modified)
             {
                 DialogResult result = MessageBox.Show(Strings.saveChangePrompt, Strings.saveChangesTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
@@ -836,7 +835,7 @@ namespace Notepad_Light
                 RemoveFileFromMRU(filePath);
             }
 
-            gPrevPageLength = RtbPage.TextLength;
+            gPrevPageLength = RtbMain.TextLength;
         }
 
         public void Print()
@@ -844,7 +843,7 @@ namespace Notepad_Light
             printDialog1.Document = printDocument1;
             if (printDialog1.ShowDialog() == DialogResult.OK)
             {
-                gPrintString = RtbPage.Text;
+                gPrintString = RtbMain.Text;
                 printDocument1.Print();
             }
         }
@@ -852,7 +851,7 @@ namespace Notepad_Light
         public void PrintPreview()
         {
             printPreviewDialog1.Document = printDocument1;
-            gPrintString = RtbPage.Text;
+            gPrintString = RtbMain.Text;
             printPreviewDialog1.ShowDialog();
         }
 
@@ -911,21 +910,21 @@ namespace Notepad_Light
 
         public void Cut()
         {
-            RtbPage.Cut();
-            RtbPage.Modified = true;
+            RtbMain.Cut();
+            RtbMain.Modified = true;
         }
 
         public void Copy()
         {
             // if the cursor is in either toolbar textbox, use that text in the clipboard
-            // otherwise, use the rtbpage
+            // otherwise, use the RtbMain
             // currently this only copies the entire textbox text even if part of the text is selected
             // TODO: revisit if there is a need to copy partial selection in a textbox
             try
             {
                 if (TimerDescriptionTextbox.Focused)
                 {
-                    if (TimerDescriptionTextbox.SelectionLength == 0) 
+                    if (TimerDescriptionTextbox.SelectionLength == 0)
                     {
                         return;
                     }
@@ -943,18 +942,18 @@ namespace Notepad_Light
                 }
                 else
                 {
-                    if (RtbPage.SelectionLength == 0)
+                    if (RtbMain.SelectionLength == 0)
                     {
                         return;
                     }
 
-                    RtbPage.Copy();
+                    RtbMain.Copy();
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 App.WriteErrorLogContent(ex.Message, Strings.errorLogFile);
-                RtbPage.Copy();
+                RtbMain.Copy();
             }
         }
 
@@ -984,20 +983,20 @@ namespace Notepad_Light
             }
 
             // now handle paste into the richtextbox
-            RtbPage.Modified = true;
+            RtbMain.Modified = true;
 
             if (Properties.Settings.Default.UsePasteUI == false)
             {
                 // when the clipboard has text and the user doesn't want to use the UI, use that by default
                 // otherwise use whatever Paste() selects by default
                 DataFormats.Format df = DataFormats.GetFormat(DataFormats.UnicodeText);
-                if (RtbPage.CanPaste(df))
+                if (RtbMain.CanPaste(df))
                 {
-                    RtbPage.Paste(df);
+                    RtbMain.Paste(df);
                 }
                 else
                 {
-                    RtbPage.Paste();
+                    RtbMain.Paste();
                 }
             }
             else
@@ -1012,14 +1011,14 @@ namespace Notepad_Light
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
                 {
-                    case Strings.pasteCsv: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.CommaSeparatedValue); break;
-                    case Strings.plainText: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
-                    case Strings.pasteHtml: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
+                    case Strings.pasteCsv: RtbMain.SelectedText = Clipboard.GetText(TextDataFormat.CommaSeparatedValue); break;
+                    case Strings.plainText: RtbMain.SelectedText = Clipboard.GetText(TextDataFormat.Text); break;
+                    case Strings.pasteHtml: RtbMain.SelectedText = Clipboard.GetText(TextDataFormat.Html); break;
                     case Strings.rtf:
                         if (Properties.Settings.Default.PasteRtfUnformatted)
                         {
                             // paste as unformatted rtf
-                            RtbPage.SelectedText = Clipboard.GetData(DataFormats.Rtf)?.ToString();
+                            RtbMain.SelectedText = Clipboard.GetData(DataFormats.Rtf)?.ToString();
                         }
                         else
                         {
@@ -1029,13 +1028,13 @@ namespace Notepad_Light
                             RichTextBox tempRtb = new RichTextBox();
                             tempRtb.LoadFile(rtfStream, RichTextBoxStreamType.RichText);
                             tempRtb.Copy();
-                            RtbPage.Paste();
+                            RtbMain.Paste();
                         }
                         break;
-                    case Strings.pasteUnicode: RtbPage.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
-                    case Strings.pasteImage: RtbPage.Paste(); break;
+                    case Strings.pasteUnicode: RtbMain.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
+                    case Strings.pasteImage: RtbMain.Paste(); break;
                     default:
-                        RtbPage.Paste();
+                        RtbMain.Paste();
                         break;
                 }
             }
@@ -1043,14 +1042,14 @@ namespace Notepad_Light
 
         public void Undo()
         {
-            RtbPage.Undo();
-            RtbPage.Modified = true;
+            RtbMain.Undo();
+            RtbMain.Modified = true;
         }
 
         public void Redo()
         {
-            RtbPage.Redo();
-            RtbPage.Modified = true;
+            RtbMain.Redo();
+            RtbMain.Modified = true;
         }
 
         /// <summary>
@@ -1061,7 +1060,7 @@ namespace Notepad_Light
         {
             Properties.Settings.Default.Save();
             SaveChanges();
-            RtbPage.Modified = false;
+            RtbMain.Modified = false;
 
             // check if the timers need to be cleared out
             if (Properties.Settings.Default.ClearTimersOnExit == true)
@@ -1230,14 +1229,14 @@ namespace Notepad_Light
             try
             {
                 // if multiple selections exist like Ctrl+A, disable all buttons
-                if (RtbPage.SelectionFont is null)
+                if (RtbMain.SelectionFont is null)
                 {
                     ClearToolbarFormattingIcons();
                     return;
                 }
 
                 // bold
-                if (RtbPage.SelectionFont.Bold == true)
+                if (RtbMain.SelectionFont.Bold == true)
                 {
                     BoldToolStripButton.Checked = true;
                 }
@@ -1247,7 +1246,7 @@ namespace Notepad_Light
                 }
 
                 // italic
-                if (RtbPage.SelectionFont.Italic == true)
+                if (RtbMain.SelectionFont.Italic == true)
                 {
                     ItalicToolStripButton.Checked = true;
                 }
@@ -1257,7 +1256,7 @@ namespace Notepad_Light
                 }
 
                 // underline
-                if (RtbPage.SelectionFont.Underline == true)
+                if (RtbMain.SelectionFont.Underline == true)
                 {
                     UnderlineToolStripButton.Checked = true;
                 }
@@ -1267,7 +1266,7 @@ namespace Notepad_Light
                 }
 
                 // strikethrough
-                if (RtbPage.SelectionFont.Strikeout == true)
+                if (RtbMain.SelectionFont.Strikeout == true)
                 {
                     StrikethroughToolStripButton.Checked = true;
                 }
@@ -1277,7 +1276,7 @@ namespace Notepad_Light
                 }
 
                 // bullets
-                if (RtbPage.SelectionBullet == true)
+                if (RtbMain.SelectionBullet == true)
                 {
                     BulletToolStripButton.Checked = true;
                 }
@@ -1287,19 +1286,19 @@ namespace Notepad_Light
                 }
 
                 // alignment
-                if (RtbPage.SelectionAlignment == HorizontalAlignment.Left)
+                if (RtbMain.SelectionAlignment == HorizontalAlignment.Left)
                 {
                     LeftJustifiedToolStripButton.Checked = true;
                     CenterJustifiedToolStripButton.Checked = false;
                     RightJustifiedToolStripButton.Checked = false;
                 }
-                else if (RtbPage.SelectionAlignment == HorizontalAlignment.Center)
+                else if (RtbMain.SelectionAlignment == HorizontalAlignment.Center)
                 {
                     CenterJustifiedToolStripButton.Checked = true;
                     LeftJustifiedToolStripButton.Checked = false;
                     RightJustifiedToolStripButton.Checked = false;
                 }
-                else if (RtbPage.SelectionAlignment == HorizontalAlignment.Right)
+                else if (RtbMain.SelectionAlignment == HorizontalAlignment.Right)
                 {
                     RightJustifiedToolStripButton.Checked = true;
                     CenterJustifiedToolStripButton.Checked = false;
@@ -1307,7 +1306,7 @@ namespace Notepad_Light
                 }
 
                 // save icon
-                if (RtbPage.Modified)
+                if (RtbMain.Modified)
                 {
                     SaveToolStripButton.Enabled = true;
                     SaveToolStripMenuItem.Enabled = true;
@@ -1331,7 +1330,7 @@ namespace Notepad_Light
         {
             int totalWordCount = 0;
             int lineCount;
-            foreach (string line in RtbPage.Lines)
+            foreach (string line in RtbMain.Lines)
             {
                 char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', '=', '|',
                     '&', '@', '#', '*', '%', '~', '(', ')', '/', '+', '[', ']', '{', '}', '<', '>', '$', '^' };
@@ -1341,8 +1340,8 @@ namespace Notepad_Light
 
             // update the statusbar
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
-            CharacterCountToolStripStatusLabel.Text = RtbPage.TextLength.ToString();
-            LinesToolStripStatusLabel.Text = RtbPage.Lines.Length.ToString();
+            CharacterCountToolStripStatusLabel.Text = RtbMain.TextLength.ToString();
+            LinesToolStripStatusLabel.Text = RtbMain.Lines.Length.ToString();
         }
 
         /// <summary>
@@ -1350,12 +1349,12 @@ namespace Notepad_Light
         /// </summary>
         public void ClearFormatting()
         {
-            RtbPage.SelectionBullet = false;
-            RtbPage.SelectionFont = new Font("Segoe UI", 10);
-            RtbPage.SelectionColor = Color.Black;
-            RtbPage.SelectionIndent = 0;
-            RtbPage.SelectionAlignment = HorizontalAlignment.Left;
-            RtbPage.Modified = true;
+            RtbMain.SelectionBullet = false;
+            RtbMain.SelectionFont = new Font("Segoe UI", 10);
+            RtbMain.SelectionColor = Color.Black;
+            RtbMain.SelectionIndent = 0;
+            RtbMain.SelectionAlignment = HorizontalAlignment.Left;
+            RtbMain.Modified = true;
         }
 
         /// <summary>
@@ -1420,21 +1419,21 @@ namespace Notepad_Light
         /// </summary>
         public void EndOfButtonFormatWork()
         {
-            RtbPage.Focus();
+            RtbMain.Focus();
             UpdateToolbarIcons();
-            RtbPage.Modified = true;
+            RtbMain.Modified = true;
         }
 
         public void ApplyBold()
         {
-            if (RtbPage.SelectionFont == null) { return; }
-            if (RtbPage.SelectionFont.Bold == true)
+            if (RtbMain.SelectionFont == null) { return; }
+            if (RtbMain.SelectionFont.Bold == true)
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Bold);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style & ~FontStyle.Bold);
             }
             else
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Bold);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style | FontStyle.Bold);
             }
 
             EndOfButtonFormatWork();
@@ -1442,14 +1441,14 @@ namespace Notepad_Light
 
         public void ApplyItalic()
         {
-            if (RtbPage.SelectionFont == null) { return; }
-            if (RtbPage.SelectionFont.Italic == true)
+            if (RtbMain.SelectionFont == null) { return; }
+            if (RtbMain.SelectionFont.Italic == true)
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Italic);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style & ~FontStyle.Italic);
             }
             else
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Italic);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style | FontStyle.Italic);
             }
 
             EndOfButtonFormatWork();
@@ -1457,14 +1456,14 @@ namespace Notepad_Light
 
         public void ApplyUnderline()
         {
-            if (RtbPage.SelectionFont == null) { return; }
-            if (RtbPage.SelectionFont.Underline == true)
+            if (RtbMain.SelectionFont == null) { return; }
+            if (RtbMain.SelectionFont.Underline == true)
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Underline);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style & ~FontStyle.Underline);
             }
             else
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Underline);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style | FontStyle.Underline);
             }
 
             EndOfButtonFormatWork();
@@ -1472,14 +1471,14 @@ namespace Notepad_Light
 
         public void ApplyStrikethrough()
         {
-            if (RtbPage.SelectionFont == null) { return; }
-            if (RtbPage.SelectionFont.Strikeout == true)
+            if (RtbMain.SelectionFont == null) { return; }
+            if (RtbMain.SelectionFont.Strikeout == true)
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style & ~FontStyle.Strikeout);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style & ~FontStyle.Strikeout);
             }
             else
             {
-                RtbPage.SelectionFont = new Font(RtbPage.SelectionFont, RtbPage.SelectionFont.Style | FontStyle.Strikeout);
+                RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style | FontStyle.Strikeout);
             }
 
             EndOfButtonFormatWork();
@@ -1492,8 +1491,8 @@ namespace Notepad_Light
         /// <param name="length"></param>
         public void MoveCursorToLocation(int startLocation, int length)
         {
-            RtbPage.SelectionStart = startLocation;
-            RtbPage.SelectionLength = length;
+            RtbMain.SelectionStart = startLocation;
+            RtbMain.SelectionLength = length;
         }
 
         /// <summary>
@@ -1561,9 +1560,9 @@ namespace Notepad_Light
         {
             try
             {
-                if (RtbPage.SelectionFont != null)
+                if (RtbMain.SelectionFont != null)
                 {
-                    fontToolStripStatusLabel.Text = "Font: " + RtbPage.SelectionFont.Name + " Size: " + RtbPage.SelectionFont.Size + " pt";
+                    fontToolStripStatusLabel.Text = "Font: " + RtbMain.SelectionFont.Name + " Size: " + RtbMain.SelectionFont.Size + " pt";
                 }
             }
             catch (Exception ex)
@@ -1577,8 +1576,8 @@ namespace Notepad_Light
         /// </summary>
         public void UpdateLnColValues()
         {
-            int line = RtbPage.GetLineFromCharIndex(RtbPage.SelectionStart);
-            int column = RtbPage.SelectionStart - RtbPage.GetFirstCharIndexFromLine(line);
+            int line = RtbMain.GetLineFromCharIndex(RtbMain.SelectionStart);
+            int column = RtbMain.SelectionStart - RtbMain.GetFirstCharIndexFromLine(line);
 
             line++;
             column++;
@@ -1589,7 +1588,7 @@ namespace Notepad_Light
 
         public void InsertDateTime()
         {
-            RtbPage.SelectedText = DateTime.Now.ToString() + "\r\n";
+            RtbMain.SelectedText = DateTime.Now.ToString() + "\r\n";
         }
 
         /// <summary>
@@ -1609,7 +1608,7 @@ namespace Notepad_Light
         /// <param name="zoomPercentage"></param>
         public void ApplyZoom(float zoomPercentage)
         {
-            RtbPage.ZoomFactor = zoomPercentage;
+            RtbMain.ZoomFactor = zoomPercentage;
 
             // reset the check marks
             ZoomToolStripMenuItem100.Checked = false;
@@ -1626,6 +1625,18 @@ namespace Notepad_Light
                 case 2.0f: ZoomToolStripMenuItem200.Checked = true; break;
                 case 2.5f: ZoomToolStripMenuItem250.Checked = true; break;
                 case 3.0f: ZoomToolStripMenuItem300.Checked = true; break;
+            }
+        }
+
+        public void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
+        {
+            ctrl.BackColor = clrBack;
+            ctrl.ForeColor = clrFore;
+
+            foreach (Control c in ctrl.Controls)
+            {
+                c.BackColor = clrBack;
+                c.ForeColor = clrFore;
             }
         }
 
@@ -1648,20 +1659,18 @@ namespace Notepad_Light
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Dark);
 #pragma warning restore WFO5001
+
+                ApplyUIColors(MainStatusStrip, clrDarkModeBackColor, Color.White);
+
+                // workaround for controls not repainting right away
+                this.Refresh();
+                Application.DoEvents();
             }
             else
             {
-                menuStrip1.BackColor = clrDarkModeBackground;
-                toolStrip1.BackColor = clrDarkModeBackground;
-                statusStrip1.BackColor = clrDarkModeBackground;
-            
-                RtbPage.BackColor = clrDarkModeTextBackground;
-                //ApplyDefaultTextColor();
-
-                ChangeControlTextColor(Color.White);
-                ChangeMenuTextForeColor(Color.White);
-                ChangeMenuTextBackColor(clrDarkModeBackground);
-                ChangeSubMenuItemBackColor(clrDarkModeBackground);
+                ApplyUIColors(MainMenuStrip, clrDarkModeBackColor, Color.White);
+                ApplyUIColors(ButtonToolStrip, clrDarkModeBackColor, Color.White);
+                ApplyUIColors(MainStatusStrip, clrDarkModeBackColor, Color.White);
             }
         }
 
@@ -1675,236 +1684,18 @@ namespace Notepad_Light
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Classic);
 #pragma warning restore WFO5001
+
+                ApplyUIColors(MainStatusStrip, SystemColors.Control, SystemColors.ControlText);
+
+                this.Refresh();
+                Application.DoEvents();
             }
             else
             {
-
-                menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-                toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-                statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            
-                RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
-                //ApplyDefaultTextColor();
-
-                ChangeControlTextColor(Color.Black);
-                ChangeMenuTextForeColor(Color.Black);
-                ChangeMenuTextBackColor(Color.FromKnownColor(KnownColor.Control));
-                ChangeSubMenuItemBackColor(Color.White);
+                ApplyUIColors(MainMenuStrip, SystemColors.Control, SystemColors.ControlText);
+                ApplyUIColors(ButtonToolStrip, SystemColors.Control, SystemColors.ControlText);
+                ApplyUIColors(MainStatusStrip, SystemColors.Control, SystemColors.ControlText);
             }
-        }
-
-        /// <summary>
-        /// change text color of controls and menu items
-        /// this includes menu item text itself, not just the menu items
-        /// </summary>
-        /// <param name="clr"></param>
-        public void ChangeControlTextColor(Color clr)
-        {
-            // update toolstrip buttons
-            TimerToolStripLabel.ForeColor = clr;
-            TimerToolStripLabelOnly.ForeColor = clr;
-            StartStopTimerToolStripButton.ForeColor = clr;
-            FindToolStripButton.ForeColor = clr;
-            SearchToolStripLabel.ForeColor = clr;
-            ReplaceToolStripButton.ForeColor = clr;
-            TrackTimeToolStripButton.ForeColor = clr;
-            FindTextBox.ForeColor = clr;
-            TimerDescriptionTextbox.ForeColor = clr;
-
-            // update status bar labels
-            toolStripStatusLabelCol.ForeColor = clr;
-            toolStripStatusLabelColumn.ForeColor = clr;
-            toolStripStatusLabelLn.ForeColor = clr;
-            toolStripStatusLabelLine.ForeColor = clr;
-            toolStripStatusLabelFType.ForeColor = clr;
-            toolStripStatusLabelFileType.ForeColor = clr;
-            toolStripStatusLabelOpenFilePath.ForeColor = clr;
-            toolStripStatusLabelFilePath.ForeColor = clr;
-            EncodingToolStripStatusLabel.ForeColor = clr;
-            WordCountToolStripStatusLabel.ForeColor = clr;
-            LinesToolStripStatusLabel.ForeColor = clr;
-            CharacterCountToolStripStatusLabel.ForeColor = clr;
-            toolStripStatusLabelChar.ForeColor = clr;
-            toolStripStatusLabelWords.ForeColor = clr;
-            toolStripStatusLabelLines.ForeColor = clr;
-            toolStripStatusLabelFileEncoding.ForeColor = clr;
-            fontToolStripStatusLabel.ForeColor = clr;
-
-            // update File menu
-            NewToolStripMenuItem.ForeColor = clr;
-            OpenToolStripMenuItem.ForeColor = clr;
-            RecentToolStripMenuItem.ForeColor = clr;
-            RecentToolStripMenuItem1.ForeColor = clr;
-            RecentToolStripMenuItem2.ForeColor = clr;
-            RecentToolStripMenuItem3.ForeColor = clr;
-            RecentToolStripMenuItem4.ForeColor = clr;
-            RecentToolStripMenuItem5.ForeColor = clr;
-            RecentToolStripMenuItem6.ForeColor = clr;
-            RecentToolStripMenuItem7.ForeColor = clr;
-            RecentToolStripMenuItem8.ForeColor = clr;
-            RecentToolStripMenuItem9.ForeColor = clr;
-            PrintToolStripMenuItem.ForeColor = clr;
-            PrintPreviewToolStripMenuItem.ForeColor = clr;
-            PageSetupToolStripMenuItem.ForeColor = clr;
-            SaveAsToolStripMenuItem.ForeColor = clr;
-            SaveToolStripMenuItem.ForeColor = clr;
-            OptionsToolStripMenuItem.ForeColor = clr;
-            ExitToolStripMenuItem.ForeColor = clr;
-
-            // update Edit menu
-            UndoToolStripMenuItem.ForeColor = clr;
-            RedoToolStripMenuItem.ForeColor = clr;
-            CutToolStripMenuItem.ForeColor = clr;
-            CopyToolStripMenuItem.ForeColor = clr;
-            PasteToolStripMenuItem.ForeColor = clr;
-            SelectAllToolStripMenuItem.ForeColor = clr;
-            ClearAllTextToolStripMenuItem.ForeColor = clr;
-            FindToolStripMenuItem.ForeColor = clr;
-            ReplaceToolStripMenuItem.ForeColor = clr;
-
-            // update Insert menu
-            PictureToolStripMenuItem.ForeColor = clr;
-            TableToolStripMenuItem.ForeColor = clr;
-            dateTimeToolStripMenuItem.ForeColor = clr;
-
-            // update Formatting menu
-            EditFontToolStripMenuItem.ForeColor = clr;
-            ClearFormattingToolStripMenuItem.ForeColor = clr;
-            decreaseIndentToolStripMenuItem.ForeColor = clr;
-
-            // update Templates menu
-            Template1ToolStripMenuItem.ForeColor = clr;
-            Template2ToolStripMenuItem.ForeColor = clr;
-            Template3ToolStripMenuItem.ForeColor = clr;
-            Template4ToolStripMenuItem.ForeColor = clr;
-            Template5ToolStripMenuItem.ForeColor = clr;
-            ManageTemplatesToolStripMenuItem.ForeColor = clr;
-
-            // update Timer menu
-            StartTimerToolStripMenuItem.ForeColor = clr;
-            EditTimerToolStripMenuItem.ForeColor = clr;
-            ResetTimerToolStripMenuItem.ForeColor = clr;
-            ViewTimersToolStripMenuItem.ForeColor = clr;
-            ClearTimersToolStripMenuItem.ForeColor = clr;
-
-            // update View menu
-            WordWrapToolStripMenuItem.ForeColor = clr;
-            ZoomToolStripMenuItem.ForeColor = clr;
-            ZoomToolStripMenuItem100.ForeColor = clr;
-            ZoomToolStripMenuItem150.ForeColor = clr;
-            ZoomToolStripMenuItem200.ForeColor = clr;
-            ZoomToolStripMenuItem250.ForeColor = clr;
-            ZoomToolStripMenuItem300.ForeColor = clr;
-            TaskPaneToolStripMenuItem.ForeColor = clr;
-
-            // update Help menu
-            AboutToolStripMenuItem.ForeColor = clr;
-            ReportBugToolStripMenuItem.ForeColor = clr;
-        }
-
-        public void ChangeMenuTextBackColor(Color clr)
-        {
-            FileToolStripMenuItem.BackColor = clr;
-            EditToolStripMenuItem.BackColor = clr;
-            InsertToolStripMenuItem.BackColor = clr;
-            FormatToolStripMenuItem.BackColor = clr;
-            timerToolStripMenuItem.BackColor = clr;
-            ViewToolStripMenuItem.BackColor = clr;
-            HelpToolStripMenuItem.BackColor = clr;
-        }
-
-        public void ChangeMenuTextForeColor(Color clr)
-        {
-            FileToolStripMenuItem.ForeColor = clr;
-            EditToolStripMenuItem.ForeColor = clr;
-            InsertToolStripMenuItem.ForeColor = clr;
-            FormatToolStripMenuItem.ForeColor = clr;
-            timerToolStripMenuItem.ForeColor = clr;
-            ViewToolStripMenuItem.ForeColor = clr;
-            HelpToolStripMenuItem.ForeColor = clr;
-            TemplatesToolStripMenuItem.ForeColor = clr;
-        }
-
-        /// <summary>
-        /// change the background color of the sub menu items
-        /// </summary>
-        /// <param name="clr"></param>
-        public void ChangeSubMenuItemBackColor(Color clr)
-        {
-            // update File menu
-            NewToolStripMenuItem.BackColor = clr;
-            OpenToolStripMenuItem.BackColor = clr;
-            RecentToolStripMenuItem.BackColor = clr;
-            RecentToolStripMenuItem1.BackColor = clr;
-            RecentToolStripMenuItem2.BackColor = clr;
-            RecentToolStripMenuItem3.BackColor = clr;
-            RecentToolStripMenuItem4.BackColor = clr;
-            RecentToolStripMenuItem5.BackColor = clr;
-            RecentToolStripMenuItem6.BackColor = clr;
-            RecentToolStripMenuItem7.BackColor = clr;
-            RecentToolStripMenuItem8.BackColor = clr;
-            RecentToolStripMenuItem9.BackColor = clr;
-            PrintToolStripMenuItem.BackColor = clr;
-            PrintPreviewToolStripMenuItem.BackColor = clr;
-            PageSetupToolStripMenuItem.BackColor = clr;
-            SaveAsToolStripMenuItem.BackColor = clr;
-            SaveToolStripMenuItem.BackColor = clr;
-            OptionsToolStripMenuItem.BackColor = clr;
-            ExitToolStripMenuItem.BackColor = clr;
-
-            // update Edit menu
-            UndoToolStripMenuItem.BackColor = clr;
-            RedoToolStripMenuItem.BackColor = clr;
-            CutToolStripMenuItem.BackColor = clr;
-            CopyToolStripMenuItem.BackColor = clr;
-            PasteToolStripMenuItem.BackColor = clr;
-            SelectAllToolStripMenuItem.BackColor = clr;
-            ClearAllTextToolStripMenuItem.BackColor = clr;
-            FindToolStripMenuItem.BackColor = clr;
-            ReplaceToolStripMenuItem.BackColor = clr;
-
-            // update Insert menu
-            PictureToolStripMenuItem.BackColor = clr;
-            TableToolStripMenuItem.BackColor = clr;
-            dateTimeToolStripMenuItem.BackColor = clr;
-
-            // update Formatting menu
-            EditFontToolStripMenuItem.BackColor = clr;
-            ClearFormattingToolStripMenuItem.BackColor = clr;
-            decreaseIndentToolStripMenuItem.BackColor = clr;
-
-            // update Templates menu
-            Template1ToolStripMenuItem.BackColor = clr;
-            Template2ToolStripMenuItem.BackColor = clr;
-            Template3ToolStripMenuItem.BackColor = clr;
-            Template4ToolStripMenuItem.BackColor = clr;
-            Template5ToolStripMenuItem.BackColor = clr;
-            ManageTemplatesToolStripMenuItem.BackColor = clr;
-
-            // update View menu
-            WordWrapToolStripMenuItem.BackColor = clr;
-            ZoomToolStripMenuItem.BackColor = clr;
-            ZoomToolStripMenuItem100.BackColor = clr;
-            ZoomToolStripMenuItem150.BackColor = clr;
-            ZoomToolStripMenuItem200.BackColor = clr;
-            ZoomToolStripMenuItem250.BackColor = clr;
-            ZoomToolStripMenuItem300.BackColor = clr;
-            TaskPaneToolStripMenuItem.BackColor = clr;
-
-            // update Timer menu
-            StartTimerToolStripMenuItem.BackColor = clr;
-            EditTimerToolStripMenuItem.BackColor = clr;
-            ResetTimerToolStripMenuItem.BackColor = clr;
-            ViewTimersToolStripMenuItem.BackColor = clr;
-            ClearTimersToolStripMenuItem.BackColor = clr;
-
-            // update textboxes
-            FindTextBox.BackColor = clr;
-            TimerDescriptionTextbox.BackColor = clr;
-            
-            // update Help menu
-            AboutToolStripMenuItem.BackColor = clr;
-            ReportBugToolStripMenuItem.BackColor = clr;
         }
 
         /// <summary>
@@ -1954,9 +1745,9 @@ namespace Notepad_Light
         /// </summary>
         private async void WebView2Navigate()
         {
-            await webView2Md.EnsureCoreWebView2Async();
-            string searchUrl = "https://www.bing.com/search?q=" + RtbPage.SelectedText;
-            webView2Md.Source = new Uri(searchUrl);
+            await webViewMarkup.EnsureCoreWebView2Async();
+            string searchUrl = "https://www.bing.com/search?q=" + RtbMain.SelectedText;
+            webViewMarkup.Source = new Uri(searchUrl);
         }
 
         /// <summary>
@@ -1964,7 +1755,7 @@ namespace Notepad_Light
         /// </summary>
         public void ReplaceText()
         {
-            if (RtbPage.SelectedText == string.Empty)
+            if (RtbMain.SelectedText == string.Empty)
             {
                 return;
             }
@@ -1982,7 +1773,7 @@ namespace Notepad_Light
             }
 
             // single replace
-            RtbPage.SelectedText = RtbPage.SelectedText.Replace(RtbPage.SelectedText, fReplace.replaceText);
+            RtbMain.SelectedText = RtbMain.SelectedText.Replace(RtbMain.SelectedText, fReplace.replaceText);
         }
 
         /// <summary>
@@ -1997,7 +1788,7 @@ namespace Notepad_Light
             else
             {
                 // if the cursor is at the end of the textbox, change start position to 0
-                if (RtbPage.SelectionStart == RtbPage.TextLength)
+                if (RtbMain.SelectionStart == RtbMain.TextLength)
                 {
                     MoveCursorToLocation(0, 0);
                 }
@@ -2008,26 +1799,26 @@ namespace Notepad_Light
                     if (Properties.Settings.Default.SearchOption == Strings.findUp)
                     {
                         // search up the file and find any word match
-                        indexToText = RtbPage.Find(FindTextBox.Text, RtbPage.TextLength, RichTextBoxFinds.Reverse);
-                        gPrevSearchIndex = RtbPage.SelectionStart;
+                        indexToText = RtbMain.Find(FindTextBox.Text, RtbMain.TextLength, RichTextBoxFinds.Reverse);
+                        gPrevSearchIndex = RtbMain.SelectionStart;
                     }
                     else if (Properties.Settings.Default.SearchOption == Strings.findDown)
                     {
                         // search from the top down and find any word match
-                        indexToText = RtbPage.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.None);
-                        gPrevSearchIndex = RtbPage.SelectionStart + FindTextBox.TextLength;
+                        indexToText = RtbMain.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.None);
+                        gPrevSearchIndex = RtbMain.SelectionStart + FindTextBox.TextLength;
                     }
                     else if (Properties.Settings.Default.SearchOption == Strings.findMatchCase)
                     {
                         // only find words that match the case exactly
-                        indexToText = RtbPage.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.MatchCase);
-                        gPrevSearchIndex = RtbPage.SelectionStart + FindTextBox.TextLength;
+                        indexToText = RtbMain.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.MatchCase);
+                        gPrevSearchIndex = RtbMain.SelectionStart + FindTextBox.TextLength;
                     }
                     else
                     {
                         // only find words that have the entire word in the search textbox
-                        indexToText = RtbPage.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.WholeWord);
-                        gPrevSearchIndex = RtbPage.SelectionStart + FindTextBox.TextLength;
+                        indexToText = RtbMain.Find(FindTextBox.Text, gPrevSearchIndex, RichTextBoxFinds.WholeWord);
+                        gPrevSearchIndex = RtbMain.SelectionStart + FindTextBox.TextLength;
                     }
 
                     // move to the location of the find result
@@ -2048,8 +1839,8 @@ namespace Notepad_Light
                     // ignore the exception and write out the selection details
                     App.WriteErrorLogContent("FindText Error: " + ex.Message, gErrorLog);
                     App.WriteErrorLogContent("  Stack: " + ex.StackTrace, gErrorLog);
-                    App.WriteErrorLogContent("  SelectionStart: " + RtbPage.SelectionStart, gErrorLog);
-                    App.WriteErrorLogContent("  Text Lengh:" + RtbPage.Text.Length, gErrorLog);
+                    App.WriteErrorLogContent("  SelectionStart: " + RtbMain.SelectionStart, gErrorLog);
+                    App.WriteErrorLogContent("  Text Lengh:" + RtbMain.Text.Length, gErrorLog);
                 }
             }
         }
@@ -2063,11 +1854,11 @@ namespace Notepad_Light
 
             switch (templateNumber)
             {
-                case 1: RtbPage.SelectedText = Templates.GetTemplate1().ToString(); break;
-                case 2: RtbPage.SelectedText = Templates.GetTemplate2().ToString(); break;
-                case 3: RtbPage.SelectedText = Templates.GetTemplate3().ToString(); break;
-                case 4: RtbPage.SelectedText = Templates.GetTemplate4().ToString(); break;
-                case 5: RtbPage.SelectedText = Templates.GetTemplate5().ToString(); break;
+                case 1: RtbMain.SelectedText = Templates.GetTemplate1().ToString(); break;
+                case 2: RtbMain.SelectedText = Templates.GetTemplate2().ToString(); break;
+                case 3: RtbMain.SelectedText = Templates.GetTemplate3().ToString(); break;
+                case 4: RtbMain.SelectedText = Templates.GetTemplate4().ToString(); break;
+                case 5: RtbMain.SelectedText = Templates.GetTemplate5().ToString(); break;
             }
         }
 
@@ -2089,13 +1880,13 @@ namespace Notepad_Light
             try
             {
                 // if the doc is not modified, nothing to do
-                RtbPage.Invoke((MethodInvoker)delegate { if (RtbPage.Modified == false) { return; }});
+                RtbMain.Invoke((MethodInvoker)delegate { if (RtbMain.Modified == false) { return; } });
 
                 // save the existing changes to the file
                 if (gCurrentFileName != Strings.defaultFileName)
                 {
                     // need to avoid cross thread operation
-                    RtbPage.Invoke((MethodInvoker)delegate { FileSave(); });
+                    RtbMain.Invoke((MethodInvoker)delegate { FileSave(); });
                 }
             }
             catch (Exception ex)
@@ -2110,9 +1901,9 @@ namespace Notepad_Light
         /// </summary>
         public void CollapsePanel2()
         {
-            if (splitContainer1.Panel2Collapsed == false)
+            if (splitContainerMain.Panel2Collapsed == false)
             {
-                splitContainer1.Panel2Collapsed = true;
+                splitContainerMain.Panel2Collapsed = true;
                 TaskPaneToolStripMenuItem.Checked = false;
             }
         }
@@ -2125,9 +1916,9 @@ namespace Notepad_Light
             try
             {
                 // initialize the webview
-                await webView2Md.EnsureCoreWebView2Async();
+                await webViewMarkup.EnsureCoreWebView2Async();
                 string? html = Markdown.ToHtml(string.Empty);
-                webView2Md.NavigateToString(html);
+                webViewMarkup.NavigateToString(html);
             }
             catch (Exception ex)
             {
@@ -2143,12 +1934,12 @@ namespace Notepad_Light
         private async void LoadMarkdownInWebView2()
         {
             // initialize the webview
-            await webView2Md.EnsureCoreWebView2Async();
+            await webViewMarkup.EnsureCoreWebView2Async();
 
             // render the html content of the markdown text
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            string? html = Markdown.ToHtml(RtbPage.Text, pipeline);
-            webView2Md.NavigateToString(html);
+            string? html = Markdown.ToHtml(RtbMain.Text, pipeline);
+            webViewMarkup.NavigateToString(html);
         }
 
         /// <summary>
@@ -2307,13 +2098,13 @@ namespace Notepad_Light
             ToolStripSeparator sep = (ToolStripSeparator)sender;
             if (Properties.Settings.Default.DarkMode)
             {
-                e.Graphics.FillRectangle(new SolidBrush(clrDarkModeBackground), 0, 0, sep.Width, sep.Height);
+                e.Graphics.FillRectangle(new SolidBrush(clrDarkModeBackColor), 0, 0, sep.Width, sep.Height);
                 e.Graphics.DrawLine(new Pen(Color.White), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
             }
             else
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.White), 0, 0, sep.Width, sep.Height);
-                e.Graphics.DrawLine(new Pen(clrDarkModeBackground), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
+                e.Graphics.DrawLine(new Pen(clrDarkModeBackColor), 30, sep.Height / 2, sep.Width - 4, sep.Height / 2);
             }
         }
 
@@ -2322,7 +2113,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RtbPage_SelectionChanged(object sender, EventArgs e)
+        private void RtbMain_SelectionChanged(object sender, EventArgs e)
         {
             UpdateLnColValues();
             UpdateToolbarIcons();
@@ -2376,7 +2167,7 @@ namespace Notepad_Light
 
         private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RtbPage.SelectAll();
+            RtbMain.SelectAll();
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2443,16 +2234,16 @@ namespace Notepad_Light
             }
 
             // populate the font dialog with the current font
-            if (RtbPage.SelectionFont != null)
+            if (RtbMain.SelectionFont != null)
             {
-                fontDialog1.Font = new Font(RtbPage.SelectionFont.FontFamily, RtbPage.SelectionFont.Size, RtbPage.SelectionFont.Style);
+                fontDialog1.Font = new Font(RtbMain.SelectionFont.FontFamily, RtbMain.SelectionFont.Size, RtbMain.SelectionFont.Style);
             }
             else
             {
-                fontDialog1.Font = new Font(RtbPage.Font.FontFamily, RtbPage.Font.Size, RtbPage.Font.Style);
+                fontDialog1.Font = new Font(RtbMain.Font.FontFamily, RtbMain.Font.Size, RtbMain.Font.Style);
             }
 
-            fontDialog1.Color = RtbPage.SelectionColor;
+            fontDialog1.Color = RtbMain.SelectionColor;
 
             // if the user selects a font, apply it to the entire document for plain text
             // apply to just the selection for rtf
@@ -2460,12 +2251,12 @@ namespace Notepad_Light
             {
                 if (gCurrentFileType == CurrentFileType.RTF)
                 {
-                    RtbPage.SelectionFont = fontDialog1.Font;
-                    RtbPage.SelectionColor = fontDialog1.Color;
+                    RtbMain.SelectionFont = fontDialog1.Font;
+                    RtbMain.SelectionColor = fontDialog1.Color;
                 }
                 else
                 {
-                    RtbPage.SelectionFont = fontDialog1.Font;
+                    RtbMain.SelectionFont = fontDialog1.Font;
                 }
             }
 
@@ -2481,7 +2272,7 @@ namespace Notepad_Light
 
         private void ClearAllTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RtbPage.ResetText();
+            RtbMain.ResetText();
             EndOfButtonFormatWork();
         }
 
@@ -2543,37 +2334,37 @@ namespace Notepad_Light
 
         private void WordWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (RtbPage.WordWrap == true)
+            if (RtbMain.WordWrap == true)
             {
-                RtbPage.WordWrap = false;
+                RtbMain.WordWrap = false;
                 WordWrapToolStripMenuItem.Checked = false;
             }
             else
             {
-                RtbPage.WordWrap = true;
+                RtbMain.WordWrap = true;
                 WordWrapToolStripMenuItem.Checked = true;
             }
         }
 
         private void BulletToolStripButton_Click(object sender, EventArgs e)
         {
-            if (RtbPage.SelectionBullet == true)
+            if (RtbMain.SelectionBullet == true)
             {
                 // this is the toggling off scenario, set bullet to false and move everything back to the beginning of the line
-                RtbPage.SelectionBullet = false;
-                RtbPage.SelectionIndent = 0;
+                RtbMain.SelectionBullet = false;
+                RtbMain.SelectionIndent = 0;
             }
-            else if (RtbPage.SelectionBullet == false && Properties.Settings.Default.BulletFirstIndent == true)
+            else if (RtbMain.SelectionBullet == false && Properties.Settings.Default.BulletFirstIndent == true)
             {
                 // this is a toggle on scenario to use an indented bullet
-                RtbPage.SelectionBullet = true;
-                RtbPage.SelectionIndent = 30;
+                RtbMain.SelectionBullet = true;
+                RtbMain.SelectionIndent = 30;
             }
             else
             {
                 // this is a toggle on sceanrio to add the bullet with no indent
-                RtbPage.SelectionBullet = true;
-                RtbPage.SelectionIndent = 0;
+                RtbMain.SelectionBullet = true;
+                RtbMain.SelectionIndent = 0;
             }
 
             // todo: find a way to account for existing indents and move the bullet accordingly
@@ -2583,31 +2374,31 @@ namespace Notepad_Light
 
         private void DecreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
-            if (RtbPage.SelectionIndent > 0)
+            if (RtbMain.SelectionIndent > 0)
             {
-                RtbPage.SelectionIndent -= 30;
+                RtbMain.SelectionIndent -= 30;
             }
             EndOfButtonFormatWork();
         }
 
         private void IncreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
-            if (RtbPage.SelectionIndent < 150)
+            if (RtbMain.SelectionIndent < 150)
             {
-                RtbPage.SelectionIndent += 30;
+                RtbMain.SelectionIndent += 30;
             }
             EndOfButtonFormatWork();
         }
 
-        private void RtbPage_KeyDown(object sender, KeyEventArgs e)
+        private void RtbMain_KeyDown(object sender, KeyEventArgs e)
         {
             // if the line has a bullet and the tab was pressed, indent the line
             // need to suppress the key to prevent the cursor from moving around
             // tab will cause selectionchange so the ui/stats update there
-            if (e.KeyCode == Keys.Tab && RtbPage.SelectionBullet == true)
+            if (e.KeyCode == Keys.Tab && RtbMain.SelectionBullet == true)
             {
                 e.SuppressKeyPress = true;
-                RtbPage.Select(RtbPage.GetFirstCharIndexOfCurrentLine(), 0);
+                RtbMain.Select(RtbMain.GetFirstCharIndexOfCurrentLine(), 0);
                 IncreaseIndentToolStripButton.PerformClick();
                 return;
             }
@@ -2615,7 +2406,7 @@ namespace Notepad_Light
             // if the user deletes the bullet, remove bullet formatting
             if (e.KeyCode == Keys.Back)
             {
-                if (RtbPage.SelectionStart == RtbPage.GetFirstCharIndexOfCurrentLine() && RtbPage.SelectionBullet == true)
+                if (RtbMain.SelectionStart == RtbMain.GetFirstCharIndexOfCurrentLine() && RtbMain.SelectionBullet == true)
                 {
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
@@ -2625,8 +2416,8 @@ namespace Notepad_Light
             // if delete key is pressed change the saved state and update ui/stats
             if (e.KeyCode == Keys.Delete)
             {
-                gPrevPageLength = RtbPage.TextLength;
-                RtbPage.Modified = true;
+                gPrevPageLength = RtbMain.TextLength;
+                RtbMain.Modified = true;
                 UpdateToolbarIcons();
                 UpdateDocStats();
             }
@@ -2699,7 +2490,7 @@ namespace Notepad_Light
 
         private void FindToolStripButton_Click(object sender, EventArgs e)
         {
-            if (RtbPage.Text.Length > 0)
+            if (RtbMain.Text.Length > 0)
             {
                 FindText();
             }
@@ -2763,7 +2554,7 @@ namespace Notepad_Light
                 // print rtf
                 if (gCurrentFileType == CurrentFileType.RTF)
                 {
-                    e.HasMorePages = Win32.Print(RtbPage, ref charFrom, e);
+                    e.HasMorePages = Win32.Print(RtbMain, ref charFrom, e);
                     return;
                 }
 
@@ -2771,7 +2562,7 @@ namespace Notepad_Light
                 int charactersOnPage = 0;
 
                 // Ensure font is not null to avoid CS8604
-                Font printFont = RtbPage.SelectionFont ?? RtbPage.Font ?? new Font("Segoe UI", 9);
+                Font printFont = RtbMain.SelectionFont ?? RtbMain.Font ?? new Font("Segoe UI", 9);
 
                 // Set charactersOnPage to the number of chars that will fit within the bounds of the page.
                 e.Graphics?.MeasureString(gPrintString, printFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
@@ -2799,34 +2590,34 @@ namespace Notepad_Light
 
         private void LeftJustifiedToolStripButton_Click(object sender, EventArgs e)
         {
-            RtbPage.SelectionAlignment = HorizontalAlignment.Left;
+            RtbMain.SelectionAlignment = HorizontalAlignment.Left;
             EndOfButtonFormatWork();
         }
 
         private void CenterJustifiedToolStripButton_Click(object sender, EventArgs e)
         {
-            RtbPage.SelectionAlignment = HorizontalAlignment.Center;
+            RtbMain.SelectionAlignment = HorizontalAlignment.Center;
             EndOfButtonFormatWork();
         }
 
         private void RightJustifiedToolStripButton_Click(object sender, EventArgs e)
         {
-            RtbPage.SelectionAlignment = HorizontalAlignment.Right;
+            RtbMain.SelectionAlignment = HorizontalAlignment.Right;
             EndOfButtonFormatWork();
         }
 
         private void FontColorToolStripButton_Click(object sender, EventArgs e)
         {
-            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != RtbPage.SelectionColor)
+            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != RtbMain.SelectionColor)
             {
-                RtbPage.SelectionColor = colorDialog1.Color;
-                RtbPage.Modified = true;
+                RtbMain.SelectionColor = colorDialog1.Color;
+                RtbMain.Modified = true;
             }
         }
 
         private void FindToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RtbPage.Focus();
+            RtbMain.Focus();
             FindText();
         }
 
@@ -2872,10 +2663,10 @@ namespace Notepad_Light
 
         private void HighlightTextToolStripButton_Click(object sender, EventArgs e)
         {
-            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != RtbPage.SelectionBackColor)
+            if (colorDialog1.ShowDialog() == DialogResult.OK && colorDialog1.Color != RtbMain.SelectionBackColor)
             {
-                RtbPage.SelectionBackColor = colorDialog1.Color;
-                RtbPage.Modified = true;
+                RtbMain.SelectionBackColor = colorDialog1.Color;
+                RtbMain.Modified = true;
             }
         }
 
@@ -2884,27 +2675,27 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RtbPage_TextChanged(object sender, EventArgs e)
+        private void RtbMain_TextChanged(object sender, EventArgs e)
         {
             // check if content was added
-            if (gPrevPageLength != RtbPage.TextLength)
+            if (gPrevPageLength != RtbMain.TextLength)
             {
-                RtbPage.Modified = true;
+                RtbMain.Modified = true;
             }
 
             // update the prevPageLength and UI
-            gPrevPageLength = RtbPage.TextLength;
+            gPrevPageLength = RtbMain.TextLength;
             UpdateDocStats();
             UpdateToolbarIcons();
 
             // for markdown files, update the panel
-            if (splitContainer1.Panel2Collapsed == false && gCurrentFileType == CurrentFileType.Markdown)
+            if (splitContainerMain.Panel2Collapsed == false && gCurrentFileType == CurrentFileType.Markdown)
             {
                 LoadMarkdownInWebView2();
             }
         }
 
-        private void RtbPage_LinkClicked(object sender, LinkClickedEventArgs e)
+        private void RtbMain_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             if (e.LinkText is not null)
             {
@@ -2935,7 +2726,7 @@ namespace Notepad_Light
                         // depending on the ui theme, apply the same color to the background
                         if (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency == true)
                         {
-                            img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeTextBackground);
+                            img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeForeColor);
                         }
                         else
                         {
@@ -2944,8 +2735,8 @@ namespace Notepad_Light
                     }
 
                     // convert the image to rtf so it can be displayed
-                    RtbPage.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
-                    RtbPage.Focus();
+                    RtbMain.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
+                    RtbMain.Focus();
                 }
             }
         }
@@ -2997,14 +2788,14 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RtbPage_MouseMove(object sender, MouseEventArgs e)
+        private void RtbMain_MouseMove(object sender, MouseEventArgs e)
         {
             // if the focus is in either toolbar textbox, don't change focus
             if (TimerDescriptionTextbox.Focused || FindTextBox.Focused)
             {
                 return;
             }
-            RtbPage.Focus();
+            RtbMain.Focus();
         }
 
         private void TableToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3019,7 +2810,7 @@ namespace Notepad_Light
             // otherwise, the value will be between 1 and 10, so call inserttable
             if (fTable.fRows > 0 && fTable.fCols > 0)
             {
-                RtbPage.SelectedRtf = Rtf.InsertTable(fTable.fRows, fTable.fCols, 2500);
+                RtbMain.SelectedRtf = Rtf.InsertTable(fTable.fRows, fTable.fCols, 2500);
             }
         }
 
@@ -3035,25 +2826,25 @@ namespace Notepad_Light
 
         private void SearchContextMenu_Click(object sender, EventArgs e)
         {
-            splitContainer1.Panel2Collapsed = false;
+            splitContainerMain.Panel2Collapsed = false;
             WebView2Navigate();
         }
 
         private void BtnClosePanel2_Click(object sender, EventArgs e)
         {
-            splitContainer1.Panel2Collapsed = true;
+            splitContainerMain.Panel2Collapsed = true;
             TaskPaneToolStripMenuItem.Checked = false;
         }
 
         private void TaskPaneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            splitContainerMain.Panel2Collapsed = !splitContainerMain.Panel2Collapsed;
             TaskPaneToolStripMenuItem.Checked = !TaskPaneToolStripMenuItem.Checked;
         }
 
         private void SelectAllContextMenu_Click(object sender, EventArgs e)
         {
-            RtbPage.SelectAll();
+            RtbMain.SelectAll();
         }
 
         private void ToolStripSeparator12_Paint(object sender, PaintEventArgs e)
@@ -3121,14 +2912,14 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RtbPage_VScroll(object sender, EventArgs e)
+        private void RtbMain_VScroll(object sender, EventArgs e)
         {
             // if the file is markdown, use synchronized scrolling
             if (gCurrentFileType == CurrentFileType.Markdown)
             {
-                POINT p = GetVScrollPos(RtbPage);
-                webView2Md.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
-                RtbPage.Refresh();
+                POINT p = GetVScrollPos(RtbMain);
+                webViewMarkup.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
+                RtbMain.Refresh();
             }
         }
 
@@ -3141,7 +2932,7 @@ namespace Notepad_Light
         {
             try
             {
-                if (RtbPage.SelectionType == RichTextBoxSelectionTypes.Object)
+                if (RtbMain.SelectionType == RichTextBoxSelectionTypes.Object)
                 {
                     // display save as dialog
                     SaveFileDialog dlgSave = new SaveFileDialog();
@@ -3158,7 +2949,7 @@ namespace Notepad_Light
                     if (dlgSave.ShowDialog(this) == DialogResult.OK)
                     {
                         // write out the picture stream to the new file location
-                        string imageDataHex = ExtractImgHex(RtbPage.SelectedRtf);
+                        string imageDataHex = ExtractImgHex(RtbMain.SelectedRtf);
                         byte[] imageBuffer = ToBinary(imageDataHex);
                         using (MemoryStream stream = new MemoryStream(imageBuffer))
                         {
@@ -3187,7 +2978,7 @@ namespace Notepad_Light
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (RtbPage.SelectionType == RichTextBoxSelectionTypes.Object)
+            if (RtbMain.SelectionType == RichTextBoxSelectionTypes.Object)
             {
                 SaveAsPictureContextMenu.Enabled = true;
             }
@@ -3197,25 +2988,25 @@ namespace Notepad_Light
             }
         }
 
-        private void RtbPage_MouseDown(object sender, MouseEventArgs e)
+        private void RtbMain_MouseDown(object sender, MouseEventArgs e)
         {
             // don't change cursor position for multi-selected text scenarios
-            if (RtbPage.SelectionLength > 0)
+            if (RtbMain.SelectionLength > 0)
             {
                 return;
             }
 
-            if (RtbPage.SelectionType != RichTextBoxSelectionTypes.Object && e.Button == MouseButtons.Right)
+            if (RtbMain.SelectionType != RichTextBoxSelectionTypes.Object && e.Button == MouseButtons.Right)
             {
-                MoveCursorToLocation(RtbPage.GetCharIndexFromPosition(e.Location), 0);
+                MoveCursorToLocation(RtbMain.GetCharIndexFromPosition(e.Location), 0);
             }
         }
 
         private void decreaseIndentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (RtbPage.SelectionIndent > 0)
+            if (RtbMain.SelectionIndent > 0)
             {
-                RtbPage.SelectionIndent -= 30;
+                RtbMain.SelectionIndent -= 30;
             }
             EndOfButtonFormatWork();
         }

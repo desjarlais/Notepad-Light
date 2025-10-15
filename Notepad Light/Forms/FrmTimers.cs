@@ -19,6 +19,19 @@ namespace Notepad_Light.Forms
             {
                 UpdateTimeDisplay();
             }
+
+            if (Properties.Settings.Default.DarkMode)
+            {
+                statusStrip1.BackColor = Color.Black;
+                toolStripStatusLabel1.ForeColor = Color.White;
+                toolStripStatusLabel2.ForeColor = Color.White;
+            }
+            else
+            {
+                statusStrip1.BackColor = Color.White;
+                toolStripStatusLabel1.ForeColor = Color.Black;
+                toolStripStatusLabel2.ForeColor = Color.Black;
+            }
         }
 
         public void UpdateTotalTime()

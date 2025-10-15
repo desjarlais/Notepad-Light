@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            statusStrip1 = new StatusStrip();
+            MainStatusStrip = new StatusStrip();
             toolStripStatusLabelLn = new ToolStripStatusLabel();
             toolStripStatusLabelLine = new ToolStripStatusLabel();
             toolStripStatusLabelCol = new ToolStripStatusLabel();
@@ -52,7 +52,6 @@
             EncodingToolStripStatusLabel = new ToolStripStatusLabel();
             toolStripStatusLabelFilePath = new ToolStripStatusLabel();
             toolStripStatusLabelOpenFilePath = new ToolStripStatusLabel();
-            RtbPage = new RichTextBox();
             contextMenuStrip1 = new ContextMenuStrip(components);
             CutContextMenu = new ToolStripMenuItem();
             CopyContextMenu = new ToolStripMenuItem();
@@ -61,7 +60,7 @@
             toolStripSeparator15 = new ToolStripSeparator();
             SaveAsPictureContextMenu = new ToolStripMenuItem();
             SelectAllContextMenu = new ToolStripMenuItem();
-            menuStrip1 = new MenuStrip();
+            MainMenuStrip = new MenuStrip();
             FileToolStripMenuItem = new ToolStripMenuItem();
             NewToolStripMenuItem = new ToolStripMenuItem();
             OpenToolStripMenuItem = new ToolStripMenuItem();
@@ -114,7 +113,7 @@
             Template5ToolStripMenuItem = new ToolStripMenuItem();
             ToolStripSeparator18 = new ToolStripSeparator();
             ManageTemplatesToolStripMenuItem = new ToolStripMenuItem();
-            timerToolStripMenuItem = new ToolStripMenuItem();
+            TimerToolStripMenuItem = new ToolStripMenuItem();
             StartTimerToolStripMenuItem = new ToolStripMenuItem();
             ResetTimerToolStripMenuItem = new ToolStripMenuItem();
             EditTimerToolStripMenuItem = new ToolStripMenuItem();
@@ -133,7 +132,7 @@
             ReportBugToolStripMenuItem = new ToolStripMenuItem();
             AboutToolStripMenuItem = new ToolStripMenuItem();
             openFileDialog1 = new OpenFileDialog();
-            toolStrip1 = new ToolStrip();
+            ButtonToolStrip = new ToolStrip();
             NewToolStripButton = new ToolStripButton();
             OpenToolStripButton = new ToolStripButton();
             SaveToolStripButton = new ToolStripButton();
@@ -177,33 +176,31 @@
             pageSetupDialog1 = new PageSetupDialog();
             colorDialog1 = new ColorDialog();
             autosaveTimer = new System.Windows.Forms.Timer(components);
-            splitContainer1 = new SplitContainer();
-            toolStrip2 = new ToolStrip();
-            BtnClosePanel2 = new ToolStripButton();
-            webView2Md = new Microsoft.Web.WebView2.WinForms.WebView2();
-            statusStrip1.SuspendLayout();
+            splitContainerMain = new SplitContainer();
+            RtbMain = new RichTextBox();
+            webViewMarkup = new Microsoft.Web.WebView2.WinForms.WebView2();
+            MainStatusStrip.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
-            menuStrip1.SuspendLayout();
-            toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
-            toolStrip2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)webView2Md).BeginInit();
+            MainMenuStrip.SuspendLayout();
+            ButtonToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
+            splitContainerMain.Panel1.SuspendLayout();
+            splitContainerMain.Panel2.SuspendLayout();
+            splitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)webViewMarkup).BeginInit();
             SuspendLayout();
             // 
-            // statusStrip1
+            // MainStatusStrip
             // 
-            statusStrip1.ImageScalingSize = new Size(32, 32);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelLn, toolStripStatusLabelLine, toolStripStatusLabelCol, toolStripStatusLabelColumn, toolStripStatusLabelSeparator2, WordCountToolStripStatusLabel, toolStripStatusLabelWords, CharacterCountToolStripStatusLabel, toolStripStatusLabelChar, LinesToolStripStatusLabel, toolStripStatusLabelLines, toolStripStatusLabelSeparator1, fontToolStripStatusLabel, toolStripStatusLabelSeparator3, toolStripStatusLabelFType, toolStripStatusLabelFileType, toolStripStatusLabel4, toolStripStatusLabelFileEncoding, EncodingToolStripStatusLabel, toolStripStatusLabelFilePath, toolStripStatusLabelOpenFilePath });
-            statusStrip1.Location = new Point(0, 886);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Padding = new Padding(1, 0, 11, 0);
-            statusStrip1.Size = new Size(1631, 32);
-            statusStrip1.SizingGrip = false;
-            statusStrip1.TabIndex = 0;
-            statusStrip1.Text = "statusStrip1";
+            MainStatusStrip.ImageScalingSize = new Size(32, 32);
+            MainStatusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelLn, toolStripStatusLabelLine, toolStripStatusLabelCol, toolStripStatusLabelColumn, toolStripStatusLabelSeparator2, WordCountToolStripStatusLabel, toolStripStatusLabelWords, CharacterCountToolStripStatusLabel, toolStripStatusLabelChar, LinesToolStripStatusLabel, toolStripStatusLabelLines, toolStripStatusLabelSeparator1, fontToolStripStatusLabel, toolStripStatusLabelSeparator3, toolStripStatusLabelFType, toolStripStatusLabelFileType, toolStripStatusLabel4, toolStripStatusLabelFileEncoding, EncodingToolStripStatusLabel, toolStripStatusLabelFilePath, toolStripStatusLabelOpenFilePath });
+            MainStatusStrip.Location = new Point(0, 1035);
+            MainStatusStrip.Name = "MainStatusStrip";
+            MainStatusStrip.Padding = new Padding(1, 0, 11, 0);
+            MainStatusStrip.Size = new Size(1717, 32);
+            MainStatusStrip.SizingGrip = false;
+            MainStatusStrip.TabIndex = 0;
+            MainStatusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabelLn
             // 
@@ -331,30 +328,6 @@
             toolStripStatusLabelOpenFilePath.Size = new Size(105, 25);
             toolStripStatusLabelOpenFilePath.Text = "Document1";
             // 
-            // RtbPage
-            // 
-            RtbPage.AcceptsTab = true;
-            RtbPage.AutoWordSelection = true;
-            RtbPage.BorderStyle = BorderStyle.None;
-            RtbPage.CausesValidation = false;
-            RtbPage.ContextMenuStrip = contextMenuStrip1;
-            RtbPage.Dock = DockStyle.Fill;
-            RtbPage.Location = new Point(0, 0);
-            RtbPage.Margin = new Padding(3, 2, 3, 2);
-            RtbPage.Name = "RtbPage";
-            RtbPage.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
-            RtbPage.ShowSelectionMargin = true;
-            RtbPage.Size = new Size(788, 819);
-            RtbPage.TabIndex = 1;
-            RtbPage.Text = "";
-            RtbPage.LinkClicked += RtbPage_LinkClicked;
-            RtbPage.SelectionChanged += RtbPage_SelectionChanged;
-            RtbPage.VScroll += RtbPage_VScroll;
-            RtbPage.TextChanged += RtbPage_TextChanged;
-            RtbPage.KeyDown += RtbPage_KeyDown;
-            RtbPage.MouseDown += RtbPage_MouseDown;
-            RtbPage.MouseMove += RtbPage_MouseMove;
-            // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(24, 24);
@@ -418,16 +391,16 @@
             SelectAllContextMenu.Text = "Select All";
             SelectAllContextMenu.Click += SelectAllContextMenu_Click;
             // 
-            // menuStrip1
+            // MainMenuStrip
             // 
-            menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, EditToolStripMenuItem, InsertToolStripMenuItem, FormatToolStripMenuItem, TemplatesToolStripMenuItem, timerToolStripMenuItem, ViewToolStripMenuItem, HelpToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(4, 2, 0, 2);
-            menuStrip1.Size = new Size(1631, 33);
-            menuStrip1.TabIndex = 3;
-            menuStrip1.Text = "menuStrip1";
+            MainMenuStrip.ImageScalingSize = new Size(24, 24);
+            MainMenuStrip.Items.AddRange(new ToolStripItem[] { FileToolStripMenuItem, EditToolStripMenuItem, InsertToolStripMenuItem, FormatToolStripMenuItem, TemplatesToolStripMenuItem, TimerToolStripMenuItem, ViewToolStripMenuItem, HelpToolStripMenuItem });
+            MainMenuStrip.Location = new Point(0, 0);
+            MainMenuStrip.Name = "MainMenuStrip";
+            MainMenuStrip.Padding = new Padding(4, 2, 0, 2);
+            MainMenuStrip.Size = new Size(1717, 33);
+            MainMenuStrip.TabIndex = 3;
+            MainMenuStrip.Text = "menuStrip1";
             // 
             // FileToolStripMenuItem
             // 
@@ -442,7 +415,7 @@
             NewToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             NewToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-            NewToolStripMenuItem.Size = new Size(270, 34);
+            NewToolStripMenuItem.Size = new Size(223, 34);
             NewToolStripMenuItem.Text = "&New";
             NewToolStripMenuItem.Click += NewToolStripMenuItem_Click;
             // 
@@ -452,7 +425,7 @@
             OpenToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
             OpenToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            OpenToolStripMenuItem.Size = new Size(270, 34);
+            OpenToolStripMenuItem.Size = new Size(223, 34);
             OpenToolStripMenuItem.Text = "&Open";
             OpenToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
             // 
@@ -461,7 +434,7 @@
             RecentToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { RecentToolStripMenuItem1, RecentToolStripMenuItem2, RecentToolStripMenuItem3, RecentToolStripMenuItem4, RecentToolStripMenuItem5, RecentToolStripMenuItem6, RecentToolStripMenuItem7, RecentToolStripMenuItem8, RecentToolStripMenuItem9 });
             RecentToolStripMenuItem.Image = Properties.Resources.MoveToFolder;
             RecentToolStripMenuItem.Name = "RecentToolStripMenuItem";
-            RecentToolStripMenuItem.Size = new Size(270, 34);
+            RecentToolStripMenuItem.Size = new Size(223, 34);
             RecentToolStripMenuItem.Text = "Recent Files";
             // 
             // RecentToolStripMenuItem1
@@ -539,7 +512,7 @@
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new Size(267, 6);
+            toolStripSeparator12.Size = new Size(220, 6);
             toolStripSeparator12.Paint += ToolStripSeparator12_Paint;
             // 
             // SaveToolStripMenuItem
@@ -548,7 +521,7 @@
             SaveToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             SaveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            SaveToolStripMenuItem.Size = new Size(270, 34);
+            SaveToolStripMenuItem.Size = new Size(223, 34);
             SaveToolStripMenuItem.Text = "&Save";
             SaveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             // 
@@ -556,14 +529,14 @@
             // 
             SaveAsToolStripMenuItem.Image = Properties.Resources.SaveAs_16x;
             SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            SaveAsToolStripMenuItem.Size = new Size(270, 34);
+            SaveAsToolStripMenuItem.Size = new Size(223, 34);
             SaveAsToolStripMenuItem.Text = "Save &As";
             SaveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
             // 
             // toolStripSeparator14
             // 
             toolStripSeparator14.Name = "toolStripSeparator14";
-            toolStripSeparator14.Size = new Size(267, 6);
+            toolStripSeparator14.Size = new Size(220, 6);
             toolStripSeparator14.Paint += ToolStripSeparator14_Paint;
             // 
             // PrintToolStripMenuItem
@@ -571,7 +544,7 @@
             PrintToolStripMenuItem.Image = Properties.Resources.PrintStatusBar1_16x;
             PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
             PrintToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
-            PrintToolStripMenuItem.Size = new Size(270, 34);
+            PrintToolStripMenuItem.Size = new Size(223, 34);
             PrintToolStripMenuItem.Text = "Print";
             PrintToolStripMenuItem.Click += PrintToolStripMenuItem_Click;
             // 
@@ -579,7 +552,7 @@
             // 
             PrintPreviewToolStripMenuItem.Image = Properties.Resources.PrintPreview_16x;
             PrintPreviewToolStripMenuItem.Name = "PrintPreviewToolStripMenuItem";
-            PrintPreviewToolStripMenuItem.Size = new Size(270, 34);
+            PrintPreviewToolStripMenuItem.Size = new Size(223, 34);
             PrintPreviewToolStripMenuItem.Text = "Print Preview";
             PrintPreviewToolStripMenuItem.Click += PrintPreviewToolStripMenuItem_Click;
             // 
@@ -587,21 +560,21 @@
             // 
             PageSetupToolStripMenuItem.Image = Properties.Resources.PageGuide_16x;
             PageSetupToolStripMenuItem.Name = "PageSetupToolStripMenuItem";
-            PageSetupToolStripMenuItem.Size = new Size(270, 34);
+            PageSetupToolStripMenuItem.Size = new Size(223, 34);
             PageSetupToolStripMenuItem.Text = "Page Setup";
             PageSetupToolStripMenuItem.Click += PageSetupToolStripMenuItem_Click;
             // 
             // ToolStripSeparator1
             // 
             ToolStripSeparator1.Name = "ToolStripSeparator1";
-            ToolStripSeparator1.Size = new Size(267, 6);
+            ToolStripSeparator1.Size = new Size(220, 6);
             ToolStripSeparator1.Paint += ToolStripSeparator1_Paint;
             // 
             // OptionsToolStripMenuItem
             // 
             OptionsToolStripMenuItem.Image = Properties.Resources.Settings_16x;
             OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
-            OptionsToolStripMenuItem.Size = new Size(270, 34);
+            OptionsToolStripMenuItem.Size = new Size(223, 34);
             OptionsToolStripMenuItem.Text = "Options";
             OptionsToolStripMenuItem.Click += FileOptionsToolStripMenuItem_Click;
             // 
@@ -609,7 +582,7 @@
             // 
             ExitToolStripMenuItem.Image = Properties.Resources.Exit_16x;
             ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            ExitToolStripMenuItem.Size = new Size(270, 34);
+            ExitToolStripMenuItem.Size = new Size(223, 34);
             ExitToolStripMenuItem.Text = "E&xit";
             ExitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -845,12 +818,12 @@
             ManageTemplatesToolStripMenuItem.Text = "Manage Templates";
             ManageTemplatesToolStripMenuItem.Click += ManageTemplatesToolStripMenuItem_Click;
             // 
-            // timerToolStripMenuItem
+            // TimerToolStripMenuItem
             // 
-            timerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { StartTimerToolStripMenuItem, ResetTimerToolStripMenuItem, EditTimerToolStripMenuItem, ViewTimersToolStripMenuItem, ClearTimersToolStripMenuItem });
-            timerToolStripMenuItem.Name = "timerToolStripMenuItem";
-            timerToolStripMenuItem.Size = new Size(72, 29);
-            timerToolStripMenuItem.Text = "Timer";
+            TimerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { StartTimerToolStripMenuItem, ResetTimerToolStripMenuItem, EditTimerToolStripMenuItem, ViewTimersToolStripMenuItem, ClearTimersToolStripMenuItem });
+            TimerToolStripMenuItem.Name = "TimerToolStripMenuItem";
+            TimerToolStripMenuItem.Size = new Size(72, 29);
+            TimerToolStripMenuItem.Text = "Timer";
             // 
             // StartTimerToolStripMenuItem
             // 
@@ -903,7 +876,7 @@
             // 
             WordWrapToolStripMenuItem.Image = (Image)resources.GetObject("WordWrapToolStripMenuItem.Image");
             WordWrapToolStripMenuItem.Name = "WordWrapToolStripMenuItem";
-            WordWrapToolStripMenuItem.Size = new Size(270, 34);
+            WordWrapToolStripMenuItem.Size = new Size(206, 34);
             WordWrapToolStripMenuItem.Text = "Word Wrap";
             WordWrapToolStripMenuItem.Click += WordWrapToolStripMenuItem_Click;
             // 
@@ -912,7 +885,7 @@
             TaskPaneToolStripMenuItem.Enabled = false;
             TaskPaneToolStripMenuItem.Image = (Image)resources.GetObject("TaskPaneToolStripMenuItem.Image");
             TaskPaneToolStripMenuItem.Name = "TaskPaneToolStripMenuItem";
-            TaskPaneToolStripMenuItem.Size = new Size(270, 34);
+            TaskPaneToolStripMenuItem.Size = new Size(206, 34);
             TaskPaneToolStripMenuItem.Text = "TaskPane";
             TaskPaneToolStripMenuItem.Click += TaskPaneToolStripMenuItem_Click;
             // 
@@ -921,7 +894,7 @@
             ZoomToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ZoomToolStripMenuItem100, ZoomToolStripMenuItem150, ZoomToolStripMenuItem200, ZoomToolStripMenuItem250, ZoomToolStripMenuItem300 });
             ZoomToolStripMenuItem.Image = Properties.Resources.MediaZoom;
             ZoomToolStripMenuItem.Name = "ZoomToolStripMenuItem";
-            ZoomToolStripMenuItem.Size = new Size(270, 34);
+            ZoomToolStripMenuItem.Size = new Size(206, 34);
             ZoomToolStripMenuItem.Text = "Zoom";
             // 
             // ZoomToolStripMenuItem100
@@ -986,17 +959,17 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // toolStrip1
+            // ButtonToolStrip
             // 
-            toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.ImageScalingSize = new Size(24, 24);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5 });
-            toolStrip1.Location = new Point(0, 33);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Padding = new Padding(0, 0, 3, 0);
-            toolStrip1.Size = new Size(1631, 34);
-            toolStrip1.TabIndex = 4;
-            toolStrip1.Text = "toolStrip1";
+            ButtonToolStrip.GripStyle = ToolStripGripStyle.Hidden;
+            ButtonToolStrip.ImageScalingSize = new Size(24, 24);
+            ButtonToolStrip.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5 });
+            ButtonToolStrip.Location = new Point(0, 33);
+            ButtonToolStrip.Name = "ButtonToolStrip";
+            ButtonToolStrip.Padding = new Padding(0, 0, 3, 0);
+            ButtonToolStrip.Size = new Size(1717, 34);
+            ButtonToolStrip.TabIndex = 4;
+            ButtonToolStrip.Text = "toolStrip1";
             // 
             // NewToolStripButton
             // 
@@ -1332,102 +1305,83 @@
             autosaveTimer.Interval = 1000;
             autosaveTimer.Tick += AutosaveTimer_Tick;
             // 
-            // splitContainer1
+            // splitContainerMain
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 67);
-            splitContainer1.Margin = new Padding(4, 5, 4, 5);
-            splitContainer1.Name = "splitContainer1";
+            splitContainerMain.Dock = DockStyle.Fill;
+            splitContainerMain.Location = new Point(0, 67);
+            splitContainerMain.Name = "splitContainerMain";
             // 
-            // splitContainer1.Panel1
+            // splitContainerMain.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(RtbPage);
+            splitContainerMain.Panel1.Controls.Add(RtbMain);
             // 
-            // splitContainer1.Panel2
+            // splitContainerMain.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(toolStrip2);
-            splitContainer1.Panel2.Controls.Add(webView2Md);
-            splitContainer1.Size = new Size(1631, 819);
-            splitContainer1.SplitterDistance = 788;
-            splitContainer1.SplitterWidth = 6;
-            splitContainer1.TabIndex = 5;
+            splitContainerMain.Panel2.Controls.Add(webViewMarkup);
+            splitContainerMain.Size = new Size(1717, 968);
+            splitContainerMain.SplitterDistance = 852;
+            splitContainerMain.TabIndex = 5;
             // 
-            // toolStrip2
+            // RtbMain
             // 
-            toolStrip2.ImageScalingSize = new Size(24, 24);
-            toolStrip2.Items.AddRange(new ToolStripItem[] { BtnClosePanel2 });
-            toolStrip2.Location = new Point(0, 0);
-            toolStrip2.Name = "toolStrip2";
-            toolStrip2.Padding = new Padding(0, 0, 3, 0);
-            toolStrip2.Size = new Size(837, 34);
-            toolStrip2.TabIndex = 1;
-            toolStrip2.Text = "toolStrip2";
+            RtbMain.Dock = DockStyle.Fill;
+            RtbMain.Location = new Point(0, 0);
+            RtbMain.Name = "RtbMain";
+            RtbMain.Size = new Size(852, 968);
+            RtbMain.TabIndex = 0;
+            RtbMain.Text = "";
             // 
-            // BtnClosePanel2
+            // webViewMarkup
             // 
-            BtnClosePanel2.Image = Properties.Resources.Close;
-            BtnClosePanel2.ImageTransparentColor = Color.Magenta;
-            BtnClosePanel2.Name = "BtnClosePanel2";
-            BtnClosePanel2.Size = new Size(83, 29);
-            BtnClosePanel2.Text = "Close";
-            BtnClosePanel2.Click += BtnClosePanel2_Click;
-            // 
-            // webView2Md
-            // 
-            webView2Md.AllowExternalDrop = true;
-            webView2Md.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            webView2Md.CreationProperties = null;
-            webView2Md.DefaultBackgroundColor = Color.White;
-            webView2Md.Location = new Point(0, 47);
-            webView2Md.Margin = new Padding(4, 5, 4, 5);
-            webView2Md.Name = "webView2Md";
-            webView2Md.Size = new Size(816, 767);
-            webView2Md.TabIndex = 0;
-            webView2Md.ZoomFactor = 1D;
+            webViewMarkup.AllowExternalDrop = true;
+            webViewMarkup.CreationProperties = null;
+            webViewMarkup.DefaultBackgroundColor = Color.White;
+            webViewMarkup.Dock = DockStyle.Fill;
+            webViewMarkup.Location = new Point(0, 0);
+            webViewMarkup.Name = "webViewMarkup";
+            webViewMarkup.Size = new Size(861, 968);
+            webViewMarkup.TabIndex = 0;
+            webViewMarkup.ZoomFactor = 1D;
             // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1631, 918);
-            Controls.Add(splitContainer1);
-            Controls.Add(toolStrip1);
-            Controls.Add(statusStrip1);
-            Controls.Add(menuStrip1);
+            ClientSize = new Size(1717, 1067);
+            Controls.Add(splitContainerMain);
+            Controls.Add(ButtonToolStrip);
+            Controls.Add(MainStatusStrip);
+            Controls.Add(MainMenuStrip);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 2, 3, 2);
             Name = "FrmMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Notepad Light";
             FormClosing += FrmMain_FormClosing;
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            MainStatusStrip.ResumeLayout(false);
+            MainStatusStrip.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
-            toolStrip2.ResumeLayout(false);
-            toolStrip2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)webView2Md).EndInit();
+            MainMenuStrip.ResumeLayout(false);
+            MainMenuStrip.PerformLayout();
+            ButtonToolStrip.ResumeLayout(false);
+            ButtonToolStrip.PerformLayout();
+            splitContainerMain.Panel1.ResumeLayout(false);
+            splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
+            splitContainerMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)webViewMarkup).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private StatusStrip statusStrip1;
+        private StatusStrip MainStatusStrip;
         private ToolStripStatusLabel toolStripStatusLabelLn;
         private ToolStripStatusLabel toolStripStatusLabelLine;
         private ToolStripStatusLabel toolStripStatusLabelCol;
         private ToolStripStatusLabel toolStripStatusLabelColumn;
-        private MenuStrip menuStrip1;
+        private MenuStrip MainMenuStrip;
         private ToolStripMenuItem FileToolStripMenuItem;
         private ToolStripMenuItem NewToolStripMenuItem;
         private ToolStripMenuItem OpenToolStripMenuItem;
@@ -1447,8 +1401,7 @@
         private ToolStripMenuItem HelpToolStripMenuItem;
         private ToolStripMenuItem AboutToolStripMenuItem;
         private OpenFileDialog openFileDialog1;
-        private RichTextBox RtbPage;
-        private ToolStrip toolStrip1;
+        private ToolStrip ButtonToolStrip;
         private ToolStripButton NewToolStripButton;
         private ToolStripButton OpenToolStripButton;
         private ToolStripButton SaveToolStripButton;
@@ -1553,16 +1506,12 @@
         private ToolStripMenuItem RecentToolStripMenuItem7;
         private ToolStripMenuItem RecentToolStripMenuItem8;
         private ToolStripMenuItem RecentToolStripMenuItem9;
-        private SplitContainer splitContainer1;
-        private Microsoft.Web.WebView2.WinForms.WebView2 webView2Md;
         private ToolStripMenuItem SearchContextMenu;
-        private ToolStrip toolStrip2;
-        private ToolStripButton BtnClosePanel2;
         private ToolStripMenuItem TaskPaneToolStripMenuItem;
         private ToolStripButton ReplaceToolStripButton;
         private ToolStripMenuItem SaveAsPictureContextMenu;
         private ToolStripMenuItem decreaseIndentToolStripMenuItem;
-        private ToolStripMenuItem timerToolStripMenuItem;
+        private ToolStripMenuItem TimerToolStripMenuItem;
         private ToolStripTextBox TimerDescriptionTextbox;
         private ToolStripButton TrackTimeToolStripButton;
         private ToolStripMenuItem StartTimerToolStripMenuItem;
@@ -1573,5 +1522,8 @@
         private ToolStripMenuItem ClearTimersToolStripMenuItem;
         private ToolStripStatusLabel toolStripStatusLabelFilePath;
         private ToolStripStatusLabel toolStripStatusLabelOpenFilePath;
+        private SplitContainer splitContainerMain;
+        private RichTextBox RtbMain;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webViewMarkup;
     }
 }
