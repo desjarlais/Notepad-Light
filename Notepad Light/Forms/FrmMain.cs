@@ -332,82 +332,6 @@ namespace Notepad_Light
             }
         }
 
-        public void ApplyNoColorDefaultColor()
-        {
-            if (RtbMain.Rtf != null && gNoColorTable)
-            {
-                string rtf = RtbMain.Rtf;
-                string colorTableNoColor = "colortbl ;";
-                string colorTableDefaultBlack = "colortbl \\red0\\green0\\blue0;";
-                string colorTableDefaultWhite = "colortbl \\red255\\green255\\blue255;";
-
-                Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
-
-                if (colorTableMatch.Value.Contains(colorTableDefaultWhite))
-                {
-                    rtf = rtf.Replace(colorTableDefaultWhite, colorTableNoColor);
-                    RtbMain.Rtf = rtf;
-                    return;
-                }
-
-                if (colorTableMatch.Value.Contains(colorTableDefaultBlack))
-                {
-                    rtf = rtf.Replace(colorTableDefaultBlack, colorTableNoColor);
-                    RtbMain.Rtf = rtf;
-                    return;
-                }
-            }
-        }
-
-        public void ApplyDefaultTextColor()
-        {
-            if (RtbMain.Rtf != null)
-            {
-                string rtf = RtbMain.Rtf;
-                string colorTableNoColor = "colortbl ;";
-                string colorTableDefaultBlack = "colortbl \\red0\\green0\\blue0;";
-                string colorTableDefaultWhite = "colortbl \\red255\\green255\\blue255;";
-
-                Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
-
-                if (Properties.Settings.Default.DarkMode == true && colorTableMatch.Value.Contains(colorTableNoColor))
-                {
-                    rtf = rtf.Replace(colorTableNoColor, colorTableDefaultWhite);
-                    RtbMain.Rtf = rtf;
-                    gNoColorTable = true;
-                    return;
-                }
-
-                if (Properties.Settings.Default.DarkMode == false && colorTableMatch.Value.Contains(colorTableNoColor))
-                {
-                    rtf = rtf.Replace(colorTableNoColor, colorTableDefaultBlack);
-                    RtbMain.Rtf = rtf;
-                    gNoColorTable = true;
-                }
-                else
-                {
-                    ApplyNonRtfDefaultTextColor();
-                }
-
-            }
-            else
-            {
-                ApplyNonRtfDefaultTextColor();
-            }
-        }
-
-        public void ApplyNonRtfDefaultTextColor()
-        {
-            if (Properties.Settings.Default.DarkMode == true)
-            {
-                RtbMain.ForeColor = Color.White;
-            }
-            else
-            {
-                RtbMain.ForeColor = Color.Black;
-            }
-        }
-
         /// <summary>
         /// mostly UI setup work, it doesn't really create a new file/document
         /// </summary>
@@ -582,7 +506,6 @@ namespace Notepad_Light
                 UpdateDocStats();
                 AddFileToMRU(filePath);
                 RtbMain.Modified = false;
-                //ApplyDefaultTextColor();
             }
             catch (Exception ex)
             {
