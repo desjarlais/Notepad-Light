@@ -4,6 +4,7 @@ using Markdig;
 using Microsoft.Web.WebView2.Core;
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
+
 // .net refs
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
@@ -13,6 +14,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using static Notepad_Light.Helpers.Win32;
 using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
@@ -21,6 +23,7 @@ namespace Notepad_Light
     public partial class FrmMain : Form
     {
         // globals
+        public bool gNoColorTable = false;
         public string gCurrentFileName = Strings.defaultFileName;
         public static string gErrorLog = string.Empty;
         public string gCurrentAppVersion = string.Empty;
@@ -330,9 +333,73 @@ namespace Notepad_Light
             }
         }
 
+        public void ApplyNoColorDefaultColor()
+        {
+            if (RtbPage.Rtf != null && gNoColorTable)
+            {
+                string rtf = RtbPage.Rtf;
+                string colorTableNoColor = "colortbl ;";
+                string colorTableDefaultBlack = "colortbl \\red0\\green0\\blue0;";
+                string colorTableDefaultWhite = "colortbl \\red255\\green255\\blue255;";
+
+                Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
+                
+                if (colorTableMatch.Value.Contains(colorTableDefaultWhite))
+                {
+                    rtf = rtf.Replace(colorTableDefaultWhite, colorTableNoColor);
+                    RtbPage.Rtf = rtf;
+                    return;
+                }
+
+                if (colorTableMatch.Value.Contains(colorTableDefaultBlack))
+                {
+                    rtf = rtf.Replace(colorTableDefaultBlack, colorTableNoColor);
+                    RtbPage.Rtf = rtf;
+                    return;
+                }
+            }
+        }
+
         public void ApplyDefaultTextColor()
         {
-            if (Properties.Settings.Default.DarkMode)
+            if (RtbPage.Rtf != null)
+            {
+                string rtf = RtbPage.Rtf;
+                string colorTableNoColor = "colortbl ;";
+                string colorTableDefaultBlack = "colortbl \\red0\\green0\\blue0;";
+                string colorTableDefaultWhite = "colortbl \\red255\\green255\\blue255;";
+
+                Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
+
+                if (Properties.Settings.Default.DarkMode == true && colorTableMatch.Value.Contains(colorTableNoColor))
+                {
+                    rtf = rtf.Replace(colorTableNoColor, colorTableDefaultWhite);
+                    RtbPage.Rtf = rtf;
+                    gNoColorTable = true;
+                    return;
+                }
+
+                if (Properties.Settings.Default.DarkMode == false && colorTableMatch.Value.Contains(colorTableNoColor))
+                {
+                    rtf = rtf.Replace(colorTableNoColor, colorTableDefaultBlack);
+                    RtbPage.Rtf = rtf;
+                    gNoColorTable = true;
+                }
+                else
+                {
+                    ApplyNonRtfDefaultTextColor();
+                }
+
+            }
+            else
+            {
+                ApplyNonRtfDefaultTextColor();   
+            }
+        }
+
+        public void ApplyNonRtfDefaultTextColor()
+        {
+            if (Properties.Settings.Default.DarkMode == true)
             {
                 RtbPage.ForeColor = Color.White;
             }
@@ -377,8 +444,8 @@ namespace Notepad_Light
                 toolStripStatusLabelFileType.Text = Strings.markdown;
             }
 
+            //ApplyDefaultTextColor();
             RtbPage.Modified = false;
-            ApplyDefaultTextColor();
         }
 
         /// <summary>
@@ -516,6 +583,7 @@ namespace Notepad_Light
                 UpdateDocStats();
                 AddFileToMRU(filePath);
                 RtbPage.Modified = false;
+                //ApplyDefaultTextColor();
             }
             catch (Exception ex)
             {
@@ -601,6 +669,7 @@ namespace Notepad_Light
                     UpdateDocStats();
                     CheckForReadOnly(ofdFileOpen.FileName);
                     gPrevPageLength = RtbPage.TextLength;
+                    //ApplyDefaultTextColor();
                     RtbPage.Modified = false;
                 }
             }
@@ -641,6 +710,7 @@ namespace Notepad_Light
                     // rtf files can use SaveFile, everything else should use WriteAllText to handle unicode variations
                     if (gCurrentFileType == CurrentFileType.RTF)
                     {
+                        //ApplyNoColorDefaultColor();
                         RtbPage.SaveFile(gCurrentFileName);
                     }
                     else
@@ -1565,46 +1635,6 @@ namespace Notepad_Light
             return version.Major == 10 && version.Build >= 22000;
         }
 
-        public void SwapDefaultColor(RichTextBox rtb, Color oldColor, Color newColor)
-        {
-            string? rtf = rtb.Rtf;
-            Match colorTableMatch = Regex.Match(rtf, @"\{\\colortbl[^}]*\}");
-            string oldFragmentPattern = @"\red" + oldColor.R + @"\green" + oldColor.G + @"\blue" + oldColor.B + @"\;";
-
-            if (colorTableMatch.Success)
-            {
-                string colorTable = colorTableMatch.Value;
-                bool hasColor = Regex.IsMatch(colorTable, oldFragmentPattern);
-                if (!hasColor)
-                {
-                    ApplyDefaultTextColor();
-                    return;
-                }
-            }
-            else
-            {
-                ApplyDefaultTextColor();
-                return;
-            }
-
-            // Build the RTF color fragment we expect (tolerate optional whitespace)
-            //string oldFragmentPattern = "\\\\red" + oldColor.R + "\\\\green" + oldColor.G + "\\\\blue" + oldColor.B + "\\\\;";
-            //if (!Regex.IsMatch(rtf, oldFragmentPattern))
-            //{
-            //    // if there is nothing, apply default text colors based on dark mode setting
-            //    ApplyDefaultTextColor();
-            //    return;
-            //}
-
-            string newFragment = "\\red" + newColor.R + "\\green" + newColor.G + "\\blue" + newColor.B + "\\;";
-
-            // Replace only first occurrence inside color table
-            rtf = Regex.Replace(rtf, oldFragmentPattern, newFragment, RegexOptions.IgnoreCase);
-
-            // Re-assign (this preserves all run-level \cfN)
-            rtb.Rtf = rtf;
-        }
-
         /// <summary>
         /// change UI to have a black background and white text
         /// .net 9 has built in dark mode support for windows 11
@@ -1613,26 +1643,26 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyDarkMode()
         {
-            //            if (IsWindows11() && SystemInformation.HighContrast == false)
-            //            {
-            //#pragma warning disable WFO5001
-            //                Application.SetColorMode(SystemColorMode.Dark);
-            //#pragma warning restore WFO5001
-            //            }
-            //            else
-            //            {
-            menuStrip1.BackColor = clrDarkModeBackground;
-            toolStrip1.BackColor = clrDarkModeBackground;
-            statusStrip1.BackColor = clrDarkModeBackground;
+            if (IsWindows11() && SystemInformation.HighContrast == false)
+            {
+#pragma warning disable WFO5001
+                Application.SetColorMode(SystemColorMode.Dark);
+#pragma warning restore WFO5001
+            }
+            else
+            {
+                menuStrip1.BackColor = clrDarkModeBackground;
+                toolStrip1.BackColor = clrDarkModeBackground;
+                statusStrip1.BackColor = clrDarkModeBackground;
             
-            RtbPage.BackColor = clrDarkModeTextBackground;
-            SwapDefaultColor(RtbPage, Color.Black, Color.Gainsboro);
+                RtbPage.BackColor = clrDarkModeTextBackground;
+                //ApplyDefaultTextColor();
 
-            ChangeControlTextColor(Color.White);
-            ChangeMenuTextForeColor(Color.White);
-            ChangeMenuTextBackColor(clrDarkModeBackground);
-            ChangeSubMenuItemBackColor(clrDarkModeBackground);
-            //            }
+                ChangeControlTextColor(Color.White);
+                ChangeMenuTextForeColor(Color.White);
+                ChangeMenuTextBackColor(clrDarkModeBackground);
+                ChangeSubMenuItemBackColor(clrDarkModeBackground);
+            }
         }
 
         /// <summary>
@@ -1640,26 +1670,27 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
-            //            if (IsWindows11() && SystemInformation.HighContrast == false)
-            //            {
-            //#pragma warning disable WFO5001
-            //                Application.SetColorMode(SystemColorMode.Classic);
-            //#pragma warning restore WFO5001
-            //            }
-            //            else
-            //            {
-            menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
-            
-            RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
-            SwapDefaultColor(RtbPage, Color.Gainsboro, Color.Black);
+            if (IsWindows11() && SystemInformation.HighContrast == false)
+            {
+#pragma warning disable WFO5001
+                Application.SetColorMode(SystemColorMode.Classic);
+#pragma warning restore WFO5001
+            }
+            else
+            {
 
-            ChangeControlTextColor(Color.Black);
-            ChangeMenuTextForeColor(Color.Black);
-            ChangeMenuTextBackColor(Color.FromKnownColor(KnownColor.Control));
-            ChangeSubMenuItemBackColor(Color.White);
-            //            }
+                menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+                toolStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+                statusStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+            
+                RtbPage.BackColor = Color.FromKnownColor(KnownColor.Window);
+                //ApplyDefaultTextColor();
+
+                ChangeControlTextColor(Color.Black);
+                ChangeMenuTextForeColor(Color.Black);
+                ChangeMenuTextBackColor(Color.FromKnownColor(KnownColor.Control));
+                ChangeSubMenuItemBackColor(Color.White);
+            }
         }
 
         /// <summary>
