@@ -1551,6 +1551,51 @@ namespace Notepad_Light
             }
         }
 
+        public void ApplyUIColorToSeparator(Color clr)
+        {
+            ToolStripSeparator1.BackColor = clr;
+            ToolStripSeparator2.BackColor = clr;
+            ToolStripSeparator3.BackColor = clr;
+            ToolStripSeparator4.BackColor = clr;
+            ToolStripSeparator5.BackColor = clr;
+            ToolStripSeparator6.BackColor = clr;
+            ToolStripSeparator8.BackColor = clr;
+            ToolStripSeparator9.BackColor = clr;
+            ToolStripSeparator11.BackColor = clr;
+            ToolStripSeparator13.BackColor = clr;
+        }
+
+        public void ApplyUIColorsLegacy(Color clrBack, Color clrFore)
+        {
+            MainMenuStrip.BackColor = clrBack;
+            MainMenuStrip.ForeColor = clrFore;
+            ButtonToolStrip.BackColor = clrBack;
+            ButtonToolStrip.ForeColor = clrFore;
+            MainStatusStrip.BackColor = clrBack;
+            MainStatusStrip.ForeColor = clrFore;
+
+            // now apply to each control in the strips
+            foreach (ToolStripItem item in MainMenuStrip.Items)
+            {
+                item.BackColor = clrBack;
+                item.ForeColor = clrFore;
+            }
+
+            foreach (ToolStripItem item in ButtonToolStrip.Items)
+            {
+                item.BackColor = clrBack;
+                item.ForeColor = clrFore;
+            }
+
+            foreach (ToolStripItem item in MainStatusStrip.Items)
+            {
+                item.BackColor = clrBack;
+                item.ForeColor = clrFore;
+            }
+
+            ApplyUIColorToSeparator(clrBack);
+        }
+
         public void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
         {
             ctrl.BackColor = clrBack;
@@ -1591,9 +1636,9 @@ namespace Notepad_Light
             }
             else
             {
-                ApplyUIColors(MainMenuStrip, clrDarkModeBackColor, Color.White);
-                ApplyUIColors(ButtonToolStrip, clrDarkModeBackColor, Color.White);
-                ApplyUIColors(MainStatusStrip, clrDarkModeBackColor, Color.White);
+                RtbMain.BackColor = clrDarkModeBackColor;
+                RtbMain.ForeColor = Color.White;
+                ApplyUIColorsLegacy(clrDarkModeBackColor, Color.White);
             }
         }
 
@@ -1615,9 +1660,9 @@ namespace Notepad_Light
             }
             else
             {
-                ApplyUIColors(MainMenuStrip, SystemColors.Control, SystemColors.ControlText);
-                ApplyUIColors(ButtonToolStrip, SystemColors.Control, SystemColors.ControlText);
-                ApplyUIColors(MainStatusStrip, SystemColors.Control, SystemColors.ControlText);
+                RtbMain.BackColor = SystemColors.Window;
+                RtbMain.ForeColor = SystemColors.WindowText;
+                ApplyUIColorsLegacy(SystemColors.Control, SystemColors.ControlText);
             }
         }
 
