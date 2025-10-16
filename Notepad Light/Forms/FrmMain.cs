@@ -2753,12 +2753,6 @@ namespace Notepad_Light
             WebView2Navigate();
         }
 
-        private void BtnClosePanel2_Click(object sender, EventArgs e)
-        {
-            splitContainerMain.Panel2Collapsed = true;
-            TaskPaneToolStripMenuItem.Checked = false;
-        }
-
         private void TaskPaneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             splitContainerMain.Panel2Collapsed = !splitContainerMain.Panel2Collapsed;

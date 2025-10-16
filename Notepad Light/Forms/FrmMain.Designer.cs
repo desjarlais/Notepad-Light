@@ -1319,7 +1319,7 @@
             // 
             splitContainerMain.Panel2.Controls.Add(webViewMarkup);
             splitContainerMain.Size = new Size(1717, 968);
-            splitContainerMain.SplitterDistance = 852;
+            splitContainerMain.SplitterDistance = 851;
             splitContainerMain.TabIndex = 5;
             // 
             // RtbMain
@@ -1327,9 +1327,16 @@
             RtbMain.Dock = DockStyle.Fill;
             RtbMain.Location = new Point(0, 0);
             RtbMain.Name = "RtbMain";
-            RtbMain.Size = new Size(852, 968);
+            RtbMain.Size = new Size(851, 968);
             RtbMain.TabIndex = 0;
             RtbMain.Text = "";
+            RtbMain.LinkClicked += RtbMain_LinkClicked;
+            RtbMain.SelectionChanged += RtbMain_SelectionChanged;
+            RtbMain.VScroll += RtbMain_VScroll;
+            RtbMain.TextChanged += RtbMain_TextChanged;
+            RtbMain.KeyDown += RtbMain_KeyDown;
+            RtbMain.MouseDown += RtbMain_MouseDown;
+            RtbMain.MouseMove += RtbMain_MouseMove;
             // 
             // webViewMarkup
             // 
@@ -1339,7 +1346,7 @@
             webViewMarkup.Dock = DockStyle.Fill;
             webViewMarkup.Location = new Point(0, 0);
             webViewMarkup.Name = "webViewMarkup";
-            webViewMarkup.Size = new Size(861, 968);
+            webViewMarkup.Size = new Size(862, 968);
             webViewMarkup.TabIndex = 0;
             webViewMarkup.ZoomFactor = 1D;
             // 
@@ -1372,6 +1379,16 @@
             ((System.ComponentModel.ISupportInitialize)webViewMarkup).EndInit();
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void RtbMain_MouseMove1(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RtbMain_MouseDown1(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
