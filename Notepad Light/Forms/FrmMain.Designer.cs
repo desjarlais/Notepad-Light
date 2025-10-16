@@ -1324,6 +1324,7 @@
             // 
             // RtbMain
             // 
+            RtbMain.ContextMenuStrip = contextMenuStrip1;
             RtbMain.Dock = DockStyle.Fill;
             RtbMain.Location = new Point(0, 0);
             RtbMain.Name = "RtbMain";
