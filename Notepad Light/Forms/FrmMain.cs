@@ -11,6 +11,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Reflection;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -1551,22 +1552,9 @@ namespace Notepad_Light
             }
         }
 
-        public void ApplyUIColorToSeparator(Color clr)
-        {
-            ToolStripSeparator1.BackColor = clr;
-            ToolStripSeparator2.BackColor = clr;
-            ToolStripSeparator3.BackColor = clr;
-            ToolStripSeparator4.BackColor = clr;
-            ToolStripSeparator5.BackColor = clr;
-            ToolStripSeparator6.BackColor = clr;
-            ToolStripSeparator8.BackColor = clr;
-            ToolStripSeparator9.BackColor = clr;
-            ToolStripSeparator11.BackColor = clr;
-            ToolStripSeparator13.BackColor = clr;
-        }
-
         public void ApplyUIColorsLegacy(Color clrBack, Color clrFore)
         {
+            // first apply to the main strips
             MainMenuStrip.BackColor = clrBack;
             MainMenuStrip.ForeColor = clrFore;
             ButtonToolStrip.BackColor = clrBack;
@@ -1593,7 +1581,17 @@ namespace Notepad_Light
                 item.ForeColor = clrFore;
             }
 
-            ApplyUIColorToSeparator(clrBack);
+            // now adjust the menu separators
+            ToolStripSeparator1.BackColor = clrBack;
+            ToolStripSeparator2.BackColor = clrBack;
+            ToolStripSeparator3.BackColor = clrBack;
+            ToolStripSeparator4.BackColor = clrBack;
+            ToolStripSeparator5.BackColor = clrBack;
+            ToolStripSeparator6.BackColor = clrBack;
+            ToolStripSeparator8.BackColor = clrBack;
+            ToolStripSeparator9.BackColor = clrBack;
+            ToolStripSeparator11.BackColor = clrBack;
+            ToolStripSeparator13.BackColor = clrBack;
         }
 
         public void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
@@ -1618,15 +1616,28 @@ namespace Notepad_Light
         /// change UI to have a black background and white text
         /// .net 9 has built in dark mode support for windows 11
         /// dark/light mode on Windows 11 does not work with high contrast, so fall back to custom colors
-        /// TODO: looks like a possible bug in .net 9 dark/light mode, needs further testing, not all controls are changing color
         /// </summary>
         public void ApplyDarkMode()
         {
             if (IsWindows11() && SystemInformation.HighContrast == false)
             {
+                // rtf color tables get messed up when switching to dark mode
+                // hold the rtf (including color table) in the rtf string
+                string rtf = RtbMain.Rtf!;
+                if (gCurrentFileType == CurrentFileType.RTF)
+                {
+                    RtbMain.Rtf = string.Empty;
+                }
+                
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Dark);
 #pragma warning restore WFO5001
+
+                // after the color mode switch, bring the rtf table and content back in
+                if (gCurrentFileType == CurrentFileType.RTF)
+                {
+                    RtbMain.Rtf = rtf;
+                }
 
                 ApplyUIColors(MainStatusStrip, clrDarkModeBackColor, Color.White);
 
@@ -1647,11 +1658,25 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
+            // rtf color tables get messed up when switching to dark mode
+            // hold the rtf (including color table) in the rtf string
+            string rtf = RtbMain.Rtf!;
+            if (gCurrentFileType == CurrentFileType.RTF)
+            {
+                RtbMain.Rtf = string.Empty;
+            }
+
             if (IsWindows11() && SystemInformation.HighContrast == false)
             {
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Classic);
 #pragma warning restore WFO5001
+
+                // after the color mode switch, bring the rtf table and content back in
+                if (gCurrentFileType == CurrentFileType.RTF)
+                {
+                    RtbMain.Rtf = rtf;
+                }
 
                 ApplyUIColors(MainStatusStrip, SystemColors.Control, SystemColors.ControlText);
 
