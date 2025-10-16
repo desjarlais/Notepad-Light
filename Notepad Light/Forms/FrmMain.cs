@@ -338,7 +338,7 @@ namespace Notepad_Light
         /// </summary>
         public void CreateNewDocument()
         {
-            RtbMain.Clear();
+            RtbMain.ResetText();
             CollapsePanel2();
             ClearFormatting();
             RtbMain.ReadOnly = false;
@@ -1275,7 +1275,6 @@ namespace Notepad_Light
         {
             RtbMain.SelectionBullet = false;
             RtbMain.SelectionFont = new Font("Segoe UI", 10);
-            RtbMain.SelectionColor = Color.Black;
             RtbMain.SelectionIndent = 0;
             RtbMain.SelectionAlignment = HorizontalAlignment.Left;
             RtbMain.Modified = true;
