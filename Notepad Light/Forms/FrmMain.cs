@@ -368,7 +368,6 @@ namespace Notepad_Light
                 toolStripStatusLabelFileType.Text = Strings.markdown;
             }
 
-            //ApplyDefaultTextColor();
             RtbMain.Modified = false;
         }
 
@@ -592,7 +591,6 @@ namespace Notepad_Light
                     UpdateDocStats();
                     CheckForReadOnly(ofdFileOpen.FileName);
                     gPrevPageLength = RtbMain.TextLength;
-                    //ApplyDefaultTextColor();
                     RtbMain.Modified = false;
                 }
             }
@@ -1562,12 +1560,6 @@ namespace Notepad_Light
             MainStatusStrip.ForeColor = clrFore;
 
             // now apply to each control in the strips
-            foreach (ToolStripItem item in MainMenuStrip.Items)
-            {
-                item.BackColor = clrBack;
-                item.ForeColor = clrFore;
-            }
-
             foreach (ToolStripItem item in ButtonToolStrip.Items)
             {
                 item.BackColor = clrBack;
@@ -1591,6 +1583,28 @@ namespace Notepad_Light
             ToolStripSeparator9.BackColor = clrBack;
             ToolStripSeparator11.BackColor = clrBack;
             ToolStripSeparator13.BackColor = clrBack;
+
+            // now apply to each top level menu item
+            foreach (ToolStripMenuItem item in MainMenuStrip.Items)
+            {
+                item.BackColor = clrBack;
+                item.ForeColor = clrFore;
+                // now apply to each dropdown item
+                foreach (ToolStripItem dropDownItem in item.DropDownItems)
+                {
+                    dropDownItem.BackColor = clrBack;
+                    dropDownItem.ForeColor = clrFore;
+                    // if the dropdown item has subitems, apply to those as well
+                    if (dropDownItem is ToolStripMenuItem subItem && subItem.HasDropDownItems)
+                    {
+                        foreach (ToolStripItem subDropDownItem in subItem.DropDownItems)
+                        {
+                            subDropDownItem.BackColor = clrBack;
+                            subDropDownItem.ForeColor = clrFore;
+                        }
+                    }
+                }
+            }
         }
 
         public void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
