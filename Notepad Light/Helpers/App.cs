@@ -61,7 +61,7 @@ namespace Notepad_Light.Helpers
                 var rtfBom = new byte[11];
                 using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    file.Read(rtfBom);
+                    file.ReadExactly(rtfBom);
                 }
 
                 if (rtfBom[0] == 0x7b && rtfBom[1] == 0x5c && rtfBom[2] == 0x72 && rtfBom[3] == 0x74 && rtfBom[4] == 0x66 && rtfBom[5] == 0x31
@@ -82,7 +82,7 @@ namespace Notepad_Light.Helpers
             var bom = new byte[4];
             using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                file.Read(bom);
+                file.ReadExactly(bom);
             }
 
             // determine the encoding based on the BOM
