@@ -1,5 +1,4 @@
-﻿// app related refs
-// external dll refs
+﻿// external dll refs
 using Markdig;
 using Microsoft.Web.WebView2.Core;
 using Notepad_Light.Forms;
@@ -11,10 +10,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Reflection;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
+
 using static Notepad_Light.Helpers.Win32;
 using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
@@ -383,7 +381,6 @@ namespace Notepad_Light
             }
             else
             {
-                // if we have changes, prompt the user
                 // yes = save and create new doc
                 // no = create new doc
                 // cancel = do nothing
@@ -838,10 +835,7 @@ namespace Notepad_Light
 
         public void Copy()
         {
-            // if the cursor is in either toolbar textbox, use that text in the clipboard
-            // otherwise, use the RtbMain
-            // currently this only copies the entire textbox text even if part of the text is selected
-            // TODO: revisit if there is a need to copy partial selection in a textbox
+            // if the cursor is in a toolbar textbox, use that text in the clipboard instead of rtbmain
             try
             {
                 if (TimerDescriptionTextbox.Focused)
@@ -1549,6 +1543,11 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// Apply dark/light mode colors for pre Win11 machines
+        /// </summary>
+        /// <param name="clrBack"></param>
+        /// <param name="clrFore"></param>
         public void ApplyUIColorsLegacy(Color clrBack, Color clrFore)
         {
             // first apply to the main strips
@@ -1559,7 +1558,28 @@ namespace Notepad_Light
             MainStatusStrip.BackColor = clrBack;
             MainStatusStrip.ForeColor = clrFore;
 
-            // now apply to each control in the strips
+            // now apply to each control in the main menu, toolbar and status bar strips
+            foreach (ToolStripMenuItem item in MainMenuStrip.Items)
+            {
+                item.BackColor = clrBack;
+                item.ForeColor = clrFore;
+                // now apply to each dropdown item
+                foreach (ToolStripItem dropDownItem in item.DropDownItems)
+                {
+                    dropDownItem.BackColor = clrBack;
+                    dropDownItem.ForeColor = clrFore;
+                    // if the dropdown item has subitems, apply to those as well
+                    if (dropDownItem is ToolStripMenuItem subItem && subItem.HasDropDownItems)
+                    {
+                        foreach (ToolStripItem subDropDownItem in subItem.DropDownItems)
+                        {
+                            subDropDownItem.BackColor = clrBack;
+                            subDropDownItem.ForeColor = clrFore;
+                        }
+                    }
+                }
+            }
+
             foreach (ToolStripItem item in ButtonToolStrip.Items)
             {
                 item.BackColor = clrBack;
@@ -1583,30 +1603,14 @@ namespace Notepad_Light
             ToolStripSeparator9.BackColor = clrBack;
             ToolStripSeparator11.BackColor = clrBack;
             ToolStripSeparator13.BackColor = clrBack;
-
-            // now apply to each top level menu item
-            foreach (ToolStripMenuItem item in MainMenuStrip.Items)
-            {
-                item.BackColor = clrBack;
-                item.ForeColor = clrFore;
-                // now apply to each dropdown item
-                foreach (ToolStripItem dropDownItem in item.DropDownItems)
-                {
-                    dropDownItem.BackColor = clrBack;
-                    dropDownItem.ForeColor = clrFore;
-                    // if the dropdown item has subitems, apply to those as well
-                    if (dropDownItem is ToolStripMenuItem subItem && subItem.HasDropDownItems)
-                    {
-                        foreach (ToolStripItem subDropDownItem in subItem.DropDownItems)
-                        {
-                            subDropDownItem.BackColor = clrBack;
-                            subDropDownItem.ForeColor = clrFore;
-                        }
-                    }
-                }
-            }
         }
 
+        /// <summary>
+        /// apply dark/light mode colors to a control and its children for Win11 machines
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="clrBack"></param>
+        /// <param name="clrFore"></param>
         public void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
         {
             ctrl.BackColor = clrBack;
@@ -1619,6 +1623,10 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// dark mode is only supported on Windows 11
+        /// </summary>
+        /// <returns></returns>
         public static bool IsWindows11()
         {
             Version version = Environment.OSVersion.Version;
@@ -2290,21 +2298,6 @@ namespace Notepad_Light
         private void SaveToolStripButton_Click(object sender, EventArgs e)
         {
             FileSave();
-        }
-
-        private void CutToolStripButton_Click(object sender, EventArgs e)
-        {
-            Cut();
-        }
-
-        private void CopyToolStripButton_Click(object sender, EventArgs e)
-        {
-            Copy();
-        }
-
-        private void PasteToolStripButton_Click(object sender, EventArgs e)
-        {
-            Paste();
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
