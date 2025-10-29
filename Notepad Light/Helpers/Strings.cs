@@ -5,10 +5,15 @@
         // general strings
         public const string semiColon = " : ";
         public const string space = " ";
+        public const string pipe = " | ";
         public const string defaultFileName = "Untitled";
         public const string backupTemplateFileName = "TemplateBackup";
         public const string markdown = "Markdown";
         public const string rtf = "Rtf";
+        public const string utf8 = "UTF-8";
+        public const string utf16 = "UTF-16";
+        public const string ascii = "ASCII";
+        public const string ansi = "ANSI";
         public const string plainText = "Text";
         public const string pasteHtml = "Html";
         public const string pasteUnicode = "UnicodeText";
@@ -29,6 +34,7 @@
         public const string replaceText = "Replace Text";
         public const string textReplaced = "Text Replaced";
         public const string pathDivider = "\\";
+        public const string crLf = "\r\n";
         public const string AppTitle = "Notepad Light - ";
         public const string findUp = "Up";
         public const string findDown = "Down";
@@ -36,11 +42,15 @@
         public const string findWholeWord = "WholeWord";
         public const string errorLogFile = "NLErrors.txt";
         public const string appReadOnlyState = "(Read-Only)";
+        public const string RO = "Read-Only";
+        public const string defaultFont = "Segoe UI";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
         public const string githubIssues = "https://github.com/desjarlais/Notepad-Light/issues";
         public const string githubDiscussion = "https://github.com/desjarlais/Notepad-Light/discussions";
+        public const string copilotUrl = "https://copilot.microsoft.com/";
+        public const string bingSearchUrl = "https://www.bing.com/search?q=";
 
         // file paths
         public static string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

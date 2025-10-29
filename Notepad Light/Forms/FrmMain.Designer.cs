@@ -168,6 +168,7 @@
             TrackTimeToolStripButton = new ToolStripButton();
             ViewTimersToolStripButton = new ToolStripButton();
             ToolStripSeparator5 = new ToolStripSeparator();
+            CopilotToolStripButton = new ToolStripButton();
             fontDialog1 = new FontDialog();
             timer1 = new System.Windows.Forms.Timer(components);
             printDialog1 = new PrintDialog();
@@ -333,14 +334,14 @@
             contextMenuStrip1.ImageScalingSize = new Size(24, 24);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { CutContextMenu, CopyContextMenu, PasteContextMenu, SearchContextMenu, toolStripSeparator15, SaveAsPictureContextMenu, SelectAllContextMenu });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(213, 202);
+            contextMenuStrip1.Size = new Size(249, 235);
             contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             // 
             // CutContextMenu
             // 
             CutContextMenu.Image = Properties.Resources.Cut;
             CutContextMenu.Name = "CutContextMenu";
-            CutContextMenu.Size = new Size(212, 32);
+            CutContextMenu.Size = new Size(248, 32);
             CutContextMenu.Text = "Cut";
             CutContextMenu.Click += CutContextMenu_Click;
             // 
@@ -348,7 +349,7 @@
             // 
             CopyContextMenu.Image = Properties.Resources.Copy;
             CopyContextMenu.Name = "CopyContextMenu";
-            CopyContextMenu.Size = new Size(212, 32);
+            CopyContextMenu.Size = new Size(248, 32);
             CopyContextMenu.Text = "Copy";
             CopyContextMenu.Click += CopyContextMenu_Click;
             // 
@@ -356,7 +357,7 @@
             // 
             PasteContextMenu.Image = Properties.Resources.Paste;
             PasteContextMenu.Name = "PasteContextMenu";
-            PasteContextMenu.Size = new Size(212, 32);
+            PasteContextMenu.Size = new Size(248, 32);
             PasteContextMenu.Text = "Paste";
             PasteContextMenu.Click += PasteContextMenu_Click;
             // 
@@ -365,21 +366,21 @@
             SearchContextMenu.Enabled = false;
             SearchContextMenu.Image = Properties.Resources.Search;
             SearchContextMenu.Name = "SearchContextMenu";
-            SearchContextMenu.Size = new Size(212, 32);
+            SearchContextMenu.Size = new Size(248, 32);
             SearchContextMenu.Text = "Search Web";
             SearchContextMenu.Click += SearchContextMenu_Click;
             // 
             // toolStripSeparator15
             // 
             toolStripSeparator15.Name = "toolStripSeparator15";
-            toolStripSeparator15.Size = new Size(209, 6);
+            toolStripSeparator15.Size = new Size(245, 6);
             // 
             // SaveAsPictureContextMenu
             // 
             SaveAsPictureContextMenu.Enabled = false;
             SaveAsPictureContextMenu.Image = Properties.Resources.Image_16x;
             SaveAsPictureContextMenu.Name = "SaveAsPictureContextMenu";
-            SaveAsPictureContextMenu.Size = new Size(212, 32);
+            SaveAsPictureContextMenu.Size = new Size(248, 32);
             SaveAsPictureContextMenu.Text = "Save As Picture";
             SaveAsPictureContextMenu.Click += SaveAsPictureContextMenu_Click;
             // 
@@ -387,7 +388,7 @@
             // 
             SelectAllContextMenu.Image = Properties.Resources.SelectAll;
             SelectAllContextMenu.Name = "SelectAllContextMenu";
-            SelectAllContextMenu.Size = new Size(212, 32);
+            SelectAllContextMenu.Size = new Size(248, 32);
             SelectAllContextMenu.Text = "Select All";
             SelectAllContextMenu.Click += SelectAllContextMenu_Click;
             // 
@@ -963,7 +964,7 @@
             // 
             ButtonToolStrip.GripStyle = ToolStripGripStyle.Hidden;
             ButtonToolStrip.ImageScalingSize = new Size(24, 24);
-            ButtonToolStrip.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5 });
+            ButtonToolStrip.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5, CopilotToolStripButton });
             ButtonToolStrip.Location = new Point(0, 33);
             ButtonToolStrip.Name = "ButtonToolStrip";
             ButtonToolStrip.Padding = new Padding(0, 0, 3, 0);
@@ -1276,6 +1277,15 @@
             ToolStripSeparator5.Name = "ToolStripSeparator5";
             ToolStripSeparator5.Size = new Size(6, 34);
             // 
+            // CopilotToolStripButton
+            // 
+            CopilotToolStripButton.Image = (Image)resources.GetObject("CopilotToolStripButton.Image");
+            CopilotToolStripButton.ImageTransparentColor = Color.Magenta;
+            CopilotToolStripButton.Name = "CopilotToolStripButton";
+            CopilotToolStripButton.Size = new Size(98, 29);
+            CopilotToolStripButton.Text = "Copilot";
+            CopilotToolStripButton.Click += CopilotToolStripButton_Click;
+            // 
             // timer1
             // 
             timer1.Tick += Timer1_Tick;
@@ -1543,5 +1553,6 @@
         private SplitContainer splitContainerMain;
         private RichTextBox RtbMain;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewMarkup;
+        private ToolStripButton CopilotToolStripButton;
     }
 }

@@ -22,6 +22,7 @@ namespace Notepad_Light
     {
         // globals
         public bool gNoColorTable = false;
+        public bool gIsWindows11 = false;
         public string gCurrentFileName = Strings.defaultFileName;
         public static string gErrorLog = string.Empty;
         public string gCurrentAppVersion = string.Empty;
@@ -56,6 +57,9 @@ namespace Notepad_Light
 
             // initialize stopwatch for timer
             gStopwatch = new Stopwatch();
+
+            // check os version for dark mode support
+            gIsWindows11 = IsWindows11();
 
             // init file MRU
             UpdateMRU();
@@ -155,7 +159,7 @@ namespace Notepad_Light
         {
             if (additionalInfo != string.Empty)
             {
-                this.Text = additionalInfo + " - " + Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version + " | " + additionalInfo;
+                this.Text = additionalInfo + " - " + Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version + Strings.pipe + additionalInfo;
             }
             else
             {
@@ -413,16 +417,16 @@ namespace Notepad_Light
         {
             // Fix CS8602: Ensure EncodingToolStripStatusLabel.Text is not null before using Contains
             var encodingText = EncodingToolStripStatusLabel.Text;
-            if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains("UTF-8"))
+            if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains(Strings.utf8))
             {
                 string text = File.ReadAllText(filePath);
                 RtbMain.Text = text;
             }
-            else if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains("UTF-16"))
+            else if (!string.IsNullOrEmpty(encodingText) && encodingText.Contains(Strings.utf16))
             {
                 RtbMain.LoadFile(filePath, RichTextBoxStreamType.UnicodePlainText);
             }
-            else if (!string.IsNullOrEmpty(encodingText) && (encodingText.Contains("ASCII") || encodingText.Contains("ANSI")))
+            else if (!string.IsNullOrEmpty(encodingText) && (encodingText.Contains(Strings.ascii) || encodingText.Contains(Strings.ansi)))
             {
                 RtbMain.LoadFile(filePath, RichTextBoxStreamType.PlainText);
             }
@@ -619,7 +623,7 @@ namespace Notepad_Light
                 }
 
                 // for new blank docs and readonly files, any change needs to be a new file save
-                if (gCurrentFileName.ToString() == Strings.defaultFileName || this.Text.Contains("Read-Only"))
+                if (gCurrentFileName.ToString() == Strings.defaultFileName || this.Text.Contains(Strings.RO))
                 {
                     FileSaveAs();
                 }
@@ -737,7 +741,7 @@ namespace Notepad_Light
         /// <param name="filePath"></param>
         public void OpenRecentFile(string filePath)
         {
-            if (filePath == string.Empty || filePath == "empty")
+            if (filePath == string.Empty || filePath == Strings.empty)
             {
                 return;
             }
@@ -1080,7 +1084,7 @@ namespace Notepad_Light
                 return true;
             }
 
-            if (TimerToolStripLabel.Text != "00:00:00")
+            if (TimerToolStripLabel.Text != Strings.zeroTimer)
             {
                 return true;
             }
@@ -1266,7 +1270,7 @@ namespace Notepad_Light
         public void ClearFormatting()
         {
             RtbMain.SelectionBullet = false;
-            RtbMain.SelectionFont = new Font("Segoe UI", 10);
+            RtbMain.SelectionFont = new Font(Strings.defaultFont, 10);
             RtbMain.SelectionIndent = 0;
             RtbMain.SelectionAlignment = HorizontalAlignment.Left;
             RtbMain.Modified = true;
@@ -1503,7 +1507,7 @@ namespace Notepad_Light
 
         public void InsertDateTime()
         {
-            RtbMain.SelectedText = DateTime.Now.ToString() + "\r\n";
+            RtbMain.SelectedText = DateTime.Now.ToString() + Strings.crLf;
         }
 
         /// <summary>
@@ -1640,7 +1644,7 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyDarkMode()
         {
-            if (IsWindows11() && SystemInformation.HighContrast == false)
+            if (gIsWindows11 && SystemInformation.HighContrast == false)
             {
                 // rtf color tables get messed up when switching to dark mode
                 // hold the rtf (including color table) in the rtf string
@@ -1649,7 +1653,7 @@ namespace Notepad_Light
                 {
                     RtbMain.Rtf = string.Empty;
                 }
-                
+
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Dark);
 #pragma warning restore WFO5001
@@ -1687,7 +1691,7 @@ namespace Notepad_Light
                 RtbMain.Rtf = string.Empty;
             }
 
-            if (IsWindows11() && SystemInformation.HighContrast == false)
+            if (gIsWindows11 && SystemInformation.HighContrast == false)
             {
 #pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Classic);
@@ -1757,11 +1761,17 @@ namespace Notepad_Light
         /// <summary>
         /// search bing for the selected text and display it in the panel
         /// </summary>
-        private async void WebView2Navigate()
+        private async void WebView2Search()
         {
             await webViewMarkup.EnsureCoreWebView2Async();
-            string searchUrl = "https://www.bing.com/search?q=" + RtbMain.SelectedText;
+            string searchUrl = Strings.bingSearchUrl + RtbMain.SelectedText;
             webViewMarkup.Source = new Uri(searchUrl);
+        }
+
+        private async void WebView2NavigateUrl(string url)
+        {
+            await webViewMarkup.EnsureCoreWebView2Async();
+            webViewMarkup.Source = new Uri(url);
         }
 
         /// <summary>
@@ -2561,7 +2571,7 @@ namespace Notepad_Light
                 int charactersOnPage = 0;
 
                 // Ensure font is not null to avoid CS8604
-                Font printFont = RtbMain.SelectionFont ?? RtbMain.Font ?? new Font("Segoe UI", 9);
+                Font printFont = RtbMain.SelectionFont ?? RtbMain.Font ?? new Font(Strings.defaultFont, 9);
 
                 // Set charactersOnPage to the number of chars that will fit within the bounds of the page.
                 e.Graphics?.MeasureString(gPrintString, printFont, e.MarginBounds.Size, StringFormat.GenericTypographic,
@@ -2826,7 +2836,7 @@ namespace Notepad_Light
         private void SearchContextMenu_Click(object sender, EventArgs e)
         {
             splitContainerMain.Panel2Collapsed = false;
-            WebView2Navigate();
+            WebView2Search();
         }
 
         private void TaskPaneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3046,6 +3056,14 @@ namespace Notepad_Light
         private void ClearTimersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.TimersList.Clear();
+        }
+
+        private void CopilotToolStripButton_Click(object sender, EventArgs e)
+        {
+            splitContainerMain.Panel2Collapsed = false;
+            TaskPaneToolStripMenuItem.Enabled = true;
+            TaskPaneToolStripMenuItem.Checked = true;
+            WebView2NavigateUrl(Strings.copilotUrl);
         }
 
         #endregion
