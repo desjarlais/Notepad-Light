@@ -50,8 +50,9 @@
             toolStripStatusLabel4 = new ToolStripStatusLabel();
             toolStripStatusLabelFileEncoding = new ToolStripStatusLabel();
             EncodingToolStripStatusLabel = new ToolStripStatusLabel();
-            toolStripStatusLabelFilePath = new ToolStripStatusLabel();
-            toolStripStatusLabelOpenFilePath = new ToolStripStatusLabel();
+            toolStripStatusLabelOverStrike = new ToolStripStatusLabel();
+            toolStripStatusLabelCapsLock = new ToolStripStatusLabel();
+            toolStripStatusLabelNumLock = new ToolStripStatusLabel();
             contextMenuStrip1 = new ContextMenuStrip(components);
             CutContextMenu = new ToolStripMenuItem();
             CopyContextMenu = new ToolStripMenuItem();
@@ -180,6 +181,7 @@
             splitContainerMain = new SplitContainer();
             RtbMain = new RichTextBox();
             webViewMarkup = new Microsoft.Web.WebView2.WinForms.WebView2();
+            toolStripStatusLabelSeparator9 = new ToolStripStatusLabel();
             MainStatusStrip.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             MainMenuStrip.SuspendLayout();
@@ -194,7 +196,7 @@
             // MainStatusStrip
             // 
             MainStatusStrip.ImageScalingSize = new Size(32, 32);
-            MainStatusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelLn, toolStripStatusLabelLine, toolStripStatusLabelCol, toolStripStatusLabelColumn, toolStripStatusLabelSeparator2, WordCountToolStripStatusLabel, toolStripStatusLabelWords, CharacterCountToolStripStatusLabel, toolStripStatusLabelChar, LinesToolStripStatusLabel, toolStripStatusLabelLines, toolStripStatusLabelSeparator1, fontToolStripStatusLabel, toolStripStatusLabelSeparator3, toolStripStatusLabelFType, toolStripStatusLabelFileType, toolStripStatusLabel4, toolStripStatusLabelFileEncoding, EncodingToolStripStatusLabel, toolStripStatusLabelFilePath, toolStripStatusLabelOpenFilePath });
+            MainStatusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelLn, toolStripStatusLabelLine, toolStripStatusLabelCol, toolStripStatusLabelColumn, toolStripStatusLabelSeparator2, WordCountToolStripStatusLabel, toolStripStatusLabelWords, CharacterCountToolStripStatusLabel, toolStripStatusLabelChar, LinesToolStripStatusLabel, toolStripStatusLabelLines, toolStripStatusLabelSeparator1, fontToolStripStatusLabel, toolStripStatusLabelSeparator3, toolStripStatusLabelFType, toolStripStatusLabelFileType, toolStripStatusLabel4, toolStripStatusLabelFileEncoding, EncodingToolStripStatusLabel, toolStripStatusLabelSeparator9, toolStripStatusLabelOverStrike, toolStripStatusLabelCapsLock, toolStripStatusLabelNumLock });
             MainStatusStrip.Location = new Point(0, 1035);
             MainStatusStrip.Name = "MainStatusStrip";
             MainStatusStrip.Padding = new Padding(1, 0, 11, 0);
@@ -317,31 +319,37 @@
             EncodingToolStripStatusLabel.Size = new Size(139, 25);
             EncodingToolStripStatusLabel.Text = "Unicode (UTF-8)";
             // 
-            // toolStripStatusLabelFilePath
+            // toolStripStatusLabelOverStrike
             // 
-            toolStripStatusLabelFilePath.Name = "toolStripStatusLabelFilePath";
-            toolStripStatusLabelFilePath.Size = new Size(95, 25);
-            toolStripStatusLabelFilePath.Text = "| File Path: ";
+            toolStripStatusLabelOverStrike.Name = "toolStripStatusLabelOverStrike";
+            toolStripStatusLabelOverStrike.Size = new Size(48, 25);
+            toolStripStatusLabelOverStrike.Text = "OVR";
             // 
-            // toolStripStatusLabelOpenFilePath
+            // toolStripStatusLabelCapsLock
             // 
-            toolStripStatusLabelOpenFilePath.Name = "toolStripStatusLabelOpenFilePath";
-            toolStripStatusLabelOpenFilePath.Size = new Size(105, 25);
-            toolStripStatusLabelOpenFilePath.Text = "Document1";
+            toolStripStatusLabelCapsLock.Name = "toolStripStatusLabelCapsLock";
+            toolStripStatusLabelCapsLock.Size = new Size(92, 25);
+            toolStripStatusLabelCapsLock.Text = "Caps Lock";
+            // 
+            // toolStripStatusLabelNumLock
+            // 
+            toolStripStatusLabelNumLock.Name = "toolStripStatusLabelNumLock";
+            toolStripStatusLabelNumLock.Size = new Size(92, 25);
+            toolStripStatusLabelNumLock.Text = "Num Lock";
             // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(24, 24);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { CutContextMenu, CopyContextMenu, PasteContextMenu, SearchContextMenu, toolStripSeparator15, SaveAsPictureContextMenu, SelectAllContextMenu });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(249, 235);
+            contextMenuStrip1.Size = new Size(213, 202);
             contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             // 
             // CutContextMenu
             // 
             CutContextMenu.Image = Properties.Resources.Cut;
             CutContextMenu.Name = "CutContextMenu";
-            CutContextMenu.Size = new Size(248, 32);
+            CutContextMenu.Size = new Size(212, 32);
             CutContextMenu.Text = "Cut";
             CutContextMenu.Click += CutContextMenu_Click;
             // 
@@ -349,7 +357,7 @@
             // 
             CopyContextMenu.Image = Properties.Resources.Copy;
             CopyContextMenu.Name = "CopyContextMenu";
-            CopyContextMenu.Size = new Size(248, 32);
+            CopyContextMenu.Size = new Size(212, 32);
             CopyContextMenu.Text = "Copy";
             CopyContextMenu.Click += CopyContextMenu_Click;
             // 
@@ -357,7 +365,7 @@
             // 
             PasteContextMenu.Image = Properties.Resources.Paste;
             PasteContextMenu.Name = "PasteContextMenu";
-            PasteContextMenu.Size = new Size(248, 32);
+            PasteContextMenu.Size = new Size(212, 32);
             PasteContextMenu.Text = "Paste";
             PasteContextMenu.Click += PasteContextMenu_Click;
             // 
@@ -366,21 +374,21 @@
             SearchContextMenu.Enabled = false;
             SearchContextMenu.Image = Properties.Resources.Search;
             SearchContextMenu.Name = "SearchContextMenu";
-            SearchContextMenu.Size = new Size(248, 32);
+            SearchContextMenu.Size = new Size(212, 32);
             SearchContextMenu.Text = "Search Web";
             SearchContextMenu.Click += SearchContextMenu_Click;
             // 
             // toolStripSeparator15
             // 
             toolStripSeparator15.Name = "toolStripSeparator15";
-            toolStripSeparator15.Size = new Size(245, 6);
+            toolStripSeparator15.Size = new Size(209, 6);
             // 
             // SaveAsPictureContextMenu
             // 
             SaveAsPictureContextMenu.Enabled = false;
             SaveAsPictureContextMenu.Image = Properties.Resources.Image_16x;
             SaveAsPictureContextMenu.Name = "SaveAsPictureContextMenu";
-            SaveAsPictureContextMenu.Size = new Size(248, 32);
+            SaveAsPictureContextMenu.Size = new Size(212, 32);
             SaveAsPictureContextMenu.Text = "Save As Picture";
             SaveAsPictureContextMenu.Click += SaveAsPictureContextMenu_Click;
             // 
@@ -388,7 +396,7 @@
             // 
             SelectAllContextMenu.Image = Properties.Resources.SelectAll;
             SelectAllContextMenu.Name = "SelectAllContextMenu";
-            SelectAllContextMenu.Size = new Size(248, 32);
+            SelectAllContextMenu.Size = new Size(212, 32);
             SelectAllContextMenu.Text = "Select All";
             SelectAllContextMenu.Click += SelectAllContextMenu_Click;
             // 
@@ -1361,6 +1369,12 @@
             webViewMarkup.TabIndex = 0;
             webViewMarkup.ZoomFactor = 1D;
             // 
+            // toolStripStatusLabelSeparator9
+            // 
+            toolStripStatusLabelSeparator9.Name = "toolStripStatusLabelSeparator9";
+            toolStripStatusLabelSeparator9.Size = new Size(16, 25);
+            toolStripStatusLabelSeparator9.Text = "|";
+            // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -1548,11 +1562,13 @@
         private ToolStripMenuItem ViewTimersToolStripMenuItem;
         private ToolStripButton ViewTimersToolStripButton;
         private ToolStripMenuItem ClearTimersToolStripMenuItem;
-        private ToolStripStatusLabel toolStripStatusLabelFilePath;
-        private ToolStripStatusLabel toolStripStatusLabelOpenFilePath;
         private SplitContainer splitContainerMain;
         private RichTextBox RtbMain;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewMarkup;
         private ToolStripButton CopilotToolStripButton;
+        private ToolStripStatusLabel toolStripStatusLabelCapsLock;
+        private ToolStripStatusLabel toolStripStatusLabelOverStrike;
+        private ToolStripStatusLabel toolStripStatusLabelNumLock;
+        private ToolStripStatusLabel toolStripStatusLabelSeparator9;
     }
 }

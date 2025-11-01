@@ -218,6 +218,8 @@ namespace Notepad_Light.Helpers
         public const int MM_ISOTROPIC = 7;
         public const int MM_ANISOTROPIC = 8;
 
+        public const int KEY_INSERT = 0X2D;
+
         /// <summary>
         /// contains information about the current state of both physical and virtual memory, including extended memory
         /// </summary>
@@ -278,6 +280,8 @@ namespace Notepad_Light.Helpers
             }
         }
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        internal static extern short GetKeyState(int KeyCode);
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern void GetSystemInfo(ref SYSTEM_INFO Info);
         [DllImport("user32.dll", SetLastError = true)]

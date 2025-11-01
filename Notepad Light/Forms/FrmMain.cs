@@ -65,7 +65,7 @@ namespace Notepad_Light
             UpdateMRU();
 
             // update app version in titlebar
-            UpdateTitleBar(string.Empty);
+            UpdateTitleBar("Untitled");
 
             // set initial zoom to 100 and update menu
             ZoomToolStripMenuItem100.Checked = true;
@@ -79,6 +79,7 @@ namespace Notepad_Light
             UpdateStatusBar();
             UpdateLnColValues();
             UpdateDocStats();
+            UpdateKeyboardInfo();
             UpdateAutoSaveInterval();
 
             // update theme
@@ -111,6 +112,8 @@ namespace Notepad_Light
 
             UpdateToolbarIcons();
             SetupWebView();
+
+            Application.Idle += OnApplication_Idle;
         }
 
         #region Class Properties
@@ -159,7 +162,7 @@ namespace Notepad_Light
         {
             if (additionalInfo != string.Empty)
             {
-                this.Text = additionalInfo + " - " + Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version + Strings.pipe + additionalInfo;
+                this.Text = Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version + Strings.minus + additionalInfo;
             }
             else
             {
@@ -236,7 +239,7 @@ namespace Notepad_Light
 
         public void UpdateOpenFilePath(string docName)
         {
-            toolStripStatusLabelOpenFilePath.Text = docName;
+            UpdateTitleBar(docName);
             gCurrentFileName = docName;
         }
 
@@ -632,7 +635,6 @@ namespace Notepad_Light
                     // rtf files can use SaveFile, everything else should use WriteAllText to handle unicode variations
                     if (gCurrentFileType == CurrentFileType.RTF)
                     {
-                        //ApplyNoColorDefaultColor();
                         RtbMain.SaveFile(gCurrentFileName);
                     }
                     else
@@ -1262,6 +1264,45 @@ namespace Notepad_Light
             WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
             CharacterCountToolStripStatusLabel.Text = RtbMain.TextLength.ToString();
             LinesToolStripStatusLabel.Text = RtbMain.Lines.Length.ToString();
+        }
+
+        /// <summary>
+        /// update the caps and overstrike keyboard info to the statusbar
+        /// </summary>
+        public void UpdateKeyboardInfo()
+        {
+            toolStripStatusLabelCapsLock.Visible = false;
+            toolStripStatusLabelNumLock.Visible = false;
+
+            // update caps lock
+            if (Control.IsKeyLocked(Keys.CapsLock))
+            {
+                toolStripStatusLabelCapsLock.Visible = true;
+            }
+            else
+            {
+                toolStripStatusLabelCapsLock.Visible = false;
+            }
+
+            // update num lock
+            if (Control.IsKeyLocked(Keys.NumLock))
+            {
+                toolStripStatusLabelNumLock.Visible = true;
+            }
+            else
+            {
+                toolStripStatusLabelNumLock.Visible = false;
+            }
+
+            // update overstrike / insert
+            if ((Win32.GetKeyState(Win32.KEY_INSERT) & 1) > 0)
+            {
+                toolStripStatusLabelOverStrike.Text = Strings.keyboardOvr;
+            }
+            else
+            {
+                toolStripStatusLabelOverStrike.Text = Strings.keybaordIns;
+            }
         }
 
         /// <summary>
@@ -2107,6 +2148,17 @@ namespace Notepad_Light
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// app idle event to update keyboard info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void OnApplication_Idle(object? sender, EventArgs e)
+        {
+            UpdateKeyboardInfo();
+        }
 
         /// <summary>
         /// known issue in toolstripseparator not using back/fore colors

@@ -6,6 +6,7 @@
         public const string semiColon = " : ";
         public const string space = " ";
         public const string pipe = " | ";
+        public const string minus = " - ";
         public const string defaultFileName = "Untitled";
         public const string backupTemplateFileName = "TemplateBackup";
         public const string markdown = "Markdown";
@@ -35,7 +36,7 @@
         public const string textReplaced = "Text Replaced";
         public const string pathDivider = "\\";
         public const string crLf = "\r\n";
-        public const string AppTitle = "Notepad Light - ";
+        public const string AppTitle = "Notepad Light v";
         public const string findUp = "Up";
         public const string findDown = "Down";
         public const string findMatchCase = "MatchCase";
@@ -44,6 +45,8 @@
         public const string appReadOnlyState = "(Read-Only)";
         public const string RO = "Read-Only";
         public const string defaultFont = "Segoe UI";
+        public const string keyboardOvr = "OVR";
+        public const string keybaordIns = "INS";
 
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
