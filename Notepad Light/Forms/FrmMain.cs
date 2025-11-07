@@ -53,6 +53,7 @@ namespace Notepad_Light
             gErrorLog = Strings.appFolderDirectoryUrl;
 
             // collapse panel by default, currently only used for markdown files
+            SetupWebView();
             splitContainerMain.Panel2Collapsed = true;
 
             // initialize stopwatch for timer
@@ -111,8 +112,6 @@ namespace Notepad_Light
             }
 
             UpdateToolbarIcons();
-            SetupWebView();
-
             Application.Idle += OnApplication_Idle;
         }
 
@@ -990,17 +989,17 @@ namespace Notepad_Light
                 Properties.Settings.Default.TimersList.Clear();
             }
 
+            // remove all non-app related files or no longer used templates
+            if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
+            {
+                CleanupTemplateFiles();
+            }
+
             // formclosingevent will fire twice if we call app exit anywhere from form closing
             // only call app.exit if we aren't coming from the event
             if (!fromFormClosingEvent)
             {
                 Application.Exit();
-            }
-
-            // remove all non-app related files or no longer used templates
-            if (Properties.Settings.Default.RemoveTempFilesOnExit == true)
-            {
-                CleanupTemplateFiles();
             }
         }
 

@@ -50,6 +50,7 @@
             toolStripStatusLabel4 = new ToolStripStatusLabel();
             toolStripStatusLabelFileEncoding = new ToolStripStatusLabel();
             EncodingToolStripStatusLabel = new ToolStripStatusLabel();
+            toolStripStatusLabelSeparator9 = new ToolStripStatusLabel();
             toolStripStatusLabelOverStrike = new ToolStripStatusLabel();
             toolStripStatusLabelCapsLock = new ToolStripStatusLabel();
             toolStripStatusLabelNumLock = new ToolStripStatusLabel();
@@ -181,7 +182,6 @@
             splitContainerMain = new SplitContainer();
             RtbMain = new RichTextBox();
             webViewMarkup = new Microsoft.Web.WebView2.WinForms.WebView2();
-            toolStripStatusLabelSeparator9 = new ToolStripStatusLabel();
             MainStatusStrip.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             MainMenuStrip.SuspendLayout();
@@ -318,6 +318,12 @@
             EncodingToolStripStatusLabel.Name = "EncodingToolStripStatusLabel";
             EncodingToolStripStatusLabel.Size = new Size(139, 25);
             EncodingToolStripStatusLabel.Text = "Unicode (UTF-8)";
+            // 
+            // toolStripStatusLabelSeparator9
+            // 
+            toolStripStatusLabelSeparator9.Name = "toolStripStatusLabelSeparator9";
+            toolStripStatusLabelSeparator9.Size = new Size(16, 25);
+            toolStripStatusLabelSeparator9.Text = "|";
             // 
             // toolStripStatusLabelOverStrike
             // 
@@ -1368,12 +1374,6 @@
             webViewMarkup.Size = new Size(862, 968);
             webViewMarkup.TabIndex = 0;
             webViewMarkup.ZoomFactor = 1D;
-            // 
-            // toolStripStatusLabelSeparator9
-            // 
-            toolStripStatusLabelSeparator9.Name = "toolStripStatusLabelSeparator9";
-            toolStripStatusLabelSeparator9.Size = new Size(16, 25);
-            toolStripStatusLabelSeparator9.Text = "|";
             // 
             // FrmMain
             // 
