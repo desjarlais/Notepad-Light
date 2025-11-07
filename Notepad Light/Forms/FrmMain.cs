@@ -52,7 +52,7 @@ namespace Notepad_Light
             // setup log file
             gErrorLog = Strings.appFolderDirectoryUrl;
 
-            // collapse panel by default, currently only used for markdown files
+            // setup webview and collapse panel
             SetupWebView();
             splitContainerMain.Panel2Collapsed = true;
 
@@ -93,8 +93,6 @@ namespace Notepad_Light
                 ApplyLightMode();
             }
 
-            RtbMain.Modified = false;
-
             // start the autosave timer
             if (Properties.Settings.Default.AutoSaveInterval > 0)
             {
@@ -111,6 +109,7 @@ namespace Notepad_Light
                 CreateNewDocument();
             }
 
+            RtbMain.Modified = false;
             UpdateToolbarIcons();
             Application.Idle += OnApplication_Idle;
         }
@@ -513,7 +512,7 @@ namespace Notepad_Light
             catch (Exception ex)
             {
                 MessageBox.Show("Unable to open file - " + ex.Message, "File Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                App.WriteErrorLogContent("FileMRUOpen Error = " + ex.Message, gErrorLog);
+                App.WriteErrorLogContent("FileMRUOpen Error: " + filePath + Strings.semiColon + ex.Message, gErrorLog);
             }
             finally
             {
@@ -593,6 +592,7 @@ namespace Notepad_Light
                     MoveCursorToLocation(0, 0);
                     UpdateDocStats();
                     CheckForReadOnly(ofdFileOpen.FileName);
+                    UpdateTitleBar(ofdFileOpen.FileName);
                     gPrevPageLength = RtbMain.TextLength;
                     RtbMain.Modified = false;
                 }
