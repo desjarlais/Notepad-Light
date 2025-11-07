@@ -348,25 +348,22 @@ namespace Notepad_Light
             UpdateOpenFilePath(Strings.defaultFileName);
             UpdateCurrentFileType(gCurrentFileName);
 
+            ClearToolbarFormattingIcons();
+            DisableToolbarFormattingIcons();
+
             // check for file type and update UI accordingly
             if (gCurrentFileType == CurrentFileType.RTF)
             {
-                ClearToolbarFormattingIcons();
-                EnableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbMain.Rtf ?? string.Empty, true);
                 toolStripStatusLabelFileType.Text = Strings.rtf;
             }
             else if (gCurrentFileType == CurrentFileType.Text)
             {
-                ClearToolbarFormattingIcons();
-                DisableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
                 toolStripStatusLabelFileType.Text = Strings.plainText;
             }
             else
             {
-                ClearToolbarFormattingIcons();
-                DisableToolbarFormattingIcons();
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
                 toolStripStatusLabelFileType.Text = Strings.markdown;
             }
