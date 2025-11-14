@@ -808,31 +808,18 @@ namespace Notepad_Light
         /// <param name="index"></param>
         public void RemoveFileFromMRU(string path)
         {
-            int mruIndex = 0;
-            int badIndex = 0;
+            if (string.IsNullOrEmpty(path)) return;
+            if (Properties.Settings.Default.FileMRU.Count == 0) return;
 
-            // check if the non-existent file is in the mru
-            if (Properties.Settings.Default.FileMRU.Count > 0)
+            int index = Properties.Settings.Default.FileMRU.IndexOf(path);
+            if (index >= 0)
             {
-                foreach (var f in Properties.Settings.Default.FileMRU)
-                {
-                    if (f == path)
-                    {
-                        badIndex = mruIndex;
-                    }
-
-                    mruIndex++;
-                }
-
-                // now that we know where the file is, remove it
-                Properties.Settings.Default.FileMRU.RemoveAt(badIndex);
+                Properties.Settings.Default.FileMRU.RemoveAt(index);
                 App.WriteErrorLogContent("File MRU Path Removed : " + path, gErrorLog);
                 MessageBox.Show("File No Longer Exists, Removing From Recent Files", "Invalid File Path", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ClearRecentMenuItems();
+                UpdateMRU();
             }
-
-            // clear the menu and add back the remaining files
-            ClearRecentMenuItems();
-            UpdateMRU();
         }
 
         public void Cut()
@@ -963,9 +950,55 @@ namespace Notepad_Light
                         }
                         break;
                     case Strings.pasteUnicode: RtbMain.SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText); break;
-                    case Strings.pasteImage: RtbMain.Paste(); break;
+                    case Strings.pasteImage:
+                        // Handle image paste with transparency replacement if needed
+                        if (Clipboard.ContainsImage())
+                        {
+                            Image? img = Clipboard.GetImage();
+                            if (img != null)
+                            {
+                                using Bitmap transparencyCheck = new Bitmap(img);
+                                if (ContainsTransparentPixel(transparencyCheck) && Properties.Settings.Default.UseImageTransparency)
+                                {
+                                    Color bg = (Properties.Settings.Default.DarkMode) ? clrDarkModeForeColor : Color.White;
+                                    using Bitmap replaced = ReplaceTransparency(img, bg);
+                                    RtbMain.SelectedRtf = Rtf.InsertPicture(replaced, gErrorLog);
+                                }
+                                else
+                                {
+                                    RtbMain.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            RtbMain.Paste();
+                        }
+                        break;
                     default:
+                        // Default paste: if clipboard has image, treat like pasteImage with transparency logic
+                        if (Clipboard.ContainsImage())
+                        {
+                            Image? img = Clipboard.GetImage();
+                            if (img != null)
+                            {
+                                using Bitmap transparencyCheck = new Bitmap(img);
+                                if (ContainsTransparentPixel(transparencyCheck) && Properties.Settings.Default.UseImageTransparency)
+                                {
+                                    Color bg = (Properties.Settings.Default.DarkMode) ? clrDarkModeForeColor : Color.White;
+                                    using Bitmap replaced = ReplaceTransparency(img, bg);
+                                    RtbMain.SelectedRtf = Rtf.InsertPicture(replaced, gErrorLog);
+                                }
+                                else
+                                {
+                                    RtbMain.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
+                                }
+                            }
+                        }
+                        else
+                        {
                         RtbMain.Paste();
+                        }
                         break;
                 }
             }
@@ -1502,16 +1535,8 @@ namespace Notepad_Light
         /// <param name="filePath">file path to check if it exists</param>
         public void AddFileToMRU(string filePath)
         {
-            bool isFileInMru = false;
-            foreach (var f in Properties.Settings.Default.FileMRU)
-            {
-                if (f == gCurrentFileName)
-                {
-                    isFileInMru = true;
-                }
-            }
-
-            if (!isFileInMru)
+            if (string.IsNullOrEmpty(filePath)) return;
+            if (!Properties.Settings.Default.FileMRU.Contains(filePath))
             {
                 Properties.Settings.Default.FileMRU.Add(filePath);
                 if (Properties.Settings.Default.FileMRU.Count > 9)
@@ -1519,6 +1544,7 @@ namespace Notepad_Light
                     Properties.Settings.Default.FileMRU.RemoveAt(0);
                 }
                 UpdateMRU();
+                // Batching: defer Properties.Settings.Default.Save() to broader lifecycle points (e.g., app exit)
             }
         }
 
@@ -2775,26 +2801,26 @@ namespace Notepad_Light
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    // get the image from the dialog
-                    Image img = Image.FromFile(ofd.FileName);
+                    // Load the image once
+                    using Image original = Image.FromFile(ofd.FileName);
+                    using Bitmap transparencyCheck = new Bitmap(original);
 
-                    // creating a bitmap to check for transparencies
-                    Bitmap bmp = new Bitmap(img);
-                    if (ContainsTransparentPixel(bmp))
+                    Image toInsert = original;
+                    if (ContainsTransparentPixel(transparencyCheck))
                     {
-                        // depending on the ui theme, apply the same color to the background
-                        if (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency == true)
-                        {
-                            img = ReplaceTransparency(Image.FromFile(ofd.FileName), clrDarkModeForeColor);
-                        }
-                        else
-                        {
-                            img = ReplaceTransparency(Image.FromFile(ofd.FileName), Color.White);
-                        }
+                        // Replace transparency based on current UI theme (do not reload file)
+                        Color bg = (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency)
+                            ? clrDarkModeForeColor
+                            : Color.White;
+                        toInsert = ReplaceTransparency(original, bg);
                     }
 
-                    // convert the image to rtf so it can be displayed
-                    RtbMain.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
+                    // Insert converted (or original) image
+                    RtbMain.SelectedRtf = Rtf.InsertPicture(toInsert, gErrorLog);
+                    if (!ReferenceEquals(toInsert, original))
+                    {
+                        toInsert.Dispose(); // dispose temp bitmap produced by ReplaceTransparency
+                    }
                     RtbMain.Focus();
                 }
             }
