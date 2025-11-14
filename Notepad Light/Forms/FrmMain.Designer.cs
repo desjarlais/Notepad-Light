@@ -1360,6 +1360,7 @@
             RtbMain.VScroll += RtbMain_VScroll;
             RtbMain.TextChanged += RtbMain_TextChanged;
             RtbMain.KeyDown += RtbMain_KeyDown;
+            RtbMain.KeyUp += RtbMain_KeyUp;
             RtbMain.MouseDown += RtbMain_MouseDown;
             RtbMain.MouseMove += RtbMain_MouseMove;
             // 

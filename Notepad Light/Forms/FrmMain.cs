@@ -111,7 +111,6 @@ namespace Notepad_Light
 
             RtbMain.Modified = false;
             UpdateToolbarIcons();
-            Application.Idle += OnApplication_Idle;
         }
 
         #region Class Properties
@@ -935,8 +934,15 @@ namespace Notepad_Light
                     case Strings.rtf:
                         if (Properties.Settings.Default.PasteRtfUnformatted)
                         {
-                            // paste as unformatted rtf
-                            RtbMain.SelectedText = Clipboard.GetData(DataFormats.Rtf)?.ToString();
+                            // paste as unformatted rtf using TryGetData<string>
+                            if (Clipboard.TryGetData<string>(DataFormats.Rtf, out var rtfData) && rtfData != null)
+                            {
+                                RtbMain.SelectedText = rtfData;
+                            }
+                            else
+                            {
+                                RtbMain.SelectedText = Clipboard.GetText(TextDataFormat.Rtf);
+                            }
                         }
                         else
                         {
@@ -2138,17 +2144,6 @@ namespace Notepad_Light
         #region Events
 
         /// <summary>
-        /// app idle event to update keyboard info
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void OnApplication_Idle(object? sender, EventArgs e)
-        {
-            UpdateKeyboardInfo();
-        }
-
-        /// <summary>
         /// known issue in toolstripseparator not using back/fore colors
         /// https://stackoverflow.com/questions/15926377/change-the-backcolor-of-the-toolstripseparator-control
         /// this is for MenuStrip toolstrip separators, but not needed for ToolStrip separators
@@ -3104,6 +3099,11 @@ namespace Notepad_Light
             TaskPaneToolStripMenuItem.Enabled = true;
             TaskPaneToolStripMenuItem.Checked = true;
             WebView2NavigateUrl(Strings.copilotUrl);
+        }
+
+        private void RtbMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            UpdateKeyboardInfo();
         }
 
         #endregion
