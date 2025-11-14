@@ -34,6 +34,9 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+        // timer performance optimization state
+        private long _lastTimerUiUpdateMs = -250; // allow immediate first update
+        private string _prevTimerText = Strings.zeroTimer;
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
         public Color clrDarkModeForeColor = Color.FromArgb(96, 96, 96);
         public CurrentFileType gCurrentFileType;
@@ -114,6 +117,18 @@ namespace Notepad_Light
         }
 
         /// <summary>
+        /// Helper to only assign ToolStripItem.Text when value changed.
+        /// Reduces layout/paint churn.
+        /// </summary>
+        private static void SetToolStripText(ToolStripItem item, string newText)
+        {
+            if (item.Text != newText)
+            {
+                item.Text = newText;
+            }
+        }
+
+        /// <summary>
         /// Helper to log benign (high-frequency) errors without stack trace to reduce I/O overhead.
         /// </summary>
         /// <param name="context">Short context prefix.</param>
@@ -169,9 +184,13 @@ namespace Notepad_Light
         {
             // Cache version to avoid repeated reflection and use interpolation for readability
             string version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? string.Empty;
-            this.Text = additionalInfo != string.Empty
+            string newTitle = additionalInfo != string.Empty
                 ? $"{Strings.AppTitle}{version}{Strings.minus}{additionalInfo}"
                 : $"{Strings.AppTitle}{version}";
+            if (this.Text != newTitle)
+            {
+                this.Text = newTitle;
+            }
         }
 
         /// <summary>
@@ -227,17 +246,17 @@ namespace Notepad_Light
             if (gCurrentFileType == CurrentFileType.RTF)
             {
                 EnableToolbarFormattingIcons();
-                toolStripStatusLabelFileType.Text = Strings.rtf;
+                SetToolStripText(toolStripStatusLabelFileType, Strings.rtf);
             }
             else if (gCurrentFileType == CurrentFileType.Text)
             {
                 DisableToolbarFormattingIcons();
-                toolStripStatusLabelFileType.Text = Strings.plainText;
+                SetToolStripText(toolStripStatusLabelFileType, Strings.plainText);
             }
             else
             {
                 DisableToolbarFormattingIcons();
-                toolStripStatusLabelFileType.Text = Strings.markdown;
+                SetToolStripText(toolStripStatusLabelFileType, Strings.markdown);
             }
         }
 
@@ -1292,20 +1311,60 @@ namespace Notepad_Light
         /// </summary>
         public void UpdateDocStats()
         {
-            int totalWordCount = 0;
-            int lineCount;
-            foreach (string line in RtbMain.Lines)
+            // Optimized single-pass scan over entire text to reduce allocations
+            ReadOnlySpan<char> span = RtbMain.Text.AsSpan();
+            int length = span.Length;
+            if (length == 0)
             {
-                char[] delimiters = { ' ', '.', '?', ',', ':', '\t', ';', '-', '!', '\'', '=', '|',
-                    '&', '@', '#', '*', '%', '~', '(', ')', '/', '+', '[', ']', '{', '}', '<', '>', '$', '^' };
-                lineCount = line.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
-                totalWordCount += lineCount;
+                WordCountToolStripStatusLabel.Text = "0";
+                CharacterCountToolStripStatusLabel.Text = "0";
+                LinesToolStripStatusLabel.Text = "0";
+                return;
             }
 
-            // update the statusbar
-            WordCountToolStripStatusLabel.Text = totalWordCount.ToString();
-            CharacterCountToolStripStatusLabel.Text = RtbMain.TextLength.ToString();
-            LinesToolStripStatusLabel.Text = RtbMain.Lines.Length.ToString();
+            int wordCount = 0;
+            bool inWord = false;
+            int lineCount = 1; // at least one line if length > 0
+
+            for (int i = 0; i < length; i++)
+            {
+                char c = span[i];
+                // line counting (treat '\n' as line terminator)
+                if (c == '\n')
+                {
+                    lineCount++;
+                }
+
+                // delimiter check via switch for speed (matches legacy delimiters list)
+                bool isDelim = c switch
+                {
+                    ' ' or '.' or '?' or ',' or ':' or '\t' or ';' or '-' or '!' or '\'' or '=' or '|' or '&' or '@' or '#' or '*' or '%' or '~' or '(' or ')' or '/' or '+' or '[' or ']' or '{' or '}' or '<' or '>' or '$' or '^' => true,
+                    _ => false
+                };
+
+                if (isDelim)
+                {
+                    if (inWord)
+                    {
+                        wordCount++;
+                        inWord = false;
+                    }
+                }
+                else
+                {
+                    inWord = true;
+                }
+            }
+
+            // finalize last word if we ended while still in one
+            if (inWord)
+            {
+                wordCount++;
+            }
+
+            WordCountToolStripStatusLabel.Text = wordCount.ToString();
+            CharacterCountToolStripStatusLabel.Text = length.ToString();
+            LinesToolStripStatusLabel.Text = lineCount.ToString();
         }
 
         /// <summary>
@@ -1557,7 +1616,8 @@ namespace Notepad_Light
             {
                 if (RtbMain.SelectionFont != null)
                 {
-                    fontToolStripStatusLabel.Text = "Font: " + RtbMain.SelectionFont.Name + " Size: " + RtbMain.SelectionFont.Size + " pt";
+                    string newVal = "Font: " + RtbMain.SelectionFont.Name + " Size: " + RtbMain.SelectionFont.Size + " pt";
+                    SetToolStripText(fontToolStripStatusLabel, newVal);
                 }
             }
             catch (Exception ex)
@@ -1577,8 +1637,10 @@ namespace Notepad_Light
             line++;
             column++;
 
-            toolStripStatusLabelLine.Text = line.ToString();
-            toolStripStatusLabelColumn.Text = column.ToString();
+            string lineStr = line.ToString();
+            string colStr = column.ToString();
+            if (toolStripStatusLabelLine.Text != lineStr) toolStripStatusLabelLine.Text = lineStr;
+            if (toolStripStatusLabelColumn.Text != colStr) toolStripStatusLabelColumn.Text = colStr;
         }
 
         public void InsertDateTime()
@@ -2098,34 +2160,43 @@ namespace Notepad_Light
         /// <exception cref="ArgumentNullException"></exception>
         public static byte[] ToBinary(string imageDataHex)
         {
-            if (imageDataHex == null)
+            if (imageDataHex == null) throw new ArgumentNullException(nameof(imageDataHex));
+
+            ReadOnlySpan<char> span = imageDataHex.AsSpan();
+            // Count non-whitespace hex characters
+            int hexCount = 0;
+            for (int i = 0; i < span.Length; i++)
             {
-                throw new ArgumentNullException("imageDataHex");
+                if (!char.IsWhiteSpace(span[i])) hexCount++;
+            }
+            int dataSize = hexCount / 2;
+            if (dataSize == 0) return Array.Empty<byte>();
+
+            // Rent temp buffer for performance; copy out before returning
+            byte[] rented = System.Buffers.ArrayPool<byte>.Shared.Rent(dataSize);
+            int nibbleIndex = 0;
+            int byteIndex = 0;
+            int accum = 0;
+            for (int i = 0; i < span.Length; i++)
+            {
+                char c = span[i];
+                if (char.IsWhiteSpace(c)) continue;
+                int val = c <= '9' ? c - '0' : (c <= 'F' ? c - 'A' + 10 : c - 'a' + 10);
+                accum = (accum << 4) | (val & 0xF);
+                nibbleIndex++;
+                if (nibbleIndex == 2)
+                {
+                    rented[byteIndex++] = (byte)accum;
+                    nibbleIndex = 0;
+                    accum = 0;
+                }
             }
 
-            int hexDigits = imageDataHex.Length;
-            int dataSize = hexDigits / 2;
-            byte[] imageDataBinary = new byte[dataSize];
-
-            StringBuilder hex = new StringBuilder(2);
-
-            int dataPos = 0;
-            for (int i = 0; i < hexDigits; i++)
-            {
-                char c = imageDataHex[i];
-                if (char.IsWhiteSpace(c))
-                {
-                    continue;
-                }
-                hex.Append(imageDataHex[i]);
-                if (hex.Length == 2)
-                {
-                    imageDataBinary[dataPos] = byte.Parse(hex.ToString(), System.Globalization.NumberStyles.HexNumber);
-                    dataPos++;
-                    hex.Remove(0, 2);
-                }
-            }
-            return imageDataBinary;
+            // Copy to correctly sized array and return; return rented buffer to pool
+            byte[] result = new byte[dataSize];
+            Buffer.BlockCopy(rented, 0, result, 0, dataSize);
+            System.Buffers.ArrayPool<byte>.Shared.Return(rented, clearArray: true);
+            return result;
         }
 
         public void StartTimer()
@@ -2159,6 +2230,8 @@ namespace Notepad_Light
             StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
             StartStopTimerToolStripButton.Text = Strings.startTimeText;
             ClearTimeSpanVariables();
+            _lastTimerUiUpdateMs = -250;
+            _prevTimerText = Strings.zeroTimer;
         }
 
         public void EditTimer()
@@ -2560,13 +2633,22 @@ namespace Notepad_Light
             {
                 return;
             }
-            else
+            // throttle UI updates to reduce layout/paint cost
+            long elapsedMs = gStopwatch.ElapsedMilliseconds;
+            if (elapsedMs - _lastTimerUiUpdateMs < 250) // ~4 updates/sec
             {
-                TimeSpan tSpan2 = gStopwatch.Elapsed;
-                tSpan = gStopwatch.Elapsed;
-                tSpan = tSpan2.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
-                TimerToolStripLabel.Text = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
+                return;
             }
+
+            TimeSpan baseElapsed = gStopwatch.Elapsed;
+            tSpan = baseElapsed.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
+            string newText = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
+            if (newText != _prevTimerText)
+            {
+                TimerToolStripLabel.Text = newText;
+                _prevTimerText = newText;
+            }
+            _lastTimerUiUpdateMs = elapsedMs;
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
