@@ -1696,6 +1696,9 @@ namespace Notepad_Light
         {
             if (gIsWindows11 && SystemInformation.HighContrast == false)
             {
+                // setting rtf clears the modified flag, so hold onto it
+                bool isModified = RtbMain.Modified;
+
                 // rtf color tables get messed up when switching to dark mode
                 // hold the rtf (including color table) in the rtf string
                 string rtf = RtbMain.Rtf!;
@@ -1711,6 +1714,8 @@ namespace Notepad_Light
                 {
                     RtbMain.Rtf = rtf;
                 }
+
+                RtbMain.Modified = isModified;
 
                 // workaround for controls not repainting right away
                 this.Refresh();
@@ -1729,6 +1734,9 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
+            // setting rtf clears the modified flag, so hold onto it
+            bool isModified = RtbMain.Modified;
+
             // rtf color tables get messed up when switching to dark mode
             // hold the rtf (including color table) in the rtf string
             string rtf = RtbMain.Rtf!;
@@ -1746,6 +1754,8 @@ namespace Notepad_Light
                 {
                     RtbMain.Rtf = rtf;
                 }
+
+                RtbMain.Modified = isModified;
 
                 this.Refresh();
                 Application.DoEvents();
