@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
     <RootNamespace>Notepad_Light</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.25.1108</AssemblyVersion>
-    <FileVersion>1.25.1108</FileVersion>
+    <AssemblyVersion>1.25.1114</AssemblyVersion>
+    <FileVersion>1.25.1114</FileVersion>
     <PackageIcon>TextFile_white_16x.png</PackageIcon>
     <StartupObject>Notepad_Light.Program</StartupObject>
     <ApplicationIcon>RichTextBox_16x.ico</ApplicationIcon>
