@@ -113,6 +113,16 @@ namespace Notepad_Light
             UpdateToolbarIcons();
         }
 
+        /// <summary>
+        /// Helper to log benign (high-frequency) errors without stack trace to reduce I/O overhead.
+        /// </summary>
+        /// <param name="context">Short context prefix.</param>
+        /// <param name="ex">Exception instance.</param>
+        private void LogBenignError(string context, Exception ex)
+        {
+            App.WriteErrorLogContent(context + ex.Message, gErrorLog);
+        }
+
         #region Class Properties
 
         /// <summary>
@@ -157,14 +167,11 @@ namespace Notepad_Light
 
         public void UpdateTitleBar(string additionalInfo)
         {
-            if (additionalInfo != string.Empty)
-            {
-                this.Text = Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version + Strings.minus + additionalInfo;
-            }
-            else
-            {
-                this.Text = Strings.AppTitle + Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
-            }
+            // Cache version to avoid repeated reflection and use interpolation for readability
+            string version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? string.Empty;
+            this.Text = additionalInfo != string.Empty
+                ? $"{Strings.AppTitle}{version}{Strings.minus}{additionalInfo}"
+                : $"{Strings.AppTitle}{version}";
         }
 
         /// <summary>
@@ -1981,8 +1988,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                App.WriteErrorLogContent("UnloadMarkdown Error: " + ex.Message, gErrorLog);
-                App.WriteErrorLogContent("  Stack: " + ex.StackTrace, gErrorLog);
+                LogBenignError("UnloadMarkdown Error: ", ex);
             }
         }
 
@@ -2623,8 +2629,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                App.WriteErrorLogContent("PrintPage Error: " + ex.Message, gErrorLog);
-                App.WriteErrorLogContent("Stack: " + ex.StackTrace, gErrorLog);
+                LogBenignError("PrintPage Error: ", ex);
             }
             finally
             {
@@ -3010,7 +3015,7 @@ namespace Notepad_Light
             }
             catch (Exception ex)
             {
-                App.WriteErrorLogContent("SaveAsPicture Error: " + ex.Message, gErrorLog);
+                LogBenignError("SaveAsPicture Error: ", ex);
             }
         }
 
