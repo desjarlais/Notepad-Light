@@ -1691,17 +1691,13 @@ namespace Notepad_Light
                     RtbMain.Rtf = string.Empty;
                 }
 
-#pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Dark);
-#pragma warning restore WFO5001
 
                 // after the color mode switch, bring the rtf table and content back in
                 if (gCurrentFileType == CurrentFileType.RTF)
                 {
                     RtbMain.Rtf = rtf;
                 }
-
-                ApplyUIColors(MainStatusStrip, clrDarkModeBackColor, Color.White);
 
                 // workaround for controls not repainting right away
                 this.Refresh();
@@ -1730,17 +1726,13 @@ namespace Notepad_Light
 
             if (gIsWindows11 && SystemInformation.HighContrast == false)
             {
-#pragma warning disable WFO5001
                 Application.SetColorMode(SystemColorMode.Classic);
-#pragma warning restore WFO5001
 
                 // after the color mode switch, bring the rtf table and content back in
                 if (gCurrentFileType == CurrentFileType.RTF)
                 {
                     RtbMain.Rtf = rtf;
                 }
-
-                ApplyUIColors(MainStatusStrip, SystemColors.Control, SystemColors.ControlText);
 
                 this.Refresh();
                 Application.DoEvents();
