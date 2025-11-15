@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11205.157 d18.0
+VisualStudioVersion = 18.0.11205.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notepad Light", "Notepad Light\Notepad Light.csproj", "{AD5708BF-3192-490B-B50F-BE9A0F23EA9C}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NotepadLightSetup", "NotepadLightSetup\NotepadLightSetup.vdproj", "{65120E55-3A53-ED15-0A3B-36F696ED0D9A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkSuite2", "BenchmarkSuite2\BenchmarkSuite2.csproj", "{FF431CE1-8DAA-F2E0-6083-541E879F0B56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{AD5708BF-3192-490B-B50F-BE9A0F23EA9C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65120E55-3A53-ED15-0A3B-36F696ED0D9A}.Debug|Any CPU.ActiveCfg = Debug
 		{65120E55-3A53-ED15-0A3B-36F696ED0D9A}.Release|Any CPU.ActiveCfg = Release
-		{FF431CE1-8DAA-F2E0-6083-541E879F0B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF431CE1-8DAA-F2E0-6083-541E879F0B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF431CE1-8DAA-F2E0-6083-541E879F0B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF431CE1-8DAA-F2E0-6083-541E879F0B56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

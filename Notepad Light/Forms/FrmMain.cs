@@ -133,7 +133,7 @@ namespace Notepad_Light
         /// </summary>
         /// <param name="context">Short context prefix.</param>
         /// <param name="ex">Exception instance.</param>
-        private void LogBenignError(string context, Exception ex)
+        private static void LogBenignError(string context, Exception ex)
         {
             App.WriteErrorLogContent(context + ex.Message, gErrorLog);
         }

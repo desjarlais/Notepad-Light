@@ -71,9 +71,9 @@ namespace Notepad_Light.Forms
 
                     // parse out the time to add to the total time
                     string[] totalTimerData = timerData[2].Split(Strings.semiColonNoSpaces);
-                    totalHours = totalHours + Convert.ToInt32(totalTimerData[0]);
-                    totalMinutes = totalMinutes + Convert.ToInt32(totalTimerData[1]);
-                    totalSeconds = totalSeconds + Convert.ToInt32(totalTimerData[2]);
+                    totalHours += Convert.ToInt32(totalTimerData[0]);
+                    totalMinutes += Convert.ToInt32(totalTimerData[1]);
+                    totalSeconds += Convert.ToInt32(totalTimerData[2]);
                 }
 
                 // update the total time
@@ -174,10 +174,12 @@ namespace Notepad_Light.Forms
                     if (dgvr is null) { return; }
 
                     // add the timer data to the app setting
-                    string[] timerData = new string[3];
-                    timerData[0] = dgvr.Cells[0].Value?.ToString() ?? string.Empty;
-                    timerData[1] = dgvr.Cells[1].Value?.ToString() ?? string.Empty;
-                    timerData[2] = dgvr.Cells[2].Value?.ToString() ?? string.Empty;
+                    string[] timerData =
+                    [
+                        dgvr.Cells[0].Value?.ToString() ?? string.Empty,
+                        dgvr.Cells[1].Value?.ToString() ?? string.Empty,
+                        dgvr.Cells[2].Value?.ToString() ?? string.Empty,
+                    ];
                     Properties.Settings.Default.TimersList.Add(string.Join(Strings.pipeDelim, timerData));
                 }
             }
@@ -227,10 +229,12 @@ namespace Notepad_Light.Forms
                         if (dgvr is null) { return; }
 
                         // add the timer data to the app setting
-                        string[] timerData = new string[3];
-                        timerData[0] = dgvr.Cells[0].Value?.ToString() ?? string.Empty;
-                        timerData[1] = dgvr.Cells[1].Value?.ToString() ?? string.Empty;
-                        timerData[2] = dgvr.Cells[2].Value?.ToString() ?? string.Empty;
+                        string[] timerData =
+                        [
+                            dgvr.Cells[0].Value?.ToString() ?? string.Empty,
+                            dgvr.Cells[1].Value?.ToString() ?? string.Empty,
+                            dgvr.Cells[2].Value?.ToString() ?? string.Empty,
+                        ];
                         Properties.Settings.Default.TimersList.Add(string.Join(Strings.pipeDelim, timerData));
                     }
 
