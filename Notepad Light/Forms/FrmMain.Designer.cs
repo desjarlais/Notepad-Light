@@ -1348,6 +1348,7 @@
             // 
             // RtbMain
             // 
+            RtbMain.AcceptsTab = true;
             RtbMain.ContextMenuStrip = contextMenuStrip1;
             RtbMain.Dock = DockStyle.Fill;
             RtbMain.Location = new Point(0, 0);

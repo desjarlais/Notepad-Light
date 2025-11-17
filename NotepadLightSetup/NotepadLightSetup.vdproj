@@ -213,15 +213,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Notepad Light"
-        "ProductCode" = "8:{09325F0E-3770-42DB-817D-C7F2145AE81A}"
-        "PackageCode" = "8:{E22CA238-7625-4678-AF8B-91E8C9C9560A}"
+        "ProductCode" = "8:{2248F041-1D5E-4810-AE45-81A6FEF30B2E}"
+        "PackageCode" = "8:{FB8E7381-5A79-424D-8B3E-C95971C619F6}"
         "UpgradeCode" = "8:{1846059C-2C94-493D-95FD-EF4FBD0A7E16}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.25.1114"
+        "ProductVersion" = "8:1.25.1115"
         "Manufacturer" = "8:BrandeSoft"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/desjarlais/Notepad-Light/issues"
@@ -763,7 +763,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_605B4A3F65AE4D6C98433DDBA1D1D576"
             {
-            "SourcePath" = "8:..\\Notepad Light\\obj\\Debug\\net10.0-windows7.0\\apphost.exe"
+            "SourcePath" = "8:..\\Notepad Light\\obj\\Release\\net10.0-windows7.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_38F48DD9DE164BBA9CF22B6E565EF4C7"

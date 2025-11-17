@@ -34,9 +34,11 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+        
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
         private string _prevTimerText = Strings.zeroTimer;
+        
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
         public Color clrDarkModeForeColor = Color.FromArgb(96, 96, 96);
         public CurrentFileType gCurrentFileType;
@@ -1016,7 +1018,7 @@ namespace Notepad_Light
                         }
                         else
                         {
-                        RtbMain.Paste();
+                            RtbMain.Paste();
                         }
                         break;
                 }
@@ -1753,7 +1755,7 @@ namespace Notepad_Light
         /// <param name="ctrl"></param>
         /// <param name="clrBack"></param>
         /// <param name="clrFore"></param>
-        public void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
+        public static void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
         {
             ctrl.BackColor = clrBack;
             ctrl.ForeColor = clrFore;
@@ -2570,6 +2572,14 @@ namespace Notepad_Light
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
                 }
+                return;
+            }
+
+            if (e.KeyCode == Keys.Tab && e.Shift && RtbMain.SelectionBullet == true)
+            {
+                e.SuppressKeyPress = true;
+                DecreaseIndentToolStripButton.PerformClick();
+                return;
             }
 
             // if delete key is pressed change the saved state and update ui/stats
@@ -2579,6 +2589,7 @@ namespace Notepad_Light
                 RtbMain.Modified = true;
                 UpdateToolbarIcons();
                 UpdateDocStats();
+                return;
             }
         }
 
