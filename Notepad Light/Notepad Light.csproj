@@ -24,6 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.43.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3595.46" />
+    <PackageReference Include="NetSpell" Version="2.1.7" />
   </ItemGroup>
 
   <ItemGroup>

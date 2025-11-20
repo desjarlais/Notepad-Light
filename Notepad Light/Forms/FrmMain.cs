@@ -2553,6 +2553,14 @@ namespace Notepad_Light
 
         private void RtbMain_KeyDown(object sender, KeyEventArgs e)
         {
+            // if the selection is not at the beginning of the line, tab 4 spaces
+            if (e.KeyCode == Keys.Tab && RtbMain.SelectionStart > RtbMain.GetFirstCharIndexOfCurrentLine())
+            {
+                e.SuppressKeyPress = true;
+                RtbMain.SelectedText = "    ";
+                return;
+            }
+
             // if the line has a bullet and the tab was pressed, indent the line
             // need to suppress the key to prevent the cursor from moving around
             // tab will cause selectionchange so the ui/stats update there
@@ -2565,9 +2573,9 @@ namespace Notepad_Light
             }
 
             // if the user deletes the bullet, remove bullet formatting
-            if (e.KeyCode == Keys.Back)
+            if (e.KeyCode == Keys.Back && RtbMain.SelectionStart == RtbMain.GetFirstCharIndexOfCurrentLine())
             {
-                if (RtbMain.SelectionStart == RtbMain.GetFirstCharIndexOfCurrentLine() && RtbMain.SelectionBullet == true)
+                if (RtbMain.SelectionBullet == true)
                 {
                     e.SuppressKeyPress = true;
                     BulletToolStripButton.PerformClick();
@@ -3104,42 +3112,51 @@ namespace Notepad_Light
         {
             try
             {
-                if (RtbMain.SelectionType == RichTextBoxSelectionTypes.Object)
+                if (RtbMain.SelectionType != RichTextBoxSelectionTypes.Object)
                 {
-                    // display save as dialog
-                    SaveFileDialog dlgSave = new SaveFileDialog();
-                    dlgSave.Title = "Save Image";
-                    dlgSave.Filter = "Windows Bitmap (*.bmp)|*.bmp|"
-                        + "JPEG File Interchange Format (*.jpg)|*.jpg|"
-                        + "Graphics Interchange Format (*.gif)|*.gif|"
-                        + "Portable Network Graphics (*.png)|*.png|"
-                        + "Tag Image File Format (*.tif)|*.tif|"
-                        + "Exchangeable Image File Format (*.exif)|*.exif|"
-                        + "Enhanced MetaFile Format (*.emf)|*.emf|"
-                        + "Windows MetaFile Format (*.wmf)|*.wmf";
+                    return;
+                }
 
-                    if (dlgSave.ShowDialog(this) == DialogResult.OK)
-                    {
-                        // write out the picture stream to the new file location
-                        string imageDataHex = ExtractImgHex(RtbMain.SelectedRtf);
-                        byte[] imageBuffer = ToBinary(imageDataHex);
-                        using (MemoryStream stream = new MemoryStream(imageBuffer))
-                        {
-                            Image image = Image.FromStream(stream);
-                            switch (dlgSave.FilterIndex)
-                            {
-                                case 0: image.Save(dlgSave.FileName, ImageFormat.Bmp); break;
-                                case 1: image.Save(dlgSave.FileName, ImageFormat.Jpeg); break;
-                                case 2: image.Save(dlgSave.FileName, ImageFormat.Gif); break;
-                                case 3: image.Save(dlgSave.FileName, ImageFormat.Png); break;
-                                case 4: image.Save(dlgSave.FileName, ImageFormat.Tiff); break;
-                                case 5: image.Save(dlgSave.FileName, ImageFormat.Exif); break;
-                                case 6: image.Save(dlgSave.FileName, ImageFormat.Emf); break;
-                                case 7: image.Save(dlgSave.FileName, ImageFormat.Wmf); break;
-                                default: image.Save(dlgSave.FileName); break;
-                            }
-                        }
-                    }
+                using SaveFileDialog dlgSave = new SaveFileDialog
+                {
+                    Title = "Save Image",
+                    Filter =
+                        "Windows Bitmap (*.bmp)|*.bmp|" +
+                        "JPEG File Interchange Format (*.jpg)|*.jpg|" +
+                        "Graphics Interchange Format (*.gif)|*.gif|" +
+                        "Portable Network Graphics (*.png)|*.png|" +
+                        "Tag Image File Format (*.tif)|*.tif|" +
+                        "Exchangeable Image File Format (*.exif)|*.exif|" +
+                        "Enhanced MetaFile Format (*.emf)|*.emf|" +
+                        "Windows MetaFile Format (*.wmf)|*.wmf"
+                };
+
+                if (dlgSave.ShowDialog(this) != DialogResult.OK)
+                {
+                    return;
+                }
+
+                // Extract hex image data from selected RTF and convert to binary
+                string imageDataHex = ExtractImgHex(RtbMain.SelectedRtf);
+                byte[] imageBuffer = ToBinary(imageDataHex);
+
+                using var stream = new MemoryStream(imageBuffer);
+                using var image = Image.FromStream(stream); // ensures disposal
+
+                // FilterIndex is 1-based
+                switch (dlgSave.FilterIndex)
+                {
+                    case 1: image.Save(dlgSave.FileName, ImageFormat.Bmp); break;
+                    case 2: image.Save(dlgSave.FileName, ImageFormat.Jpeg); break;
+                    case 3: image.Save(dlgSave.FileName, ImageFormat.Gif); break;
+                    case 4: image.Save(dlgSave.FileName, ImageFormat.Png); break;
+                    case 5: image.Save(dlgSave.FileName, ImageFormat.Tiff); break;
+                    case 6: image.Save(dlgSave.FileName, ImageFormat.Exif); break;
+                    case 7: image.Save(dlgSave.FileName, ImageFormat.Emf); break;
+                    case 8: image.Save(dlgSave.FileName, ImageFormat.Wmf); break;
+                    default:
+                        image.Save(dlgSave.FileName); // fallback
+                        break;
                 }
             }
             catch (Exception ex)
