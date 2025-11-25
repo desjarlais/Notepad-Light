@@ -75,7 +75,7 @@ namespace Notepad_Light.Helpers
             uint _bufferSize = Win32.GdipEmfToWmfBits(_hEmf, 0, null!, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
             byte[] _buffer = new byte[_bufferSize];
             uint hresult = Win32.GdipEmfToWmfBits(_hEmf, _bufferSize, _buffer, Win32.MM_ANISOTROPIC, Win32.EmfToWmfBitsFlags.EmfToWmfBitsFlagsDefault);
-            App.WriteErrorLogContent(errorFilePath, "GdipEmfToWmfBits hr = " + hresult.ToString());
+            if (File.Exists(errorFilePath)) { App.WriteErrorLogContent(errorFilePath, "GdipEmfToWmfBits hr = " + hresult.ToString()); }
             IntPtr hmf = Win32.SetMetaFileBitsEx(_bufferSize, _buffer);
             string tempfile = Path.GetTempFileName();
 
