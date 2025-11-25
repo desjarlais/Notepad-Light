@@ -34,11 +34,11 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        
+
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
         private string _prevTimerText = Strings.zeroTimer;
-        
+
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
         public Color clrDarkModeForeColor = Color.FromArgb(96, 96, 96);
         public CurrentFileType gCurrentFileType;
@@ -118,6 +118,20 @@ namespace Notepad_Light
             UpdateToolbarIcons();
         }
 
+        #region Class Properties
+
+        /// <summary>
+        /// used for the adjust labor dialog return value
+        /// </summary>
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public string EditedTime
+        {
+            set => _EditedTime = value;
+        }
+        #endregion
+
+        #region Functions
+
         /// <summary>
         /// Helper to only assign ToolStripItem.Text when value changed.
         /// Reduces layout/paint churn.
@@ -139,20 +153,6 @@ namespace Notepad_Light
         {
             App.WriteErrorLogContent(context + ex.Message, gErrorLog);
         }
-
-        #region Class Properties
-
-        /// <summary>
-        /// used for the adjust labor dialog return value
-        /// </summary>
-        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public string EditedTime
-        {
-            set => _EditedTime = value;
-        }
-        #endregion
-
-        #region Functions
 
         /// <summary>
         /// need to setup webview2 with a user data folder to avoid temp folder issues
@@ -939,6 +939,11 @@ namespace Notepad_Light
                     Owner = this
                 };
                 pFrm.ShowDialog();
+
+                if (pFrm.SelectedPasteOption == Strings.cancel)
+                {
+                    return;
+                }
 
                 // paste based on user selection
                 switch (pFrm.SelectedPasteOption)
@@ -2913,16 +2918,13 @@ namespace Notepad_Light
                         Color bg = (Properties.Settings.Default.DarkMode && Properties.Settings.Default.UseImageTransparency)
                             ? clrDarkModeForeColor
                             : Color.White;
-                        toInsert = ReplaceTransparency(original, bg);
+                        using Bitmap replaced = ReplaceTransparency(original, bg);
+                        RtbMain.SelectedRtf = Rtf.InsertPicture(replaced, gErrorLog);
                     }
-
-                    // Insert converted (or original) image
-                    RtbMain.SelectedRtf = Rtf.InsertPicture(toInsert, gErrorLog);
-                    if (!ReferenceEquals(toInsert, original))
+                    else
                     {
-                        toInsert.Dispose(); // dispose temp bitmap produced by ReplaceTransparency
+                        RtbMain.SelectedRtf = Rtf.InsertPicture(original, gErrorLog);
                     }
-                    RtbMain.Focus();
                 }
             }
         }

@@ -52,7 +52,7 @@ namespace Notepad_Light.Forms
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            SelectedPasteOption = "Cancel";
+            SelectedPasteOption = Strings.cancel;
             Close();
         }
 
