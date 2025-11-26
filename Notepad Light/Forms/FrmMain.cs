@@ -3,6 +3,8 @@ using Markdig;
 using Microsoft.Web.WebView2.Core;
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
+using Notepad_Light.NetSpeller;
+
 
 // .net refs
 using System.Diagnostics;
@@ -34,6 +36,11 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+
+        // Spelling globals
+        private string dicFilePath = Strings.empty;
+        private NetSpeller.Spelling gSpellChecker;
+        private NetSpeller.WordDictionary gDictionary;
 
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
@@ -116,6 +123,105 @@ namespace Notepad_Light
 
             RtbMain.Modified = false;
             UpdateToolbarIcons();
+
+            // setup spell checker
+            dicFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "\\Dictionaries\\", "en-US.dic");
+            if (File.Exists(dicFilePath))
+            {
+                // initialize spell checker
+                gSpellChecker = new Spelling();
+                gDictionary = new WordDictionary();
+
+                // initialize the events
+                gSpellChecker.Dictionary = gDictionary;
+                gSpellChecker.ReplacedWord += GSpellChecker_ReplacedWord;
+                gSpellChecker.EndOfText += GSpellChecker_EndOfText;
+                gSpellChecker.DeletedWord += GSpellChecker_DeletedWord;
+                gSpellChecker.MisspelledWord += GSpellChecker_MisspelledWord;
+
+                gDictionary.DictionaryFile = dicFilePath;
+            }
+            else
+            {
+                App.WriteErrorLogContent("Spell Checker Dictionary Not Found: " + dicFilePath, gErrorLog);
+            }
+        }
+
+        private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
+        {
+            using (Graphics g = RtbMain.CreateGraphics())
+            using (Pen pen = new Pen(Color.Red, 2))
+            {
+                int start = RtbMain.SelectionStart;
+                int length = RtbMain.SelectionLength;
+
+                // get pixel position of first character
+                Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
+
+                // Measure selected text width
+                string selectedText = RtbMain.Text.Substring(e.TextIndex, e.Word.Length);
+                Size textSize = TextRenderer.MeasureText(g, selectedText, RtbMain.Font);
+
+                // baseline under text
+                int y = startPos.Y + RtbMain.Font.Height - 2;
+                int x = startPos.X;
+
+                // draw squiggle line across word
+                for (int i = 0; i < textSize.Width; i += 4)
+                {
+                    g.DrawLine(pen, x + i, y, x + i + 2, y + 2);
+                    g.DrawLine(pen, x + i + 2, y + 2, x + i + 4, y);
+                }
+            }
+
+            return;
+        }
+
+        private void GSpellChecker_DeletedWord(object sender, SpellingEventArgs e)
+        {
+            int start = RtbMain.SelectionStart;
+            int length = RtbMain.SelectionLength;
+
+            RtbMain.Select(e.TextIndex, e.Word.Length);
+            RtbMain.SelectedText = string.Empty;
+
+            if (start > RtbMain.Text.Length)
+            {
+                start = RtbMain.Text.Length;
+            }
+
+            if ((start + length) > RtbMain.Text.Length)
+            {
+                start = 0;
+            }
+
+            RtbMain.Select(start, length);
+        }
+
+        private void GSpellChecker_EndOfText(object sender, EventArgs e)
+        {
+            // log end of text
+        }
+
+        private void GSpellChecker_ReplacedWord(object sender, ReplaceWordEventArgs e)
+        {
+            int start = RtbMain.SelectionStart;
+            int length = RtbMain.SelectionLength;
+
+            RtbMain.Select(e.TextIndex, e.Word.Length);
+            RtbMain.SelectedText = e.ReplacementWord;
+
+            if (start > RtbMain.Text.Length)
+            {
+                start = RtbMain.Text.Length;
+            }
+
+            if ((start + length) > RtbMain.Text.Length)
+            {
+                start = 0;
+            }
+
+            RtbMain.Select(start, length);
         }
 
         #region Class Properties
@@ -3260,5 +3366,48 @@ namespace Notepad_Light
         }
 
         #endregion
+
+        private void CheckSpellingToolStripButton_Click(object sender, EventArgs e)
+        {
+            gSpellChecker.Text = RtbMain.Text;
+            if (gSpellChecker.SpellCheck())
+            {
+                RtbMain.Select();
+            }
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_PAINT = 0x000F;
+
+            if (m.Msg == WM_PAINT)
+            {
+                // Rtb paints itself first
+                base.WndProc(ref m);
+
+                // draw underneath text
+                if (RtbMain.SelectionLength > 0)
+                {
+                    using (Graphics g = RtbMain.CreateGraphics())
+                    using (Brush brush = new SolidBrush(Color.FromArgb(255, Color.Red)))
+                    {
+                        int start = RtbMain.SelectionStart;
+                        int length = RtbMain.SelectionLength;
+                        
+                        for (int i = 0; i < length; i++)
+                        {
+                            Point pos = RtbMain.GetPositionFromCharIndex(start + i);
+                            Size charSize = TextRenderer.MeasureText(RtbMain.Text.Substring(start + i, 1), RtbMain.Font);
+                            Rectangle rect = new Rectangle(pos, charSize);
+                            g.FillRectangle(brush, rect);
+                        }
+                    }
+                }
+                
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
     }
 }
