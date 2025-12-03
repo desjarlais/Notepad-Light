@@ -495,6 +495,11 @@ namespace Notepad_Light
 
             // update the UI after the new doc and unsaved work is done
             UpdateToolbarIcons();
+
+            if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
+            {
+                EnableToolbarFormattingIcons();
+            }
         }
 
         /// <summary>
