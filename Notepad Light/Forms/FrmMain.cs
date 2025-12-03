@@ -39,8 +39,9 @@ namespace Notepad_Light
 
         // Spelling globals
         private string dicFilePath = Strings.empty;
-        private NetSpeller.Spelling gSpellChecker;
-        private NetSpeller.WordDictionary gDictionary;
+        private Spelling? gSpellChecker;
+        private WordDictionary? gDictionary;
+        public List<SpellingEventArgs> gMisspelledWords = new List<SpellingEventArgs>();
 
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
@@ -145,9 +146,19 @@ namespace Notepad_Light
             {
                 App.WriteErrorLogContent("Spell Checker Dictionary Not Found: " + dicFilePath, gErrorLog);
             }
+
+            Application.Idle += Application_Idle;
         }
 
-        private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
+        private void Application_Idle(object? sender, EventArgs e)
+        {
+            foreach (SpellingEventArgs sea in gMisspelledWords)
+            {
+                DrawSquiggle(sea);
+            }
+        }
+
+        public void DrawSquiggle(SpellingEventArgs e)
         {
             using (Graphics g = RtbMain.CreateGraphics())
             using (Pen pen = new Pen(Color.Red, 2))
@@ -174,6 +185,21 @@ namespace Notepad_Light
                 }
             }
 
+        }
+
+        private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
+        {
+            DrawSquiggle(e);
+
+            foreach (SpellingEventArgs sea in gMisspelledWords)
+            {
+                if (sea.TextIndex == e.TextIndex && sea.Word == e.Word)
+                {
+                    return;
+                }
+            }
+
+            gMisspelledWords.Add(e);
             return;
         }
 
