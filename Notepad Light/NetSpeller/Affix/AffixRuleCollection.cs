@@ -79,39 +79,15 @@ namespace Notepad_Light.NetSpeller.Affix
         /// <summary>
         ///     Initializes a new instance of 'AffixRuleCollection'.
         /// </summary>
-        /// <param name="codeProvider" type="System.Collections.IHashCodeProvider">
+        /// <param name="equalityComparer" type="System.Collections.IEqualityComparer">
         ///     <para>
-        ///         The IHashCodeProvider that supplies the hash codes for all keys in the 'AffixRuleCollection'.
+        ///         The IEqualityComparer to use to determine whether two keys are equal.
         ///     </para>
         /// </param>
-        /// <param name="comparer" type="System.Collections.IComparer">
-        ///     <para>
-        ///         The IComparer to use to determine whether two keys are equal.
-        ///     </para>
-        /// </param>
-        public AffixRuleCollection(IHashCodeProvider codeProvider, IComparer comparer)
+        public AffixRuleCollection(IEqualityComparer equalityComparer)
         {
-            innerHash = new Hashtable(codeProvider, comparer);
+            innerHash = new Hashtable(equalityComparer);
         }
-
-        /// <summary>
-        ///     Initializes a new instance of 'AffixRuleCollection'.
-        /// </summary>
-        /// <param name="capacity" type="int">
-        ///     <para>
-        ///         The approximate number of elements that the 'AffixRuleCollection' can initially contain.
-        ///     </para>
-        /// </param>
-        /// <param name="loadFactor" type="int">
-        ///     <para>
-        ///         A number in the range from 0.1 through 1.0 indicating the maximum ratio of elements to buckets.
-        ///     </para>
-        /// </param>
-        public AffixRuleCollection(int capacity, int loadFactor)
-        {
-            innerHash = new Hashtable(capacity, loadFactor);
-        }
-
 
         /// <summary>
         ///     Initializes a new instance of 'AffixRuleCollection'.
@@ -121,19 +97,14 @@ namespace Notepad_Light.NetSpeller.Affix
         ///         The IDictionary to copy to a new 'AffixRuleCollection'.
         ///     </para>
         /// </param>
-        /// <param name="codeProvider" type="System.Collections.IHashCodeProvider">
+        /// <param name="equalityComparer" type="System.Collections.IEqualityComparer">
         ///     <para>
-        ///         The IHashCodeProvider that supplies the hash codes for all keys in the 'AffixRuleCollection'.
+        ///         The IEqualityComparer to use to determine whether two keys are equal.
         ///     </para>
         /// </param>
-        /// <param name="comparer" type="System.Collections.IComparer">
-        ///     <para>
-        ///         The IComparer to use to determine whether two keys are equal.
-        ///     </para>
-        /// </param>
-        public AffixRuleCollection(IDictionary dictionary, IHashCodeProvider codeProvider, IComparer comparer)
+        public AffixRuleCollection(IDictionary dictionary, IEqualityComparer equalityComparer)
         {
-            innerHash = new Hashtable(dictionary, codeProvider, comparer);
+            innerHash = new Hashtable(dictionary, equalityComparer);
         }
 
         /// <summary>
@@ -144,19 +115,14 @@ namespace Notepad_Light.NetSpeller.Affix
         ///         The approximate number of elements that the 'AffixRuleCollection' can initially contain.
         ///     </para>
         /// </param>
-        /// <param name="codeProvider" type="System.Collections.IHashCodeProvider">
+        /// <param name="equalityComparer" type="System.Collections.IEqualityComparer">
         ///     <para>
-        ///         The IHashCodeProvider that supplies the hash codes for all keys in the 'AffixRuleCollection'.
+        ///         The IEqualityComparer to use to determine whether two keys are equal.
         ///     </para>
         /// </param>
-        /// <param name="comparer" type="System.Collections.IComparer">
-        ///     <para>
-        ///         The IComparer to use to determine whether two keys are equal.
-        ///     </para>
-        /// </param>		
-        public AffixRuleCollection(int capacity, IHashCodeProvider codeProvider, IComparer comparer)
+        public AffixRuleCollection(int capacity, IEqualityComparer equalityComparer)
         {
-            innerHash = new Hashtable(capacity, codeProvider, comparer);
+            innerHash = new Hashtable(capacity, equalityComparer);
         }
 
         /// <summary>
@@ -172,19 +138,14 @@ namespace Notepad_Light.NetSpeller.Affix
         ///         A number in the range from 0.1 through 1.0 indicating the maximum ratio of elements to buckets.
         ///     </para>
         /// </param>
-        /// <param name="codeProvider" type="System.Collections.IHashCodeProvider">
+        /// <param name="equalityComparer" type="System.Collections.IEqualityComparer">
         ///     <para>
-        ///         The IHashCodeProvider that supplies the hash codes for all keys in the 'AffixRuleCollection'.
+        ///         The IEqualityComparer to use to determine whether two keys are equal.
         ///     </para>
         /// </param>
-        /// <param name="comparer" type="System.Collections.IComparer">
-        ///     <para>
-        ///         The IComparer to use to determine whether two keys are equal.
-        ///     </para>
-        /// </param>
-        public AffixRuleCollection(IDictionary dictionary, float loadFactor, IHashCodeProvider codeProvider, IComparer comparer)
+        public AffixRuleCollection(IDictionary dictionary, float loadFactor, IEqualityComparer equalityComparer)
         {
-            innerHash = new Hashtable(dictionary, loadFactor, codeProvider, comparer);
+            innerHash = new Hashtable(dictionary, loadFactor, equalityComparer);
         }
 
         /// <summary>
@@ -200,19 +161,14 @@ namespace Notepad_Light.NetSpeller.Affix
         ///         A number in the range from 0.1 through 1.0 indicating the maximum ratio of elements to buckets.
         ///     </para>
         /// </param>
-        /// <param name="codeProvider" type="System.Collections.IHashCodeProvider">
+        /// <param name="equalityComparer" type="System.Collections.IEqualityComparer">
         ///     <para>
-        ///         The IHashCodeProvider that supplies the hash codes for all keys in the 'AffixRuleCollection'.
+        ///         The IEqualityComparer to use to determine whether two keys are equal.
         ///     </para>
         /// </param>
-        /// <param name="comparer" type="System.Collections.IComparer">
-        ///     <para>
-        ///         The IComparer to use to determine whether two keys are equal. 
-        ///     </para>
-        /// </param>
-        public AffixRuleCollection(int capacity, float loadFactor, IHashCodeProvider codeProvider, IComparer comparer)
+        public AffixRuleCollection(int capacity, float loadFactor, IEqualityComparer equalityComparer)
         {
-            innerHash = new Hashtable(capacity, loadFactor, codeProvider, comparer);
+            innerHash = new Hashtable(capacity, loadFactor, equalityComparer);
         }
 
 
