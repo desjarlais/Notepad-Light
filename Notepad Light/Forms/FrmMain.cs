@@ -150,14 +150,24 @@ namespace Notepad_Light
             Application.Idle += Application_Idle;
         }
 
-        private void Application_Idle(object? sender, EventArgs e)
-        {
-            foreach (SpellingEventArgs sea in gMisspelledWords)
-            {
-                DrawSquiggle(sea);
-            }
-        }
+        #region Class Properties
 
+        /// <summary>
+        /// used for the adjust labor dialog return value
+        /// </summary>
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public string EditedTime
+        {
+            set => _EditedTime = value;
+        }
+        #endregion
+
+        #region Functions
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         public void DrawSquiggle(SpellingEventArgs e)
         {
             using (Graphics g = RtbMain.CreateGraphics())
@@ -184,85 +194,7 @@ namespace Notepad_Light
                     g.DrawLine(pen, x + i + 2, y + 2, x + i + 4, y);
                 }
             }
-
         }
-
-        private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
-        {
-            DrawSquiggle(e);
-
-            foreach (SpellingEventArgs sea in gMisspelledWords)
-            {
-                if (sea.TextIndex == e.TextIndex && sea.Word == e.Word)
-                {
-                    return;
-                }
-            }
-
-            gMisspelledWords.Add(e);
-            return;
-        }
-
-        private void GSpellChecker_DeletedWord(object sender, SpellingEventArgs e)
-        {
-            int start = RtbMain.SelectionStart;
-            int length = RtbMain.SelectionLength;
-
-            RtbMain.Select(e.TextIndex, e.Word.Length);
-            RtbMain.SelectedText = string.Empty;
-
-            if (start > RtbMain.Text.Length)
-            {
-                start = RtbMain.Text.Length;
-            }
-
-            if ((start + length) > RtbMain.Text.Length)
-            {
-                start = 0;
-            }
-
-            RtbMain.Select(start, length);
-        }
-
-        private void GSpellChecker_EndOfText(object sender, EventArgs e)
-        {
-            // log end of text
-        }
-
-        private void GSpellChecker_ReplacedWord(object sender, ReplaceWordEventArgs e)
-        {
-            int start = RtbMain.SelectionStart;
-            int length = RtbMain.SelectionLength;
-
-            RtbMain.Select(e.TextIndex, e.Word.Length);
-            RtbMain.SelectedText = e.ReplacementWord;
-
-            if (start > RtbMain.Text.Length)
-            {
-                start = RtbMain.Text.Length;
-            }
-
-            if ((start + length) > RtbMain.Text.Length)
-            {
-                start = 0;
-            }
-
-            RtbMain.Select(start, length);
-        }
-
-        #region Class Properties
-
-        /// <summary>
-        /// used for the adjust labor dialog return value
-        /// </summary>
-        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public string EditedTime
-        {
-            set => _EditedTime = value;
-        }
-        #endregion
-
-        #region Functions
 
         /// <summary>
         /// Helper to only assign ToolStripItem.Text when value changed.
@@ -3391,17 +3323,99 @@ namespace Notepad_Light
             UpdateKeyboardInfo();
         }
 
-        #endregion
+        private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
+        {
+            DrawSquiggle(e);
 
+            foreach (SpellingEventArgs sea in gMisspelledWords)
+            {
+                if (sea.TextIndex == e.TextIndex && sea.Word == e.Word)
+                {
+                    return;
+                }
+            }
+
+            gMisspelledWords.Add(e);
+            return;
+        }
+
+        private void GSpellChecker_DeletedWord(object sender, SpellingEventArgs e)
+        {
+            int start = RtbMain.SelectionStart;
+            int length = RtbMain.SelectionLength;
+
+            RtbMain.Select(e.TextIndex, e.Word.Length);
+            RtbMain.SelectedText = string.Empty;
+
+            if (start > RtbMain.Text.Length)
+            {
+                start = RtbMain.Text.Length;
+            }
+
+            if ((start + length) > RtbMain.Text.Length)
+            {
+                start = 0;
+            }
+
+            RtbMain.Select(start, length);
+        }
+
+        private void GSpellChecker_EndOfText(object sender, EventArgs e)
+        {
+            // log end of text
+        }
+
+        private void GSpellChecker_ReplacedWord(object sender, ReplaceWordEventArgs e)
+        {
+            int start = RtbMain.SelectionStart;
+            int length = RtbMain.SelectionLength;
+
+            RtbMain.Select(e.TextIndex, e.Word.Length);
+            RtbMain.SelectedText = e.ReplacementWord;
+
+            if (start > RtbMain.Text.Length)
+            {
+                start = RtbMain.Text.Length;
+            }
+
+            if ((start + length) > RtbMain.Text.Length)
+            {
+                start = 0;
+            }
+
+            RtbMain.Select(start, length);
+        }
+
+        private void Application_Idle(object? sender, EventArgs e)
+        {
+            foreach (SpellingEventArgs sea in gMisspelledWords)
+            {
+                DrawSquiggle(sea);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckSpellingToolStripButton_Click(object sender, EventArgs e)
         {
-            gSpellChecker.Text = RtbMain.Text;
+            gSpellChecker?.Text = RtbMain.Text;
             if (gSpellChecker.SpellCheck())
             {
                 RtbMain.Select();
             }
         }
 
+        #endregion
+
+        #region Overrides
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="m"></param>
         protected override void WndProc(ref Message m)
         {
             const int WM_PAINT = 0x000F;
@@ -3435,5 +3449,7 @@ namespace Notepad_Light
 
             base.WndProc(ref m);
         }
+
+        #endregion
     }
 }

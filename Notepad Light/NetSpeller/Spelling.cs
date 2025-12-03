@@ -837,7 +837,7 @@ namespace Notepad_Light.NetSpeller
 
             this.Initialize();
 
-            string currentWord = "";
+            string currentWord = string.Empty;
             bool misspelledWord = false;
 
             for (int i = startWordIndex; i <= endWordIndex; i++)
