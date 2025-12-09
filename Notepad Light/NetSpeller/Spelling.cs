@@ -858,7 +858,7 @@ namespace Notepad_Light.NetSpeller
                         {
                             misspelledWord = true;
                             this.OnMisspelledWord(new SpellingEventArgs(currentWord, i, _words[i].Index));      //raise event
-                            break;
+                            // continue scanning to find all misspelled words
                         }
                     }
                     else if (i > 0 && _words[i - 1].Value.ToString() == currentWord
@@ -866,7 +866,7 @@ namespace Notepad_Light.NetSpeller
                     {
                         misspelledWord = true;
                         this.OnDoubledWord(new SpellingEventArgs(currentWord, i, _words[i].Index));     //raise event
-                        break;
+                        // continue scanning to find all doubled words
                     }
                 }
             } // for

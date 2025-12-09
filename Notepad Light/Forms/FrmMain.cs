@@ -36,6 +36,7 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
+        private System.Windows.Forms.Timer? spellCheckTimer;
 
         // Spelling globals
         private string dicFilePath = Strings.empty;
@@ -148,6 +149,11 @@ namespace Notepad_Light
             }
 
             Application.Idle += Application_Idle;
+
+            // setup live spell check debounce timer
+            spellCheckTimer = new System.Windows.Forms.Timer();
+            spellCheckTimer.Interval = 300; // ms debounce
+            spellCheckTimer.Tick += SpellCheckTimer_Tick;
         }
 
         #region Class Properties
@@ -2953,6 +2959,40 @@ namespace Notepad_Light
             {
                 LoadMarkdownInWebView2();
             }
+
+            // debounce live spell check while typing
+            if (spellCheckTimer != null)
+            {
+                spellCheckTimer.Stop();
+                spellCheckTimer.Start();
+            }
+        }
+
+        private void SpellCheckTimer_Tick(object? sender, EventArgs e)
+        {
+            spellCheckTimer?.Stop();
+
+            // run spell check if initialized
+            if (gSpellChecker == null || gDictionary == null)
+            {
+                return;
+            }
+
+            try
+            {
+                // reset previous results
+                gMisspelledWords.Clear();
+                gSpellChecker.Text = RtbMain.Text;
+                if (gSpellChecker.SpellCheck())
+                {
+                    // trigger redraw of squiggles via idle/paint
+                    RtbMain.Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogBenignError("LiveSpellCheck Error: ", ex);
+            }
         }
 
         private void RtbMain_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -3330,8 +3370,6 @@ namespace Notepad_Light
 
         private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
         {
-            DrawSquiggle(e);
-
             foreach (SpellingEventArgs sea in gMisspelledWords)
             {
                 if (sea.TextIndex == e.TextIndex && sea.Word == e.Word)
@@ -3340,6 +3378,7 @@ namespace Notepad_Light
                 }
             }
 
+            DrawSquiggle(e);
             gMisspelledWords.Add(e);
             return;
         }
