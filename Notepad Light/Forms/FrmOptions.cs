@@ -90,6 +90,16 @@ namespace Notepad_Light.Forms
                 ckbPasteRtfUnformatted.Checked = false;
             }
 
+            // update rtt paste option
+            if (Properties.Settings.Default.CheckSpellingAsYouType)
+            {
+                ckbCheckSpellingAsYouType.Checked = true;
+            }
+            else
+            {
+                ckbCheckSpellingAsYouType.Checked = false;
+            }
+
             // update autosave interval
             nudAutoSaveInterval.Value = Properties.Settings.Default.AutoSaveInterval;
         }
@@ -205,6 +215,15 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.ClearTimersOnExit = false;
+            }
+
+            if (ckbCheckSpellingAsYouType.Checked == true)
+            {
+                Properties.Settings.Default.CheckSpellingAsYouType = true;
+            }
+            else
+            {
+                Properties.Settings.Default.CheckSpellingAsYouType = false;
             }
 
             Close();

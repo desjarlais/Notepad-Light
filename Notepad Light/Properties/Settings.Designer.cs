@@ -276,5 +276,17 @@ namespace Notepad_Light.Properties {
                 this["FontColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CheckSpellingAsYouType {
+            get {
+                return ((bool)(this["CheckSpellingAsYouType"]));
+            }
+            set {
+                this["CheckSpellingAsYouType"] = value;
+            }
+        }
     }
 }

@@ -154,6 +154,9 @@ namespace Notepad_Light
             spellCheckTimer = new System.Windows.Forms.Timer();
             spellCheckTimer.Interval = 300; // ms debounce
             spellCheckTimer.Tick += SpellCheckTimer_Tick;
+
+            // apply initial setting for live spell check
+            UpdateSpellCheckAsYouType();
         }
 
         #region Class Properties
@@ -176,6 +179,11 @@ namespace Notepad_Light
         /// <param name="e"></param>
         public void DrawSquiggle(SpellingEventArgs e)
         {
+            if (e.TextIndex > RtbMain.TextLength - 1)
+            {
+                return;
+            }
+
             using (Graphics g = RtbMain.CreateGraphics())
             using (Pen pen = new Pen(Color.Red, 2))
             {
@@ -1731,6 +1739,32 @@ namespace Notepad_Light
         }
 
         /// <summary>
+        /// Enable or disable live spell check based on user setting.
+        /// When disabling: stop timer and clear current squiggles/invalidations.
+        /// </summary>
+        private void UpdateSpellCheckAsYouType()
+        {
+            bool enabled = Properties.Settings.Default.CheckSpellingAsYouType;
+
+            // guard if timer is not created yet
+            if (spellCheckTimer != null)
+            {
+                spellCheckTimer.Enabled = enabled;
+                if (!enabled)
+                {
+                    spellCheckTimer.Stop();
+                }
+            }
+
+            // clear any existing squiggles when disabling
+            if (!enabled)
+            {
+                gMisspelledWords.Clear();
+                RtbMain.Invalidate();
+            }
+        }
+
+        /// <summary>
         /// reset the timespan variables
         /// </summary>
         public void ClearTimeSpanVariables()
@@ -2789,6 +2823,7 @@ namespace Notepad_Light
 
             // update the autosave ticks
             UpdateAutoSaveInterval();
+            UpdateSpellCheckAsYouType();
             Properties.Settings.Default.Save();
         }
 
@@ -2960,8 +2995,8 @@ namespace Notepad_Light
                 LoadMarkdownInWebView2();
             }
 
-            // debounce live spell check while typing
-            if (spellCheckTimer != null)
+            // debounce live spell check while typing when enabled
+            if (spellCheckTimer != null && Properties.Settings.Default.CheckSpellingAsYouType)
             {
                 spellCheckTimer.Stop();
                 spellCheckTimer.Start();
