@@ -2229,10 +2229,10 @@ namespace Notepad_Light
         /// <returns></returns>
         public static POINT GetVScrollPos(RichTextBox box)
         {
-            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(POINT)));
+            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf<POINT>());
             Marshal.StructureToPtr(new POINT(), ptr, false);
             SendMessage(box.Handle, EM_GETSCROLLPOS, IntPtr.Zero, ptr);
-            POINT point = (POINT)Marshal.PtrToStructure(ptr, typeof(POINT))!;
+            POINT point = Marshal.PtrToStructure<POINT>(ptr)!;
             Marshal.FreeHGlobal(ptr);
             return point;
         }
@@ -2671,7 +2671,7 @@ namespace Notepad_Light
             if (e.KeyCode == Keys.Tab && RtbMain.SelectionStart > RtbMain.GetFirstCharIndexOfCurrentLine())
             {
                 e.SuppressKeyPress = true;
-                RtbMain.SelectedText = "    ";
+                RtbMain.SelectedText = Strings.tabSpacing;
                 return;
             }
 
