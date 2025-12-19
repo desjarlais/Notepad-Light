@@ -48,6 +48,12 @@ namespace Notepad_Light
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
         private string _prevTimerText = Strings.zeroTimer;
 
+        // squiggle rendering
+        private Pen? _squigglePen;
+        private const int SquiggleStep = 6;   // pixels between zig-zag points
+        private const int SquiggleAmp = 2;    // amplitude in pixels
+        private RtbPaintHook? _rtbPaintHook;
+
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
         public Color clrDarkModeForeColor = Color.FromArgb(96, 96, 96);
         public CurrentFileType gCurrentFileType;
@@ -126,6 +132,12 @@ namespace Notepad_Light
             RtbMain.Modified = false;
             UpdateToolbarIcons();
 
+            // init squiggle pen
+            _squigglePen = new Pen(Color.Red, 2);
+
+            // hook richtextbox paint to render squiggles
+            _rtbPaintHook = new RtbPaintHook(this, RtbMain);
+
             // setup spell checker
             dicFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "\\Dictionaries\\", "en-US.dic");
             if (File.Exists(dicFilePath))
@@ -174,40 +186,83 @@ namespace Notepad_Light
         #region Functions
 
         /// <summary>
-        /// 
+        /// Draw a single squiggle for a misspelled word using the provided Graphics, batching friendly.
+        /// Skips when off-screen. Uses character positions to compute width.
         /// </summary>
-        /// <param name="e"></param>
-        public void DrawSquiggle(SpellingEventArgs e)
+        /// <param name="g">Graphics from Paint/WndProc</param>
+        /// <param name="e">Spelling event</param>
+        private void DrawSquiggle(Graphics g, SpellingEventArgs e)
         {
-            if (e.TextIndex > RtbMain.TextLength - 1)
+            if (e.TextIndex < 0 || e.TextIndex >= RtbMain.TextLength) return;
+            if (_squigglePen == null) return;
+
+            // start and end positions in client coordinates
+            Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
+            int endIndex = Math.Min(RtbMain.TextLength, e.TextIndex + e.Word.Length);
+            Point endPos = RtbMain.GetPositionFromCharIndex(endIndex);
+
+            // Heuristic: if wrapped, ensure width positive; fallback to TextRenderer if equal X
+            int width = Math.Max(0, endPos.X - startPos.X);
+            if (width == 0)
+            {
+                // very short or at line wrap; estimate width by measuring text
+                Size sz = TextRenderer.MeasureText(g, e.Word, RtbMain.Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding);
+                width = Math.Max(0, sz.Width - 2);
+            }
+
+            // vertical baseline under the text
+            int y = startPos.Y + RtbMain.Font.Height - 2;
+
+            // visibility check: skip if outside viewport
+            Rectangle client = RtbMain.ClientRectangle;
+            if (y < client.Top - RtbMain.Font.Height || y > client.Bottom + RtbMain.Font.Height)
             {
                 return;
             }
 
-            using (Graphics g = RtbMain.CreateGraphics())
-            using (Pen pen = new Pen(Color.Red, 2))
+            // build zig-zag points
+            int x0 = startPos.X;
+            int steps = Math.Max(1, width / SquiggleStep);
+            Point[] pts = new Point[steps + 1];
+            for (int i = 0; i <= steps; i++)
             {
-                int start = RtbMain.SelectionStart;
-                int length = RtbMain.SelectionLength;
-
-                // get pixel position of first character
-                Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
-
-                // Measure selected text width
-                string selectedText = RtbMain.Text.Substring(e.TextIndex, e.Word.Length);
-                Size textSize = TextRenderer.MeasureText(g, selectedText, RtbMain.Font);
-
-                // baseline under text
-                int y = startPos.Y + RtbMain.Font.Height - 2;
-                int x = startPos.X;
-
-                // draw squiggle line across word
-                for (int i = 0; i < textSize.Width; i += 4)
-                {
-                    g.DrawLine(pen, x + i, y, x + i + 2, y + 2);
-                    g.DrawLine(pen, x + i + 2, y + 2, x + i + 4, y);
-                }
+                int x = x0 + i * SquiggleStep;
+                if (x > x0 + width) x = x0 + width;
+                int dy = (i % 2 == 0) ? 0 : SquiggleAmp;
+                pts[i] = new Point(x, y + dy);
             }
+
+            if (pts.Length >= 2)
+            {
+                g.DrawLines(_squigglePen, pts);
+            }
+        }
+
+        /// <summary>
+        /// Draw all visible squiggles with one paint pass
+        /// </summary>
+        /// <param name="g"></param>
+        public void DrawVisibleSquiggles(Graphics g)
+        {
+            if (gMisspelledWords.Count == 0) return;
+            foreach (var sea in gMisspelledWords)
+            {
+                DrawSquiggle(g, sea);
+            }
+        }
+
+        /// <summary>
+        /// Invalidate only the area that likely contains the squiggle
+        /// </summary>
+        private void InvalidateSquiggleArea(SpellingEventArgs e)
+        {
+            if (e.TextIndex < 0 || e.TextIndex >= RtbMain.TextLength) return;
+            Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
+            int endIndex = Math.Min(RtbMain.TextLength, e.TextIndex + e.Word.Length);
+            Point endPos = RtbMain.GetPositionFromCharIndex(endIndex);
+            int width = Math.Max(6, Math.Abs(endPos.X - startPos.X));
+            var rect = new Rectangle(startPos.X, startPos.Y, width, RtbMain.Font.Height + 4);
+            RtbMain.Invalidate(rect);
         }
 
         /// <summary>
@@ -2578,6 +2633,7 @@ namespace Notepad_Light
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _squigglePen?.Dispose();
             Properties.Settings.Default.Save();
             ExitAppWork(true);
         }
@@ -3020,7 +3076,7 @@ namespace Notepad_Light
                 gSpellChecker.Text = RtbMain.Text;
                 if (gSpellChecker.SpellCheck())
                 {
-                    // trigger redraw of squiggles via idle/paint
+                    // trigger redraw of squiggles via paint
                     RtbMain.Invalidate();
                 }
             }
@@ -3412,9 +3468,8 @@ namespace Notepad_Light
                     return;
                 }
             }
-
-            DrawSquiggle(e);
             gMisspelledWords.Add(e);
+            InvalidateSquiggleArea(e);
             return;
         }
 
@@ -3467,10 +3522,7 @@ namespace Notepad_Light
 
         private void Application_Idle(object? sender, EventArgs e)
         {
-            foreach (SpellingEventArgs sea in gMisspelledWords)
-            {
-                DrawSquiggle(sea);
-            }
+            // no-op: avoid redundant drawing during idle
         }
 
         /// <summary>
@@ -3530,5 +3582,38 @@ namespace Notepad_Light
         }
 
         #endregion
+    }
+
+    // intercept RtbMain WM_PAINT to draw squiggles exactly when it repaints
+    internal sealed class RtbPaintHook : NativeWindow
+    {
+        private readonly FrmMain _owner;
+        private readonly RichTextBox _rtb;
+
+        public RtbPaintHook(FrmMain owner, RichTextBox rtb)
+        {
+            _owner = owner;
+            _rtb = rtb;
+            AssignHandle(rtb.Handle);
+            _rtb.HandleDestroyed += Rtb_HandleDestroyed;
+        }
+
+        private void Rtb_HandleDestroyed(object? sender, EventArgs e)
+        {
+            ReleaseHandle();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_PAINT = 0x000F;
+            base.WndProc(ref m);
+            if (m.Msg == WM_PAINT)
+            {
+                using (Graphics g = Graphics.FromHwnd(this.Handle))
+                {
+                    _owner.DrawVisibleSquiggles(g);
+                }
+            }
+        }
     }
 }
