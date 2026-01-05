@@ -526,7 +526,7 @@ namespace Notepad_Light.NetSpeller
             for (int j = 1; j <= target.Length; j++)
             {
                 // boundary conditions
-                int val = (int)matrix.GetValue(0, j - 1);
+                int val = matrix.GetValue(0, j - 1) is int v ? v : 0;
                 matrix.SetValue(val + 1, 0, j);
             }
 
@@ -534,27 +534,27 @@ namespace Notepad_Light.NetSpeller
             for (int i = 1; i <= source.Length; i++)
             {
                 // boundary conditions
-                int val = (int)matrix.GetValue(i - 1, 0);
+                int val = matrix.GetValue(i - 1, 0) is int v ? v : 0;
                 matrix.SetValue(val + 1, i, 0);
 
                 // inner loop
                 for (int j = 1; j <= target.Length; j++)
                 {
-                    int diag = (int)matrix.GetValue(i - 1, j - 1);
+                    int diag = matrix.GetValue(i - 1, j - 1) is int v1 ? v1 : 0;
 
                     if (source.Substring(i - 1, 1) != target.Substring(j - 1, 1))
                     {
                         diag++;
                     }
 
-                    int deletion = (int)matrix.GetValue(i - 1, j);
-                    int insertion = (int)matrix.GetValue(i, j - 1);
+                    int deletion = matrix.GetValue(i - 1, j) is int v2 ? v2 : 0;
+                    int insertion = matrix.GetValue(i, j - 1) is int v3 ? v3 : 0;
                     int match = Math.Min(deletion + 1, insertion + 1);
                     matrix.SetValue(Math.Min(diag, match), i, j);
                 }//for j
             }//for i
 
-            int dist = (int)matrix.GetValue(source.Length, target.Length);
+            int dist = matrix.GetValue(source.Length, target.Length) is int v4 ? v4 : 0;
 
             // extra edit on first and last chars
             if (positionPriority)

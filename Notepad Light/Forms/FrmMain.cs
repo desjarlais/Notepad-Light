@@ -257,6 +257,7 @@ namespace Notepad_Light
         private void InvalidateSquiggleArea(SpellingEventArgs e)
         {
             if (e.TextIndex < 0 || e.TextIndex >= RtbMain.TextLength) return;
+
             Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
             int endIndex = Math.Min(RtbMain.TextLength, e.TextIndex + e.Word.Length);
             Point endPos = RtbMain.GetPositionFromCharIndex(endIndex);
@@ -511,6 +512,9 @@ namespace Notepad_Light
             ClearToolbarFormattingIcons();
             DisableToolbarFormattingIcons();
 
+            // clear any existing spell marks when starting a new document
+            ClearSpellCheckArtifacts();
+
             // check for file type and update UI accordingly
             if (gCurrentFileType == CurrentFileType.RTF)
             {
@@ -644,6 +648,8 @@ namespace Notepad_Light
             {
                 Cursor = Cursors.WaitCursor;
                 CollapsePanel2();
+                // clear previous spell marks for new file context
+                ClearSpellCheckArtifacts();
                 CheckForReadOnly(filePath);
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
                 if (filePath.EndsWith(Strings.txtExt))
@@ -1092,7 +1098,6 @@ namespace Notepad_Light
                     case Strings.rtf:
                         if (Properties.Settings.Default.PasteRtfUnformatted)
                         {
-                            // paste as unformatted rtf using TryGetData<string>
                             if (Clipboard.TryGetData<string>(DataFormats.Rtf, out var rtfData) && rtfData != null)
                             {
                                 RtbMain.SelectedText = rtfData;
@@ -3059,6 +3064,20 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// Clear misspelled words list and invalidate the editor to remove squiggles.
+        /// Also reset spell checker text to avoid stale references.
+        /// </summary>
+        private void ClearSpellCheckArtifacts()
+        {
+            gMisspelledWords.Clear();
+            if (gSpellChecker != null)
+            {
+                gSpellChecker.Text = string.Empty;
+            }
+            RtbMain.Invalidate();
+        }
+
         private void SpellCheckTimer_Tick(object? sender, EventArgs e)
         {
             spellCheckTimer?.Stop();
@@ -3532,10 +3551,13 @@ namespace Notepad_Light
         /// <param name="e"></param>
         private void CheckSpellingToolStripButton_Click(object sender, EventArgs e)
         {
-            gSpellChecker?.Text = RtbMain.Text;
-            if (gSpellChecker.SpellCheck())
+            if (gSpellChecker != null)
             {
-                RtbMain.Select();
+                gSpellChecker.Text = RtbMain.Text;
+                if (gSpellChecker.SpellCheck())
+                {
+                    RtbMain.Select();
+                }
             }
         }
 

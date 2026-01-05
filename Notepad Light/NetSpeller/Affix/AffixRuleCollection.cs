@@ -280,18 +280,7 @@ namespace Notepad_Light.NetSpeller.Affix
         ///         The key of the element to get or set.
         ///     </para>
         /// </value>
-        public AffixRule this[string key]
-        {
-            get
-            {
-                return (AffixRule)innerHash[key];
-            }
-            set
-            {
-                innerHash[key] = value;
-            }
-        }
-        object IDictionary.this[object key]
+        object? IDictionary.this[object key]
         {
             get
             {
@@ -299,7 +288,19 @@ namespace Notepad_Light.NetSpeller.Affix
             }
             set
             {
-                this[(string)key] = (AffixRule)value;
+                this[(string)key] = (AffixRule?)value;
+            }
+        }
+
+        public AffixRule? this[string key]
+        {
+            get
+            {
+                return (AffixRule?)innerHash[key];
+            }
+            set
+            {
+                innerHash[key] = value;
             }
         }
 
