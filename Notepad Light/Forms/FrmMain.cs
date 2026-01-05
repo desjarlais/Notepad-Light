@@ -245,8 +245,17 @@ namespace Notepad_Light
         public void DrawVisibleSquiggles(Graphics g)
         {
             if (gMisspelledWords.Count == 0) return;
+            // Do not draw squiggles for the word currently being edited (caret inside the word)
+            int caret = RtbMain.SelectionStart;
             foreach (var sea in gMisspelledWords)
             {
+                int start = sea.TextIndex;
+                int end = Math.Min(RtbMain.TextLength, start + sea.Word.Length);
+                if (caret >= start && caret <= end)
+                {
+                    // skip drawing while caret is within this misspelled word
+                    continue;
+                }
                 DrawSquiggle(g, sea);
             }
         }
