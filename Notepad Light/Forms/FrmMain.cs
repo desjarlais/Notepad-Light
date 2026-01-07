@@ -139,7 +139,7 @@ namespace Notepad_Light
             _rtbPaintHook = new RtbPaintHook(this, RtbMain);
 
             // setup spell checker
-            dicFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "\\Dictionaries\\", "en-US.dic");
+            dicFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "\\Dictionaries\\", Strings.englishDictFile);
             if (File.Exists(dicFilePath))
             {
                 // initialize spell checker
@@ -159,8 +159,6 @@ namespace Notepad_Light
             {
                 App.WriteErrorLogContent("Spell Checker Dictionary Not Found: " + dicFilePath, gErrorLog);
             }
-
-            Application.Idle += Application_Idle;
 
             // setup live spell check debounce timer
             spellCheckTimer = new System.Windows.Forms.Timer();
@@ -295,6 +293,31 @@ namespace Notepad_Light
         private static void LogBenignError(string context, Exception ex)
         {
             App.WriteErrorLogContent(context + ex.Message, gErrorLog);
+        }
+
+        // helper: compute selection bounding rectangle for minimal invalidation
+        private Rectangle GetSelectionBoundingRect()
+        {
+            if (RtbMain.SelectionLength <= 0) return Rectangle.Empty;
+            int start = RtbMain.SelectionStart;
+            int end = start + RtbMain.SelectionLength;
+            Point pStart = RtbMain.GetPositionFromCharIndex(start);
+            Point pEnd = RtbMain.GetPositionFromCharIndex(end);
+            int top = pStart.Y;
+            int bottom = Math.Max(pStart.Y, pEnd.Y) + RtbMain.Font.Height;
+            int left = Math.Min(pStart.X, pEnd.X);
+            int right;
+            if (pEnd.Y != pStart.Y)
+            {
+                // multi-line: invalidate full width to be safe
+                right = RtbMain.ClientSize.Width;
+                left = 0;
+            }
+            else
+            {
+                right = Math.Max(pStart.X, pEnd.X);
+            }
+            return Rectangle.FromLTRB(left, top, right, bottom);
         }
 
         /// <summary>
@@ -2477,6 +2500,15 @@ namespace Notepad_Light
             UpdateLnColValues();
             UpdateToolbarIcons();
             UpdateFontInformation();
+            // invalidate only the selection area to refresh lightweight overlay
+            if (RtbMain.SelectionLength > 0)
+            {
+                Rectangle selRect = GetSelectionBoundingRect();
+                if (!selRect.IsEmpty)
+                {
+                    RtbMain.Invalidate(selRect);
+                }
+            }
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3331,6 +3363,15 @@ namespace Notepad_Light
                 webViewMarkup.ExecuteScriptAsync("window.scroll(" + p.X + "," + p.Y + ")");
                 RtbMain.Refresh();
             }
+            // ensure overlays follow scroll
+            if (RtbMain.SelectionLength > 0)
+            {
+                Rectangle selRect = GetSelectionBoundingRect();
+                if (!selRect.IsEmpty)
+                {
+                    RtbMain.Invalidate(selRect);
+                }
+            }
         }
 
         /// <summary>
@@ -3548,10 +3589,7 @@ namespace Notepad_Light
             RtbMain.Select(start, length);
         }
 
-        private void Application_Idle(object? sender, EventArgs e)
-        {
-            // no-op: avoid redundant drawing during idle
-        }
+        
 
         /// <summary>
         /// 
@@ -3575,42 +3613,20 @@ namespace Notepad_Light
         #region Overrides
 
         /// <summary>
-        /// 
+        /// draw minimal overlay in WM_PAINT, heavy work moved to RtbPaintHook
         /// </summary>
         /// <param name="m"></param>
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_PAINT = 0x000F;
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == Win32.WM_PAINT)
+        //    {
+        //        // Rtb paints itself first
+        //        base.WndProc(ref m);
+        //        return;
+        //    }
 
-            if (m.Msg == WM_PAINT)
-            {
-                // Rtb paints itself first
-                base.WndProc(ref m);
-
-                // draw underneath text
-                if (RtbMain.SelectionLength > 0)
-                {
-                    using (Graphics g = RtbMain.CreateGraphics())
-                    using (Brush brush = new SolidBrush(Color.FromArgb(255, Color.Red)))
-                    {
-                        int start = RtbMain.SelectionStart;
-                        int length = RtbMain.SelectionLength;
-                        
-                        for (int i = 0; i < length; i++)
-                        {
-                            Point pos = RtbMain.GetPositionFromCharIndex(start + i);
-                            Size charSize = TextRenderer.MeasureText(RtbMain.Text.Substring(start + i, 1), RtbMain.Font);
-                            Rectangle rect = new Rectangle(pos, charSize);
-                            g.FillRectangle(brush, rect);
-                        }
-                    }
-                }
-                
-                return;
-            }
-
-            base.WndProc(ref m);
-        }
+        //    base.WndProc(ref m);
+        //}
 
         #endregion
     }
@@ -3636,15 +3652,66 @@ namespace Notepad_Light
 
         protected override void WndProc(ref Message m)
         {
-            const int WM_PAINT = 0x000F;
             base.WndProc(ref m);
-            if (m.Msg == WM_PAINT)
+            if (m.Msg == Win32.WM_PAINT)
             {
                 using (Graphics g = Graphics.FromHwnd(this.Handle))
                 {
                     _owner.DrawVisibleSquiggles(g);
+                    // draw lightweight selection overlay as a single region per line
+                    DrawSelectionOverlay(g);
                 }
             }
         }
+
+        private void DrawSelectionOverlay(Graphics g)
+        {
+            int length = _rtb.SelectionLength;
+            if (length <= 0) return;
+            int start = _rtb.SelectionStart;
+
+            // compute bounding rectangles per line for the selection range
+            int end = start + length;
+            int current = start;
+            using Brush overlay = new SolidBrush(Color.FromArgb(48, Color.Red));
+
+            while (current < end)
+            {
+                int lineIdx = _rtb.GetLineFromCharIndex(current);
+                int lineStart = _rtb.GetFirstCharIndexFromLine(lineIdx);
+                int lineEnd = (lineIdx + 1 < _rtb.Lines.Length) ? _rtb.GetFirstCharIndexFromLine(lineIdx + 1) : _rtb.TextLength;
+
+                int segmentStart = current;
+                int segmentEnd = Math.Min(end, lineEnd);
+                if (segmentStart >= segmentEnd)
+                {
+                    break;
+                }
+
+                Point pStart = _rtb.GetPositionFromCharIndex(segmentStart);
+                Point pEnd = _rtb.GetPositionFromCharIndex(segmentEnd);
+                int width = Math.Max(0, pEnd.X - pStart.X);
+                if (width == 0)
+                {
+                    // fallback to measuring the selected substring on this line
+                    int count = segmentEnd - segmentStart;
+                    if (count > 0)
+                    {
+                        string s = _rtb.Text.Substring(segmentStart, count);
+                        Size sz = TextRenderer.MeasureText(g, s, _rtb.Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding);
+                        width = Math.Max(0, sz.Width - 2);
+                    }
+                }
+
+                Rectangle rect = new Rectangle(pStart.X, pStart.Y, width, _rtb.Font.Height);
+                if (rect.Width > 0 && rect.Height > 0)
+                {
+                    g.FillRectangle(overlay, rect);
+                }
+
+                current = segmentEnd;
+            }
+        }
     }
+
 }

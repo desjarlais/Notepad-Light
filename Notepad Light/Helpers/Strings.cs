@@ -50,6 +50,9 @@
         public const string keyboardOvr = "OVR";
         public const string keybaordIns = "INS";
 
+        // dictionary paths
+        public const string englishDictFile = "en-US.dic";
+
         // hyperlinks
         public const string mainWebsite = "https://github.com/desjarlais/Notepad-Light";
         public const string githubIssues = "https://github.com/desjarlais/Notepad-Light/issues";

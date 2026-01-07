@@ -8,6 +8,9 @@ namespace Notepad_Light.Helpers
 {
     public static class Win32
     {
+        // window messages
+        public const int WM_PAINT = 0x000F;
+
         /// <summary>
         /// used to get machine details
         /// </summary>
