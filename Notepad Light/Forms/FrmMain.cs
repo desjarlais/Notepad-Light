@@ -746,7 +746,6 @@ namespace Notepad_Light
             try
             {
                 Cursor = Cursors.WaitCursor;
-                CollapsePanel2();
 
                 // prompt for changes
                 SaveChanges();
@@ -773,11 +772,13 @@ namespace Notepad_Light
                     {
                         LoadPlainTextFile(ofdFileOpen.FileName);
                         UnloadMarkdown();
+                        CollapsePanel2();
                     }
                     else if (ofdFileOpen.FileName.EndsWith(Strings.rtfExt))
                     {
                         LoadRtfFile(ofdFileOpen.FileName);
                         UnloadMarkdown();
+                        CollapsePanel2();
                     }
                     else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt) || ofdFileOpen.FileName.EndsWith(Strings.md2Ext))
                     {
@@ -2217,6 +2218,29 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// Inserts two blank lines at the current caret (selection start), pushing existing content downward,
+        /// then returns the caret to the original position and inserts the provided text.
+        /// </summary>
+        /// <param name="textToInsert">The text to insert at the original caret position.</param>
+        private void InsertLeadingBlankLinesAndSetText(string textToInsert)
+        {
+            const int linesToInsert = 2;
+            string pad = string.Concat(Enumerable.Repeat(Environment.NewLine, linesToInsert));
+
+            // capture current caret/selection start
+            int originalCaret = RtbMain.SelectionStart;
+
+            // insert padding at caret (shifts content down)
+            RtbMain.Select(originalCaret, 0);
+            RtbMain.SelectedText = pad;
+
+            // move caret back to the original position and insert the text
+            RtbMain.SelectionStart = originalCaret;
+            RtbMain.SelectionLength = 0;
+            RtbMain.SelectedText = textToInsert;
+        }
+
         public void InsertTemplate(int templateNumber)
         {
             if (Properties.Settings.Default.IncludeDateTimeWithTemplates)
@@ -2226,11 +2250,11 @@ namespace Notepad_Light
 
             switch (templateNumber)
             {
-                case 1: RtbMain.SelectedText = Templates.GetTemplate1().ToString(); break;
-                case 2: RtbMain.SelectedText = Templates.GetTemplate2().ToString(); break;
-                case 3: RtbMain.SelectedText = Templates.GetTemplate3().ToString(); break;
-                case 4: RtbMain.SelectedText = Templates.GetTemplate4().ToString(); break;
-                case 5: RtbMain.SelectedText = Templates.GetTemplate5().ToString(); break;
+                case 1: InsertLeadingBlankLinesAndSetText(Templates.GetTemplate1().ToString()); break;
+                case 2: InsertLeadingBlankLinesAndSetText(Templates.GetTemplate2().ToString()); break;
+                case 3: InsertLeadingBlankLinesAndSetText(Templates.GetTemplate3().ToString()); break;
+                case 4: InsertLeadingBlankLinesAndSetText(Templates.GetTemplate4().ToString()); break;
+                case 5: InsertLeadingBlankLinesAndSetText(Templates.GetTemplate5().ToString()); break;
             }
         }
 
