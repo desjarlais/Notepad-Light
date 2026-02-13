@@ -54,8 +54,14 @@ namespace Notepad_Light
         private const int SquiggleAmp = 2;    // amplitude in pixels
         private RtbPaintHook? _rtbPaintHook;
 
+        // fields
+        private int _lastCaretBeforeChange = 0;
+
+        // dark mode colors
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
         public Color clrDarkModeForeColor = Color.FromArgb(96, 96, 96);
+
+        // current file type tracking for UI and save logic
         public CurrentFileType gCurrentFileType;
 
         public enum CurrentFileType
@@ -721,6 +727,26 @@ namespace Notepad_Light
             }
         }
 
+        // helper
+        private void AdjustMisspelledWordOffsets(int changeStart, int delta)
+        {
+            if (delta == 0 || gMisspelledWords.Count == 0) return;
+
+            var adjusted = new List<SpellingEventArgs>(gMisspelledWords.Count);
+            foreach (var sea in gMisspelledWords)
+            {
+                int newIndex = sea.TextIndex;
+                if (sea.TextIndex >= changeStart)
+                {
+                    newIndex = Math.Max(0, sea.TextIndex + delta);
+                }
+                adjusted.Add(new SpellingEventArgs(sea.Word, sea.WordIndex, newIndex));
+            }
+
+            gMisspelledWords = adjusted;
+            RtbMain.Invalidate();
+        }
+
         /// <summary>
         /// if a file is read only, update the UI so the user knows the app state
         /// </summary>
@@ -1022,6 +1048,7 @@ namespace Notepad_Light
 
         public void Cut()
         {
+            _lastCaretBeforeChange = RtbMain.SelectionStart;
             RtbMain.Cut();
             RtbMain.Modified = true;
         }
@@ -1072,6 +1099,9 @@ namespace Notepad_Light
         /// </summary>
         public void Paste()
         {
+            // cache the caret position before the paste in case we need to revert it for certain paste types
+            _lastCaretBeforeChange = RtbMain.SelectionStart;
+
             // if the clipboard is empty, do nothing
             if (Clipboard.GetDataObject()?.GetFormats().Length == 0)
             {
@@ -2793,6 +2823,9 @@ namespace Notepad_Light
 
         private void RtbMain_KeyDown(object sender, KeyEventArgs e)
         {
+            // capture the caret position before the key is processed to compare against after the key is processed in order to determine if the caret moved
+            _lastCaretBeforeChange = RtbMain.SelectionStart;
+
             // if the selection is not at the beginning of the line, tab 4 spaces
             if (e.KeyCode == Keys.Tab && RtbMain.SelectionStart > RtbMain.GetFirstCharIndexOfCurrentLine())
             {
@@ -3108,6 +3141,15 @@ namespace Notepad_Light
             if (gPrevPageLength != RtbMain.TextLength)
             {
                 RtbMain.Modified = true;
+            }
+
+            // if spell check as you type is enabled and there are misspelled words, adjust their offsets based on the change in text length to keep them in sync with the text
+            int deltaLength = RtbMain.TextLength - gPrevPageLength;
+            if (deltaLength != 0 &&
+                Properties.Settings.Default.CheckSpellingAsYouType &&
+                gMisspelledWords.Count > 0)
+            {
+                AdjustMisspelledWordOffsets(_lastCaretBeforeChange, deltaLength);
             }
 
             // update the prevPageLength and UI
