@@ -2230,11 +2230,11 @@ namespace Notepad_Light
                         MoveCursorToLocation(indexToText, FindTextBox.TextLength);
                     }
 
-                    // end of the document, restart at the beginning
+                    // end of the document, wrap search index so next Find starts from the top
                     if (indexToText == -1)
                     {
                         MoveCursorToLocation(0, 0);
-                        FindText();
+                        gPrevSearchIndex = 0;
                     }
                 }
                 catch (Exception ex)
