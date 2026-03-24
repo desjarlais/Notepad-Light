@@ -56,6 +56,7 @@ namespace Notepad_Light
 
         // fields
         private int _lastCaretBeforeChange = 0;
+        internal bool _isInSizeMove = false;
 
         // dark mode colors
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
@@ -2858,8 +2859,6 @@ namespace Notepad_Light
                 RtbMain.SelectionIndent = 0;
             }
 
-            // todo: find a way to account for existing indents and move the bullet accordingly
-            // see https://github.com/desjarlais/Notepad-Light/issues/10
             EndOfButtonFormatWork();
         }
 
@@ -3775,20 +3774,22 @@ namespace Notepad_Light
         #region Overrides
 
         /// <summary>
-        /// draw minimal overlay in WM_PAINT, heavy work moved to RtbPaintHook
+        /// Track window move/resize to suppress expensive squiggle drawing during drag.
         /// </summary>
-        /// <param name="m"></param>
-        //protected override void WndProc(ref Message m)
-        //{
-        //    if (m.Msg == Win32.WM_PAINT)
-        //    {
-        //        // Rtb paints itself first
-        //        base.WndProc(ref m);
-        //        return;
-        //    }
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
 
-        //    base.WndProc(ref m);
-        //}
+            if (m.Msg == Win32.WM_ENTERSIZEMOVE)
+            {
+                _isInSizeMove = true;
+            }
+            else if (m.Msg == Win32.WM_EXITSIZEMOVE)
+            {
+                _isInSizeMove = false;
+                RtbMain.Invalidate();
+            }
+        }
 
         #endregion
     }
@@ -3815,7 +3816,7 @@ namespace Notepad_Light
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            if (m.Msg == Win32.WM_PAINT)
+            if (m.Msg == Win32.WM_PAINT && !_owner._isInSizeMove)
             {
                 using (Graphics g = Graphics.FromHwnd(this.Handle))
                 {
@@ -3875,5 +3876,4 @@ namespace Notepad_Light
             }
         }
     }
-
 }
