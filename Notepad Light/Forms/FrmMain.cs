@@ -1641,6 +1641,7 @@ namespace Notepad_Light
             UnderlineToolStripButton.Enabled = true;
             StrikethroughToolStripButton.Enabled = true;
             BulletToolStripButton.Enabled = true;
+            NumberedListToolStripButton.Enabled = true;
             FontColorToolStripButton.Enabled = true;
             HighlightTextToolStripButton.Enabled = true;
             PictureToolStripMenuItem.Enabled = true;
@@ -1662,6 +1663,7 @@ namespace Notepad_Light
             UnderlineToolStripButton.Enabled = false;
             StrikethroughToolStripButton.Enabled = false;
             BulletToolStripButton.Enabled = false;
+            NumberedListToolStripButton.Enabled = false;
             FontColorToolStripButton.Enabled = false;
             HighlightTextToolStripButton.Enabled = false;
             PictureToolStripMenuItem.Enabled = false;
@@ -1683,6 +1685,7 @@ namespace Notepad_Light
             UnderlineToolStripButton.Checked = false;
             StrikethroughToolStripButton.Checked = false;
             BulletToolStripButton.Checked = false;
+            NumberedListToolStripButton.Checked = false;
             RightJustifiedToolStripButton.Checked = false;
             CenterJustifiedToolStripButton.Checked = false;
             LeftJustifiedToolStripButton.Checked = false;
@@ -1755,6 +1758,63 @@ namespace Notepad_Light
                 RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style | FontStyle.Strikeout);
             }
 
+            EndOfButtonFormatWork();
+        }
+
+        /// <summary>
+        /// toggle numbered list prefixes (1. 2. 3. ...) on the selected lines or current line
+        /// </summary>
+        public void ApplyNumberedList()
+        {
+            int selStart = RtbMain.SelectionStart;
+            int selLength = RtbMain.SelectionLength;
+
+            // determine the range of lines affected
+            int firstLine = RtbMain.GetLineFromCharIndex(selStart);
+            int lastLine = selLength > 0
+                ? RtbMain.GetLineFromCharIndex(selStart + selLength - 1)
+                : firstLine;
+
+            // check if the first affected line already has a numbered prefix to decide toggle direction
+            string firstLineText = RtbMain.Lines.Length > firstLine ? RtbMain.Lines[firstLine] : string.Empty;
+            bool isNumbered = System.Text.RegularExpressions.Regex.IsMatch(firstLineText, @"^\d+\.\s");
+
+            // suspend painting to avoid flicker
+            RtbMain.SuspendLayout();
+
+            if (isNumbered)
+            {
+                // remove numbering from each affected line
+                for (int i = firstLine; i <= lastLine && i < RtbMain.Lines.Length; i++)
+                {
+                    string lineText = RtbMain.Lines[i];
+                    var match = System.Text.RegularExpressions.Regex.Match(lineText, @"^\d+\.\s");
+                    if (match.Success)
+                    {
+                        int lineStart = RtbMain.GetFirstCharIndexFromLine(i);
+                        RtbMain.Select(lineStart, match.Length);
+                        RtbMain.SelectedText = string.Empty;
+                    }
+                }
+
+                NumberedListToolStripButton.Checked = false;
+            }
+            else
+            {
+                // add numbering to each affected line
+                int number = 1;
+                for (int i = firstLine; i <= lastLine && i < RtbMain.Lines.Length; i++)
+                {
+                    int lineStart = RtbMain.GetFirstCharIndexFromLine(i);
+                    RtbMain.Select(lineStart, 0);
+                    RtbMain.SelectedText = $"{number}. ";
+                    number++;
+                }
+
+                NumberedListToolStripButton.Checked = true;
+            }
+
+            RtbMain.ResumeLayout();
             EndOfButtonFormatWork();
         }
 
@@ -2803,6 +2863,11 @@ namespace Notepad_Light
             EndOfButtonFormatWork();
         }
 
+        private void NumberedListToolStripButton_Click(object sender, EventArgs e)
+        {
+            ApplyNumberedList();
+        }
+
         private void DecreaseIndentToolStripButton_Click(object sender, EventArgs e)
         {
             if (RtbMain.SelectionIndent > 0)
@@ -2861,6 +2926,37 @@ namespace Notepad_Light
                 e.SuppressKeyPress = true;
                 DecreaseIndentToolStripButton.PerformClick();
                 return;
+            }
+
+            // auto-continue numbered list on Enter
+            if (e.KeyCode == Keys.Return)
+            {
+                int currentLine = RtbMain.GetLineFromCharIndex(RtbMain.SelectionStart);
+                if (currentLine < RtbMain.Lines.Length)
+                {
+                    string lineText = RtbMain.Lines[currentLine];
+                    var numMatch = System.Text.RegularExpressions.Regex.Match(lineText, @"^(\d+)\.\s");
+                    if (numMatch.Success)
+                    {
+                        int currentNumber = int.Parse(numMatch.Groups[1].Value);
+                        string contentAfterPrefix = lineText.Substring(numMatch.Length);
+
+                        // if the line is empty after the prefix, remove the prefix and stop the list
+                        if (string.IsNullOrWhiteSpace(contentAfterPrefix))
+                        {
+                            e.SuppressKeyPress = true;
+                            int lineStart = RtbMain.GetFirstCharIndexFromLine(currentLine);
+                            RtbMain.Select(lineStart, numMatch.Length);
+                            RtbMain.SelectedText = string.Empty;
+                            return;
+                        }
+
+                        // insert newline and next number
+                        e.SuppressKeyPress = true;
+                        RtbMain.SelectedText = $"{Environment.NewLine}{currentNumber + 1}. ";
+                        return;
+                    }
+                }
             }
 
             // if delete key is pressed change the saved state and update ui/stats

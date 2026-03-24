@@ -149,12 +149,14 @@
             ToolStripSeparator17 = new ToolStripSeparator();
             FontColorToolStripButton = new ToolStripButton();
             HighlightTextToolStripButton = new ToolStripButton();
+            CheckSpellingToolStripButton = new ToolStripButton();
             ToolStripSeparator11 = new ToolStripSeparator();
             LeftJustifiedToolStripButton = new ToolStripButton();
             CenterJustifiedToolStripButton = new ToolStripButton();
             RightJustifiedToolStripButton = new ToolStripButton();
             ToolStripSeparator16 = new ToolStripSeparator();
             BulletToolStripButton = new ToolStripButton();
+            NumberedListToolStripButton = new ToolStripButton();
             DecreaseIndentToolStripButton = new ToolStripButton();
             IncreaseIndentToolStripButton = new ToolStripButton();
             ToolStripSeparator2 = new ToolStripSeparator();
@@ -182,7 +184,6 @@
             splitContainerMain = new SplitContainer();
             RtbMain = new RichTextBox();
             webViewMarkup = new Microsoft.Web.WebView2.WinForms.WebView2();
-            CheckSpellingToolStripButton = new ToolStripButton();
             MainStatusStrip.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             MainMenuStrip.SuspendLayout();
@@ -979,7 +980,7 @@
             // 
             ButtonToolStrip.GripStyle = ToolStripGripStyle.Hidden;
             ButtonToolStrip.ImageScalingSize = new Size(24, 24);
-            ButtonToolStrip.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, CheckSpellingToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5, CopilotToolStripButton });
+            ButtonToolStrip.Items.AddRange(new ToolStripItem[] { NewToolStripButton, OpenToolStripButton, SaveToolStripButton, ToolStripSeparator6, UndoToolStripButton, RedoToolStripButton, ToolStripSeparator8, BoldToolStripButton, ItalicToolStripButton, UnderlineToolStripButton, StrikethroughToolStripButton, ToolStripSeparator17, FontColorToolStripButton, HighlightTextToolStripButton, CheckSpellingToolStripButton, ToolStripSeparator11, LeftJustifiedToolStripButton, CenterJustifiedToolStripButton, RightJustifiedToolStripButton, ToolStripSeparator16, BulletToolStripButton, NumberedListToolStripButton, DecreaseIndentToolStripButton, IncreaseIndentToolStripButton, ToolStripSeparator2, SearchToolStripLabel, FindTextBox, FindToolStripButton, ReplaceToolStripButton, ToolStripSeparator9, TimerToolStripLabelOnly, TimerDescriptionTextbox, StartStopTimerToolStripButton, TimerToolStripLabel, TrackTimeToolStripButton, ViewTimersToolStripButton, ToolStripSeparator5, CopilotToolStripButton });
             ButtonToolStrip.Location = new Point(0, 33);
             ButtonToolStrip.Name = "ButtonToolStrip";
             ButtonToolStrip.Padding = new Padding(0, 0, 3, 0);
@@ -1120,6 +1121,16 @@
             HighlightTextToolStripButton.ToolTipText = "Highlight Text Color";
             HighlightTextToolStripButton.Click += HighlightTextToolStripButton_Click;
             // 
+            // CheckSpellingToolStripButton
+            // 
+            CheckSpellingToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            CheckSpellingToolStripButton.Image = (Image)resources.GetObject("CheckSpellingToolStripButton.Image");
+            CheckSpellingToolStripButton.ImageTransparentColor = Color.Magenta;
+            CheckSpellingToolStripButton.Name = "CheckSpellingToolStripButton";
+            CheckSpellingToolStripButton.Size = new Size(34, 29);
+            CheckSpellingToolStripButton.Text = "Check Spelling";
+            CheckSpellingToolStripButton.Click += CheckSpellingToolStripButton_Click;
+            // 
             // ToolStripSeparator11
             // 
             ToolStripSeparator11.Name = "ToolStripSeparator11";
@@ -1172,6 +1183,16 @@
             BulletToolStripButton.Size = new Size(34, 29);
             BulletToolStripButton.Text = "Apply Bullets";
             BulletToolStripButton.Click += BulletToolStripButton_Click;
+            // 
+            // NumberedListToolStripButton
+            // 
+            NumberedListToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            NumberedListToolStripButton.Image = (Image)resources.GetObject("NumberedListToolStripButton.Image");
+            NumberedListToolStripButton.ImageTransparentColor = Color.Magenta;
+            NumberedListToolStripButton.Name = "NumberedListToolStripButton";
+            NumberedListToolStripButton.Size = new Size(34, 29);
+            NumberedListToolStripButton.Text = "Apply Numbered List";
+            NumberedListToolStripButton.Click += NumberedListToolStripButton_Click;
             // 
             // DecreaseIndentToolStripButton
             // 
@@ -1378,16 +1399,6 @@
             webViewMarkup.TabIndex = 0;
             webViewMarkup.ZoomFactor = 1D;
             // 
-            // CheckSpellingToolStripButton
-            // 
-            CheckSpellingToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            CheckSpellingToolStripButton.Image = (Image)resources.GetObject("CheckSpellingToolStripButton.Image");
-            CheckSpellingToolStripButton.ImageTransparentColor = Color.Magenta;
-            CheckSpellingToolStripButton.Name = "CheckSpellingToolStripButton";
-            CheckSpellingToolStripButton.Size = new Size(34, 29);
-            CheckSpellingToolStripButton.Text = "Check Spelling";
-            CheckSpellingToolStripButton.Click += CheckSpellingToolStripButton_Click;
-            // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -1469,6 +1480,7 @@
         private ToolStripButton RedoToolStripButton;
         private ToolStripSeparator ToolStripSeparator8;
         private ToolStripButton BulletToolStripButton;
+        private ToolStripButton NumberedListToolStripButton;
         private ToolStripButton DecreaseIndentToolStripButton;
         private ToolStripButton IncreaseIndentToolStripButton;
         private ToolStripSeparator ToolStripSeparator9;
