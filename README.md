@@ -23,7 +23,8 @@ OneNote style apps are also close, but they are too open on a per page basis...I
   * italic
   * underline
   * strikethrough / strikeout
-  * bullets
+  * bullet list formatting
+  * numbering list formatting
   * indenting
   * font color
   * change selected text background (highlight) color
@@ -45,4 +46,5 @@ OneNote style apps are also close, but they are too open on a per page basis...I
 * Create and Insert Template / boilerplate text
 * Search Bing for selected text
 * Save As Picture
-* Track timers feature 
+* Track timers feature
+* Spell check
