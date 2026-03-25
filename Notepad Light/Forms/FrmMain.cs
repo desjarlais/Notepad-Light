@@ -2084,26 +2084,11 @@ namespace Notepad_Light
         {
             if (gIsWindows11 && SystemInformation.HighContrast == false)
             {
-                // setting rtf clears the modified flag, so hold onto it
-                bool isModified = RtbMain.Modified;
-
-                // rtf color tables get messed up when switching to dark mode
-                // hold the rtf (including color table) in the rtf string
-                string rtf = RtbMain.Rtf!;
-                if (gCurrentFileType == CurrentFileType.RTF)
-                {
-                    RtbMain.Rtf = string.Empty;
-                }
-
                 Application.SetColorMode(SystemColorMode.Dark);
 
-                // after the color mode switch, bring the rtf table and content back in
-                if (gCurrentFileType == CurrentFileType.RTF)
-                {
-                    RtbMain.Rtf = rtf;
-                }
-
-                RtbMain.Modified = isModified;
+                // adjust the search and timer textboxes in the toolbar
+                FindTextBox?.BackColor = SystemColors.ControlDark;
+                TimerDescriptionTextbox?.BackColor = SystemColors.ControlDark;
 
                 // workaround for controls not repainting right away
                 this.Refresh();
@@ -2122,28 +2107,13 @@ namespace Notepad_Light
         /// </summary>
         public void ApplyLightMode()
         {
-            // setting rtf clears the modified flag, so hold onto it
-            bool isModified = RtbMain.Modified;
-
-            // rtf color tables get messed up when switching to dark mode
-            // hold the rtf (including color table) in the rtf string
-            string rtf = RtbMain.Rtf!;
-            if (gCurrentFileType == CurrentFileType.RTF)
-            {
-                RtbMain.Rtf = string.Empty;
-            }
-
             if (gIsWindows11 && SystemInformation.HighContrast == false)
             {
                 Application.SetColorMode(SystemColorMode.Classic);
 
-                // after the color mode switch, bring the rtf table and content back in
-                if (gCurrentFileType == CurrentFileType.RTF)
-                {
-                    RtbMain.Rtf = rtf;
-                }
-
-                RtbMain.Modified = isModified;
+                // adjust the search and timer textboxes in the toolbar
+                FindTextBox?.BackColor = SystemColors.ControlLight;
+                TimerDescriptionTextbox?.BackColor = SystemColors.ControlLight;
 
                 this.Refresh();
                 Application.DoEvents();
