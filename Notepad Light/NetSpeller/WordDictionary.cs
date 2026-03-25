@@ -354,8 +354,6 @@ namespace Notepad_Light.NetSpeller
             AffixRule currentRule = null;
             string dictionaryPath = Path.Combine(_dictionaryFolder, _dictionaryFile);
 
-            //TraceWriter.TraceInfo("Loading Dictionary:{0}", dictionaryPath);
-
             // open dictionary file
             FileStream fs = new FileStream(dictionaryPath, FileMode.Open, FileAccess.Read, FileShare.Read);
             StreamReader sr = new StreamReader(fs, Encoding.UTF8);
@@ -471,8 +469,6 @@ namespace Notepad_Light.NetSpeller
               // close files
             sr.Close();
             fs.Close();
-
-            //TraceWriter.TraceInfo("Dictionary Loaded BaseWords:{0}; PrefixRules:{1}; SuffixRules:{2}; PhoneticRules:{3}", this.BaseWords.Count, this.PrefixRules.Count, this.SuffixRules.Count, this.PhoneticRules.Count);
 
             this.LoadUserFile();
 

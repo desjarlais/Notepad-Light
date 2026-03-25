@@ -5,7 +5,6 @@ using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
 using Notepad_Light.NetSpeller;
 
-
 // .net refs
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
@@ -1434,53 +1433,33 @@ namespace Notepad_Light
 
                 // bold
                 if (RtbMain.SelectionFont.Bold == true)
-                {
                     BoldToolStripButton.Checked = true;
-                }
                 else
-                {
                     BoldToolStripButton.Checked = false;
-                }
 
                 // italic
                 if (RtbMain.SelectionFont.Italic == true)
-                {
                     ItalicToolStripButton.Checked = true;
-                }
                 else
-                {
                     ItalicToolStripButton.Checked = false;
-                }
 
                 // underline
                 if (RtbMain.SelectionFont.Underline == true)
-                {
                     UnderlineToolStripButton.Checked = true;
-                }
                 else
-                {
                     UnderlineToolStripButton.Checked = false;
-                }
 
                 // strikethrough
                 if (RtbMain.SelectionFont.Strikeout == true)
-                {
                     StrikethroughToolStripButton.Checked = true;
-                }
                 else
-                {
                     StrikethroughToolStripButton.Checked = false;
-                }
 
                 // bullets
                 if (RtbMain.SelectionBullet == true)
-                {
                     BulletToolStripButton.Checked = true;
-                }
                 else
-                {
                     BulletToolStripButton.Checked = false;
-                }
 
                 // alignment
                 if (RtbMain.SelectionAlignment == HorizontalAlignment.Left)
@@ -2190,9 +2169,7 @@ namespace Notepad_Light
         public void ReplaceText()
         {
             if (RtbMain.SelectedText == string.Empty)
-            {
                 return;
-            }
 
             FrmReplace fReplace = new FrmReplace(this)
             {
@@ -2202,9 +2179,7 @@ namespace Notepad_Light
 
             // user cancelled the dialog scenario or no matches were found
             if (fReplace.formExited)
-            {
                 return;
-            }
 
             // single replace
             RtbMain.SelectedText = RtbMain.SelectedText.Replace(RtbMain.SelectedText, fReplace.replaceText);
@@ -2305,9 +2280,7 @@ namespace Notepad_Light
         public void InsertTemplate(int templateNumber)
         {
             if (Properties.Settings.Default.IncludeDateTimeWithTemplates)
-            {
                 InsertDateTime();
-            }
 
             switch (templateNumber)
             {
@@ -2453,7 +2426,7 @@ namespace Notepad_Light
         /// <exception cref="ArgumentNullException"></exception>
         public static byte[] ToBinary(string imageDataHex)
         {
-            if (imageDataHex == null) throw new ArgumentNullException(nameof(imageDataHex));
+            ArgumentNullException.ThrowIfNull(imageDataHex);
 
             ReadOnlySpan<char> span = imageDataHex.AsSpan();
             // Count non-whitespace hex characters

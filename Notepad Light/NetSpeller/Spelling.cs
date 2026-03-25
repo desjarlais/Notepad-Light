@@ -441,9 +441,9 @@ namespace Notepad_Light.NetSpeller
         /// </remarks>
         public void DeleteWord()
         {
+            // no words to delete
             if (_words == null || _words.Count == 0)
             {
-                //TraceWriter.TraceWarning("No Words to Delete");
                 return;
             }
             string replacedWord = this.CurrentWord;
@@ -514,9 +514,8 @@ namespace Notepad_Light.NetSpeller
         /// <returns>
         ///     The number of edits to make firstWord equal secondWord
         /// </returns>
-        public int EditDistance(string source, string target, bool positionPriority)
+        public static int EditDistance(string source, string target, bool positionPriority)
         {
-
             // i.e. 2-D array
             Array matrix = Array.CreateInstance(typeof(int), source.Length + 1, target.Length + 1);
 
@@ -587,7 +586,7 @@ namespace Notepad_Light.NetSpeller
         /// </remarks>
         public int EditDistance(string source, string target)
         {
-            return this.EditDistance(source, target, true);
+            return EditDistance(source, target, true);
         }
 
         /// <summary>
@@ -606,7 +605,6 @@ namespace Notepad_Light.NetSpeller
         {
             if (_words == null || _words.Count == 0 || textIndex < 1)
             {
-                //TraceWriter.TraceWarning("No words to get text index from.");
                 return 0;
             }
 
@@ -646,7 +644,6 @@ namespace Notepad_Light.NetSpeller
         {
             if (this.CurrentWord.Length == 0)
             {
-                //TraceWriter.TraceWarning("No current word");
                 return;
             }
 
@@ -667,7 +664,6 @@ namespace Notepad_Light.NetSpeller
 
             if (_words == null || _words.Count == 0 || this.CurrentWord.Length == 0)
             {
-                //TraceWriter.TraceWarning("No text or current word");
                 return;
             }
 
@@ -687,7 +683,6 @@ namespace Notepad_Light.NetSpeller
         {
             if (this.CurrentWord.Length == 0)
             {
-                //TraceWriter.TraceWarning("No current word");
                 return;
             }
 
@@ -714,7 +709,6 @@ namespace Notepad_Light.NetSpeller
             this.ReplaceAllWord();
         }
 
-
         /// <summary>
         ///     Replaces the instances of the CurrentWord in the Text Property
         /// </summary>
@@ -722,7 +716,6 @@ namespace Notepad_Light.NetSpeller
         {
             if (_words == null || _words.Count == 0 || this.CurrentWord.Length == 0)
             {
-                //TraceWriter.TraceWarning("No text or current word");
                 return;
             }
 
@@ -747,12 +740,7 @@ namespace Notepad_Light.NetSpeller
             _text.Insert(index, _replacementWord);
 
             this.CalculateWords();
-
-            this.OnReplacedWord(new ReplaceWordEventArgs(
-                _replacementWord,
-                replacedWord,
-                replacedIndex,
-                index));
+            this.OnReplacedWord(new ReplaceWordEventArgs(_replacementWord, replacedWord, replacedIndex, index));
         }
 
         /// <summary>
@@ -966,12 +954,9 @@ namespace Notepad_Light.NetSpeller
         /// <seealso cref="TestWord"/>
         public void Suggest()
         {
-
-
             // can't generate suggestions with out current word
             if (this.CurrentWord.Length == 0)
             {
-                //TraceWriter.TraceWarning("No current word");
                 return;
             }
 
@@ -1013,7 +998,6 @@ namespace Notepad_Light.NetSpeller
                         }
                     }
                 }
-                //TraceWriter.TraceVerbose("Suggestiongs Found with Phonetic Stratagy: {0}", tempSuggestion.Count);
             }
 
             if (_suggestionMode == SuggestionEnum.PhoneticNearMiss
@@ -1040,8 +1024,6 @@ namespace Notepad_Light.NetSpeller
                 // try swapping adjacent chars one by one
                 this.SwapChar(ref tempSuggestion);
             }
-
-            //TraceWriter.TraceVerbose("Total Suggestiongs Found: {0}", tempSuggestion.Count);
 
             tempSuggestion.Sort();  // sorts by edit score
             _suggestions.Clear();
@@ -1079,8 +1061,6 @@ namespace Notepad_Light.NetSpeller
         {
             this.Initialize();
 
-            //TraceWriter.TraceVerbose("Testing Word: {0}", word);
-
             if (this.Dictionary.Contains(word))
             {
                 return true;
@@ -1104,7 +1084,7 @@ namespace Notepad_Light.NetSpeller
         private bool _ignoreWordsWithDigits = false;
         private int _maxSuggestions = 25;
         private Hashtable _replaceList = new Hashtable();
-        private string _replacementWord = "";
+        private string _replacementWord = string.Empty;
         private bool _showDialog = true;
         private FrmSuggestion _suggestionForm;
         private SuggestionEnum _suggestionMode = SuggestionEnum.PhoneticNearMiss;
@@ -1190,7 +1170,6 @@ namespace Notepad_Light.NetSpeller
                     _dictionary = value;
             }
         }
-
 
         /// <summary>
         ///     Ignore words with all capital letters when spell checking
