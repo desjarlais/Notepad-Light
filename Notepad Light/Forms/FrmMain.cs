@@ -53,6 +53,9 @@ namespace Notepad_Light
         private const int SquiggleAmp = 2;    // amplitude in pixels
         private RtbPaintHook? _rtbPaintHook;
 
+        // lazy webview initialization
+        private Task? _webViewInitTask;
+
         // fields
         private int _lastCaretBeforeChange = 0;
         internal bool _isInSizeMove = false;
@@ -78,8 +81,7 @@ namespace Notepad_Light
             // setup log file
             gErrorLog = Strings.appFolderDirectoryUrl;
 
-            // setup webview and collapse panel
-            SetupWebView();
+            // collapse panel - webview initialization is deferred until first use
             splitContainerMain.Panel2Collapsed = true;
 
             // initialize stopwatch for timer
@@ -327,9 +329,15 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// need to setup webview2 with a user data folder to avoid temp folder issues
+        /// Lazily initialize WebView2 with a custom user data folder on first use.
+        /// Returns a cached Task so the initialization runs only once.
         /// </summary>
-        public async void SetupWebView()
+        private Task EnsureWebViewAsync()
+        {
+            return _webViewInitTask ??= InitWebViewCoreAsync();
+        }
+
+        private async Task InitWebViewCoreAsync()
         {
             try
             {
@@ -693,12 +701,14 @@ namespace Notepad_Light
                 if (filePath.EndsWith(Strings.txtExt))
                 {
                     LoadPlainTextFile(filePath);
-                    UnloadMarkdown();
+                    if (gCurrentFileType == CurrentFileType.Markdown)
+                        UnloadMarkdown();
                 }
                 else if (filePath.EndsWith(Strings.rtfExt))
                 {
                     LoadRtfFile(filePath);
-                    UnloadMarkdown();
+                    if (gCurrentFileType == CurrentFileType.Markdown)
+                        UnloadMarkdown();
                 }
                 else if (filePath.EndsWith(Strings.mdExt) || filePath.EndsWith(Strings.md2Ext))
                 {
@@ -797,13 +807,15 @@ namespace Notepad_Light
                         if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
                         {
                             LoadPlainTextFile(ofdFileOpen.FileName);
-                            UnloadMarkdown();
+                            if (gCurrentFileType == CurrentFileType.Markdown)
+                                UnloadMarkdown();
                             CollapsePanel2();
                         }
                         else if (ofdFileOpen.FileName.EndsWith(Strings.rtfExt))
                         {
                             LoadRtfFile(ofdFileOpen.FileName);
-                            UnloadMarkdown();
+                            if (gCurrentFileType == CurrentFileType.Markdown)
+                                UnloadMarkdown();
                             CollapsePanel2();
                         }
                         else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt) || ofdFileOpen.FileName.EndsWith(Strings.md2Ext))
@@ -2157,14 +2169,14 @@ namespace Notepad_Light
         /// </summary>
         private async void WebView2Search()
         {
-            await webViewMarkup.EnsureCoreWebView2Async();
+            await EnsureWebViewAsync();
             string searchUrl = Strings.bingSearchUrl + RtbMain.SelectedText;
             webViewMarkup.Source = new Uri(searchUrl);
         }
 
         private async void WebView2NavigateUrl(string url)
         {
-            await webViewMarkup.EnsureCoreWebView2Async();
+            await EnsureWebViewAsync();
             webViewMarkup.Source = new Uri(url);
         }
 
@@ -2350,8 +2362,10 @@ namespace Notepad_Light
         {
             try
             {
-                // initialize the webview
-                await webViewMarkup.EnsureCoreWebView2Async();
+                // skip if webview was never initialized - nothing to unload
+                if (webViewMarkup.CoreWebView2 == null)
+                    return;
+
                 string? html = Markdown.ToHtml(string.Empty);
                 webViewMarkup.NavigateToString(html);
             }
@@ -2367,8 +2381,8 @@ namespace Notepad_Light
         /// <param name="html"></param>
         private async void LoadMarkdownInWebView2()
         {
-            // initialize the webview
-            await webViewMarkup.EnsureCoreWebView2Async();
+            // lazily initialize the webview on first use
+            await EnsureWebViewAsync();
 
             // render the html content of the markdown text
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
