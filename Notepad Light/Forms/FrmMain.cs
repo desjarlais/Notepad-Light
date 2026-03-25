@@ -777,7 +777,7 @@ namespace Notepad_Light
                 SaveChanges();
 
                 // start the file open process
-                OpenFileDialog ofdFileOpen = new OpenFileDialog
+                using (OpenFileDialog ofdFileOpen = new OpenFileDialog
                 {
                     Title = "Open Document",
                     Filter = "All Supported Formats | *.txt; *.rtf; *.md; *.markdown |" +
@@ -787,41 +787,42 @@ namespace Notepad_Light
                     AutoUpgradeEnabled = true,
                     RestoreDirectory = true,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                };
-
-                // add the contents to the textbox
-                if (ofdFileOpen.ShowDialog() == DialogResult.OK)
+                })
                 {
-                    // populate the file encoding first, it gets used in the loadfile
-                    EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName, false);
-                    if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
+                    // add the contents to the textbox
+                    if (ofdFileOpen.ShowDialog() == DialogResult.OK)
                     {
-                        LoadPlainTextFile(ofdFileOpen.FileName);
-                        UnloadMarkdown();
-                        CollapsePanel2();
-                    }
-                    else if (ofdFileOpen.FileName.EndsWith(Strings.rtfExt))
-                    {
-                        LoadRtfFile(ofdFileOpen.FileName);
-                        UnloadMarkdown();
-                        CollapsePanel2();
-                    }
-                    else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt) || ofdFileOpen.FileName.EndsWith(Strings.md2Ext))
-                    {
-                        LoadMarkdownFile(ofdFileOpen.FileName);
-                        LoadMarkdownInWebView2();
-                    }
+                        // populate the file encoding first, it gets used in the loadfile
+                        EncodingToolStripStatusLabel.Text = App.GetFileEncoding(ofdFileOpen.FileName, false);
+                        if (ofdFileOpen.FileName.EndsWith(Strings.txtExt))
+                        {
+                            LoadPlainTextFile(ofdFileOpen.FileName);
+                            UnloadMarkdown();
+                            CollapsePanel2();
+                        }
+                        else if (ofdFileOpen.FileName.EndsWith(Strings.rtfExt))
+                        {
+                            LoadRtfFile(ofdFileOpen.FileName);
+                            UnloadMarkdown();
+                            CollapsePanel2();
+                        }
+                        else if (ofdFileOpen.FileName.EndsWith(Strings.mdExt) || ofdFileOpen.FileName.EndsWith(Strings.md2Ext))
+                        {
+                            LoadMarkdownFile(ofdFileOpen.FileName);
+                            LoadMarkdownInWebView2();
+                        }
 
-                    UpdateOpenFilePath(ofdFileOpen.FileName);
-                    UpdateCurrentFileType(ofdFileOpen.FileName);
-                    AddFileToMRU(gCurrentFileName);
-                    ClearToolbarFormattingIcons();
-                    MoveCursorToLocation(0, 0);
-                    UpdateDocStats();
-                    CheckForReadOnly(ofdFileOpen.FileName);
-                    UpdateTitleBar(ofdFileOpen.FileName);
-                    gPrevPageLength = RtbMain.TextLength;
-                    RtbMain.Modified = false;
+                        UpdateOpenFilePath(ofdFileOpen.FileName);
+                        UpdateCurrentFileType(ofdFileOpen.FileName);
+                        AddFileToMRU(gCurrentFileName);
+                        ClearToolbarFormattingIcons();
+                        MoveCursorToLocation(0, 0);
+                        UpdateDocStats();
+                        CheckForReadOnly(ofdFileOpen.FileName);
+                        UpdateTitleBar(ofdFileOpen.FileName);
+                        gPrevPageLength = RtbMain.TextLength;
+                        RtbMain.Modified = false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -1919,10 +1920,14 @@ namespace Notepad_Light
                 }
             }
 
-            // clear any existing squiggles when disabling
+            // clear any existing squiggles and release held text when disabling
             if (!enabled)
             {
                 gMisspelledWords.Clear();
+                if (gSpellChecker != null)
+                {
+                    gSpellChecker.Text = string.Empty;
+                }
                 RtbMain.Invalidate();
             }
         }
