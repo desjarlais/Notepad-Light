@@ -1210,11 +1210,13 @@ namespace Notepad_Light
                                 {
                                     Color bg = (Properties.Settings.Default.DarkMode) ? clrDarkModeForeColor : Color.White;
                                     using Bitmap replaced = ReplaceTransparency(img, bg);
-                                    RtbMain.SelectedRtf = Rtf.InsertPicture(replaced, gErrorLog);
+                                    string rtf = Rtf.InsertPicture(replaced, gErrorLog);
+                                    if (!string.IsNullOrEmpty(rtf)) RtbMain.SelectedRtf = rtf;
                                 }
                                 else
                                 {
-                                    RtbMain.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
+                                    string rtf = Rtf.InsertPicture(img, gErrorLog);
+                                    if (!string.IsNullOrEmpty(rtf)) RtbMain.SelectedRtf = rtf;
                                 }
                             }
                         }
@@ -1235,11 +1237,13 @@ namespace Notepad_Light
                                 {
                                     Color bg = (Properties.Settings.Default.DarkMode) ? clrDarkModeForeColor : Color.White;
                                     using Bitmap replaced = ReplaceTransparency(img, bg);
-                                    RtbMain.SelectedRtf = Rtf.InsertPicture(replaced, gErrorLog);
+                                    string rtf = Rtf.InsertPicture(replaced, gErrorLog);
+                                    if (!string.IsNullOrEmpty(rtf)) RtbMain.SelectedRtf = rtf;
                                 }
                                 else
                                 {
-                                    RtbMain.SelectedRtf = Rtf.InsertPicture(img, gErrorLog);
+                                    string rtf = Rtf.InsertPicture(img, gErrorLog);
+                                    if (!string.IsNullOrEmpty(rtf)) RtbMain.SelectedRtf = rtf;
                                 }
                             }
                         }
@@ -3305,11 +3309,13 @@ namespace Notepad_Light
                             ? clrDarkModeForeColor
                             : Color.White;
                         using Bitmap replaced = ReplaceTransparency(original, bg);
-                        RtbMain.SelectedRtf = Rtf.InsertPicture(replaced, gErrorLog);
+                        string rtf = Rtf.InsertPicture(replaced, gErrorLog);
+                        if (!string.IsNullOrEmpty(rtf)) RtbMain.SelectedRtf = rtf;
                     }
                     else
                     {
-                        RtbMain.SelectedRtf = Rtf.InsertPicture(original, gErrorLog);
+                        string rtf = Rtf.InsertPicture(original, gErrorLog);
+                        if (!string.IsNullOrEmpty(rtf)) RtbMain.SelectedRtf = rtf;
                     }
                 }
             }
@@ -3562,6 +3568,13 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// add dynamic spelling suggestions to the context menu when right-clicking on a misspelled word
+        /// add option to ignore the word. 
+        /// enable "Save as Picture" when right-clicking on an image object.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // remove previous dynamic spelling items
