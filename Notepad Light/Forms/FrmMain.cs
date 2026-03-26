@@ -43,6 +43,9 @@ namespace Notepad_Light
         private WordDictionary? gDictionary;
         public List<SpellingEventArgs> gMisspelledWords = new List<SpellingEventArgs>();
 
+        // dynamic context menu items for spelling suggestions
+        private readonly List<ToolStripItem> _spellingSuggestionItems = new List<ToolStripItem>();
+
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
         private string _prevTimerText = Strings.zeroTimer;
@@ -3561,6 +3564,14 @@ namespace Notepad_Light
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            // remove previous dynamic spelling items
+            foreach (var item in _spellingSuggestionItems)
+            {
+                contextMenuStrip1.Items.Remove(item);
+                item.Dispose();
+            }
+            _spellingSuggestionItems.Clear();
+
             if (RtbMain.SelectionType == RichTextBoxSelectionTypes.Object)
             {
                 SaveAsPictureContextMenu.Enabled = true;
@@ -3568,6 +3579,70 @@ namespace Notepad_Light
             else
             {
                 SaveAsPictureContextMenu.Enabled = false;
+            }
+
+            // check if the caret is on a misspelled word
+            if (gSpellChecker != null && gMisspelledWords.Count > 0)
+            {
+                int caret = RtbMain.SelectionStart;
+                SpellingEventArgs? misspelled = null;
+                foreach (var sea in gMisspelledWords)
+                {
+                    int start = sea.TextIndex;
+                    int end = start + sea.Word.Length;
+                    if (caret >= start && caret <= end)
+                    {
+                        misspelled = sea;
+                        break;
+                    }
+                }
+
+                if (misspelled != null)
+                {
+                    // generate suggestions
+                    gSpellChecker.Suggest(misspelled.Word);
+                    int insertIndex = 0;
+                    int maxSuggestions = Math.Min(gSpellChecker.Suggestions.Count, 7);
+
+                    if (maxSuggestions > 0)
+                    {
+                        for (int i = 0; i < maxSuggestions; i++)
+                        {
+                            string suggestion = gSpellChecker.Suggestions[i]!.ToString()!;
+                            var menuItem = new ToolStripMenuItem(suggestion);
+                            menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
+                            // capture values for the click handler
+                            int wordStart = misspelled.TextIndex;
+                            int wordLength = misspelled.Word.Length;
+                            string replacementWord = suggestion;
+                            menuItem.Click += (s, args) => ReplaceWordAtPosition(wordStart, wordLength, replacementWord);
+                            contextMenuStrip1.Items.Insert(insertIndex, menuItem);
+                            _spellingSuggestionItems.Add(menuItem);
+                            insertIndex++;
+                        }
+                    }
+                    else
+                    {
+                        var noSuggestions = new ToolStripMenuItem("(No Suggestions)");
+                        noSuggestions.Enabled = false;
+                        contextMenuStrip1.Items.Insert(insertIndex, noSuggestions);
+                        _spellingSuggestionItems.Add(noSuggestions);
+                        insertIndex++;
+                    }
+
+                    // add "Ignore Word" option
+                    var ignoreItem = new ToolStripMenuItem("Ignore \"" + misspelled.Word + "\"");
+                    string wordToIgnore = misspelled.Word;
+                    ignoreItem.Click += (s, args) => IgnoreSpellingWord(wordToIgnore);
+                    contextMenuStrip1.Items.Insert(insertIndex, ignoreItem);
+                    _spellingSuggestionItems.Add(ignoreItem);
+                    insertIndex++;
+
+                    // add separator between spelling items and normal context menu items
+                    var separator = new ToolStripSeparator();
+                    contextMenuStrip1.Items.Insert(insertIndex, separator);
+                    _spellingSuggestionItems.Add(separator);
+                }
             }
         }
 
@@ -3583,6 +3658,34 @@ namespace Notepad_Light
             {
                 MoveCursorToLocation(RtbMain.GetCharIndexFromPosition(e.Location), 0);
             }
+        }
+
+        /// <summary>
+        /// Replace a misspelled word at the given position with the chosen suggestion
+        /// </summary>
+        private void ReplaceWordAtPosition(int textIndex, int wordLength, string replacement)
+        {
+            if (textIndex < 0 || textIndex + wordLength > RtbMain.TextLength) return;
+
+            RtbMain.Select(textIndex, wordLength);
+            RtbMain.SelectedText = replacement;
+            RtbMain.Modified = true;
+
+            // remove the corrected word from misspelled list and refresh squiggles
+            gMisspelledWords.RemoveAll(w => w.TextIndex == textIndex && w.Word.Length == wordLength);
+            RtbMain.Invalidate();
+        }
+
+        /// <summary>
+        /// Add the word to the spell checker ignore list and remove its squiggle
+        /// </summary>
+        private void IgnoreSpellingWord(string word)
+        {
+            if (gSpellChecker == null) return;
+
+            gSpellChecker.IgnoreList.Add(word);
+            gMisspelledWords.RemoveAll(w => w.Word.Equals(word, StringComparison.OrdinalIgnoreCase));
+            RtbMain.Invalidate();
         }
 
         private void decreaseIndentToolStripMenuItem_Click(object sender, EventArgs e)
