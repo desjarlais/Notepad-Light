@@ -138,6 +138,7 @@ namespace Notepad_Light
             if (Properties.Settings.Default.NewFileFormat == Strings.rtf)
             {
                 CreateNewDocument();
+                EnableToolbarFormattingIcons();
             }
 
             RtbMain.Modified = false;
