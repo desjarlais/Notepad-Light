@@ -340,6 +340,13 @@ namespace Notepad_Light
             return _webViewInitTask ??= InitWebViewCoreAsync();
         }
 
+        /// <summary>
+        /// Initializes the core components required for WebView2 functionality asynchronously.
+        /// </summary>
+        /// <remarks>This method prepares the user data folder and creates the WebView2 environment before
+        /// ensuring the WebView2 core is initialized. If an error occurs during initialization, the error is logged for
+        /// diagnostic purposes.</remarks>
+        /// <returns>A task that represents the asynchronous initialization operation.</returns>
         private async Task InitWebViewCoreAsync()
         {
             try
@@ -740,7 +747,16 @@ namespace Notepad_Light
             }
         }
 
-        // helper
+        /// <summary>
+        /// Adjusts the text index offsets of all tracked misspelled words after a change in the text.
+        /// </summary>
+        /// <remarks>This method should be called after text is inserted or deleted to ensure that the
+        /// positions of misspelled words remain accurate. If there are no tracked misspelled words or the change does
+        /// not affect any tracked positions, no action is taken.</remarks>
+        /// <param name="changeStart">The zero-based index in the text where the change begins. Offsets for misspelled words at or after this
+        /// index will be adjusted.</param>
+        /// <param name="delta">The amount by which to adjust the offsets. Positive values indicate an insertion; negative values indicate a
+        /// deletion. If zero, no adjustment is made.</param>
         private void AdjustMisspelledWordOffsets(int changeStart, int delta)
         {
             if (delta == 0 || gMisspelledWords.Count == 0) return;
@@ -3249,6 +3265,15 @@ namespace Notepad_Light
             RtbMain.Invalidate();
         }
 
+        /// <summary>
+        /// Handles the timer tick event to perform a live spell check on the main text area.
+        /// </summary>
+        /// <remarks>If the spell checker or dictionary is not initialized, the method exits without
+        /// performing a spell check. Any errors encountered during spell checking are logged as benign errors. This
+        /// method is intended to be used as an event handler for periodic spell checking in a text editing
+        /// control.</remarks>
+        /// <param name="sender">The source of the event, typically the spell check timer.</param>
+        /// <param name="e">An object that contains the event data.</param>
         private void SpellCheckTimer_Tick(object? sender, EventArgs e)
         {
             spellCheckTimer?.Stop();
@@ -3767,6 +3792,15 @@ namespace Notepad_Light
             UpdateKeyboardInfo();
         }
 
+        /// <summary>
+        /// Handles the event triggered when a misspelled word is detected by the spell checker.
+        /// </summary>
+        /// <remarks>This method ensures that each misspelled word is only processed once by checking for
+        /// duplicates before adding to the collection. It also updates the display to indicate the misspelled
+        /// word.</remarks>
+        /// <param name="sender">The source of the event, typically the spell checker control.</param>
+        /// <param name="e">A SpellingEventArgs object containing information about the misspelled word, including its text index and
+        /// value.</param>
         private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
         {
             foreach (SpellingEventArgs sea in gMisspelledWords)
@@ -3781,6 +3815,16 @@ namespace Notepad_Light
             return;
         }
 
+        /// <summary>
+        /// Handles the event when a word is deleted by the spell checker and removes the specified word from the text
+        /// box.
+        /// </summary>
+        /// <remarks>After removing the word, the method restores the previous selection in the text box.
+        /// If the original selection is out of bounds due to the deletion, it adjusts the selection to valid
+        /// positions.</remarks>
+        /// <param name="sender">The source of the event, typically the spell checker instance.</param>
+        /// <param name="e">A SpellingEventArgs object that contains information about the deleted word, including its text and
+        /// position.</param>
         private void GSpellChecker_DeletedWord(object sender, SpellingEventArgs e)
         {
             int start = RtbMain.SelectionStart;
@@ -3802,11 +3846,23 @@ namespace Notepad_Light
             RtbMain.Select(start, length);
         }
 
+        /// <summary>
+        /// Handles the event that occurs when the end of the text is reached during spell checking.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the spell checker component.</param>
+        /// <param name="e">An object that contains the event data.</param>
         private void GSpellChecker_EndOfText(object sender, EventArgs e)
         {
             // log end of text
         }
 
+        /// <summary>
+        /// Handles the event that occurs when a word is replaced by the spell checker, updating the text selection and
+        /// replacement in the main rich text box.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the spell checker control.</param>
+        /// <param name="e">A ReplaceWordEventArgs object that contains data about the word being replaced, including its position and
+        /// the replacement text.</param>
         private void GSpellChecker_ReplacedWord(object sender, ReplaceWordEventArgs e)
         {
             int start = RtbMain.SelectionStart;
@@ -3828,10 +3884,10 @@ namespace Notepad_Light
             RtbMain.Select(start, length);
         }
 
-        
+
 
         /// <summary>
-        /// 
+        /// Manually force a spell check of the entire text when the user clicks the "Check Spelling" button, which will update the misspelled words list and redraw squiggles accordingly.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -3886,11 +3942,24 @@ namespace Notepad_Light
             _rtb.HandleDestroyed += Rtb_HandleDestroyed;
         }
 
+        /// <summary>
+        /// Handles the event that occurs when the control's underlying window handle is destroyed.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the control whose handle was destroyed.</param>
+        /// <param name="e">An object that contains the event data.</param>
         private void Rtb_HandleDestroyed(object? sender, EventArgs e)
         {
             ReleaseHandle();
         }
 
+        /// <summary>
+        /// Processes Windows messages for the control, handling custom painting when a paint message is received and
+        /// the control is not in a size/move operation.
+        /// </summary>
+        /// <remarks>Overrides the base window procedure to perform additional custom drawing when the
+        /// WM_PAINT message is received. Custom painting is only performed if the control is not currently being
+        /// resized or moved.</remarks>
+        /// <param name="m">A reference to the Windows message to process. The message may be modified by the method.</param>
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
@@ -3905,6 +3974,13 @@ namespace Notepad_Light
             }
         }
 
+        /// <summary>
+        /// Draws a semi-transparent overlay over the currently selected text in the associated RichTextBox control.
+        /// </summary>
+        /// <remarks>This method visually highlights the selected text by drawing a translucent rectangle
+        /// over each line of the selection. It should be called during custom painting routines to ensure the selection
+        /// overlay is rendered correctly. The overlay color and opacity are fixed within the method.</remarks>
+        /// <param name="g">The Graphics object used to render the selection overlay.</param>
         private void DrawSelectionOverlay(Graphics g)
         {
             int length = _rtb.SelectionLength;
