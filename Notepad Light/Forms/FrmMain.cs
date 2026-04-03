@@ -3,7 +3,6 @@ using Markdig;
 using Microsoft.Web.WebView2.Core;
 using Notepad_Light.Forms;
 using Notepad_Light.Helpers;
-using Notepad_Light.NetSpeller;
 
 // .net refs
 using System.Diagnostics;
@@ -37,24 +36,12 @@ namespace Notepad_Light
         private TimeSpan tSpan;
         private System.Windows.Forms.Timer? spellCheckTimer;
 
-        // Spelling globals
-        private string dicFilePath = Strings.empty;
-        private Spelling? gSpellChecker;
-        private WordDictionary? gDictionary;
-        public List<SpellingEventArgs> gMisspelledWords = new List<SpellingEventArgs>();
-
         // dynamic context menu items for spelling suggestions
         private readonly List<ToolStripItem> _spellingSuggestionItems = new List<ToolStripItem>();
 
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
         private string _prevTimerText = Strings.zeroTimer;
-
-        // squiggle rendering
-        private Pen? _squigglePen;
-        private const int SquiggleStep = 6;   // pixels between zig-zag points
-        private const int SquiggleAmp = 2;    // amplitude in pixels
-        private RtbPaintHook? _rtbPaintHook;
 
         // lazy webview initialization
         private Task? _webViewInitTask;
@@ -143,42 +130,6 @@ namespace Notepad_Light
 
             RtbMain.Modified = false;
             UpdateToolbarIcons();
-
-            // init squiggle pen
-            _squigglePen = new Pen(Color.Red, 2);
-
-            // hook richtextbox paint to render squiggles
-            _rtbPaintHook = new RtbPaintHook(this, RtbMain);
-
-            // setup spell checker
-            dicFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "\\Dictionaries\\", Strings.englishDictFile);
-            if (File.Exists(dicFilePath))
-            {
-                // initialize spell checker
-                gSpellChecker = new Spelling();
-                gDictionary = new WordDictionary();
-
-                // initialize the events
-                gSpellChecker.Dictionary = gDictionary;
-                gSpellChecker.ReplacedWord += GSpellChecker_ReplacedWord;
-                gSpellChecker.EndOfText += GSpellChecker_EndOfText;
-                gSpellChecker.DeletedWord += GSpellChecker_DeletedWord;
-                gSpellChecker.MisspelledWord += GSpellChecker_MisspelledWord;
-
-                gDictionary.DictionaryFile = dicFilePath;
-            }
-            else
-            {
-                App.WriteErrorLogContent("Spell Checker Dictionary Not Found: " + dicFilePath, gErrorLog);
-            }
-
-            // setup live spell check debounce timer
-            spellCheckTimer = new System.Windows.Forms.Timer();
-            spellCheckTimer.Interval = 300; // ms debounce
-            spellCheckTimer.Tick += SpellCheckTimer_Tick;
-
-            // apply initial setting for live spell check
-            UpdateSpellCheckAsYouType();
         }
 
         #region Class Properties
@@ -194,96 +145,6 @@ namespace Notepad_Light
         #endregion
 
         #region Functions
-
-        /// <summary>
-        /// Draw a single squiggle for a misspelled word using the provided Graphics, batching friendly.
-        /// Skips when off-screen. Uses character positions to compute width.
-        /// </summary>
-        /// <param name="g">Graphics from Paint/WndProc</param>
-        /// <param name="e">Spelling event</param>
-        private void DrawSquiggle(Graphics g, SpellingEventArgs e)
-        {
-            if (e.TextIndex < 0 || e.TextIndex >= RtbMain.TextLength) return;
-            if (_squigglePen == null) return;
-
-            // start and end positions in client coordinates
-            Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
-            int endIndex = Math.Min(RtbMain.TextLength, e.TextIndex + e.Word.Length);
-            Point endPos = RtbMain.GetPositionFromCharIndex(endIndex);
-
-            // Heuristic: if wrapped, ensure width positive; fallback to TextRenderer if equal X
-            int width = Math.Max(0, endPos.X - startPos.X);
-            if (width == 0)
-            {
-                // very short or at line wrap; estimate width by measuring text
-                Size sz = TextRenderer.MeasureText(g, e.Word, RtbMain.Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding);
-                width = Math.Max(0, sz.Width - 2);
-            }
-
-            // vertical baseline under the text
-            int y = startPos.Y + RtbMain.Font.Height - 2;
-
-            // visibility check: skip if outside viewport
-            Rectangle client = RtbMain.ClientRectangle;
-            if (y < client.Top - RtbMain.Font.Height || y > client.Bottom + RtbMain.Font.Height)
-            {
-                return;
-            }
-
-            // build zig-zag points
-            int x0 = startPos.X;
-            int steps = Math.Max(1, width / SquiggleStep);
-            Point[] pts = new Point[steps + 1];
-            for (int i = 0; i <= steps; i++)
-            {
-                int x = x0 + i * SquiggleStep;
-                if (x > x0 + width) x = x0 + width;
-                int dy = (i % 2 == 0) ? 0 : SquiggleAmp;
-                pts[i] = new Point(x, y + dy);
-            }
-
-            if (pts.Length >= 2)
-            {
-                g.DrawLines(_squigglePen, pts);
-            }
-        }
-
-        /// <summary>
-        /// Draw all visible squiggles with one paint pass
-        /// </summary>
-        /// <param name="g"></param>
-        public void DrawVisibleSquiggles(Graphics g)
-        {
-            if (gMisspelledWords.Count == 0) return;
-            // Do not draw squiggles for the word currently being edited (caret inside the word)
-            int caret = RtbMain.SelectionStart;
-            foreach (var sea in gMisspelledWords)
-            {
-                int start = sea.TextIndex;
-                int end = Math.Min(RtbMain.TextLength, start + sea.Word.Length);
-                if (caret >= start && caret <= end)
-                {
-                    // skip drawing while caret is within this misspelled word
-                    continue;
-                }
-                DrawSquiggle(g, sea);
-            }
-        }
-
-        /// <summary>
-        /// Invalidate only the area that likely contains the squiggle
-        /// </summary>
-        private void InvalidateSquiggleArea(SpellingEventArgs e)
-        {
-            if (e.TextIndex < 0 || e.TextIndex >= RtbMain.TextLength) return;
-
-            Point startPos = RtbMain.GetPositionFromCharIndex(e.TextIndex);
-            int endIndex = Math.Min(RtbMain.TextLength, e.TextIndex + e.Word.Length);
-            Point endPos = RtbMain.GetPositionFromCharIndex(endIndex);
-            int width = Math.Max(6, Math.Abs(endPos.X - startPos.X));
-            var rect = new Rectangle(startPos.X, startPos.Y, width, RtbMain.Font.Height + 4);
-            RtbMain.Invalidate(rect);
-        }
 
         /// <summary>
         /// Helper to only assign ToolStripItem.Text when value changed.
@@ -569,9 +430,6 @@ namespace Notepad_Light
             ClearToolbarFormattingIcons();
             DisableToolbarFormattingIcons();
 
-            // clear any existing spell marks when starting a new document
-            ClearSpellCheckArtifacts();
-
             // check for file type and update UI accordingly
             if (gCurrentFileType == CurrentFileType.RTF)
             {
@@ -705,8 +563,6 @@ namespace Notepad_Light
             {
                 Cursor = Cursors.WaitCursor;
                 CollapsePanel2();
-                // clear previous spell marks for new file context
-                ClearSpellCheckArtifacts();
                 CheckForReadOnly(filePath);
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(filePath, false);
                 if (filePath.EndsWith(Strings.txtExt))
@@ -746,35 +602,6 @@ namespace Notepad_Light
                 UpdateToolbarIcons();
                 Cursor = Cursors.Default;
             }
-        }
-
-        /// <summary>
-        /// Adjusts the text index offsets of all tracked misspelled words after a change in the text.
-        /// </summary>
-        /// <remarks>This method should be called after text is inserted or deleted to ensure that the
-        /// positions of misspelled words remain accurate. If there are no tracked misspelled words or the change does
-        /// not affect any tracked positions, no action is taken.</remarks>
-        /// <param name="changeStart">The zero-based index in the text where the change begins. Offsets for misspelled words at or after this
-        /// index will be adjusted.</param>
-        /// <param name="delta">The amount by which to adjust the offsets. Positive values indicate an insertion; negative values indicate a
-        /// deletion. If zero, no adjustment is made.</param>
-        private void AdjustMisspelledWordOffsets(int changeStart, int delta)
-        {
-            if (delta == 0 || gMisspelledWords.Count == 0) return;
-
-            var adjusted = new List<SpellingEventArgs>(gMisspelledWords.Count);
-            foreach (var sea in gMisspelledWords)
-            {
-                int newIndex = sea.TextIndex;
-                if (sea.TextIndex >= changeStart)
-                {
-                    newIndex = Math.Max(0, sea.TextIndex + delta);
-                }
-                adjusted.Add(new SpellingEventArgs(sea.Word, sea.WordIndex, newIndex));
-            }
-
-            gMisspelledWords = adjusted;
-            RtbMain.Invalidate();
         }
 
         /// <summary>
@@ -1939,36 +1766,6 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// Enable or disable live spell check based on user setting.
-        /// When disabling: stop timer and clear current squiggles/invalidations.
-        /// </summary>
-        private void UpdateSpellCheckAsYouType()
-        {
-            bool enabled = Properties.Settings.Default.CheckSpellingAsYouType;
-
-            // guard if timer is not created yet
-            if (spellCheckTimer != null)
-            {
-                spellCheckTimer.Enabled = enabled;
-                if (!enabled)
-                {
-                    spellCheckTimer.Stop();
-                }
-            }
-
-            // clear any existing squiggles and release held text when disabling
-            if (!enabled)
-            {
-                gMisspelledWords.Clear();
-                if (gSpellChecker != null)
-                {
-                    gSpellChecker.Text = string.Empty;
-                }
-                RtbMain.Invalidate();
-            }
-        }
-
-        /// <summary>
         /// reset the timespan variables
         /// </summary>
         public void ClearTimeSpanVariables()
@@ -2780,7 +2577,6 @@ namespace Notepad_Light
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _squigglePen?.Dispose();
             Properties.Settings.Default.Save();
             ExitAppWork(true);
         }
@@ -3063,7 +2859,6 @@ namespace Notepad_Light
 
             // update the autosave ticks
             UpdateAutoSaveInterval();
-            UpdateSpellCheckAsYouType();
             Properties.Settings.Default.Save();
         }
 
@@ -3224,15 +3019,6 @@ namespace Notepad_Light
                 RtbMain.Modified = true;
             }
 
-            // if spell check as you type is enabled and there are misspelled words, adjust their offsets based on the change in text length to keep them in sync with the text
-            int deltaLength = RtbMain.TextLength - gPrevPageLength;
-            if (deltaLength != 0 &&
-                Properties.Settings.Default.CheckSpellingAsYouType &&
-                gMisspelledWords.Count > 0)
-            {
-                AdjustMisspelledWordOffsets(_lastCaretBeforeChange, deltaLength);
-            }
-
             // update the prevPageLength and UI
             gPrevPageLength = RtbMain.TextLength;
             UpdateDocStats();
@@ -3242,63 +3028,6 @@ namespace Notepad_Light
             if (splitContainerMain.Panel2Collapsed == false && gCurrentFileType == CurrentFileType.Markdown)
             {
                 LoadMarkdownInWebView2();
-            }
-
-            // debounce live spell check while typing when enabled
-            if (spellCheckTimer != null && Properties.Settings.Default.CheckSpellingAsYouType)
-            {
-                spellCheckTimer.Stop();
-                spellCheckTimer.Start();
-            }
-        }
-
-        /// <summary>
-        /// Clear misspelled words list and invalidate the editor to remove squiggles.
-        /// Also reset spell checker text to avoid stale references.
-        /// </summary>
-        private void ClearSpellCheckArtifacts()
-        {
-            gMisspelledWords.Clear();
-            if (gSpellChecker != null)
-            {
-                gSpellChecker.Text = string.Empty;
-            }
-            RtbMain.Invalidate();
-        }
-
-        /// <summary>
-        /// Handles the timer tick event to perform a live spell check on the main text area.
-        /// </summary>
-        /// <remarks>If the spell checker or dictionary is not initialized, the method exits without
-        /// performing a spell check. Any errors encountered during spell checking are logged as benign errors. This
-        /// method is intended to be used as an event handler for periodic spell checking in a text editing
-        /// control.</remarks>
-        /// <param name="sender">The source of the event, typically the spell check timer.</param>
-        /// <param name="e">An object that contains the event data.</param>
-        private void SpellCheckTimer_Tick(object? sender, EventArgs e)
-        {
-            spellCheckTimer?.Stop();
-
-            // run spell check if initialized
-            if (gSpellChecker == null || gDictionary == null)
-            {
-                return;
-            }
-
-            try
-            {
-                // reset previous results
-                gMisspelledWords.Clear();
-                gSpellChecker.Text = RtbMain.Text;
-                if (gSpellChecker.SpellCheck())
-                {
-                    // trigger redraw of squiggles via paint
-                    RtbMain.Invalidate();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogBenignError("LiveSpellCheck Error: ", ex);
             }
         }
 
@@ -3594,97 +3323,6 @@ namespace Notepad_Light
             }
         }
 
-        /// <summary>
-        /// add dynamic spelling suggestions to the context menu when right-clicking on a misspelled word
-        /// add option to ignore the word. 
-        /// enable "Save as Picture" when right-clicking on an image object.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // remove previous dynamic spelling items
-            foreach (var item in _spellingSuggestionItems)
-            {
-                contextMenuStrip1.Items.Remove(item);
-                item.Dispose();
-            }
-            _spellingSuggestionItems.Clear();
-
-            if (RtbMain.SelectionType == RichTextBoxSelectionTypes.Object)
-            {
-                SaveAsPictureContextMenu.Enabled = true;
-            }
-            else
-            {
-                SaveAsPictureContextMenu.Enabled = false;
-            }
-
-            // check if the caret is on a misspelled word
-            if (gSpellChecker != null && gMisspelledWords.Count > 0)
-            {
-                int caret = RtbMain.SelectionStart;
-                SpellingEventArgs? misspelled = null;
-                foreach (var sea in gMisspelledWords)
-                {
-                    int start = sea.TextIndex;
-                    int end = start + sea.Word.Length;
-                    if (caret >= start && caret <= end)
-                    {
-                        misspelled = sea;
-                        break;
-                    }
-                }
-
-                if (misspelled != null)
-                {
-                    // generate suggestions
-                    gSpellChecker.Suggest(misspelled.Word);
-                    int insertIndex = 0;
-                    int maxSuggestions = Math.Min(gSpellChecker.Suggestions.Count, 7);
-
-                    if (maxSuggestions > 0)
-                    {
-                        for (int i = 0; i < maxSuggestions; i++)
-                        {
-                            string suggestion = gSpellChecker.Suggestions[i]!.ToString()!;
-                            var menuItem = new ToolStripMenuItem(suggestion);
-                            menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
-                            // capture values for the click handler
-                            int wordStart = misspelled.TextIndex;
-                            int wordLength = misspelled.Word.Length;
-                            string replacementWord = suggestion;
-                            menuItem.Click += (s, args) => ReplaceWordAtPosition(wordStart, wordLength, replacementWord);
-                            contextMenuStrip1.Items.Insert(insertIndex, menuItem);
-                            _spellingSuggestionItems.Add(menuItem);
-                            insertIndex++;
-                        }
-                    }
-                    else
-                    {
-                        var noSuggestions = new ToolStripMenuItem("(No Suggestions)");
-                        noSuggestions.Enabled = false;
-                        contextMenuStrip1.Items.Insert(insertIndex, noSuggestions);
-                        _spellingSuggestionItems.Add(noSuggestions);
-                        insertIndex++;
-                    }
-
-                    // add "Ignore Word" option
-                    var ignoreItem = new ToolStripMenuItem("Ignore \"" + misspelled.Word + "\"");
-                    string wordToIgnore = misspelled.Word;
-                    ignoreItem.Click += (s, args) => IgnoreSpellingWord(wordToIgnore);
-                    contextMenuStrip1.Items.Insert(insertIndex, ignoreItem);
-                    _spellingSuggestionItems.Add(ignoreItem);
-                    insertIndex++;
-
-                    // add separator between spelling items and normal context menu items
-                    var separator = new ToolStripSeparator();
-                    contextMenuStrip1.Items.Insert(insertIndex, separator);
-                    _spellingSuggestionItems.Add(separator);
-                }
-            }
-        }
-
         private void RtbMain_MouseDown(object sender, MouseEventArgs e)
         {
             // don't change cursor position for multi-selected text scenarios
@@ -3697,34 +3335,6 @@ namespace Notepad_Light
             {
                 MoveCursorToLocation(RtbMain.GetCharIndexFromPosition(e.Location), 0);
             }
-        }
-
-        /// <summary>
-        /// Replace a misspelled word at the given position with the chosen suggestion
-        /// </summary>
-        private void ReplaceWordAtPosition(int textIndex, int wordLength, string replacement)
-        {
-            if (textIndex < 0 || textIndex + wordLength > RtbMain.TextLength) return;
-
-            RtbMain.Select(textIndex, wordLength);
-            RtbMain.SelectedText = replacement;
-            RtbMain.Modified = true;
-
-            // remove the corrected word from misspelled list and refresh squiggles
-            gMisspelledWords.RemoveAll(w => w.TextIndex == textIndex && w.Word.Length == wordLength);
-            RtbMain.Invalidate();
-        }
-
-        /// <summary>
-        /// Add the word to the spell checker ignore list and remove its squiggle
-        /// </summary>
-        private void IgnoreSpellingWord(string word)
-        {
-            if (gSpellChecker == null) return;
-
-            gSpellChecker.IgnoreList.Add(word);
-            gMisspelledWords.RemoveAll(w => w.Word.Equals(word, StringComparison.OrdinalIgnoreCase));
-            RtbMain.Invalidate();
         }
 
         private void decreaseIndentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3794,241 +3404,19 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// Handles the event triggered when a misspelled word is detected by the spell checker.
-        /// </summary>
-        /// <remarks>This method ensures that each misspelled word is only processed once by checking for
-        /// duplicates before adding to the collection. It also updates the display to indicate the misspelled
-        /// word.</remarks>
-        /// <param name="sender">The source of the event, typically the spell checker control.</param>
-        /// <param name="e">A SpellingEventArgs object containing information about the misspelled word, including its text index and
-        /// value.</param>
-        private void GSpellChecker_MisspelledWord(object sender, SpellingEventArgs e)
-        {
-            foreach (SpellingEventArgs sea in gMisspelledWords)
-            {
-                if (sea.TextIndex == e.TextIndex && sea.Word == e.Word)
-                {
-                    return;
-                }
-            }
-            gMisspelledWords.Add(e);
-            InvalidateSquiggleArea(e);
-            return;
-        }
-
-        /// <summary>
-        /// Handles the event when a word is deleted by the spell checker and removes the specified word from the text
-        /// box.
-        /// </summary>
-        /// <remarks>After removing the word, the method restores the previous selection in the text box.
-        /// If the original selection is out of bounds due to the deletion, it adjusts the selection to valid
-        /// positions.</remarks>
-        /// <param name="sender">The source of the event, typically the spell checker instance.</param>
-        /// <param name="e">A SpellingEventArgs object that contains information about the deleted word, including its text and
-        /// position.</param>
-        private void GSpellChecker_DeletedWord(object sender, SpellingEventArgs e)
-        {
-            int start = RtbMain.SelectionStart;
-            int length = RtbMain.SelectionLength;
-
-            RtbMain.Select(e.TextIndex, e.Word.Length);
-            RtbMain.SelectedText = string.Empty;
-
-            if (start > RtbMain.Text.Length)
-            {
-                start = RtbMain.Text.Length;
-            }
-
-            if ((start + length) > RtbMain.Text.Length)
-            {
-                start = 0;
-            }
-
-            RtbMain.Select(start, length);
-        }
-
-        /// <summary>
-        /// Handles the event that occurs when the end of the text is reached during spell checking.
-        /// </summary>
-        /// <param name="sender">The source of the event, typically the spell checker component.</param>
-        /// <param name="e">An object that contains the event data.</param>
-        private void GSpellChecker_EndOfText(object sender, EventArgs e)
-        {
-            // log end of text
-        }
-
-        /// <summary>
-        /// Handles the event that occurs when a word is replaced by the spell checker, updating the text selection and
-        /// replacement in the main rich text box.
-        /// </summary>
-        /// <param name="sender">The source of the event, typically the spell checker control.</param>
-        /// <param name="e">A ReplaceWordEventArgs object that contains data about the word being replaced, including its position and
-        /// the replacement text.</param>
-        private void GSpellChecker_ReplacedWord(object sender, ReplaceWordEventArgs e)
-        {
-            int start = RtbMain.SelectionStart;
-            int length = RtbMain.SelectionLength;
-
-            RtbMain.Select(e.TextIndex, e.Word.Length);
-            RtbMain.SelectedText = e.ReplacementWord;
-
-            if (start > RtbMain.Text.Length)
-            {
-                start = RtbMain.Text.Length;
-            }
-
-            if ((start + length) > RtbMain.Text.Length)
-            {
-                start = 0;
-            }
-
-            RtbMain.Select(start, length);
-        }
-
-
-
-        /// <summary>
         /// Manually force a spell check of the entire text when the user clicks the "Check Spelling" button, which will update the misspelled words list and redraw squiggles accordingly.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CheckSpellingToolStripButton_Click(object sender, EventArgs e)
         {
-            if (gSpellChecker != null)
-            {
-                gSpellChecker.Text = RtbMain.Text;
-                if (gSpellChecker.SpellCheck())
-                {
-                    RtbMain.Select();
-                }
-            }
+            
         }
 
         #endregion
 
         #region Overrides
 
-        /// <summary>
-        /// Track window move/resize to suppress expensive squiggle drawing during drag.
-        /// </summary>
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-
-            if (m.Msg == Win32.WM_ENTERSIZEMOVE)
-            {
-                _isInSizeMove = true;
-            }
-            else if (m.Msg == Win32.WM_EXITSIZEMOVE)
-            {
-                _isInSizeMove = false;
-                RtbMain.Invalidate();
-            }
-        }
-
         #endregion
-    }
-
-    // intercept RtbMain WM_PAINT to draw squiggles exactly when it repaints
-    internal sealed class RtbPaintHook : NativeWindow
-    {
-        private readonly FrmMain _owner;
-        private readonly RichTextBox _rtb;
-
-        public RtbPaintHook(FrmMain owner, RichTextBox rtb)
-        {
-            _owner = owner;
-            _rtb = rtb;
-            AssignHandle(rtb.Handle);
-            _rtb.HandleDestroyed += Rtb_HandleDestroyed;
-        }
-
-        /// <summary>
-        /// Handles the event that occurs when the control's underlying window handle is destroyed.
-        /// </summary>
-        /// <param name="sender">The source of the event, typically the control whose handle was destroyed.</param>
-        /// <param name="e">An object that contains the event data.</param>
-        private void Rtb_HandleDestroyed(object? sender, EventArgs e)
-        {
-            ReleaseHandle();
-        }
-
-        /// <summary>
-        /// Processes Windows messages for the control, handling custom painting when a paint message is received and
-        /// the control is not in a size/move operation.
-        /// </summary>
-        /// <remarks>Overrides the base window procedure to perform additional custom drawing when the
-        /// WM_PAINT message is received. Custom painting is only performed if the control is not currently being
-        /// resized or moved.</remarks>
-        /// <param name="m">A reference to the Windows message to process. The message may be modified by the method.</param>
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            if (m.Msg == Win32.WM_PAINT && !_owner._isInSizeMove)
-            {
-                using (Graphics g = Graphics.FromHwnd(this.Handle))
-                {
-                    _owner.DrawVisibleSquiggles(g);
-                    // draw lightweight selection overlay as a single region per line
-                    DrawSelectionOverlay(g);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Draws a semi-transparent overlay over the currently selected text in the associated RichTextBox control.
-        /// </summary>
-        /// <remarks>This method visually highlights the selected text by drawing a translucent rectangle
-        /// over each line of the selection. It should be called during custom painting routines to ensure the selection
-        /// overlay is rendered correctly. The overlay color and opacity are fixed within the method.</remarks>
-        /// <param name="g">The Graphics object used to render the selection overlay.</param>
-        private void DrawSelectionOverlay(Graphics g)
-        {
-            int length = _rtb.SelectionLength;
-            if (length <= 0) return;
-            int start = _rtb.SelectionStart;
-
-            // compute bounding rectangles per line for the selection range
-            int end = start + length;
-            int current = start;
-            using Brush overlay = new SolidBrush(Color.FromArgb(48, Color.Red));
-
-            while (current < end)
-            {
-                int lineIdx = _rtb.GetLineFromCharIndex(current);
-                int lineStart = _rtb.GetFirstCharIndexFromLine(lineIdx);
-                int lineEnd = (lineIdx + 1 < _rtb.Lines.Length) ? _rtb.GetFirstCharIndexFromLine(lineIdx + 1) : _rtb.TextLength;
-
-                int segmentStart = current;
-                int segmentEnd = Math.Min(end, lineEnd);
-                if (segmentStart >= segmentEnd)
-                {
-                    break;
-                }
-
-                Point pStart = _rtb.GetPositionFromCharIndex(segmentStart);
-                Point pEnd = _rtb.GetPositionFromCharIndex(segmentEnd);
-                int width = Math.Max(0, pEnd.X - pStart.X);
-                if (width == 0)
-                {
-                    // fallback to measuring the selected substring on this line
-                    int count = segmentEnd - segmentStart;
-                    if (count > 0)
-                    {
-                        string s = _rtb.Text.Substring(segmentStart, count);
-                        Size sz = TextRenderer.MeasureText(g, s, _rtb.Font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding);
-                        width = Math.Max(0, sz.Width - 2);
-                    }
-                }
-
-                Rectangle rect = new Rectangle(pStart.X, pStart.Y, width, _rtb.Font.Height);
-                if (rect.Width > 0 && rect.Height > 0)
-                {
-                    g.FillRectangle(overlay, rect);
-                }
-
-                current = segmentEnd;
-            }
-        }
     }
 }
