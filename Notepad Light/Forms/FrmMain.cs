@@ -21,11 +21,9 @@ namespace Notepad_Light
     public partial class FrmMain : Form
     {
         // globals
-        public bool gNoColorTable = false;
         public bool gIsWindows11 = false;
         public string gCurrentFileName = Strings.defaultFileName;
         public static string gErrorLog = string.Empty;
-        public string gCurrentAppVersion = string.Empty;
         public string gPrintString = string.Empty;
         public int gPrevPageLength = 0;
         public int gPrevSearchIndex = 0;
@@ -33,7 +31,6 @@ namespace Notepad_Light
         private string _EditedTime = string.Empty;
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
-        private TimeSpan tSpan;
 
         // dynamic context menu items for spelling suggestions
         private readonly List<ToolStripItem> _spellingSuggestionItems = new List<ToolStripItem>();
@@ -42,14 +39,10 @@ namespace Notepad_Light
         private SpellCheckService? _spellCheckService;
 
         // timer performance optimization state
-        private long _lastTimerUiUpdateMs = -250; // allow immediate first update
         private string _prevTimerText = Strings.zeroTimer;
 
         // lazy webview initialization
         private Task? _webViewInitTask;
-
-        // fields
-        internal bool _isInSizeMove = false;
 
         // dark mode colors
         public Color clrDarkModeBackColor = Color.FromArgb(32, 32, 32);
@@ -1928,24 +1921,6 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// apply dark/light mode colors to a control and its children for Win11 machines
-        /// </summary>
-        /// <param name="ctrl"></param>
-        /// <param name="clrBack"></param>
-        /// <param name="clrFore"></param>
-        public static void ApplyUIColors(Control ctrl, Color clrBack, Color clrFore)
-        {
-            ctrl.BackColor = clrBack;
-            ctrl.ForeColor = clrFore;
-
-            foreach (Control c in ctrl.Controls)
-            {
-                c.BackColor = clrBack;
-                c.ForeColor = clrFore;
-            }
-        }
-
-        /// <summary>
         /// dark mode is only supported on Windows 11
         /// </summary>
         /// <returns></returns>
@@ -2487,7 +2462,6 @@ namespace Notepad_Light
             StartStopTimerToolStripButton.Image = Properties.Resources.StatusRun_16x;
             StartStopTimerToolStripButton.Text = Strings.startTimeText;
             ClearTimeSpanVariables();
-            _lastTimerUiUpdateMs = -250;
             _prevTimerText = Strings.zeroTimer;
         }
 
@@ -2955,22 +2929,15 @@ namespace Notepad_Light
             {
                 return;
             }
-            // throttle UI updates to reduce layout/paint cost
-            long elapsedMs = gStopwatch.ElapsedMilliseconds;
-            if (elapsedMs - _lastTimerUiUpdateMs < 250) // ~4 updates/sec
-            {
-                return;
-            }
-
+            
             TimeSpan baseElapsed = gStopwatch.Elapsed;
-            tSpan = baseElapsed.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
+            TimeSpan tSpan = baseElapsed.Add(new TimeSpan(editedHours, editedMinutes, editedSeconds));
             string newText = $"{tSpan.Hours:00}:{tSpan.Minutes:00}:{tSpan.Seconds:00}";
             if (newText != _prevTimerText)
             {
                 TimerToolStripLabel.Text = newText;
                 _prevTimerText = newText;
             }
-            _lastTimerUiUpdateMs = elapsedMs;
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)

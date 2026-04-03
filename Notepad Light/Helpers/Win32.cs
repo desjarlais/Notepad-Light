@@ -10,8 +10,6 @@ namespace Notepad_Light.Helpers
     {
         // window messages
         public const int WM_PAINT = 0x000F;
-        public const int WM_ENTERSIZEMOVE = 0x0231;
-        public const int WM_EXITSIZEMOVE = 0x0232;
 
         /// <summary>
         /// used to get machine details
