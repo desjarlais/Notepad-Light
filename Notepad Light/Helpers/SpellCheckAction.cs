@@ -1,4 +1,4 @@
-namespace Notepad_Light.Forms
+namespace Notepad_Light.Helpers
 {
     /// <summary>
     /// Actions the user can take in the spell check dialog.

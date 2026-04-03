@@ -79,6 +79,7 @@
             toolStripSeparator12 = new ToolStripSeparator();
             SaveToolStripMenuItem = new ToolStripMenuItem();
             SaveAsToolStripMenuItem = new ToolStripMenuItem();
+            ExportHtmlToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             PrintToolStripMenuItem = new ToolStripMenuItem();
             PrintPreviewToolStripMenuItem = new ToolStripMenuItem();
@@ -421,7 +422,7 @@
             // 
             // FileToolStripMenuItem
             // 
-            FileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { NewToolStripMenuItem, OpenToolStripMenuItem, RecentToolStripMenuItem, toolStripSeparator12, SaveToolStripMenuItem, SaveAsToolStripMenuItem, toolStripSeparator14, PrintToolStripMenuItem, PrintPreviewToolStripMenuItem, PageSetupToolStripMenuItem, ToolStripSeparator1, OptionsToolStripMenuItem, ExitToolStripMenuItem });
+            FileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { NewToolStripMenuItem, OpenToolStripMenuItem, RecentToolStripMenuItem, toolStripSeparator12, SaveToolStripMenuItem, SaveAsToolStripMenuItem, ExportHtmlToolStripMenuItem, toolStripSeparator14, PrintToolStripMenuItem, PrintPreviewToolStripMenuItem, PageSetupToolStripMenuItem, ToolStripSeparator1, OptionsToolStripMenuItem, ExitToolStripMenuItem });
             FileToolStripMenuItem.Name = "FileToolStripMenuItem";
             FileToolStripMenuItem.Size = new Size(54, 29);
             FileToolStripMenuItem.Text = "&File";
@@ -549,6 +550,14 @@
             SaveAsToolStripMenuItem.Size = new Size(223, 34);
             SaveAsToolStripMenuItem.Text = "Save &As";
             SaveAsToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
+            // 
+            // ExportHtmlToolStripMenuItem
+            // 
+            ExportHtmlToolStripMenuItem.Enabled = false;
+            ExportHtmlToolStripMenuItem.Name = "ExportHtmlToolStripMenuItem";
+            ExportHtmlToolStripMenuItem.Size = new Size(223, 34);
+            ExportHtmlToolStripMenuItem.Text = "Export as &HTML";
+            ExportHtmlToolStripMenuItem.Click += ExportHtmlToolStripMenuItem_Click;
             // 
             // toolStripSeparator14
             // 
@@ -1453,6 +1462,7 @@
         private ToolStripMenuItem OpenToolStripMenuItem;
         private ToolStripMenuItem SaveToolStripMenuItem;
         private ToolStripMenuItem SaveAsToolStripMenuItem;
+        private ToolStripMenuItem ExportHtmlToolStripMenuItem;
         private ToolStripSeparator ToolStripSeparator1;
         private ToolStripMenuItem ExitToolStripMenuItem;
         private ToolStripMenuItem EditToolStripMenuItem;

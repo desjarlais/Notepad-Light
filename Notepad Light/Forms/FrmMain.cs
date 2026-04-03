@@ -314,16 +314,19 @@ namespace Notepad_Light
             {
                 EnableToolbarFormattingIcons();
                 SetToolStripText(toolStripStatusLabelFileType, Strings.rtf);
+                ExportHtmlToolStripMenuItem.Enabled = false;
             }
             else if (gCurrentFileType == CurrentFileType.Text)
             {
                 DisableToolbarFormattingIcons();
                 SetToolStripText(toolStripStatusLabelFileType, Strings.plainText);
+                ExportHtmlToolStripMenuItem.Enabled = false;
             }
             else
             {
                 DisableToolbarFormattingIcons();
                 SetToolStripText(toolStripStatusLabelFileType, Strings.markdown);
+                ExportHtmlToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -766,7 +769,7 @@ namespace Notepad_Light
                 using (SaveFileDialog sfdSaveAs = new SaveFileDialog())
                 {
                     sfdSaveAs.Title = "Save As";
-                    sfdSaveAs.Filter = "Plain Text Format (*.txt)|*.txt |Markdown Format (*.md)|*.md |Rich Text Format (*.rtf)|*.rtf";
+                    sfdSaveAs.Filter = "Plain Text Format (*.txt)|*.txt|Markdown Format (*.md)|*.md|Rich Text Format (*.rtf)|*.rtf";
 
                     // change the file type dropdown based on the current file format
                     if (gCurrentFileType == CurrentFileType.RTF)
@@ -793,8 +796,8 @@ namespace Notepad_Light
                         }
                         else if (sfdSaveAs.FilterIndex == 2)
                         {
-                            RtbMain.SaveFile(sfdSaveAs.FileName, RichTextBoxStreamType.UnicodePlainText);
-                            gCurrentFileType = CurrentFileType.Text;
+                            File.WriteAllText(sfdSaveAs.FileName, RtbMain.Text, Encoding.UTF8);
+                            gCurrentFileType = CurrentFileType.Markdown;
                         }
                         else
                         {
@@ -803,8 +806,21 @@ namespace Notepad_Light
                         }
 
                         UpdateOpenFilePath(sfdSaveAs.FileName);
+                        UpdateCurrentFileType(sfdSaveAs.FileName);
                         AddFileToMRU(sfdSaveAs.FileName);
                         RtbMain.Modified = false;
+
+                        // show the markdown preview panel when saving as markdown
+                        if (gCurrentFileType == CurrentFileType.Markdown)
+                        {
+                            splitContainerMain.Panel2Collapsed = false;
+                            TaskPaneToolStripMenuItem.Checked = true;
+                            LoadMarkdownInWebView2();
+                        }
+                        else
+                        {
+                            CollapsePanel2();
+                        }
                     }
                 }
             }
@@ -817,6 +833,44 @@ namespace Notepad_Light
             {
                 UpdateStatusBar();
                 UpdateToolbarIcons();
+                Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// export the current markdown document as a styled HTML file
+        /// </summary>
+        public void ExportMarkdownAsHtml()
+        {
+            if (gCurrentFileType != CurrentFileType.Markdown)
+            {
+                MessageBox.Show("Export as HTML is only available for Markdown files.", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                using SaveFileDialog sfd = new SaveFileDialog
+                {
+                    Title = "Export as HTML",
+                    Filter = "HTML File (*.html)|*.html",
+                    FileName = Path.GetFileNameWithoutExtension(gCurrentFileName) + ".html"
+                };
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    Cursor = Cursors.WaitCursor;
+                    string html = BuildMarkdownHtml();
+                    File.WriteAllText(sfd.FileName, html, Encoding.UTF8);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to export file - " + ex.Message, "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                App.WriteErrorLogContent("ExportMarkdownAsHtml Error: " + ex.Message, gErrorLog);
+            }
+            finally
+            {
                 Cursor = Cursors.Default;
             }
         }
@@ -2206,17 +2260,105 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// initialize the webview2 control and load the html
+        /// Build a complete styled HTML document from the current markdown text.
+        /// Respects dark/light mode setting for the preview.
         /// </summary>
-        /// <param name="html"></param>
+        private string BuildMarkdownHtml()
+        {
+            MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+            string bodyHtml = Markdown.ToHtml(RtbMain.Text, pipeline);
+            bool isDark = Properties.Settings.Default.DarkMode;
+
+            string bgColor = isDark ? "#1e1e1e" : "#ffffff";
+            string fgColor = isDark ? "#d4d4d4" : "#24292e";
+            string codeBg = isDark ? "#2d2d2d" : "#f6f8fa";
+            string borderColor = isDark ? "#444" : "#dfe2e5";
+            string linkColor = isDark ? "#58a6ff" : "#0366d6";
+            string blockquoteBorder = isDark ? "#555" : "#dfe2e5";
+            string blockquoteFg = isDark ? "#8b949e" : "#6a737d";
+
+            return $@"<!DOCTYPE html>
+<html>
+<head>
+<meta charset=""utf-8"">
+<style>
+  body {{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: {fgColor};
+    background-color: {bgColor};
+    padding: 16px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }}
+  h1, h2, h3, h4, h5, h6 {{
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }}
+  h1 {{ font-size: 2em; border-bottom: 1px solid {borderColor}; padding-bottom: .3em; }}
+  h2 {{ font-size: 1.5em; border-bottom: 1px solid {borderColor}; padding-bottom: .3em; }}
+  h3 {{ font-size: 1.25em; }}
+  code {{
+    font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+    background-color: {codeBg};
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 85%;
+  }}
+  pre {{
+    background-color: {codeBg};
+    padding: 16px;
+    border-radius: 6px;
+    overflow: auto;
+  }}
+  pre code {{
+    background-color: transparent;
+    padding: 0;
+  }}
+  blockquote {{
+    margin: 0;
+    padding: 0 1em;
+    color: {blockquoteFg};
+    border-left: 0.25em solid {blockquoteBorder};
+  }}
+  table {{
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 16px;
+  }}
+  table th, table td {{
+    border: 1px solid {borderColor};
+    padding: 6px 13px;
+  }}
+  table tr:nth-child(2n) {{
+    background-color: {(isDark ? "#2a2a2a" : "#f6f8fa")};
+  }}
+  a {{ color: {linkColor}; text-decoration: none; }}
+  a:hover {{ text-decoration: underline; }}
+  img {{ max-width: 100%; }}
+  hr {{ border: none; border-top: 1px solid {borderColor}; margin: 24px 0; }}
+  ul, ol {{ padding-left: 2em; }}
+</style>
+</head>
+<body>
+{bodyHtml}
+</body>
+</html>";
+        }
+
+        /// <summary>
+        /// initialize the webview2 control and load the styled html
+        /// </summary>
         private async void LoadMarkdownInWebView2()
         {
             // lazily initialize the webview on first use
             await EnsureWebViewAsync();
 
-            // render the html content of the markdown text
-            MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            string? html = Markdown.ToHtml(RtbMain.Text, pipeline);
+            // render the styled html content of the markdown text
+            string html = BuildMarkdownHtml();
             webViewMarkup.NavigateToString(html);
         }
 
@@ -2436,6 +2578,11 @@ namespace Notepad_Light
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FileSaveAs();
+        }
+
+        private void ExportHtmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportMarkdownAsHtml();
         }
 
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
