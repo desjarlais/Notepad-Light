@@ -24,6 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Markdig" Version="1.1.2" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3856.49" />
+    <PackageReference Include="WeCantSpell.Hunspell" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,7 +55,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dictionaries\" />
+    <Content Include="Dictionaries\*.dic" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Dictionaries\*.aff" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

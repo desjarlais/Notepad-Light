@@ -34,10 +34,12 @@ namespace Notepad_Light
         private int editedHours, editedMinutes, editedSeconds, charFrom, ticks;
         private Stopwatch gStopwatch;
         private TimeSpan tSpan;
-        private System.Windows.Forms.Timer? spellCheckTimer;
 
         // dynamic context menu items for spelling suggestions
         private readonly List<ToolStripItem> _spellingSuggestionItems = new List<ToolStripItem>();
+
+        // spell check service
+        private SpellCheckService? _spellCheckService;
 
         // timer performance optimization state
         private long _lastTimerUiUpdateMs = -250; // allow immediate first update
@@ -47,7 +49,6 @@ namespace Notepad_Light
         private Task? _webViewInitTask;
 
         // fields
-        private int _lastCaretBeforeChange = 0;
         internal bool _isInSizeMove = false;
 
         // dark mode colors
@@ -130,6 +131,18 @@ namespace Notepad_Light
 
             RtbMain.Modified = false;
             UpdateToolbarIcons();
+
+            // initialize spell check service and enable red squiggles
+            try
+            {
+                _spellCheckService = new SpellCheckService();
+                RtbMain.SpellCheckService = _spellCheckService;
+                RtbMain.SpellCheckEnabled = Properties.Settings.Default.CheckSpellingAsYouType;
+            }
+            catch (Exception ex)
+            {
+                LogBenignError("SpellCheck Init: ", ex);
+            }
         }
 
         #region Class Properties
@@ -908,7 +921,6 @@ namespace Notepad_Light
 
         public void Cut()
         {
-            _lastCaretBeforeChange = RtbMain.SelectionStart;
             RtbMain.Cut();
             RtbMain.Modified = true;
         }
@@ -959,9 +971,6 @@ namespace Notepad_Light
         /// </summary>
         public void Paste()
         {
-            // cache the caret position before the paste in case we need to revert it for certain paste types
-            _lastCaretBeforeChange = RtbMain.SelectionStart;
-
             // if the clipboard is empty, do nothing
             if (Clipboard.GetDataObject()?.GetFormats().Length == 0)
             {
@@ -2669,9 +2678,6 @@ namespace Notepad_Light
 
         private void RtbMain_KeyDown(object sender, KeyEventArgs e)
         {
-            // capture the caret position before the key is processed to compare against after the key is processed in order to determine if the caret moved
-            _lastCaretBeforeChange = RtbMain.SelectionStart;
-
             // if the selection is not at the beginning of the line, tab 4 spaces
             if (e.KeyCode == Keys.Tab && RtbMain.SelectionStart > RtbMain.GetFirstCharIndexOfCurrentLine())
             {
@@ -2856,6 +2862,9 @@ namespace Notepad_Light
             {
                 ApplyLightMode();
             }
+
+            // update spell check squiggles
+            RtbMain.SpellCheckEnabled = Properties.Settings.Default.CheckSpellingAsYouType;
 
             // update the autosave ticks
             UpdateAutoSaveInterval();
@@ -3404,13 +3413,162 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// Manually force a spell check of the entire text when the user clicks the "Check Spelling" button, which will update the misspelled words list and redraw squiggles accordingly.
+        /// Manually force a spell check of the entire text when the user clicks the "Check Spelling" button.
+        /// Opens the suggestion dialog for interactive spell checking.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CheckSpellingToolStripButton_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
+                _spellCheckService ??= new SpellCheckService();
+
+                using var frmSuggestion = new FrmSuggestion(_spellCheckService, RtbMain);
+                frmSuggestion.ShowDialog(this);
+
+                if (frmSuggestion.TextModified)
+                {
+                    RtbMain.Modified = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Spell check error: " + ex.Message, "Spell Check Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                App.WriteErrorLogContent("SpellCheck Error: " + ex.Message, gErrorLog);
+            }
+        }
+
+        /// <summary>
+        /// Populates spelling suggestions in the context menu when right-clicking on a misspelled word.
+        /// </summary>
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // remove previous spelling suggestion items
+            foreach (var item in _spellingSuggestionItems)
+            {
+                contextMenuStrip1.Items.Remove(item);
+            }
+            _spellingSuggestionItems.Clear();
+
+            try
+            {
+                // get the word under the cursor
+                string wordUnderCaret = GetWordUnderCaret();
+                if (string.IsNullOrWhiteSpace(wordUnderCaret))
+                    return;
+
+                _spellCheckService ??= new SpellCheckService();
+
+                if (_spellCheckService.Check(wordUnderCaret))
+                    return;
+
+                // word is misspelled - add suggestions to context menu
+                var suggestions = _spellCheckService.Suggest(wordUnderCaret, 5).ToList();
+
+                if (suggestions.Count > 0)
+                {
+                    // add separator before suggestions
+                    var separator = new ToolStripSeparator();
+                    _spellingSuggestionItems.Add(separator);
+                    contextMenuStrip1.Items.Insert(0, separator);
+
+                    for (int i = suggestions.Count - 1; i >= 0; i--)
+                    {
+                        string suggestion = suggestions[i];
+                        var menuItem = new ToolStripMenuItem(suggestion);
+                        menuItem.Font = new Font(menuItem.Font, FontStyle.Bold);
+                        menuItem.Click += (s, args) =>
+                        {
+                            // select the misspelled word and replace it
+                            SelectWordUnderCaret();
+                            RtbMain.SelectedText = suggestion;
+                            RtbMain.Modified = true;
+                        };
+                        _spellingSuggestionItems.Add(menuItem);
+                        contextMenuStrip1.Items.Insert(0, menuItem);
+                    }
+
+                    // add "Ignore" option
+                    var ignoreItem = new ToolStripMenuItem("Ignore '" + wordUnderCaret + "'");
+                    string wordToIgnore = wordUnderCaret;
+                    ignoreItem.Click += (s, args) => _spellCheckService.IgnoreWord(wordToIgnore);
+                    _spellingSuggestionItems.Add(ignoreItem);
+                    contextMenuStrip1.Items.Insert(suggestions.Count + 1, ignoreItem);
+                }
+                else
+                {
+                    var noSuggestionsItem = new ToolStripMenuItem("(No suggestions)") { Enabled = false };
+                    _spellingSuggestionItems.Add(noSuggestionsItem);
+                    contextMenuStrip1.Items.Insert(0, noSuggestionsItem);
+
+                    var separator = new ToolStripSeparator();
+                    _spellingSuggestionItems.Add(separator);
+                    contextMenuStrip1.Items.Insert(1, separator);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogBenignError("ContextMenu SpellCheck Error: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the word under the current caret position in the RichTextBox.
+        /// </summary>
+        private string GetWordUnderCaret()
+        {
+            string text = RtbMain.Text;
+            int caretPos = RtbMain.SelectionStart;
+
+            if (string.IsNullOrEmpty(text) || caretPos < 0 || caretPos > text.Length)
+                return string.Empty;
+
+            // find word boundaries
+            int start = caretPos;
+            int end = caretPos;
+
+            while (start > 0 && IsWordCharForSpelling(text[start - 1]))
+                start--;
+
+            while (end < text.Length && IsWordCharForSpelling(text[end]))
+                end++;
+
+            if (start == end)
+                return string.Empty;
+
+            return text.Substring(start, end - start);
+        }
+
+        /// <summary>
+        /// Selects the word under the current caret position in the RichTextBox.
+        /// </summary>
+        private void SelectWordUnderCaret()
+        {
+            string text = RtbMain.Text;
+            int caretPos = RtbMain.SelectionStart;
+
+            if (string.IsNullOrEmpty(text) || caretPos < 0 || caretPos > text.Length)
+                return;
+
+            int start = caretPos;
+            int end = caretPos;
+
+            while (start > 0 && IsWordCharForSpelling(text[start - 1]))
+                start--;
+
+            while (end < text.Length && IsWordCharForSpelling(text[end]))
+                end++;
+
+            if (start < end)
+            {
+                RtbMain.Select(start, end - start);
+            }
+        }
+
+        private static bool IsWordCharForSpelling(char c)
+        {
+            return char.IsLetterOrDigit(c) || c == '\'' || c == '\u2019';
         }
 
         #endregion

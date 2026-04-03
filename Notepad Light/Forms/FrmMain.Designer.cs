@@ -182,7 +182,7 @@
             colorDialog1 = new ColorDialog();
             autosaveTimer = new System.Windows.Forms.Timer(components);
             splitContainerMain = new SplitContainer();
-            RtbMain = new RichTextBox();
+            RtbMain = new Notepad_Light.Controls.SpellCheckRichTextBox();
             webViewMarkup = new Microsoft.Web.WebView2.WinForms.WebView2();
             MainStatusStrip.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
@@ -1588,7 +1588,7 @@
         private ToolStripButton ViewTimersToolStripButton;
         private ToolStripMenuItem ClearTimersToolStripMenuItem;
         private SplitContainer splitContainerMain;
-        private RichTextBox RtbMain;
+        private Notepad_Light.Controls.SpellCheckRichTextBox RtbMain;
         private Microsoft.Web.WebView2.WinForms.WebView2 webViewMarkup;
         private ToolStripButton CopilotToolStripButton;
         private ToolStripStatusLabel toolStripStatusLabelCapsLock;
