@@ -288,5 +288,17 @@ namespace Notepad_Light.Properties {
                 this["CheckSpellingAsYouType"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en_US")]
+        public string SpellCheckLanguage {
+            get {
+                return ((string)(this["SpellCheckLanguage"]));
+            }
+            set {
+                this["SpellCheckLanguage"] = value;
+            }
+        }
     }
 }

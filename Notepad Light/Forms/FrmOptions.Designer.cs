@@ -55,6 +55,8 @@
             groupBox4 = new GroupBox();
             ckbPasteRtfUnformatted = new CheckBox();
             ckbCheckSpellingAsYouType = new CheckBox();
+            lblSpellCheckLanguage = new Label();
+            cbxSpellCheckLanguage = new ComboBox();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudAutoSaveInterval).BeginInit();
@@ -98,7 +100,7 @@
             // 
             // BtnOK
             // 
-            BtnOK.Location = new Point(481, 709);
+            BtnOK.Location = new Point(481, 738);
             BtnOK.Margin = new Padding(3, 2, 3, 2);
             BtnOK.Name = "BtnOK";
             BtnOK.Size = new Size(116, 37);
@@ -109,7 +111,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(604, 709);
+            BtnCancel.Location = new Point(604, 738);
             BtnCancel.Margin = new Padding(3, 2, 3, 2);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(116, 37);
@@ -120,6 +122,8 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(cbxSpellCheckLanguage);
+            groupBox3.Controls.Add(lblSpellCheckLanguage);
             groupBox3.Controls.Add(ckbCheckSpellingAsYouType);
             groupBox3.Controls.Add(ckbClearTimersOnExit);
             groupBox3.Controls.Add(cbxIncludeDateTimeWithTemplates);
@@ -133,7 +137,7 @@
             groupBox3.Margin = new Padding(3, 2, 3, 2);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(445, 382);
+            groupBox3.Size = new Size(445, 410);
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             groupBox3.Text = "App Options";
@@ -367,11 +371,31 @@
             ckbCheckSpellingAsYouType.Text = "Check Spelling As You Type";
             ckbCheckSpellingAsYouType.UseVisualStyleBackColor = true;
             // 
+            // lblSpellCheckLanguage
+            // 
+            lblSpellCheckLanguage.AutoSize = true;
+            lblSpellCheckLanguage.Location = new Point(20, 358);
+            lblSpellCheckLanguage.Margin = new Padding(4, 0, 4, 0);
+            lblSpellCheckLanguage.Name = "lblSpellCheckLanguage";
+            lblSpellCheckLanguage.Size = new Size(170, 25);
+            lblSpellCheckLanguage.TabIndex = 18;
+            lblSpellCheckLanguage.Text = "Spell Check Language";
+            // 
+            // cbxSpellCheckLanguage
+            // 
+            cbxSpellCheckLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxSpellCheckLanguage.FormattingEnabled = true;
+            cbxSpellCheckLanguage.Location = new Point(247, 355);
+            cbxSpellCheckLanguage.Margin = new Padding(4, 5, 4, 5);
+            cbxSpellCheckLanguage.Name = "cbxSpellCheckLanguage";
+            cbxSpellCheckLanguage.Size = new Size(180, 33);
+            cbxSpellCheckLanguage.TabIndex = 19;
+            // 
             // FrmOptions
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(738, 751);
+            ClientSize = new Size(738, 780);
             Controls.Add(groupBox4);
             Controls.Add(groupBox2);
             Controls.Add(groupBox5);
@@ -430,5 +454,7 @@
         private CheckBox ckbPasteRtfUnformatted;
         private CheckBox ckbClearTimersOnExit;
         private CheckBox ckbCheckSpellingAsYouType;
+        private Label lblSpellCheckLanguage;
+        private ComboBox cbxSpellCheckLanguage;
     }
 }

@@ -70,5 +70,8 @@
     <Setting Name="CheckSpellingAsYouType" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SpellCheckLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en_US</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

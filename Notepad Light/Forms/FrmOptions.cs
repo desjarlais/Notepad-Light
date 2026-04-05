@@ -100,6 +100,9 @@ namespace Notepad_Light.Forms
                 ckbCheckSpellingAsYouType.Checked = false;
             }
 
+            // populate spell check language dropdown
+            PopulateSpellCheckLanguages();
+
             // update autosave interval
             nudAutoSaveInterval.Value = Properties.Settings.Default.AutoSaveInterval;
         }
@@ -115,6 +118,33 @@ namespace Notepad_Light.Forms
                         LstMRU.Items.Add(f);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Discovers available dictionary files and populates the spell check language dropdown.
+        /// </summary>
+        private void PopulateSpellCheckLanguages()
+        {
+            var languages = SpellCheckService.GetAvailableLanguages();
+            string savedLanguage = Properties.Settings.Default.SpellCheckLanguage;
+            int selectedIndex = 0;
+
+            for (int i = 0; i < languages.Count; i++)
+            {
+                cbxSpellCheckLanguage.Items.Add(SpellCheckService.GetLanguageDisplayName(languages[i]));
+                if (languages[i].Equals(savedLanguage, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedIndex = i;
+                }
+            }
+
+            // store the language codes for lookup when saving
+            cbxSpellCheckLanguage.Tag = languages;
+
+            if (cbxSpellCheckLanguage.Items.Count > 0)
+            {
+                cbxSpellCheckLanguage.SelectedIndex = selectedIndex;
             }
         }
 
@@ -224,6 +254,12 @@ namespace Notepad_Light.Forms
             else
             {
                 Properties.Settings.Default.CheckSpellingAsYouType = false;
+            }
+
+            // save spell check language
+            if (cbxSpellCheckLanguage.Tag is List<string> langCodes && cbxSpellCheckLanguage.SelectedIndex >= 0)
+            {
+                Properties.Settings.Default.SpellCheckLanguage = langCodes[cbxSpellCheckLanguage.SelectedIndex];
             }
 
             Close();

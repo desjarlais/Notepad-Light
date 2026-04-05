@@ -128,7 +128,7 @@ namespace Notepad_Light
             // initialize spell check service and enable red squiggles
             try
             {
-                _spellCheckService = new SpellCheckService();
+                _spellCheckService = new SpellCheckService(Properties.Settings.Default.SpellCheckLanguage);
                 RtbMain.SpellCheckService = _spellCheckService;
                 RtbMain.SpellCheckEnabled = Properties.Settings.Default.CheckSpellingAsYouType;
             }
@@ -2980,6 +2980,26 @@ namespace Notepad_Light
             // update spell check squiggles
             RtbMain.SpellCheckEnabled = Properties.Settings.Default.CheckSpellingAsYouType;
 
+            // update spell check language if changed
+            try
+            {
+                string savedLang = Properties.Settings.Default.SpellCheckLanguage;
+                if (_spellCheckService == null)
+                {
+                    _spellCheckService = new SpellCheckService(savedLang);
+                    RtbMain.SpellCheckService = _spellCheckService;
+                }
+                else if (!_spellCheckService.Language.Equals(savedLang, StringComparison.OrdinalIgnoreCase))
+                {
+                    _spellCheckService.ChangeLanguage(savedLang);
+                    RtbMain.SpellCheckService = _spellCheckService;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogBenignError("SpellCheck Language Change: ", ex);
+            }
+
             // update the autosave ticks
             UpdateAutoSaveInterval();
             Properties.Settings.Default.Save();
@@ -3536,7 +3556,7 @@ namespace Notepad_Light
         {
             try
             {
-                _spellCheckService ??= new SpellCheckService();
+                _spellCheckService ??= new SpellCheckService(Properties.Settings.Default.SpellCheckLanguage);
 
                 using var frmSuggestion = new FrmSuggestion(_spellCheckService, RtbMain);
                 frmSuggestion.ShowDialog(this);
@@ -3572,7 +3592,7 @@ namespace Notepad_Light
                 if (string.IsNullOrWhiteSpace(wordUnderCaret))
                     return;
 
-                _spellCheckService ??= new SpellCheckService();
+                _spellCheckService ??= new SpellCheckService(Properties.Settings.Default.SpellCheckLanguage);
 
                 if (_spellCheckService.Check(wordUnderCaret))
                     return;

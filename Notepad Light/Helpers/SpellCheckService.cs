@@ -11,15 +11,81 @@ namespace Notepad_Light.Helpers
         private WordList? _wordList;
         private readonly HashSet<string> _ignoredWords = new(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> _customWords = new(StringComparer.OrdinalIgnoreCase);
-        private readonly string _dicPath;
-        private readonly string _affPath;
+        private string _dicPath;
+        private string _affPath;
+        private string _language;
         private bool _disposed;
 
-        public SpellCheckService()
+        // known language code to display name mapping
+        private static readonly Dictionary<string, string> LanguageDisplayNames = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["en_US"] = "English (US)",
+            ["en_GB"] = "English (UK)",
+            ["es_ES"] = "Spanish",
+            ["fr_FR"] = "French",
+            ["de_DE"] = "German",
+            ["it_IT"] = "Italian",
+            ["pt_BR"] = "Portuguese (Brazil)"
+        };
+
+        public SpellCheckService() : this("en_US") { }
+
+        public SpellCheckService(string language)
         {
             string baseDir = AppContext.BaseDirectory;
-            _dicPath = Path.Combine(baseDir, "Dictionaries", "en_US.dic");
-            _affPath = Path.Combine(baseDir, "Dictionaries", "en_US.aff");
+            _language = language;
+            _dicPath = Path.Combine(baseDir, "Dictionaries", language + ".dic");
+            _affPath = Path.Combine(baseDir, "Dictionaries", language + ".aff");
+        }
+
+        /// <summary>
+        /// Gets the current language code (e.g. "en_US").
+        /// </summary>
+        public string Language => _language;
+
+        /// <summary>
+        /// Changes the active dictionary language and reloads on next use.
+        /// </summary>
+        public void ChangeLanguage(string language)
+        {
+            string baseDir = AppContext.BaseDirectory;
+            _language = language;
+            _dicPath = Path.Combine(baseDir, "Dictionaries", language + ".dic");
+            _affPath = Path.Combine(baseDir, "Dictionaries", language + ".aff");
+            _wordList = null;
+        }
+
+        /// <summary>
+        /// Returns the list of available language codes by scanning the Dictionaries folder
+        /// for matching .dic/.aff file pairs.
+        /// </summary>
+        public static List<string> GetAvailableLanguages()
+        {
+            var languages = new List<string>();
+            string dictDir = Path.Combine(AppContext.BaseDirectory, "Dictionaries");
+            if (!Directory.Exists(dictDir)) return languages;
+
+            foreach (string dicFile in Directory.GetFiles(dictDir, "*.dic"))
+            {
+                string langCode = Path.GetFileNameWithoutExtension(dicFile);
+                string affFile = Path.Combine(dictDir, langCode + ".aff");
+                if (File.Exists(affFile))
+                {
+                    languages.Add(langCode);
+                }
+            }
+
+            languages.Sort();
+            return languages;
+        }
+
+        /// <summary>
+        /// Returns a friendly display name for a language code.
+        /// Falls back to the code itself if no mapping exists.
+        /// </summary>
+        public static string GetLanguageDisplayName(string languageCode)
+        {
+            return LanguageDisplayNames.TryGetValue(languageCode, out string? name) ? name : languageCode;
         }
 
         /// <summary>
