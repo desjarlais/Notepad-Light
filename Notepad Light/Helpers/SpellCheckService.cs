@@ -28,8 +28,6 @@ namespace Notepad_Light.Helpers
             ["pt_BR"] = "Portuguese (Brazil)"
         };
 
-        public SpellCheckService() : this("en_US") { }
-
         public SpellCheckService(string language)
         {
             string baseDir = AppContext.BaseDirectory;
