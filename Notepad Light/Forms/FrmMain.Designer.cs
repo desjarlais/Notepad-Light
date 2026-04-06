@@ -54,6 +54,8 @@
             toolStripStatusLabelOverStrike = new ToolStripStatusLabel();
             toolStripStatusLabelCapsLock = new ToolStripStatusLabel();
             toolStripStatusLabelNumLock = new ToolStripStatusLabel();
+            toolStripStatusLabelSeparator10 = new ToolStripStatusLabel();
+            toolStripStatusLabelDictLanguage = new ToolStripStatusLabel();
             contextMenuStrip1 = new ContextMenuStrip(components);
             CutContextMenu = new ToolStripMenuItem();
             CopyContextMenu = new ToolStripMenuItem();
@@ -210,7 +212,7 @@
             // MainStatusStrip
             // 
             MainStatusStrip.ImageScalingSize = new Size(32, 32);
-            MainStatusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelLn, toolStripStatusLabelLine, toolStripStatusLabelCol, toolStripStatusLabelColumn, toolStripStatusLabelSeparator2, WordCountToolStripStatusLabel, toolStripStatusLabelWords, CharacterCountToolStripStatusLabel, toolStripStatusLabelChar, LinesToolStripStatusLabel, toolStripStatusLabelLines, toolStripStatusLabelSeparator1, fontToolStripStatusLabel, toolStripStatusLabelSeparator3, toolStripStatusLabelFType, toolStripStatusLabelFileType, toolStripStatusLabel4, toolStripStatusLabelFileEncoding, EncodingToolStripStatusLabel, toolStripStatusLabelSeparator9, toolStripStatusLabelOverStrike, toolStripStatusLabelCapsLock, toolStripStatusLabelNumLock });
+            MainStatusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabelLn, toolStripStatusLabelLine, toolStripStatusLabelCol, toolStripStatusLabelColumn, toolStripStatusLabelSeparator2, WordCountToolStripStatusLabel, toolStripStatusLabelWords, CharacterCountToolStripStatusLabel, toolStripStatusLabelChar, LinesToolStripStatusLabel, toolStripStatusLabelLines, toolStripStatusLabelSeparator1, fontToolStripStatusLabel, toolStripStatusLabelSeparator3, toolStripStatusLabelFType, toolStripStatusLabelFileType, toolStripStatusLabel4, toolStripStatusLabelFileEncoding, EncodingToolStripStatusLabel, toolStripStatusLabelSeparator10, toolStripStatusLabelDictLanguage, toolStripStatusLabelSeparator9, toolStripStatusLabelOverStrike, toolStripStatusLabelCapsLock, toolStripStatusLabelNumLock });
             MainStatusStrip.Location = new Point(0, 1035);
             MainStatusStrip.Name = "MainStatusStrip";
             MainStatusStrip.Padding = new Padding(1, 0, 11, 0);
@@ -332,6 +334,18 @@
             EncodingToolStripStatusLabel.Name = "EncodingToolStripStatusLabel";
             EncodingToolStripStatusLabel.Size = new Size(139, 25);
             EncodingToolStripStatusLabel.Text = "Unicode (UTF-8)";
+            // 
+            // toolStripStatusLabelSeparator10
+            // 
+            toolStripStatusLabelSeparator10.Name = "toolStripStatusLabelSeparator10";
+            toolStripStatusLabelSeparator10.Size = new Size(16, 25);
+            toolStripStatusLabelSeparator10.Text = "|";
+            // 
+            // toolStripStatusLabelDictLanguage
+            // 
+            toolStripStatusLabelDictLanguage.Name = "toolStripStatusLabelDictLanguage";
+            toolStripStatusLabelDictLanguage.Size = new Size(120, 25);
+            toolStripStatusLabelDictLanguage.Text = "Dictionary: -";
             // 
             // toolStripStatusLabelSeparator9
             // 
@@ -1689,6 +1703,8 @@
         private ToolStripStatusLabel toolStripStatusLabelOverStrike;
         private ToolStripStatusLabel toolStripStatusLabelNumLock;
         private ToolStripStatusLabel toolStripStatusLabelSeparator9;
+        private ToolStripStatusLabel toolStripStatusLabelSeparator10;
+        private ToolStripStatusLabel toolStripStatusLabelDictLanguage;
         private ToolStripButton CheckSpellingToolStripButton;
         private ToolStripMenuItem SuperscriptToolStripMenuItem;
         private ToolStripMenuItem SubscriptToolStripMenuItem;

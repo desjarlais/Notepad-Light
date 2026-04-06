@@ -131,6 +131,7 @@ namespace Notepad_Light
                 _spellCheckService = new SpellCheckService(Properties.Settings.Default.SpellCheckLanguage);
                 RtbMain.SpellCheckService = _spellCheckService;
                 RtbMain.SpellCheckEnabled = Properties.Settings.Default.CheckSpellingAsYouType;
+                UpdateDictionaryLanguageLabel();
             }
             catch (Exception ex)
             {
@@ -151,6 +152,17 @@ namespace Notepad_Light
         #endregion
 
         #region Functions
+
+        /// <summary>
+        /// Update the dictionary language label in the status bar.
+        /// </summary>
+        private void UpdateDictionaryLanguageLabel()
+        {
+            string lang = _spellCheckService != null
+                ? SpellCheckService.GetLanguageDisplayName(_spellCheckService.Language)
+                : "-";
+            SetToolStripText(toolStripStatusLabelDictLanguage, "Dictionary: " + lang);
+        }
 
         /// <summary>
         /// Helper to only assign ToolStripItem.Text when value changed.
@@ -3103,6 +3115,8 @@ namespace Notepad_Light
                     _spellCheckService.ChangeLanguage(savedLang);
                     RtbMain.SpellCheckService = _spellCheckService;
                 }
+
+                UpdateDictionaryLanguageLabel();
             }
             catch (Exception ex)
             {
