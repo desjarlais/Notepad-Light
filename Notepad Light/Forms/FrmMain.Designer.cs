@@ -106,6 +106,17 @@
             dateTimeToolStripMenuItem = new ToolStripMenuItem();
             FormatToolStripMenuItem = new ToolStripMenuItem();
             EditFontToolStripMenuItem = new ToolStripMenuItem();
+            IncreaseFontSizeToolStripMenuItem = new ToolStripMenuItem();
+            DecreaseFontSizeToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripSeparator19 = new ToolStripSeparator();
+            SuperscriptToolStripMenuItem = new ToolStripMenuItem();
+            SubscriptToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripSeparator20 = new ToolStripSeparator();
+            LineSpacingToolStripMenuItem = new ToolStripMenuItem();
+            LineSpacingSingleToolStripMenuItem = new ToolStripMenuItem();
+            LineSpacing15ToolStripMenuItem = new ToolStripMenuItem();
+            LineSpacingDoubleToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripSeparator21 = new ToolStripSeparator();
             ClearFormattingToolStripMenuItem = new ToolStripMenuItem();
             decreaseIndentToolStripMenuItem = new ToolStripMenuItem();
             TemplatesToolStripMenuItem = new ToolStripMenuItem();
@@ -753,7 +764,7 @@
             // 
             // FormatToolStripMenuItem
             // 
-            FormatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EditFontToolStripMenuItem, ClearFormattingToolStripMenuItem, decreaseIndentToolStripMenuItem });
+            FormatToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EditFontToolStripMenuItem, IncreaseFontSizeToolStripMenuItem, DecreaseFontSizeToolStripMenuItem, ToolStripSeparator19, SuperscriptToolStripMenuItem, SubscriptToolStripMenuItem, ToolStripSeparator20, LineSpacingToolStripMenuItem, ToolStripSeparator21, ClearFormattingToolStripMenuItem, decreaseIndentToolStripMenuItem });
             FormatToolStripMenuItem.Name = "FormatToolStripMenuItem";
             FormatToolStripMenuItem.Size = new Size(116, 29);
             FormatToolStripMenuItem.Text = "Formatting";
@@ -765,6 +776,79 @@
             EditFontToolStripMenuItem.Size = new Size(319, 34);
             EditFontToolStripMenuItem.Text = "Edit Font";
             EditFontToolStripMenuItem.Click += EditFontToolStripMenuItem_Click;
+            // 
+            // IncreaseFontSizeToolStripMenuItem
+            // 
+            IncreaseFontSizeToolStripMenuItem.Name = "IncreaseFontSizeToolStripMenuItem";
+            IncreaseFontSizeToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.OemCloseBrackets;
+            IncreaseFontSizeToolStripMenuItem.Size = new Size(319, 34);
+            IncreaseFontSizeToolStripMenuItem.Text = "Increase Font Size";
+            IncreaseFontSizeToolStripMenuItem.Click += IncreaseFontSizeToolStripMenuItem_Click;
+            // 
+            // DecreaseFontSizeToolStripMenuItem
+            // 
+            DecreaseFontSizeToolStripMenuItem.Name = "DecreaseFontSizeToolStripMenuItem";
+            DecreaseFontSizeToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.OemOpenBrackets;
+            DecreaseFontSizeToolStripMenuItem.Size = new Size(319, 34);
+            DecreaseFontSizeToolStripMenuItem.Text = "Decrease Font Size";
+            DecreaseFontSizeToolStripMenuItem.Click += DecreaseFontSizeToolStripMenuItem_Click;
+            // 
+            // ToolStripSeparator19
+            // 
+            ToolStripSeparator19.Name = "ToolStripSeparator19";
+            ToolStripSeparator19.Size = new Size(316, 6);
+            // 
+            // SuperscriptToolStripMenuItem
+            // 
+            SuperscriptToolStripMenuItem.Name = "SuperscriptToolStripMenuItem";
+            SuperscriptToolStripMenuItem.Size = new Size(319, 34);
+            SuperscriptToolStripMenuItem.Text = "Superscript";
+            SuperscriptToolStripMenuItem.Click += SuperscriptToolStripMenuItem_Click;
+            // 
+            // SubscriptToolStripMenuItem
+            // 
+            SubscriptToolStripMenuItem.Name = "SubscriptToolStripMenuItem";
+            SubscriptToolStripMenuItem.Size = new Size(319, 34);
+            SubscriptToolStripMenuItem.Text = "Subscript";
+            SubscriptToolStripMenuItem.Click += SubscriptToolStripMenuItem_Click;
+            // 
+            // ToolStripSeparator20
+            // 
+            ToolStripSeparator20.Name = "ToolStripSeparator20";
+            ToolStripSeparator20.Size = new Size(316, 6);
+            // 
+            // LineSpacingToolStripMenuItem
+            // 
+            LineSpacingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { LineSpacingSingleToolStripMenuItem, LineSpacing15ToolStripMenuItem, LineSpacingDoubleToolStripMenuItem });
+            LineSpacingToolStripMenuItem.Name = "LineSpacingToolStripMenuItem";
+            LineSpacingToolStripMenuItem.Size = new Size(319, 34);
+            LineSpacingToolStripMenuItem.Text = "Line Spacing";
+            // 
+            // LineSpacingSingleToolStripMenuItem
+            // 
+            LineSpacingSingleToolStripMenuItem.Name = "LineSpacingSingleToolStripMenuItem";
+            LineSpacingSingleToolStripMenuItem.Size = new Size(200, 34);
+            LineSpacingSingleToolStripMenuItem.Text = "Single";
+            LineSpacingSingleToolStripMenuItem.Click += LineSpacingSingleToolStripMenuItem_Click;
+            // 
+            // LineSpacing15ToolStripMenuItem
+            // 
+            LineSpacing15ToolStripMenuItem.Name = "LineSpacing15ToolStripMenuItem";
+            LineSpacing15ToolStripMenuItem.Size = new Size(200, 34);
+            LineSpacing15ToolStripMenuItem.Text = "1.5";
+            LineSpacing15ToolStripMenuItem.Click += LineSpacing15ToolStripMenuItem_Click;
+            // 
+            // LineSpacingDoubleToolStripMenuItem
+            // 
+            LineSpacingDoubleToolStripMenuItem.Name = "LineSpacingDoubleToolStripMenuItem";
+            LineSpacingDoubleToolStripMenuItem.Size = new Size(200, 34);
+            LineSpacingDoubleToolStripMenuItem.Text = "Double";
+            LineSpacingDoubleToolStripMenuItem.Click += LineSpacingDoubleToolStripMenuItem_Click;
+            // 
+            // ToolStripSeparator21
+            // 
+            ToolStripSeparator21.Name = "ToolStripSeparator21";
+            ToolStripSeparator21.Size = new Size(316, 6);
             // 
             // ClearFormattingToolStripMenuItem
             // 
@@ -1606,5 +1690,16 @@
         private ToolStripStatusLabel toolStripStatusLabelNumLock;
         private ToolStripStatusLabel toolStripStatusLabelSeparator9;
         private ToolStripButton CheckSpellingToolStripButton;
+        private ToolStripMenuItem SuperscriptToolStripMenuItem;
+        private ToolStripMenuItem SubscriptToolStripMenuItem;
+        private ToolStripMenuItem IncreaseFontSizeToolStripMenuItem;
+        private ToolStripMenuItem DecreaseFontSizeToolStripMenuItem;
+        private ToolStripMenuItem LineSpacingToolStripMenuItem;
+        private ToolStripMenuItem LineSpacingSingleToolStripMenuItem;
+        private ToolStripMenuItem LineSpacing15ToolStripMenuItem;
+        private ToolStripMenuItem LineSpacingDoubleToolStripMenuItem;
+        private ToolStripSeparator ToolStripSeparator19;
+        private ToolStripSeparator ToolStripSeparator20;
+        private ToolStripSeparator ToolStripSeparator21;
     }
 }

@@ -216,12 +216,67 @@ namespace Notepad_Light.Helpers
         public const int EM_GETSCROLLPOS = WM_USER + 221;
         public const int EM_SETSCROLLPOS = WM_USER + 222;
         public const int EM_FORMATRANGE = WM_USER + 57;
+        public const int EM_SETPARAFORMAT = WM_USER + 71;
         public const int Hundredth2Twips = 20 * 72 / 100;
-        
+
         public const int MM_ISOTROPIC = 7;
         public const int MM_ANISOTROPIC = 8;
 
         public const int KEY_INSERT = 0X2D;
+
+        // line spacing
+        public const int SCF_SELECTION = 0x0001;
+        public const uint PFM_LINESPACING = 0x00000100;
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct PARAFORMAT2
+        {
+            public int cbSize;
+            public uint dwMask;
+            public short wNumbering;
+            public short wReserved;
+            public int dxStartIndent;
+            public int dxRightIndent;
+            public int dxOffset;
+            public short wAlignment;
+            public short cTabCount;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+            public int[] rgxTabs;
+            public int dySpaceBefore;
+            public int dySpaceAfter;
+            public int dyLineSpacing;
+            public short sStyle;
+            public byte bLineSpacingRule;
+            public byte bOutlineLevel;
+            public short wShadingWeight;
+            public short wShadingStyle;
+            public short wNumberingStart;
+            public short wNumberingStyle;
+            public short wNumberingTab;
+            public short wBorderSpace;
+            public short wBorderWidth;
+            public short wBorders;
+        }
+
+        /// <summary>
+        /// Set line spacing for the current selection in a RichTextBox.
+        /// </summary>
+        /// <param name="box">The RichTextBox control.</param>
+        /// <param name="rule">Line spacing rule (0=Single, 1=1.5, 2=Double).</param>
+        public static void SetLineSpacing(RichTextBox box, byte rule)
+        {
+            PARAFORMAT2 pf = new PARAFORMAT2();
+            pf.rgxTabs = new int[32];
+            pf.cbSize = Marshal.SizeOf(pf);
+            pf.dwMask = PFM_LINESPACING;
+            pf.bLineSpacingRule = rule;
+            pf.dyLineSpacing = 0;
+
+            IntPtr ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(pf));
+            Marshal.StructureToPtr(pf, ptr, false);
+            SendMessage(box.Handle, EM_SETPARAFORMAT, (IntPtr)SCF_SELECTION, ptr);
+            Marshal.FreeCoTaskMem(ptr);
+        }
 
         /// <summary>
         /// contains information about the current state of both physical and virtual memory, including extended memory

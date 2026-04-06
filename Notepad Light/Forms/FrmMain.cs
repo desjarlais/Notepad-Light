@@ -303,7 +303,9 @@ namespace Notepad_Light
 
         public void UpdateStatusBar()
         {
-            if (gCurrentFileType == CurrentFileType.RTF)
+            bool isRtf = gCurrentFileType == CurrentFileType.RTF;
+
+            if (isRtf)
             {
                 EnableToolbarFormattingIcons();
                 SetToolStripText(toolStripStatusLabelFileType, Strings.rtf);
@@ -321,6 +323,13 @@ namespace Notepad_Light
                 SetToolStripText(toolStripStatusLabelFileType, Strings.markdown);
                 ExportHtmlToolStripMenuItem.Enabled = true;
             }
+
+            // RTF-only formatting menu items
+            SuperscriptToolStripMenuItem.Enabled = isRtf;
+            SubscriptToolStripMenuItem.Enabled = isRtf;
+            IncreaseFontSizeToolStripMenuItem.Enabled = isRtf;
+            DecreaseFontSizeToolStripMenuItem.Enabled = isRtf;
+            LineSpacingToolStripMenuItem.Enabled = isRtf;
         }
 
         public void UpdateOpenFilePath(string docName)
@@ -437,23 +446,16 @@ namespace Notepad_Light
             UpdateCurrentFileType(gCurrentFileName);
 
             ClearToolbarFormattingIcons();
-            DisableToolbarFormattingIcons();
+            UpdateStatusBar();
 
-            // check for file type and update UI accordingly
+            // update encoding display based on file type
             if (gCurrentFileType == CurrentFileType.RTF)
             {
                 EncodingToolStripStatusLabel.Text = App.GetFileEncoding(RtbMain.Rtf ?? string.Empty, true);
-                toolStripStatusLabelFileType.Text = Strings.rtf;
-            }
-            else if (gCurrentFileType == CurrentFileType.Text)
-            {
-                EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
-                toolStripStatusLabelFileType.Text = Strings.plainText;
             }
             else
             {
                 EncodingToolStripStatusLabel.Text = Encoding.UTF8.EncodingName;
-                toolStripStatusLabelFileType.Text = Strings.markdown;
             }
 
             RtbMain.Modified = false;
@@ -597,6 +599,7 @@ namespace Notepad_Light
                 gPrevPageLength = RtbMain.TextLength;
                 UpdateOpenFilePath(filePath);
                 UpdateCurrentFileType(filePath);
+                UpdateStatusBar();
                 UpdateDocStats();
                 AddFileToMRU(filePath);
                 RtbMain.Modified = false;
@@ -682,6 +685,7 @@ namespace Notepad_Light
 
                         UpdateOpenFilePath(ofdFileOpen.FileName);
                         UpdateCurrentFileType(ofdFileOpen.FileName);
+                        UpdateStatusBar();
                         AddFileToMRU(gCurrentFileName);
                         ClearToolbarFormattingIcons();
                         MoveCursorToLocation(0, 0);
@@ -1658,6 +1662,76 @@ namespace Notepad_Light
                 RtbMain.SelectionFont = new Font(RtbMain.SelectionFont, RtbMain.SelectionFont.Style | FontStyle.Strikeout);
             }
 
+            EndOfButtonFormatWork();
+        }
+
+        /// <summary>
+        /// toggle superscript on the current selection using a positive char offset
+        /// </summary>
+        public void ApplySuperscript()
+        {
+            if (RtbMain.SelectionFont == null) { return; }
+            if (RtbMain.SelectionCharOffset > 0)
+            {
+                RtbMain.SelectionCharOffset = 0;
+            }
+            else
+            {
+                RtbMain.SelectionCharOffset = (int)(RtbMain.SelectionFont.Size / 3);
+            }
+
+            EndOfButtonFormatWork();
+        }
+
+        /// <summary>
+        /// toggle subscript on the current selection using a negative char offset
+        /// </summary>
+        public void ApplySubscript()
+        {
+            if (RtbMain.SelectionFont == null) { return; }
+            if (RtbMain.SelectionCharOffset < 0)
+            {
+                RtbMain.SelectionCharOffset = 0;
+            }
+            else
+            {
+                RtbMain.SelectionCharOffset = -(int)(RtbMain.SelectionFont.Size / 3);
+            }
+
+            EndOfButtonFormatWork();
+        }
+
+        /// <summary>
+        /// increase the font size of the current selection by 2pt
+        /// </summary>
+        public void IncreaseFontSize()
+        {
+            if (RtbMain.SelectionFont == null) { return; }
+            float newSize = RtbMain.SelectionFont.Size + 2;
+            if (newSize > 200) newSize = 200;
+            RtbMain.SelectionFont = new Font(RtbMain.SelectionFont.FontFamily, newSize, RtbMain.SelectionFont.Style);
+            EndOfButtonFormatWork();
+        }
+
+        /// <summary>
+        /// decrease the font size of the current selection by 2pt
+        /// </summary>
+        public void DecreaseFontSize()
+        {
+            if (RtbMain.SelectionFont == null) { return; }
+            float newSize = RtbMain.SelectionFont.Size - 2;
+            if (newSize < 1) newSize = 1;
+            RtbMain.SelectionFont = new Font(RtbMain.SelectionFont.FontFamily, newSize, RtbMain.SelectionFont.Style);
+            EndOfButtonFormatWork();
+        }
+
+        /// <summary>
+        /// set the line spacing for the current selection
+        /// </summary>
+        /// <param name="rule">0=Single, 1=1.5, 2=Double</param>
+        public void SetLineSpacing(byte rule)
+        {
+            Win32.SetLineSpacing(RtbMain, rule);
             EndOfButtonFormatWork();
         }
 
@@ -2687,6 +2761,41 @@ namespace Notepad_Light
         {
             ClearFormatting();
             EndOfButtonFormatWork();
+        }
+
+        private void SuperscriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplySuperscript();
+        }
+
+        private void SubscriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplySubscript();
+        }
+
+        private void IncreaseFontSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IncreaseFontSize();
+        }
+
+        private void DecreaseFontSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DecreaseFontSize();
+        }
+
+        private void LineSpacingSingleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetLineSpacing(0);
+        }
+
+        private void LineSpacing15ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetLineSpacing(1);
+        }
+
+        private void LineSpacingDoubleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetLineSpacing(2);
         }
 
         private void ClearAllTextToolStripMenuItem_Click(object sender, EventArgs e)
