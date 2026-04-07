@@ -2126,25 +2126,22 @@ namespace Notepad_Light
         }
 
         /// <summary>
-        /// function to replace text, Find button needs to be clicked before this will work
+        /// open the Find and Replace dialog, pre-populated with the toolbar search text or selected text
         /// </summary>
         public void ReplaceText()
         {
-            if (RtbMain.SelectedText == string.Empty)
-                return;
+            string initialFind = RtbMain.SelectedText.Length > 0
+                ? RtbMain.SelectedText
+                : FindTextBox.Text;
 
-            FrmReplace fReplace = new FrmReplace(this)
+            FrmReplace fReplace = new FrmReplace(RtbMain, initialFind)
             {
                 Owner = this
             };
             fReplace.ShowDialog(this);
 
-            // user cancelled the dialog scenario or no matches were found
-            if (fReplace.formExited)
-                return;
-
-            // single replace
-            RtbMain.SelectedText = RtbMain.SelectedText.Replace(RtbMain.SelectedText, fReplace.replaceText);
+            UpdateToolbarIcons();
+            UpdateDocStats();
         }
 
         /// <summary>
